@@ -1,0 +1,11 @@
+export type FAQ = {
+  id: string;
+  index: number;
+
+  question: string;
+  questionArabic: string;
+  answer: string;
+  answerArabic: string;
+
+  createdAt: string;
+};

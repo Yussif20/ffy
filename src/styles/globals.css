@@ -1,0 +1,374 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-primary1: var(--primary1);
+  --color-primary2: var(--primary2);
+  --color-primary3: var(--primary3);
+  --color-success: var(--success);
+  --color-primary-dark: var(--primary-dark);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root,
+.dark {
+  --radius: 0.65rem;
+  --background: #030310;
+  --foreground: #ffffff;
+  --card: #18181b;
+  --card-foreground: #ffffff;
+  --popover: #18181b;
+  --popover-foreground: #ffffff;
+  --primary: #059666;
+  --primary1: #51a687;
+  --primary2: #06402b;
+  --success: #6ee7bf;
+  --primary-dark: #087951;
+  --primary-foreground: #ffffff;
+  --secondary: #27272a;
+  --secondary-foreground: #ffffff;
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  --accent: #27272a;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #059666;
+  --chart-1: #34d399;
+  --chart-2: #10b981;
+  --chart-3: #059669;
+  --chart-4: #047857;
+  --chart-5: #065f46;
+  --sidebar: #18181b;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #059666;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #27272a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #27272a;
+  --sidebar-ring: #059666;
+}
+
+/* {
+  --background: #030310;
+  --foreground: #ffffff;
+  --card: #18181b;
+  --card-foreground: #ffffff;
+  --popover: #18181b;
+  --popover-foreground: #ffffff;
+  --primary: #059666;
+  --primary1: #51a687;
+  --primary2: #06402b;
+  --success: #6ee7bf;
+  --primary-dark: #087951;
+  --primary-foreground: #ffffff;
+  --secondary: #27272a;
+  --secondary-foreground: #ffffff;
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  --accent: #27272a;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #059666;
+  --chart-1: #34d399;
+  --chart-2: #10b981;
+  --chart-3: #059669;
+  --chart-4: #047857;
+  --chart-5: #065f46;
+  --sidebar: #18181b;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #059666;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #27272a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #27272a;
+  --sidebar-ring: #059666;
+} */
+
+.yellow-theme,
+.yellow-theme.dark {
+  --background: #030310;
+  --foreground: #ffffff;
+  --card: #18181b;
+  --card-foreground: #ffffff;
+  --popover: #18181b;
+  --popover-foreground: #ffffff;
+  --primary: #e6b100;
+  --primary1: #f3c725;
+  --primary2: #695300;
+  --success: #edc900;
+  --primary-dark: #b38e00;
+  --primary-foreground: #ffffff;
+  --secondary: #27272a;
+  --secondary-foreground: #ffffff;
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  --accent: #27272a;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #e6b100;
+  --chart-1: #f3c725;
+  --chart-2: #e6b100;
+  --chart-3: #b38e00;
+  --chart-4: #695300;
+  --chart-5: #403200;
+  --sidebar: #18181b;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #e6b100;
+  --sidebar-primary-foreground: #030310;
+  --sidebar-accent: #27272a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #27272a;
+  --sidebar-ring: #e6b100;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark !important;
+}
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+body {
+  font-family: var(--font-montserrat) !important;
+  background: var(--color-background);
+}
+
+button {
+  cursor: pointer;
+}
+
+.shadow-custom-offset {
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+}
+
+.shadow-inset-outline {
+  box-shadow: inset 0px 0px 0px 2px rgba(0, 0, 0, 1);
+}
+
+.shadow-offset-8 {
+  box-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 1);
+}
+
+.shadow-inset-border {
+  box-shadow: inset 0px 0px 0px 2px rgba(0, 0, 0, 1);
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #ff7e5f, #feb47b);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* Scoped reset and default styles under .danger-html */
+.danger-html * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.danger-html {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Headings */
+.danger-html h1 {
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 1em 0 0.5em;
+  font-size: 2.25rem; /* h1 - text-4xl */
+}
+
+.danger-html h2 {
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 1em 0 0.5em;
+  font-size: 1.875rem; /* h2 - text-3xl */
+}
+
+.danger-html h3 {
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 1em 0 0.5em;
+  font-size: 1.5rem; /* h3 - text-2xl */
+}
+
+.danger-html h4 {
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 1em 0 0.5em;
+  font-size: 1.25rem; /* h4 - text-xl */
+}
+
+.danger-html h5 {
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 1em 0 0.5em;
+  font-size: 1.125rem; /* h5 - text-lg */
+}
+
+.danger-html h6 {
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 1em 0 0.5em;
+  font-size: 1rem; /* h6 - text-base */
+}
+
+/* Paragraphs */
+.danger-html p {
+  margin: 0 0 1em;
+}
+
+/* Links */
+.danger-html a {
+  text-decoration: underline;
+  color: var(--color-primary);
+}
+
+.danger-html a:hover {
+  text-decoration: underline;
+}
+
+/* Lists */
+.danger-html ul,
+.danger-html ol {
+  margin: 0 0 1em 1.5em;
+  padding: 0;
+}
+
+.danger-html li {
+  margin-bottom: 0.5em;
+  list-style-type: disc;
+}
+
+/* Images */
+.danger-html img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Tables */
+.danger-html table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.danger-html th,
+.danger-html td {
+  padding: 0.5em;
+  text-align: left;
+}
+
+/* Forms */
+.danger-html input,
+.danger-html textarea,
+.danger-html select,
+.danger-html button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 0.5em;
+  border-radius: 4px;
+}
+
+.danger-html button {
+  cursor: pointer;
+}
+
+/* Blockquotes */
+.danger-html blockquote {
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  font-style: italic;
+}
+
+/* Code */
+.danger-html code,
+.danger-html pre {
+  font-family: monospace;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+}
+
+.danger-html pre {
+  padding: 1em;
+  overflow-x: auto;
+}
+
+/* Horizontal Rule */
+.danger-html hr {
+  border: none;
+  height: 1px;
+  margin: 1em 0;
+}
+
+/* Small text */
+.danger-html small {
+  font-size: 0.875em;
+}
+
+/* Centering and utility classes */
+.danger-html .center {
+  text-align: center;
+}
+
+.danger-html .clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
