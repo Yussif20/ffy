@@ -2,51 +2,108 @@ import LinearBorder from "../Global/LinearBorder";
 import SectionTitle from "../Global/SectionTitle";
 import { getTranslations } from "next-intl/server";
 
+type Subsection = {
+    subtitle: string;
+    content?: string;
+    points?: string[];
+};
+
+type Section = {
+    title: string;
+    content?: string;
+    points?: string[];
+    subsections?: Subsection[];
+    closing?: string;
+};
+
 export default async function Privacy() {
     const t = await getTranslations("Privacy");
 
-    const sections = [
+    const sections: Section[] = [
         {
             title: t("dataCollection.title"),
+            content: t("dataCollection.intro"),
             subsections: [
-                {
-                    subtitle: t("dataCollection.personal.title"),
-                    points: t.raw("dataCollection.personal.points")
-                },
-                {
-                    subtitle: t("dataCollection.nonPersonal.title"),
-                    points: t.raw("dataCollection.nonPersonal.points")
-                },
-                {
-                    subtitle: t("dataCollection.analytics.title"),
-                    content: t("dataCollection.analytics.content")
-                }
+                { subtitle: t("dataCollection.personal.title"), content: t("dataCollection.personal.content"), points: t.raw("dataCollection.personal.points") as string[] },
+                { subtitle: t("dataCollection.nonPersonal.title"), content: t("dataCollection.nonPersonal.content"), points: t.raw("dataCollection.nonPersonal.points") as string[] },
+                { subtitle: t("dataCollection.analytics.title"), content: t("dataCollection.analytics.content") },
+                { subtitle: t("dataCollection.cookies.title"), content: t("dataCollection.cookies.content") },
+                { subtitle: t("dataCollection.consent.title"), content: t("dataCollection.consent.content") },
+                { subtitle: t("dataCollection.thirdPartySources.title"), content: t("dataCollection.thirdPartySources.content") },
             ]
         },
         {
             title: t("purpose.title"),
-            points: t.raw("purpose.points")
+            content: t("purpose.intro"),
+            subsections: [
+                { subtitle: t("purpose.provide.title"), content: t("purpose.provide.content") },
+                { subtitle: t("purpose.improve.title"), content: t("purpose.improve.content") },
+                { subtitle: t("purpose.communicate.title"), content: t("purpose.communicate.content") },
+                { subtitle: t("purpose.marketing.title"), content: t("purpose.marketing.content") },
+                { subtitle: t("purpose.compliance.title"), content: t("purpose.compliance.content") },
+                { subtitle: t("purpose.protect.title"), content: t("purpose.protect.content") },
+            ],
+            closing: t("purpose.closing"),
         },
         {
             title: t("legalBasis.title"),
-            points: t.raw("legalBasis.points")
+            content: t("legalBasis.intro"),
+            subsections: [
+                { subtitle: t("legalBasis.consent.title"), content: t("legalBasis.consent.content") },
+                { subtitle: t("legalBasis.contractual.title"), content: t("legalBasis.contractual.content") },
+                { subtitle: t("legalBasis.legal.title"), content: t("legalBasis.legal.content") },
+                { subtitle: t("legalBasis.legitimate.title"), content: t("legalBasis.legitimate.content") },
+                { subtitle: t("legalBasis.vital.title"), content: t("legalBasis.vital.content") },
+            ],
+            closing: t("legalBasis.closing"),
         },
         {
             title: t("dataSharing.title"),
-            points: t.raw("dataSharing.points")
+            content: t("dataSharing.intro"),
+            subsections: [
+                { subtitle: t("dataSharing.withConsent.title"), content: t("dataSharing.withConsent.content") },
+                { subtitle: t("dataSharing.providers.title"), content: t("dataSharing.providers.content") },
+                { subtitle: t("dataSharing.legal.title"), content: t("dataSharing.legal.content") },
+                { subtitle: t("dataSharing.business.title"), content: t("dataSharing.business.content") },
+                { subtitle: t("dataSharing.aggregated.title"), content: t("dataSharing.aggregated.content") },
+            ]
         },
         {
             title: t("retention.title"),
-            content: t("retention.content"),
-            points: t.raw("retention.points")
+            content: t("retention.intro"),
+            subsections: [
+                { subtitle: t("retention.period.title"), content: t("retention.period.content") },
+                { subtitle: t("retention.analytics.title"), content: t("retention.analytics.content") },
+                { subtitle: t("retention.deletion.title"), content: t("retention.deletion.content") },
+                { subtitle: t("retention.storage.title"), content: t("retention.storage.content") },
+                { subtitle: t("retention.security.title"), content: t("retention.security.content") },
+            ]
         },
         {
             title: t("rights.title"),
-            points: t.raw("rights.points")
+            content: t("rights.intro"),
+            subsections: [
+                { subtitle: t("rights.access.title"), content: t("rights.access.content") },
+                { subtitle: t("rights.correction.title"), content: t("rights.correction.content") },
+                { subtitle: t("rights.deletion.title"), content: t("rights.deletion.content") },
+                { subtitle: t("rights.restriction.title"), content: t("rights.restriction.content") },
+                { subtitle: t("rights.session.title"), content: t("rights.session.content") },
+                { subtitle: t("rights.objection.title"), content: t("rights.objection.content") },
+                { subtitle: t("rights.withdraw.title"), content: t("rights.withdraw.content") },
+                { subtitle: t("rights.complaints.title"), content: t("rights.complaints.content") },
+                { subtitle: t("rights.optout.title"), content: t("rights.optout.content") },
+                { subtitle: t("rights.cookies.title"), content: t("rights.cookies.content") },
+            ]
         },
         {
             title: t("security.title"),
-            content: t("security.content")
+            content: t("security.intro"),
+            subsections: [
+                { subtitle: t("security.practices.title"), content: t("security.practices.content") },
+                { subtitle: t("security.accessControls.title"), content: t("security.accessControls.content") },
+                { subtitle: t("security.responsibilities.title"), content: t("security.responsibilities.content") },
+                { subtitle: t("security.limitations.title"), content: t("security.limitations.content") },
+            ]
         },
         {
             title: t("thirdParty.title"),
@@ -72,11 +129,7 @@ export default async function Privacy() {
 
     return (
         <div className="space-y-12 pb-20 md:pb-30 max-w-6xl mx-auto">
-            {/* Main Title */}
-            <SectionTitle
-                title={t("title")}
-                subtitle=""
-            />
+            <SectionTitle title={t("title")} subtitle="" />
 
             {/* Introduction */}
             <LinearBorder
@@ -85,9 +138,8 @@ export default async function Privacy() {
             >
                 <div className="w-full rounded-2xl py-10 md:py-16 relative px-4 sm:px-8 md:px-16 overflow-hidden bg-background">
                     <div className="absolute w-50 aspect-square bg-primary/40 blur-[80px] -left-5 -bottom-5"></div>
-
                     <div className="space-y-6 relative z-10">
-                        <p className="text-base md:text-lg leading-relaxed whitespace-pre-line">
+                        <p className="text-base md:text-lg leading-relaxed">
                             {t("intro")}
                         </p>
                     </div>
@@ -110,7 +162,7 @@ export default async function Privacy() {
                             </h4>
 
                             {section.content && (
-                                <p className="text-base md:text-lg leading-relaxed whitespace-pre-line">
+                                <p className="text-base md:text-lg leading-relaxed">
                                     {section.content}
                                 </p>
                             )}
@@ -121,7 +173,7 @@ export default async function Privacy() {
                                         {sub.subtitle}
                                     </h5>
                                     {sub.content && (
-                                        <p className="text-base md:text-lg leading-relaxed whitespace-pre-line">
+                                        <p className="text-base md:text-lg leading-relaxed">
                                             {sub.content}
                                         </p>
                                     )}
@@ -143,10 +195,16 @@ export default async function Privacy() {
                                     {section.points.map((point: string, pointIdx: number) => (
                                         <li key={pointIdx} className="flex gap-3 items-start text-base md:text-lg">
                                             <span className="text-primary font-bold mt-1">•</span>
-                                            <span className="leading-relaxed whitespace-pre-line">{point}</span>
+                                            <span className="leading-relaxed">{point}</span>
                                         </li>
                                     ))}
                                 </ul>
+                            )}
+
+                            {section.closing && (
+                                <p className="text-base md:text-lg leading-relaxed">
+                                    {section.closing}
+                                </p>
                             )}
                         </div>
                     </div>
