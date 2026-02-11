@@ -11,6 +11,7 @@ export default async function HighImpactNews() {
             <SectionTitle
                 title={t('title')}
                 subtitle={t('subtitle')}
+                subtitleClass="font-semibold"
             />
             <HINFilter />
             <HINTable />

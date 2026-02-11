@@ -1,10 +1,11 @@
 "use client";
 import { TQueryParam } from "@/types";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 
 export const useQueryBuilder = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   // Convert string → boolean | number | string
   const convertValue = (value: string): string | number | boolean => {
@@ -29,8 +30,13 @@ export const useQueryBuilder = () => {
   };
 
   const setParam = (key: string, value: string | number | boolean) => {
-    params.set(key, value as string);
-    window.history.replaceState(null, "", "?" + params);
+    const newParams = new URLSearchParams(searchParams.toString());
+    if (value === "" || value === null || value === undefined) {
+      newParams.delete(key);
+    } else {
+      newParams.set(key, String(value));
+    }
+    router.push("?" + newParams.toString(), { scroll: false });
   };
 
   const getAllParams = (): TQueryParam[] =>

@@ -15,20 +15,18 @@ export const programTypes = [
 ];
 
 export const drawDowns = [
-  { name: "Balance Based", value: "balanceBased" },
-  { name: "Equity Based", value: "equityBased" },
-  { name: "Trailing EOD", value: "trailingEod" },
-  { name: "Trailing Intraday", value: "trailingIntraday" },
-  { name: "Smart DD", value: "smartDd" },
+  { name: "Fixed on Capital", value: "balanceBased" },
+  { name: "Fixed on Equity", value: "equityBased" },
+  { name: "Moving End of Day", value: "trailingEod" },
+  { name: "Moving During Day", value: "trailingIntraday" },
+  { name: "Smart Loss", value: "smartDd" },
 ];
 
 export const otherFeatures = [
   { name: "Expert Advisor", value: "expertAdvisor" },
   { name: "News Trading", value: "newsTrading" },
-  { name: "Overnight Holding", value: "overnightHolding" },
-  { name: "Weekend Holding", value: "weekendHolding" },
-  { name: "Swap Free Account", value: "swapFreeAccount" },
-  { name: "Trade Copying", value: "tradeCopying" },
+  { name: "Overnight & Weekend Holding", value: "overnightHolding" },
+  { name: "Copy trading", value: "tradeCopying" },
 ];
 
 export const propFirmInstrumentTypes = [

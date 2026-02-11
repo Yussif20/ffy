@@ -9,13 +9,16 @@ import { useState } from "react";
 export default function ChallengeForm({ methods }: { methods: any }) {
   const { data: getAllFirms, isLoading } = useGetFirmsQuery();
   const t = useTranslations("CHALLENGEMANAGEMENT");
-  const [profitInput, setProfitInput] = useState<number | "">("");
+  const [profitInput, setProfitInput] = useState<string>("");
   const { watch, setValue, getValues } = methods;
   const handleProfitKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && profitInput !== "") {
+    if (e.key === "Enter" && profitInput.trim() !== "") {
       const currentTargets = getValues("profitTarget") || [];
-      setValue("profitTarget", [...currentTargets, Number(profitInput)]);
-      setProfitInput("");
+      const numValue = Number(profitInput);
+      if (!isNaN(numValue)) {
+        setValue("profitTarget", [...currentTargets, numValue]);
+        setProfitInput("");
+      }
       e.preventDefault();
     }
   };
@@ -25,7 +28,7 @@ export default function ChallengeForm({ methods }: { methods: any }) {
         name="firmId"
         mode="single"
         isLoading={isLoading}
-        label={t("firm")}
+        label={t("firmLogo")}
         placeholder={t("selectFirm")}
         options={(getAllFirms?.data || [])?.map((firm: any) => ({
           value: firm.id,
@@ -60,11 +63,7 @@ export default function ChallengeForm({ methods }: { methods: any }) {
           <input
             type="number"
             value={profitInput}
-            onChange={(e) =>
-              setProfitInput(
-                e.target.value === "" ? "" : Number(e.target.value)
-              )
-            }
+            onChange={(e) => setProfitInput(e.target.value)}
             onKeyDown={handleProfitKeyDown}
             placeholder={t("profitTargetPlaceholder")}
             className="w-full border rounded-3xl border-chart-1 px-3 py-2"
@@ -73,12 +72,13 @@ export default function ChallengeForm({ methods }: { methods: any }) {
           <button
             type="button"
             onClick={() => {
-              if (profitInput !== "" && !isNaN(profitInput)) {
-                setValue("profitTarget", [
-                  ...getValues("profitTarget"),
-                  profitInput,
-                ]);
-                setProfitInput("");
+              if (profitInput.trim() !== "") {
+                const numValue = Number(profitInput);
+                if (!isNaN(numValue)) {
+                  const currentTargets = getValues("profitTarget") || [];
+                  setValue("profitTarget", [...currentTargets, numValue]);
+                  setProfitInput("");
+                }
               }
             }}
             className="bg-primary1 text-foreground px-4 rounded-3xl"

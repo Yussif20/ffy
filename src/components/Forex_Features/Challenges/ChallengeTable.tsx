@@ -49,12 +49,15 @@ export default function ChallengeTable({
   const queries: TQueryParam[] = [
     { name: "page", value: page },
     { name: "limit", value: 10 },
-    { name: "searchTerm", value: searchTerm },
     {
       name: "firm.firmType",
       value: isFutures ? "FUTURES" : "FOREX",
     },
   ];
+
+  if (searchTerm) {
+    queries.push({ name: "searchTerm", value: searchTerm });
+  }
 
   if (sort) {
     let value = sort[0] === "-" ? sort.slice(1) : sort;
@@ -145,6 +148,7 @@ export default function ChallengeTable({
   } = useGetAllChallengesQuery(queries);
 
   const totalPages = totallBookings?.meta?.totalPage || 1;
+  const challenges = totallBookings?.data || [];
 
   const _headers = [
     {
@@ -153,13 +157,13 @@ export default function ChallengeTable({
       className: "hidden md:table-cell",
     },
     {
-      label: t("firm"),
+      label: t("firmLogo"),
       field: "title",
       hideSort: true,
       className: "table-cell md:hidden",
     },
     {
-      label: t("name"),
+      label: t("firmName"),
       field: "title",
       className: "table-cell md:hidden",
     },
@@ -195,8 +199,14 @@ export default function ChallengeTable({
       <Table>
         <SortTableHeader headers={headers} />
         <TableBody colSpan={7}>
-          {totallBookings?.data?.map((item: TChallenge, key: number) => (
-            <ChallengeRow isArabic={isArabic} key={key} challenge={item} />
+          {challenges.map((item: TChallenge, index: number) => (
+            <ChallengeRow 
+              isArabic={isArabic} 
+              key={item.id} 
+              challenge={item}
+              prevChallenge={challenges[index - 1]}
+              nextChallenge={challenges[index + 1]}
+            />
           ))}
         </TableBody>
       </Table>

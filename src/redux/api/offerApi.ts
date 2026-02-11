@@ -108,7 +108,9 @@ const offerApi = baseApi.injectEndpoints({
         firms: response.data as FirmWithOffers[],
         meta: response.meta as TMeta,
       }),
-      providesTags: ["Offers"],
+      providesTags: (_result, _error, params) => [
+        { type: "Offers", id: JSON.stringify(params || {}) },
+      ],
     }),
 
     // Get all offers by firm ID

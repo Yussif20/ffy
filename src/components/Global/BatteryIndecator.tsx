@@ -1,5 +1,3 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { Info } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface BatteryIndicatorProps {
@@ -9,7 +7,6 @@ interface BatteryIndicatorProps {
 
 const BatteryIndicator: React.FC<BatteryIndicatorProps> = ({
   percentage = 80,
-  tooltip,
 }) => {
   useTranslations("BatteryIndicator");
   const level: number = Math.min(Math.max(percentage, 0), 100);
@@ -27,15 +24,6 @@ const BatteryIndicator: React.FC<BatteryIndicatorProps> = ({
     <div className="flex items-center gap-2">
       {/* Percentage Display */}
       <div className="text-sm font-bold">{level}</div>
-
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Info size={16} />
-        </TooltipTrigger>
-        <TooltipContent className="">
-          <p className="font-semibold text-sm max-w-sm">{tooltip || ""}</p>
-        </TooltipContent>
-      </Tooltip>
 
       {/* Battery Bars */}
       <div className="flex gap-1">

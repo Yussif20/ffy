@@ -20,7 +20,7 @@ type Company = {
 
 export default function PopularFeatures() {
   const { data: allOfferData } = useGetAllFirmsQuery([
-    { name: "category", value: "POPULAR" },
+    { name: "category", value: "NEW" },
     { name: "firmType", value: "FOREX" },
     { name: "limit", value: "3" },
   ]);
@@ -32,7 +32,7 @@ export default function PopularFeatures() {
       <CardContent className="space-y-8 pb-1">
         <div className="font-bold text-lg md:text-xl flex justify-between items-center">
           <div className="flex items-center gap-2">
-            {t("mostPopularTitle")} <FaTrophy className="text-yellow-500" />
+            {t("newTitle")} <FaTrophy className="text-yellow-500" />
           </div>
         </div>
 

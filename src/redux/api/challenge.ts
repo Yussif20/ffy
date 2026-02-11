@@ -52,6 +52,22 @@ const challengeApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Challenge"],
     }),
+    reorderChallenges: builder.mutation({
+      query: (challenges: { id: string; order: number }[]) => ({
+        url: `/challenges/reorder`,
+        method: "PATCH",
+        body: { challenges },
+      }),
+      invalidatesTags: ["Challenge"],
+    }),
+    changeIndexChallenge: builder.mutation({
+      query: ({ id, order }: { id: string; order: number }) => ({
+        url: `/challenges/change-index/${id}`,
+        method: "PATCH",
+        body: { order },
+      }),
+      invalidatesTags: ["Challenge"],
+    }),
   }),
 });
 
@@ -61,4 +77,6 @@ export const {
   useGetSingleChallengeQuery,
   useUpdateChallengeMutation,
   useDeleteChallengeMutation,
+  useReorderChallengesMutation,
+  useChangeIndexChallengeMutation,
 } = challengeApi;

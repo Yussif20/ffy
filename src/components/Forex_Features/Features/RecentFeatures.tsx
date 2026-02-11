@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, Copy, Plus } from "lucide-react";
-import { FaFire } from "react-icons/fa";
 import {
   Carousel,
   CarouselApi,
@@ -101,7 +100,7 @@ export default function RecentFeatures() {
         {/* Header */}
         <div className="font-bold text-lg md:text-xl flex justify-between items-center flex-col md:flex-row">
           <div className="flex items-center gap-2">
-            {t("title")} <FaFire className="text-primary" />
+            {t("title")}
           </div>
 
           {/* Controls */}

@@ -6,4 +6,5 @@ export type News = {
   titleArabic: string;
   createdAt: string;
   updatedAt: string;
+  order: number;
 };

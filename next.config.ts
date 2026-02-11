@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "sfo3.digitaloceanspaces.com",
+      },
+      {
+        protocol: "https",
         hostname: "www.worldometers.info",
       },
       {
@@ -18,6 +22,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "http",
         hostname: "api.zenexcloud.com",
+      },
+      {
+        protocol: "http",
+        hostname: "31.220.111.98",
       },
     ],
   },

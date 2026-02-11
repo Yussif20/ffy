@@ -34,7 +34,7 @@ export default function FFT_Buttons() {
       {/* Forex Button */}
       <Button
         className={cn(
-          "px-2! sm:px-4! h-8 sm:h-9",
+          "px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24",
           isArabic && "text-base md:text-lg"
         )}
         variant={isFutures ? "ghost" : "default"}
@@ -56,7 +56,7 @@ export default function FFT_Buttons() {
       {/* Futures Button */}
       <Button
         className={cn(
-          "px-2! sm:px-4! h-8 sm:h-9",
+          "px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24",
           isArabic && "text-base md:text-lg"
         )}
         variant={isFutures ? "default" : "ghost"}

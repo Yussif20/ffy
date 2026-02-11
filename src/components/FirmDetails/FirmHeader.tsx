@@ -136,8 +136,9 @@ export default async function FirmHeader({
 
         {/* Right Button */}
         <NextLink href={company?.affiliateLink || "#"} target="_blank">
-          <Button size="xl" className="px-8">
+          <Button size="xl" className="px-8 gap-2">
             {t("buyButton")}
+            <ArrowUpRight size={20} />
           </Button>
         </NextLink>
       </div>

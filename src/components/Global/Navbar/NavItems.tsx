@@ -14,8 +14,7 @@ export default function NavItems() {
     { name: t("home"), href: "/", part: 1 },
     { name: t("offers"), href: "/exclusive-offers", part: 1 },
     { name: t("challenges"), href: "/challenges", part: 2 },
-    { name: t("bestSellers"), href: "/best-sellers", part: 3 },
-    ...(isFutures ? [] : [{ name: t("spreads"), href: "/spreads", part: 3 }]),
+    ...(isFutures ? [] : [{ name: t("spreads"), href: "/spreads", part: 3, badge: t("comingSoon") }]),
   ].map((item) => ({
     ...item,
     href: isFutures
@@ -43,9 +42,14 @@ export default function NavItems() {
           <Link
             key={item.href}
             href={item.href}
-            className={cn(linkClass(item.href))}
+            className={cn(linkClass(item.href), "flex flex-col items-center gap-0.5")}
           >
-            {item.name}
+            <span>{item.name}</span>
+            {item.badge && (
+              <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
+                {item.badge}
+              </span>
+            )}
           </Link>
         ))}
       </div>

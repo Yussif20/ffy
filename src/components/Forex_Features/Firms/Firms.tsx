@@ -20,6 +20,7 @@ export default function Firms() {
   const page = getParamsWithKey("page", 1);
 
   const limit = getParamsWithKey("limit", 10);
+  const searchTerm = searchParams.get("search") || "";
   const assets = searchParams.get("assets") || "";
   const countries = searchParams.get("countries") || "";
   const range_maxAllocation = searchParams.get("range_maxAllocation") || "";
@@ -38,6 +39,7 @@ export default function Firms() {
   const query = [
     page,
     limit,
+    { name: "searchTerm", value: searchTerm },
     { name: "leverages.array_assets", value: assets },
     { name: "array_countries", value: countries },
     { name: "range_maxAllocation", value: range_maxAllocation },
@@ -81,18 +83,20 @@ export default function Firms() {
         {user?.role === "SUPER_ADMIN" && <AddFirmDialog />}
       </div>
 
-      <div className="flex">
-        <div className="max-w-sm flex items-center justify-between">
+      <div className="flex gap-3 w-full">
+        <div className="max-w-sm flex items-center justify-between flex-shrink-0">
           <FirmAllFilters />
         </div>
 
-        <FirmTable
-          firms={firms}
-          // @ts-ignore
-          meta={firmsMeta}
-          isFuturesPage={isFuturesPage}
-          isLoading={isLoading || isFetching}
-        />
+        <div className="flex-1 min-w-0">
+          <FirmTable
+            firms={firms}
+            // @ts-ignore
+            meta={firmsMeta}
+            isFuturesPage={isFuturesPage}
+            isLoading={isLoading || isFetching}
+          />
+        </div>
       </div>
     </div>
   );

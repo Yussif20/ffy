@@ -6,7 +6,6 @@ import useIsArabic from "@/hooks/useIsArabic";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl"; // assuming you use next-intl
 import { useRouter, useSearchParams } from "next/navigation";
-import { FaFire } from "react-icons/fa";
 import { FaTag } from "react-icons/fa6";
 import { RiDiscountPercentFill } from "react-icons/ri";
 
@@ -19,11 +18,6 @@ export default function OfferFilter() {
   const isCurrentMonth = searchParams.get("isCurrentMonth") === "true";
 
   const categories = [
-    {
-      name: t("thisMonthForexOffers"),
-      queryKey: "isCurrentMonth",
-      icon: FaFire,
-    },
     {
       name: t("exclusiveOffers"),
       queryKey: "isExclusive",
@@ -44,7 +38,7 @@ export default function OfferFilter() {
       params.delete("isExclusive");
       params.delete("isCurrentMonth");
       params.delete("page"); // Reset to page 1
-      router.push(`?${params.toString()}`);
+      router.replace(`?${params.toString()}`, { scroll: false });
     } else {
       // Set the specific filter and remove the other
       const params = new URLSearchParams(searchParams.toString());
@@ -58,7 +52,7 @@ export default function OfferFilter() {
         params.delete("isExclusive");
       }
 
-      router.push(`?${params.toString()}`);
+      router.replace(`?${params.toString()}`, { scroll: false });
     }
   };
 
@@ -76,7 +70,7 @@ export default function OfferFilter() {
             <Button
               key={item.queryKey}
               onClick={() => handleSetCategory(item.queryKey)}
-              variant={"outline"}
+              variant={isActive ? "default" : "outline"}
               className={cn(
                 "text-foreground/70",
                 isActive && "text-foreground font-medium",

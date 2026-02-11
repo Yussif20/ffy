@@ -6,10 +6,11 @@ import FirmTable from "@/components/Forex_Features/Firms/FirmTable";
 import { useGetAllFirmsQuery } from "@/redux/api/firms.api";
 import useIsFutures from "@/hooks/useIsFutures";
 import { useSearchParams } from "next/navigation";
-import { handleSetSearchParams } from "@/lib/utils";
+import { handleSetSearchParams, cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
+import useIsArabic from "@/hooks/useIsArabic";
 
 export default function NavSearch() {
   const searchParams = useSearchParams();
@@ -17,6 +18,7 @@ export default function NavSearch() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const isFuturesPage = useIsFutures();
+  const isArabic = useIsArabic();
   const t = useTranslations("Navbar");
   const searchTerm = searchParams.get("searchTerm") || "";
   const query = [
@@ -44,15 +46,15 @@ export default function NavSearch() {
         className="flex items-center gap-2 cursor-pointer"
       >
         <div className="md:hidden">
-          <Button variant="outline" size="icon" className="w-8 h-8">
-            <Search />
+          <Button variant="outline" size="icon" className="w-7 h-7">
+            <Search className="w-4 h-4" />
           </Button>
         </div>
         <div className="hidden md:block">
           <Input
             disabled
             placeholder={t("searchPlaceholder")}
-            className="w-[200px] "
+            className={cn("w-[200px]", isArabic && "text-right")}
           />
         </div>
       </div>
@@ -64,6 +66,7 @@ export default function NavSearch() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={t("searchPlaceholder")}
+                className={cn(isArabic && "text-right")}
               />
             </div>
           </DialogHeader>

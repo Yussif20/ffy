@@ -3,7 +3,7 @@
 import SearchForm from "@/components/Forms/SearchForm";
 import { Button } from "@/components/ui/button";
 import { cn, handleSetSearchParams } from "@/lib/utils";
-import { ListFilter, Plus } from "lucide-react";
+import { Filter, Plus } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import SelectOptions from "./SelectOptions";
 import { useTranslations } from "next-intl";
@@ -34,8 +34,8 @@ export default function ChallengeFilter({
   };
 
   return (
-    <div className="flex justify-between md:items-center flex-col lg:flex-row gap-5 overflow-y-auto">
-      <div className="flex gap-2 md:gap-4 items-center">
+    <div className="w-full flex justify-between md:items-center flex-col lg:flex-row gap-5 overflow-x-hidden">
+      <div className="flex gap-2 md:gap-4 items-center overflow-x-auto">
         {!hideAllFilter && (
           <Button
             className={cn(
@@ -47,20 +47,9 @@ export default function ChallengeFilter({
             }}
             variant={filterOpen ? "defaultBH" : "secondary"}
           >
-            <ListFilter /> {t("filter")}
+            <Filter /> {t("filter")}
           </Button>
         )}
-        <SelectOptions
-          name="assets"
-          title={t("assets")}
-          options={[
-            { name: t("fx"), value: "FX" },
-            { name: t("stocks"), value: "Stocks" },
-            { name: t("crypto"), value: "Crypto" },
-          ]}
-          cols={3}
-        />
-
         <SelectOptions
           name="size"
           title={t("size")}

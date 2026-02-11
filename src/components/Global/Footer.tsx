@@ -21,7 +21,6 @@ const Footer = async () => {
       title: t("propFirms"),
       links: [
         { label: t("compareChallenges"), href: "challenges" },
-        { label: t("bestSellers"), href: "best-sellers" },
       ],
     },
     {
@@ -43,6 +42,7 @@ const Footer = async () => {
       title: t("company"),
       links: [
         { label: t("aboutUs"), href: "about" },
+        { label: t("careers"), href: "careers" },
         { label: t("faq"), href: "faq" },
       ],
     },
@@ -83,11 +83,9 @@ const Footer = async () => {
                 isScrolled={false}
               />
             </div>
-            <div className="grid grid-cols-2  lg:grid-cols-4 gap-3 md:gap-10">
-              {/* Logo + Description */}
-
+            <div className="grid grid-cols-2  lg:grid-cols-4 gap-0 md:gap-10">
               {footerLinks.map((section, index) => (
-                <div key={index} className="flex flex-col space-y-4">
+                <div key={index} className="flex flex-col space-y-1.5 md:space-y-4">
                   <h1 className="text-base md:text-lg lg:text-xl font-bold uppercase">
                     {section.title}
                   </h1>
@@ -150,7 +148,7 @@ const Footer = async () => {
 
           {/* Footer Bottom */}
           <div className="border-t border-[#707070]">
-            <p className="text-foreground/80 text-sm text-center py-8">
+            <p className="text-foreground/80 text-sm text-center py-8" dir="auto">
               {t("copyright")}
             </p>
           </div>

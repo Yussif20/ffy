@@ -11,7 +11,7 @@ export default function AuthContainer({
   className,
 }: {
   title: string;
-  subtitle: string;
+  subtitle?: string;
   children: ReactNode;
   className?: string;
 }) {

@@ -20,8 +20,8 @@ export default function FirmCell({
     <>
       <TableCell
         className={cn(
-          " left-0 bg-background z-10 hidden md:table-cell sticky",
-          isArabic && "right-0"
+          " left-0 bg-background z-10 hidden md:table-cell sticky shadow-[2px_0_4px_rgba(0,0,0,0.1)]",
+          isArabic && "right-0 shadow-[-2px_0_4px_rgba(0,0,0,0.1)]"
         )}
       >
         <Link
@@ -48,8 +48,8 @@ export default function FirmCell({
 
       <TableCell
         className={cn(
-          "bg-background z-10 table-cell md:hidden  sticky left-0",
-          isArabic && "right-0"
+          "bg-background z-10 table-cell md:hidden sticky left-0 shadow-[2px_0_4px_rgba(0,0,0,0.1)]",
+          isArabic && "right-0 shadow-[-2px_0_4px_rgba(0,0,0,0.1)]"
         )}
       >
         <Link href={linkHref} className="flex justify-center md:justify-start">

@@ -14,7 +14,6 @@ import { Button } from "@/components/ui/button";
 
 import { useSearchParams } from "next/navigation";
 import TableSkeleton from "@/components/Global/TableSkeleton";
-import Image from "next/image";
 import { useGetBrokersQuery } from "@/redux/api/brokerApi";
 import { Broker } from "@/types/broker.type";
 import CreateBroker from "./CreateBroker";
@@ -64,11 +63,10 @@ export default function BrokerManagement() {
                 <TableRow key={broker.id}>
                   <TableCell>
                     <div className="w-12 h-12 rounded-full overflow-hidden relative">
-                      <Image
+                      <img
                         src={broker.logoUrl}
                         alt="image"
-                        fill
-                        className="object-cover"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   </TableCell>

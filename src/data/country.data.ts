@@ -1740,6 +1740,29 @@ export const countriesByCode = (codes: string[]) => {
   return countries.filter((item) => codes.includes(item.code));
 };
 export const countryDataByCurrency = (currency: string) => {
+  // Priority mapping for major currencies
+  const currencyPriority: Record<string, string> = {
+    USD: "US",  // United States
+    EUR: "DE",  // Germany (using Germany as default EUR flag)
+    GBP: "UK",  // United Kingdom
+    JPY: "JP",  // Japan
+    CHF: "CH",  // Switzerland
+    AUD: "AU",  // Australia
+    CAD: "CA",  // Canada
+    NZD: "NZ",  // New Zealand
+  };
+
+  // Check if currency has a priority country code
+  if (currencyPriority[currency]) {
+    const priorityCountry = countries.find(
+      (item) => item.code === currencyPriority[currency]
+    );
+    if (priorityCountry) {
+      return priorityCountry;
+    }
+  }
+
+  // Fallback to first match
   return countries.find((item) => item.currency === currency);
 };
 

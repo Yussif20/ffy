@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 import Hero from "@/components/Global/hero";
-import Features from "@/components/Forex_Features/Features/Features";
 import Container from "@/components/Global/Container";
 import HomeNavItems from "@/components/Forex_Features/HomeNavItems";
 import Subscribe from "@/components/Forex_Features/Subscribe";
@@ -20,7 +19,6 @@ export default function RootLayout({
     <div>
       <Hero />
       <div className="py-30">
-        <Features />
         <HomeNavItems />
         <Container>{children}</Container>
         <Subscribe />

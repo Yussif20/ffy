@@ -33,7 +33,7 @@ export default function SearchForm() {
           name="search"
           fieldClassName="h-11"
           placeholder={t("searchPlaceholder")}
-          className={cn(isArabic ? "text-base font-semibold" : "")}
+          className={cn(isArabic ? "text-base font-semibold text-right" : "")}
           RightIconWidth={45}
           RightIcon={
             <Button type="submit" size={"sm"}>

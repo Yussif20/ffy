@@ -46,8 +46,8 @@ export default function SubscribeForm() {
           fieldClassName="h-11"
           placeholder={t("emailPlaceholder")}
           Icon={<CiMail />}
-          RightIconWidth={126}
-          RightIcon={<Button>{t("subscribeButton")}</Button>}
+          RightIconWidth={140}
+          RightIcon={<Button size="sm" className="h-10 w-full text-[10px] px-1 sm:text-xs sm:px-2 md:text-sm md:px-3">{t("subscribeButton")}</Button>}
         ></CustomInput>
       </CustomForm>
     </div>

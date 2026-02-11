@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { Card } from "../ui/card";
 import { Input } from "../ui/input";
+import useIsArabic from "@/hooks/useIsArabic";
+import { cn } from "@/lib/utils";
 
 type CustomSearchProps<T> = {
   data: T[];
@@ -19,6 +21,7 @@ function CustomSearch<T>({
   onClick,
 }: CustomSearchProps<T>) {
   const { setParam } = useQueryBuilder();
+  const isArabic = useIsArabic();
   const [query, setQuery] = useState("");
   const [queryDebounce] = useDebounce(query, 400);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -51,7 +54,7 @@ function CustomSearch<T>({
         onChange={(e) => setQuery(e.target.value)}
         onFocus={() => setIsDropdownOpen(true)}
         placeholder="Search..."
-        className="border rounded px-3 py-2 w-full"
+        className={cn("border rounded px-3 py-2 w-full", isArabic && "text-right")}
         containerClass="z-10"
       />
 

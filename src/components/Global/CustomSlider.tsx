@@ -9,11 +9,13 @@ export default function CustomSlider({
   max,
   name,
   extraQuery,
+  hideCurrency = false,
 }: {
   min: number;
   max: number;
   name: string;
   extraQuery?: Record<string, string>;
+  hideCurrency?: boolean;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -53,8 +55,8 @@ export default function CustomSlider({
         className="w-full"
       />
       <div className="flex justify-between text-xs text-gray-400">
-        <span>${value[0]}</span>
-        <span>${value[1]}</span>
+        <span>{hideCurrency ? value[0] : `$${value[0]}`}</span>
+        <span>{hideCurrency ? value[1] : `$${value[1]}`}</span>
       </div>
     </div>
   );

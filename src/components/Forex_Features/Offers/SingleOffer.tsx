@@ -18,8 +18,7 @@ import { UserRole } from "@/types";
 import { Check, ChevronDown, Copy, Pencil, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useState } from "react";
-import { FaFire } from "react-icons/fa";
+import { useState, useEffect } from "react";
 import DeleteOfferModal from "./DeleteOfferModal";
 import EditOfferModal from "./EditOfferModal";
 import { FirmWithOffers, Offer } from "@/redux/api/offerApi";
@@ -28,7 +27,7 @@ import useIsFutures from "@/hooks/useIsFutures";
 import DiscountText from "@/components/Global/DiscountText";
 import { visibleText } from "@/utils/visibleText";
 import { Separator } from "@/components/ui/separator";
-import EndDateBadge from "./EndDateBadge";
+import CountdownTimer from "./CountdownTimer";
 
 export default function SingleOffer({
   onlyShowMatch,
@@ -56,12 +55,30 @@ export default function SingleOffer({
   const currUser = useAppSelector((state) => state.auth.user);
   const isAdmin = currUser ? currUser.role !== UserRole.USER : false;
 
+  // فحص انتهاء العرض client-side لتجنب hydration mismatch
+  const [isExpired, setIsExpired] = useState(false);
+
+  useEffect(() => {
+    if (offerFirstData?.endDate) {
+      const checkExpired = () => {
+        const expired = new Date(offerFirstData.endDate as string).getTime() <= Date.now();
+        setIsExpired(expired);
+      };
+
+      checkExpired();
+      const interval = setInterval(checkExpired, 60000); // فحص كل دقيقة
+
+      return () => clearInterval(interval);
+    }
+  }, [offerFirstData?.endDate]);
+
   if (!offerFirstData) return null;
+  if (isExpired) return null;
 
   return (
     <Card
       className={cn(
-        "border-foreground/30 p-3 lg:p-6 bg-foreground/10 flex flex-col gap-8 relative",
+        "border-foreground/30 p-2 lg:p-6 bg-foreground/10 flex flex-col gap-4 lg:gap-8 relative",
         onlyShowMatch && "border-none rounded-none bg-background px-0!"
       )}
     >
@@ -89,7 +106,7 @@ export default function SingleOffer({
             isTopOffer={isTopOffer}
           />
           <AccordionContent>
-            <div className="flex flex-col gap-8 mt-8 ">
+            <div className="flex flex-col gap-4 lg:gap-8 mt-4 lg:mt-8 ">
               {offersOtherData?.map((item, idx) => (
                 <OfferCard
                   key={idx}
@@ -143,13 +160,9 @@ const OfferCard = ({
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
 
-  const endTime = offer.endDate && <EndDateBadge endDate={offer.endDate} />;
+  const endTime = offer.endDate && <CountdownTimer endDate={offer.endDate} />;
   const percantCard = (
-    <Card className="py-10 lg:h-25 w-full lg:w-auto lg:aspect-5/2 flex flex-col justify-center items-center gap-y-1 bg-transparent relative rounded-2xl">
-      <div className="absolute top-2 right-2">{endTime}</div>
-      <Button className="rounded-bl-none! rounded-tr-none! rounded-tl-xl! rounded-br-2xl! absolute top-0 left-0 h-5 w-5 sm:w-7 sm:h-7">
-        <FaFire className="text-sm sm:text-base" />
-      </Button>
+    <Card className="py-6 lg:py-10 lg:h-25 w-full lg:w-auto lg:aspect-5/2 flex flex-col justify-center items-center gap-y-2 lg:gap-y-4 bg-transparent relative rounded-2xl">
       <h1 className="text-2xl md:text-2xl font-bold uppercase py-0 leading-1">
         <DiscountText
           className="text-primary"
@@ -167,15 +180,15 @@ const OfferCard = ({
 
   const moreBtn = showTag && showingNumber > 0 && (
     <AccordionTrigger hideArrow className="p-0">
-      <Button variant={"outline"} className="font-semibold w-25">
+      <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-25">
         {showingNumber} {t("more")}
         <ChevronDown className="text-sm" />
-      </Button>
+      </div>
     </AccordionTrigger>
   );
 
   const companyDataUi = (
-    <div className="space-y-4 lg:space-y-0">
+    <div className="space-y-2 lg:space-y-4">
       <div className="flex justify-between items-center w-full">
         <Link
           href={`${isFutures ? "/futures/" : "/"}firms/${
@@ -232,7 +245,10 @@ const OfferCard = ({
             </button>
           ) : null
         ) : (
-          <div className="">{percantCard}</div>
+          <>
+            <div className="">{percantCard}</div>
+            {endTime && <div className="flex justify-center items-center mt-3">{endTime}</div>}
+          </>
         )}
       </div>
       {offer.text || offer.textArabic ? (
@@ -305,13 +321,13 @@ const OfferCard = ({
           <div className="flex justify-between items-center w-full h-max  gap-x-3  my-auto">
             <div className="hidden lg:block w-full">{companyDataUi}</div>
             <div className="flex items-center gap-2.5 justify-end ml-auto lg:ml-0 w-full lg:w-auto">
-              <div className="flex flex-col gap-3 lg:gap-4 ml-0 lg:ml-4 justify-center items-center w-full">
-                <div className="grid grid-cols-2 lg:flex items-center gap-2 w-full">
-                  <div className=" space-y-2 h-full lg:h-auto">
+              <div className="flex flex-col gap-4 lg:gap-5 ml-0 lg:ml-4 justify-center items-center w-full">
+                <div className="grid grid-cols-2 lg:flex items-center gap-3 lg:gap-4 w-full">
+                  <div className="space-y-2.5 lg:space-y-3 h-full lg:h-auto">
                     {offer.code && (
                       <button
                         onClick={() => copyToClipboard(offer?.code)}
-                        className="flex justify-center items-center gap-2 border-2 border-primary px-2 md:px-2.5 py-1 md:py-1.5 rounded-full border-dashed text-[11px] sm:text-sm w-full lg:w-auto"
+                        className="flex justify-center items-center gap-2 border-2 border-primary px-2.5 md:px-3 py-1.5 md:py-2 rounded-full border-dashed text-[11px] sm:text-sm w-full lg:w-auto"
                       >
                         <span className="text-primary font-normal">
                           {t("code")}
@@ -339,13 +355,13 @@ const OfferCard = ({
                     </div>
                   </div>
                   <div className="border-border border-r-3 h-6 hidden lg:block" />
-                  <div className="space-y-2">
+                  <div className="space-y-2.5 lg:space-y-3">
                     <Link
                       href={companyData.affiliateLink}
                       target="_blank"
                       className="block"
                     >
-                      <Button className="w-full lg:w-25">{t("buy")}</Button>
+                      <Button className="w-full lg:w-25 text-xs sm:text-sm px-3 sm:px-4">{t("buy")}</Button>
                     </Link>
                     <div className="hidden lg:block"> {moreBtn}</div>
                   </div>

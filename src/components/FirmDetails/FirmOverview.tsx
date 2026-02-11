@@ -46,7 +46,7 @@ export default async function FirmOverview({
         <div className="flex-1 space-y-6">
           {/* Firm Overview */}
           <section id="firm-overview" className="space-y-6 scroll-mt-[270px]">
-            <SecTitle id="what-is-firm-overview">
+            <SecTitle>
               {tSidebar("items.firmOverview")}
             </SecTitle>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -119,7 +119,7 @@ export default async function FirmOverview({
             id="leverages"
             className="overflow-x-auto space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle id="what-is-leverage">
+            <SecTitle>
               {tSidebar("items.leverage")}
             </SecTitle>
             <div className="text-sm md:text-base">
@@ -143,7 +143,7 @@ export default async function FirmOverview({
             id="commissions"
             className="overflow-x-auto space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle id="what-is-commission">
+            <SecTitle>
               {tSidebar("items.commissions")}
             </SecTitle>
             <div className="text-sm md:text-base">
@@ -167,7 +167,7 @@ export default async function FirmOverview({
             id="account-sizes"
             className="overflow-x-auto space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle id="what-is-account-sizes">
+            <SecTitle>
               {tSidebar("items.accountSizes")}
             </SecTitle>
             <div className="text-sm md:text-base">
@@ -191,7 +191,7 @@ export default async function FirmOverview({
             id="max-allocation"
             className="overflow-x-auto space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle id="what-is-max-allocation">
+            <SecTitle>
               {tSidebar("items.maxAllocation")}
             </SecTitle>
             <div>
@@ -224,7 +224,7 @@ export default async function FirmOverview({
             id="daily-maximum-loss"
             className="overflow-x-auto space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle id="what-is-daily-maximum-loss">
+            <SecTitle>
               {tSidebar("items.dailyMaximumLoss")}
             </SecTitle>
             <div className="text-sm md:text-base">
@@ -248,7 +248,7 @@ export default async function FirmOverview({
             id="drawdown"
             className="overflow-x-auto space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle id="what-is-drawdown">
+            <SecTitle>
               {tSidebar("items.drawdown")}
             </SecTitle>
 
@@ -276,7 +276,7 @@ export default async function FirmOverview({
             id="consistency-rules"
             className="space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle id="what-is-consistency-rules">
+            <SecTitle>
               {tSidebar("items.consistencyRules")}
             </SecTitle>
             {company?.consistencyRules && (
@@ -302,7 +302,7 @@ export default async function FirmOverview({
             id="minimum-trading-days"
             className="overflow-x-auto space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle id="what-is-minimum-trading-days">
+            <SecTitle>
               {tSidebar("items.minimumTradingDays")}
             </SecTitle>
             <div className="text-sm md:text-base">
@@ -323,11 +323,13 @@ export default async function FirmOverview({
 
           {/* news Trading */}
           <section id="news-trading" className="space-y-6 scroll-mt-[270px]">
-            <SecTitle id="what-is-news-trading">
+            <SecTitle>
               {tSidebar("items.newsTrading")}
             </SecTitle>
             <div>
-              <h2 className="text-lg font-semibold">{t("sections.allowed")}</h2>
+              <h2 className="text-lg font-semibold text-green-500 drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]">
+                {t("sections.allowed")}
+              </h2>
               <div className="text-sm md:text-base">
                 <div
                   className="danger-html"
@@ -342,7 +344,7 @@ export default async function FirmOverview({
               </div>
             </div>
             <div>
-              <h2 className="text-lg font-semibold">
+              <h2 className="text-lg font-semibold text-red-500 drop-shadow-[0_0_8px_rgba(239,68,68,0.6)]">
                 {t("sections.notAllowed")}
               </h2>
               <div className="text-sm md:text-base">
@@ -367,7 +369,7 @@ export default async function FirmOverview({
             id="overnight-weekends-holding"
             className="space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle id="what-is-overnight-weekends-holding">
+            <SecTitle>
               {tSidebar("items.overnightWeekendsHolding")}
             </SecTitle>
             <div
@@ -386,11 +388,13 @@ export default async function FirmOverview({
 
           {/* Copy Trading */}
           <section id="copy-trading" className="space-y-6 scroll-mt-[270px]">
-            <SecTitle id="what-is-copy-trading">
+            <SecTitle>
               {tSidebar("items.copyTrading")}
             </SecTitle>
             <div>
-              <h2 className="text-lg font-semibold">{t("sections.allowed")}</h2>
+              <h2 className="text-lg font-semibold text-green-500 drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]">
+                {t("sections.allowed")}
+              </h2>
               <div className="text-sm md:text-base">
                 <div
                   className="danger-html"
@@ -405,7 +409,7 @@ export default async function FirmOverview({
               </div>
             </div>
             <div>
-              <h2 className="text-lg font-semibold">
+              <h2 className="text-lg font-semibold text-red-500 drop-shadow-[0_0_8px_rgba(239,68,68,0.6)]">
                 {t("sections.notAllowed")}
               </h2>
               <div className="text-sm md:text-base">
@@ -427,11 +431,13 @@ export default async function FirmOverview({
 
           {/* Experts */}
           <section id="experts" className="space-y-6 scroll-mt-[270px]">
-            <SecTitle id="what-is-experts">
+            <SecTitle>
               {tSidebar("items.experts")}
             </SecTitle>
             <div>
-              <h2 className="text-lg font-semibold">{t("sections.allowed")}</h2>
+              <h2 className="text-lg font-semibold text-green-500 drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]">
+                {t("sections.allowed")}
+              </h2>
               <div className="text-sm md:text-base">
                 <div
                   className="danger-html"
@@ -446,7 +452,7 @@ export default async function FirmOverview({
               </div>
             </div>
             <div>
-              <h2 className="text-lg font-semibold">
+              <h2 className="text-lg font-semibold text-red-500 drop-shadow-[0_0_8px_rgba(239,68,68,0.6)]">
                 {t("sections.notAllowed")}
               </h2>
               <div className="text-sm md:text-base">
@@ -468,7 +474,7 @@ export default async function FirmOverview({
 
           {/* vpn-vps */}
           <section id="vpn-vps" className="space-y-6 scroll-mt-[270px]">
-            <SecTitle id="what-is-vpn-vps">{tSidebar("items.vpnVps")}</SecTitle>
+            <SecTitle>{tSidebar("items.vpnVps")}</SecTitle>
             <div
               className="danger-html"
               dangerouslySetInnerHTML={{
@@ -491,7 +497,7 @@ export default async function FirmOverview({
 
           {/* Payout Policy */}
           <section id="payout-policy" className="space-y-6 scroll-mt-[270px]">
-            <SecTitle id="what-is-payout-policy">
+            <SecTitle>
               {tSidebar("items.payoutPolicy")}
             </SecTitle>
             {company?.payoutPolicy && (
@@ -517,7 +523,7 @@ export default async function FirmOverview({
             id="scale-up-plan"
             className="overflow-x-auto space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle id="what-is-scale-up-plan">
+            <SecTitle>
               {tSidebar("items.scaleUpPlan")}
             </SecTitle>
             <div className="text-sm md:text-base">
@@ -541,7 +547,7 @@ export default async function FirmOverview({
             id="inactivity-rules"
             className="space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle id="what-is-inactivity-rules">
+            <SecTitle>
               {tSidebar("items.inactivityRules")}
             </SecTitle>
             {company?.inactivityRules && (
@@ -566,7 +572,7 @@ export default async function FirmOverview({
             id="prohibited-strategies"
             className="space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle id="what-is-prohibited-strategies">
+            <SecTitle>
               {tSidebar("items.prohibitedStrategies")}
             </SecTitle>
             {company?.prohibitedStrategies && (
@@ -591,7 +597,7 @@ export default async function FirmOverview({
             id="restricted-countries"
             className="space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle id="what-is-restricted-countries">
+            <SecTitle>
               {tSidebar("items.restrictedCountries")}
             </SecTitle>
             <div className="flex flex-wrap gap-1 z-10">
@@ -603,15 +609,15 @@ export default async function FirmOverview({
                 .map((item) => (
                   <div
                     key={item.country}
-                    className="flex items-center gap-1 bg-muted px-2 py-1.5 rounded text-xs"
+                    className="flex items-center gap-2 bg-muted px-3 py-2 rounded text-sm"
                   >
                     {item.flag && (
-                      <div className="w-6 h-4 relative overflow-hidden">
+                      <div className="w-8 h-6 relative overflow-hidden">
                         <Image
                           src={item.flag}
                           alt={item.country}
-                          width={24}
-                          height={16}
+                          width={32}
+                          height={24}
                           className="object-cover"
                         />
                       </div>

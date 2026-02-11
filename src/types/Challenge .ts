@@ -26,6 +26,7 @@ export type TChallenge = {
   updatedAt: string;
   firmId: string;
   affiliateLink: string;
+  order: number;
 
   firm: {
     id: string;

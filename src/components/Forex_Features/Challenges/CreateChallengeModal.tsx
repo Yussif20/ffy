@@ -62,8 +62,8 @@ export default function CreateChallengeModal({
     const payload = {
       ...data,
       accountSize: Number(data.accountSize),
-      dailyLoss: Number(data.dailyLoss),
-      maxLoss: Number(data.maxLoss),
+      dailyLoss: data.dailyLoss ? Number(data.dailyLoss) : null,
+      maxLoss: data.maxLoss ? Number(data.maxLoss) : null,
       minTradingDays: Number(data.minTradingDays),
       price: Number(data.price),
       profitSplit: Number(data.profitSplit),

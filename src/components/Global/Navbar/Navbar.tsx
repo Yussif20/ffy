@@ -24,14 +24,29 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 100);
-    window.addEventListener("scroll", handleScroll);
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          // Hysteresis: different thresholds for going down vs going up
+          if (scrollY > 100 && !isScrolled) {
+            setIsScrolled(true);
+          } else if (scrollY < 50 && isScrolled) {
+            setIsScrolled(false);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isScrolled]);
 
   return (
     <nav
-      className={`sticky z-50 w-full top-0 shadow-sm transition-all duration-300 ${isScrolled ? "py-2 bg-background/80 backdrop-blur-sm" : "py-6"
+      className={`sticky z-50 w-full top-0 shadow-sm transition-all duration-150 ${isScrolled ? "py-2 bg-background/80 backdrop-blur-sm" : "py-6"
         }`}
     >
       <Container>
@@ -40,7 +55,7 @@ const Navbar = () => {
             {/* Left Section */}
             <div className="flex items-center gap-2 sm:gap-4">
               <div
-                className={`transition-all duration-500 ease-in-out ${isScrolled
+                className={`transition-all duration-150 ease-out ${isScrolled
                     ? "opacity-100 translate-x-0"
                     : "opacity-0 -translate-x-8 absolute pointer-events-none"
                   }`}
@@ -49,7 +64,7 @@ const Navbar = () => {
               </div>
 
               {/* Search */}
-              <div className="flex items-center gap-2 sm:gap-4 transition-all duration-500">
+              <div className="flex items-center gap-2 sm:gap-4 transition-all duration-150">
                 <WebToggler />
                 <div className="bg-border h-9 w-0.5 hidden sm:block"></div>
                 <NavSearch />
@@ -60,7 +75,7 @@ const Navbar = () => {
             <div className="relative flex items-center justify-center">
               {/* Logo (Main State) */}
               <div
-                className={`transition-all duration-500 ease-in-out ${!isScrolled
+                className={`transition-all duration-150 ease-out ${!isScrolled
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 -translate-y-8 absolute pointer-events-none"
                   }`}
@@ -70,7 +85,7 @@ const Navbar = () => {
 
               {/* Feature Toggle (Scrolled State) */}
               <div
-                className={`transition-all duration-500 ease-in-out ${isScrolled
+                className={`transition-all duration-150 ease-out ${isScrolled
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-8 absolute pointer-events-none"
                   }`}

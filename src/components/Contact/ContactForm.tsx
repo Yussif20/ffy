@@ -77,8 +77,6 @@ export default function ContactForm() {
         options={[
           { value: "general", label: t("inquiry.options.general") },
           { value: "technical", label: t("inquiry.options.technical") },
-          { value: "billing", label: t("inquiry.options.billing") },
-          { value: "feature", label: t("inquiry.options.feature") },
           { value: "other", label: t("inquiry.options.other") },
         ]}
         disabled={isSubmitting}

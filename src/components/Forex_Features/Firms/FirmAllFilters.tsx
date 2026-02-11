@@ -18,6 +18,7 @@ import { Platform_T } from "@/types/spread.types";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import useIsFutures from "@/hooks/useIsFutures";
 
 const handleSetSearchParams = (
   params: Record<string, string>,
@@ -48,6 +49,7 @@ export default function FirmAllFilters() {
   const [isMobile, setIsMobile] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
+  const isFutures = useIsFutures();
   const filterOpen = searchParams.get("filterOpen") === "true" ? true : false;
   const { data: dataRaw } = useGetAllPaymentMethodQuery([
     {
@@ -192,7 +194,7 @@ export default function FirmAllFilters() {
             <div className="flex flex-wrap gap-2">
               {countryList.map((country) => (
                 <Badge
-                  className="cursor-pointer"
+                  className="cursor-pointer font-bold"
                   key={country.value}
                   variant={
                     (filters["countries"] ?? []).includes(country.value)
@@ -217,7 +219,7 @@ export default function FirmAllFilters() {
             <div className="flex flex-wrap gap-2">
               {paymentMethods?.map((method: PaymentMethod) => (
                 <Badge
-                  className="cursor-pointer"
+                  className="cursor-pointer font-bold"
                   key={method.id}
                   variant={
                     filters["paymentMethods"].includes(method.id)
@@ -242,7 +244,7 @@ export default function FirmAllFilters() {
             <div className="flex flex-wrap gap-2">
               {paymentMethods?.map((method: PaymentMethod) => (
                 <Badge
-                  className="cursor-pointer"
+                  className="cursor-pointer font-bold"
                   key={method.id}
                   variant={
                     filters["payoutMethods"].includes(method.id)
@@ -273,7 +275,7 @@ export default function FirmAllFilters() {
                 { name: t("smartDd"), value: "smartDd" },
               ].map((method) => (
                 <Badge
-                  className="cursor-pointer"
+                  className="cursor-pointer font-bold"
                   key={method.value}
                   variant={
                     filters.drawdown.includes(method.value)
@@ -300,12 +302,10 @@ export default function FirmAllFilters() {
                 { name: t("expertAdvisor"), value: "expertAdvisor" },
                 { name: t("newsTrading"), value: "newsTrading" },
                 { name: t("overnightHolding"), value: "overnightHolding" },
-                { name: t("weekendHolding"), value: "weekendHolding" },
-                { name: t("swapFreeAccount"), value: "swapFreeAccount" },
                 { name: t("tradeCopying"), value: "tradeCopying" },
               ].map((method) => (
                 <Badge
-                  className="cursor-pointer"
+                  className="cursor-pointer font-bold"
                   key={method.value}
                   variant={
                     filters.otherFeatures.includes(method.value)
@@ -332,7 +332,7 @@ export default function FirmAllFilters() {
             {t("yearsInOperation")}
           </AccordionTrigger>
           <AccordionContent>
-            <CustomSlider max={10} min={0} name="range_yearsInOperation" />
+            <CustomSlider max={10} min={0} name="range_yearsInOperation" hideCurrency={true} />
           </AccordionContent>
         </AccordionItem>
 
@@ -385,7 +385,7 @@ export default function FirmAllFilters() {
                       : "outline"
                   }
                   onClick={() => toggleMultiSelect("platforms", platform.id)}
-                  className="cursor-pointer"
+                  className="cursor-pointer font-bold"
                 >
                   {platform.title}
                 </Badge>
@@ -409,7 +409,7 @@ export default function FirmAllFilters() {
                 { name: t("fourStep"), value: "STEP4" },
               ].map((type) => (
                 <Badge
-                  className="cursor-pointer"
+                  className="cursor-pointer font-bold"
                   key={type.value}
                   variant={
                     filters.programType.includes(type.value)
@@ -440,13 +440,16 @@ export default function FirmAllFilters() {
         </AccordionItem>
       </Accordion>
 
-      <Button
-        variant="link"
-        className="w-full text-success hover:bg-transparent"
-        onClick={resetFilters}
-      >
-        {t("resetFilter")}
-      </Button>
+      <div className="pt-4 border-t border-border/50">
+        <Button
+          variant="default"
+          size="lg"
+          className="w-full text-base font-semibold"
+          onClick={resetFilters}
+        >
+          {t("resetFilter")}
+        </Button>
+      </div>
     </>
   );
 
@@ -458,8 +461,9 @@ export default function FirmAllFilters() {
     <>
       <div
         className={cn(
-          "w-sm hidden lg:block pr-8 transition-all duration-300 space-y-4 rounded-lg bg-background text-foreground overflow-hidden",
-          !filterOpen && "w-0 pr-0",
+          "w-sm hidden lg:block pr-8 transition-all duration-300 space-y-4 rounded-lg bg-background text-foreground overflow-hidden border-2 p-4 mr-6",
+          !filterOpen && "w-0 pr-0 border-0 p-0 mr-0",
+          isFutures ? "border-yellow-500/50" : "border-green-500/50",
         )}
       >
         {items}

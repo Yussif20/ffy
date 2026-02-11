@@ -68,7 +68,7 @@ export default function SpreadTable() {
     return (
       <TableSkeleton
         headers={[
-          t("firm"),
+          t("firmLogo"),
           t("platform"),
           ...(currencyWithLabel || []).map((item) => item.field),
         ]}
@@ -131,7 +131,7 @@ export default function SpreadTable() {
           <Table>
             <SortTableHeader
               headers={[
-                { label: t("firm"), field: "firm", hideSort: true },
+                { label: t("firmLogo"), field: "firm", hideSort: true },
                 {
                   label: t("platform"),
                   field: "platform",
@@ -147,7 +147,7 @@ export default function SpreadTable() {
             {isLoading || isSymbolLoading ? (
               <TableSkeleton
                 headers={[
-                  t("firm"),
+                  t("firmLogo"),
                   t("platform"),
                   ...currencyWithLabel.map((item) => item.field),
                   ...(userRole === "SUPER_ADMIN" ? ["action"] : []),

@@ -22,7 +22,7 @@ export function RiskManagement({
   return (
     <>
       <section id="risk-management" className="space-y-6 scroll-mt-[270px]">
-        <SecTitle id="what-is-risk-management">
+        <SecTitle>
           {tSidebar("items.riskManagement")}
         </SecTitle>
         {company?.riskManagement && (
@@ -61,7 +61,7 @@ export function ProfitShare({
   return (
     <>
       <section id="profit-share" className="space-y-6 scroll-mt-[270px]">
-        <SecTitle id="what-is-profit-share">
+        <SecTitle>
           {tSidebar("items.profitShare")}
         </SecTitle>
         <div

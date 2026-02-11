@@ -93,8 +93,8 @@ const CustomInput = ({
                 <div
                   onClick={handleRightClick}
                   className={cn(
-                    "absolute z-10 text-sm h-full flex justify-end  items-center  cursor-pointer",
-                    isArabic ? "left-0 pl-4" : "right-0 pr-4"
+                    "absolute z-10 text-sm h-full flex justify-end items-center cursor-pointer",
+                    isArabic ? "left-0 pl-1" : "right-0 pr-1"
                   )}
                   style={{
                     width: (RightIconWidth || 32) + "px",
@@ -121,15 +121,10 @@ const CustomInput = ({
                 className={cn(
                   "w-full text-sm  disabled:opacity-95",
                   fieldClassName,
-                  Icon && (isArabic ? "pr-9" : "pl-9")
+                  Icon && (isArabic ? "pr-9" : "pl-9"),
+                  RightIcon && (isArabic ? "pl-14" : "pr-14"),
+                  isArabic && "text-right"
                 )}
-                style={{
-                  ...(RightIcon && {
-                    [isArabic ? "paddingLeft" : "paddingRight"]: `${
-                      RightIconWidth || 32
-                    }px`,
-                  }),
-                }}
               />
             </div>
             {errors?.[name] && (

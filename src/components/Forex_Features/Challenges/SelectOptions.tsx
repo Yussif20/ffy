@@ -99,7 +99,10 @@ export default function SelectOptions({
           </h2>
           <div
             className="grid gap-2"
-            style={{ gridTemplateColumns: `repeat(${usableCols}, 1fr)` }}
+            style={{ 
+              gridTemplateColumns: `repeat(${usableCols}, 1fr)`,
+              ...(isArabic && { direction: 'rtl' })
+            }}
           >
             {options.map((item) => {
               const isExist = categories.find((cat) => cat === item.value);

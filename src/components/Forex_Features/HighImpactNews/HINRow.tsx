@@ -11,8 +11,17 @@ import { useCurrentUser } from "@/redux/authSlice";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash2 } from "lucide-react";
 import { DeleteNews, EditNews } from "./NewsActions";
+import NewsIndexChange from "./NewsIndexChange";
 
-export default function HINRow({ news }: { news: News }) {
+export default function HINRow({ 
+  news, 
+  nextNews, 
+  prevNews 
+}: { 
+  news: News;
+  nextNews: News;
+  prevNews: News;
+}) {
   const isArabic = useIsArabic();
   const gmt = useAppSelector(useCurrentGmt);
   const country = countryDataByCurrency(news.currency);
@@ -30,7 +39,7 @@ export default function HINRow({ news }: { news: News }) {
   return (
     <TableRow>
       <TableCell center>
-        <div className="w-[100px]  text-center">{localTimeString}</div>
+        <div className="w-[100px] text-center text-base font-bold">{localTimeString}</div>
       </TableCell>
       <TableCell center>
         <div className="flex items-center gap-1 justify-center w-[100px]  text-center">
@@ -46,7 +55,7 @@ export default function HINRow({ news }: { news: News }) {
         </div>
       </TableCell>
       <TableCell center>
-        <div className="w-[200px]  text-center whitespace-normal">
+        <div className="w-[200px] text-center whitespace-normal text-base font-bold">
           {visibleText(isArabic, news.title, news.titleArabic)}
         </div>
       </TableCell>
@@ -67,6 +76,11 @@ export default function HINRow({ news }: { news: News }) {
                 <Trash2 className="h-4 w-4" />
               </Button>
             </DeleteNews>
+            <NewsIndexChange
+              news={news}
+              prevNews={prevNews}
+              nextNews={nextNews}
+            />
           </div>
         </TableCell>
       )}

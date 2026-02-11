@@ -52,6 +52,26 @@ const newsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["News"],
     }),
+
+    // Reorder News
+    reorderNews: builder.mutation({
+      query: (newsItems: { id: string; order: number }[]) => ({
+        url: `/news/reorder`,
+        method: "PATCH",
+        body: { news: newsItems },
+      }),
+      invalidatesTags: ["News"],
+    }),
+    
+    // Change Index News (for Up/Down buttons)
+    changeIndexNews: builder.mutation({
+      query: ({ id, order }: { id: string; order: number }) => ({
+        url: `/news/change-index/${id}`,
+        method: "PATCH",
+        body: { order },
+      }),
+      invalidatesTags: ["News"],
+    }),
   }),
 });
 
@@ -60,4 +80,6 @@ export const {
   useGetAllNewsQuery,
   useUpdateNewsMutation,
   useDeleteNewsMutation,
+  useReorderNewsMutation,
+  useChangeIndexNewsMutation,
 } = newsApi;

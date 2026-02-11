@@ -19,18 +19,6 @@ export default async function HowItWorks() {
       number: "03",
       text: t("steps.step3"),
     },
-    {
-      number: "04",
-      text: t("steps.step4"),
-    },
-    {
-      number: "05",
-      text: t("steps.step5"),
-    },
-    {
-      number: "06",
-      text: t("steps.step6"),
-    },
   ];
 
   return (

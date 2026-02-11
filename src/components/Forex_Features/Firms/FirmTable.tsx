@@ -31,13 +31,13 @@ export default function FirmTable({
       className: "hidden md:table-cell",
     },
     {
-      label: t("firm"),
+      label: t("firmLogo"),
       field: "title",
       hideSort: true,
       className: "table-cell md:hidden",
     },
     {
-      label: t("name"),
+      label: t("firmName"),
       field: "title",
       hideSort: !!shortVersion,
       className: "table-cell md:hidden",

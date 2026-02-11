@@ -8,36 +8,73 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { useAppSelector } from "@/redux/store";
+import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { useCurrentUser } from "@/redux/authSlice";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { changeGmt, useCurrentGmt } from "@/redux/gmtSlice";
 
 export default function HINTable() {
   const searchparams = useSearchParams();
   const userRole = useAppSelector(useCurrentUser)?.role;
+  const gmt = useAppSelector(useCurrentGmt);
+  const dispatch = useAppDispatch();
   const week = searchparams.get("week") || "current";
   const { data, isLoading } = useGetAllNewsQuery([
     { name: "tab", value: week },
   ]);
   const t = useTranslations("HighImpactNews");
+  const newsData = data?.data || [];
+
+  const options: { label: string; value: string }[] = Array.from(
+    { length: 27 },
+    (_, i) => {
+      const offset = i - 12;
+      return {
+        label: `GMT${offset >= 0 ? "+" + offset : offset}`,
+        value: `${offset}`,
+      };
+    },
+  );
+
+  const handleGmtChange = (value: string) => {
+    dispatch(changeGmt(value));
+  };
+
   if (isLoading) {
     return (
       <TableSkeleton headers={[t("gmtz"), t("currency"), t("eventTitle")]} />
     );
   }
-  const newsData = data?.data || [];
+
   return (
     <div className="max-w-full w-full space-y-8">
       {newsData.map((item) => {
         return (
           <div className="space-y-5" key={item.date}>
-            <Button
-              className="cursor-default!"
-              variant={"outline"}
-              linearClassName="max-w-max"
-            >
-              <Calendar className="text-primary" /> {item.date}
-            </Button>
-            <Table>
+            <div className="flex items-center justify-between gap-2 md:gap-4 flex-wrap">
+              <Button
+                className="cursor-default!"
+                variant={"outline"}
+                linearClassName="max-w-max"
+              >
+                <Calendar className="text-primary" /> {item.date}
+              </Button>
+              <div>
+                <Select defaultValue={gmt} onValueChange={handleGmtChange}>
+                  <SelectTrigger className="px-7 w-full h-9" withoutLinearBorder>
+                    <SelectValue placeholder={t("gmt")} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {options.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <Table className="text-xs md:text-sm">
               <SortTableHeader
                 headers={[
                   { label: t("gmtz"), field: "gmtz", center: true },
@@ -50,8 +87,13 @@ export default function HINTable() {
                 skipSort
               />
               <TableBody colSpan={userRole === "SUPER_ADMIN" ? 4 : 3}>
-                {item.news.map((item, idx) => (
-                  <HINRow key={idx} news={item} />
+                {item.news.map((newsItem, newsIndex) => (
+                  <HINRow 
+                    key={newsItem.id} 
+                    news={newsItem}
+                    prevNews={item.news[newsIndex - 1]}
+                    nextNews={item.news[newsIndex + 1]}
+                  />
                 ))}
               </TableBody>
             </Table>

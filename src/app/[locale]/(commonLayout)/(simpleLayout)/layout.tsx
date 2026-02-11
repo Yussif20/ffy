@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <div>
-      <div className="pb-20 pt-67">
+      <div className="pb-20 pt-24 md:pt-32">
         <Container>{children}</Container>
       </div>
     </div>

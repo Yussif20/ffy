@@ -5,7 +5,6 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { Upload } from "lucide-react";
-import Image from "next/image";
 export default function BMImageUpload({ logoUrl }: { logoUrl?: string }) {
   const { setValue } = useFormContext();
   const [imagePreview, setImagePreview] = useState<string>(logoUrl || "");
@@ -48,11 +47,10 @@ export default function BMImageUpload({ logoUrl }: { logoUrl?: string }) {
               onClick={handleImageClick}
               className="relative w-32 h-32 border-2 border-dashed border-primary/70 rounded-full overflow-hidden bg-foreground/10 cursor-pointer"
             >
-              <Image
+              <img
                 src={imagePreview}
                 alt="Broker logo"
-                fill
-                className="object-contain p-2"
+                className="w-full h-full object-contain p-2"
               />
             </div>
             <Button

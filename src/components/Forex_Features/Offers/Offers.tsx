@@ -4,9 +4,15 @@ import { UserRole } from "@/types";
 import AddNewOffer from "./AddNewOffer";
 import OfferFilter from "./OfferFilter";
 import OfferList from "./OfferList";
+import { useSearchParams } from "next/navigation";
 
 export default function Offers() {
   const currUser = useAppSelector((state) => state.auth.user);
+  const searchParams = useSearchParams();
+  const isExclusive = searchParams.get("isExclusive") || "";
+  const isCurrentMonth = searchParams.get("isCurrentMonth") || "";
+  const filterKey = `${isExclusive}-${isCurrentMonth}`;
+  
   return (
     <div>
       {currUser && currUser.role !== UserRole.USER && (
@@ -16,7 +22,7 @@ export default function Offers() {
       )}
       <div className="space-y-8 pb-20 md:pb-30">
         <OfferFilter />
-        <OfferList />
+        <OfferList key={filterKey} />
       </div>
     </div>
   );
