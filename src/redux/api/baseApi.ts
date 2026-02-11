@@ -10,8 +10,14 @@ import { ServerError_T } from "@/types";
 import Cookies from "js-cookie";
 import { logout, setUser } from "../authSlice";
 
+const isDev = process.env.NODE_ENV === "development";
+
+// In dev: direct backend URL + /api/v1
+// In prod: proxy route (which already forwards to /api/v1)
+const baseUrl = isDev ? `${AppConfig.backendUrl}/api/v1` : AppConfig.backendUrl;
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: `${AppConfig.backendUrl}/api/v1`,
+  baseUrl,
   credentials: "include",
   prepareHeaders: (headers) => {
     const accessToken = Cookies.get("accessToken");

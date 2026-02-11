@@ -1,12 +1,9 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { AppConfig } from "@/config";
 
-const isDev = process.env.NODE_ENV === "development";
-const baseURL = isDev
-  ? process.env.NEXT_PUBLIC_BASE_SERVER_URL_DEV
-  : process.env.NEXT_PUBLIC_BASE_SERVER_URL;
-
+// Server-side axios uses direct backend URL (no mixed content issues server-to-server)
 export const serverApi = axios.create({
-  baseURL: `${baseURL}/api/v1`,
+  baseURL: `${AppConfig.directBackendUrl}/api/v1`,
   withCredentials: true,
 });
 
@@ -25,5 +22,5 @@ serverApi.interceptors.response.use(
 
     // Reject promise so the error propagates to your catch
     return Promise.reject(error);
-  }
+  },
 );
