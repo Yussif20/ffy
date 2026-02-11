@@ -51,11 +51,11 @@ const Navbar = () => {
     >
       <Container>
         <div className="">
-          <div className="grid grid-cols-3">
+          <div className="grid grid-cols-[auto_1fr_auto] md:grid-cols-3 items-center">
             {/* Left Section */}
             <div className="flex items-center gap-2 sm:gap-4">
               <div
-                className={`transition-all duration-150 ease-out ${isScrolled
+                className={`hidden md:block transition-all duration-150 ease-out ${isScrolled
                     ? "opacity-100 translate-x-0"
                     : "opacity-0 -translate-x-8 absolute pointer-events-none"
                   }`}
