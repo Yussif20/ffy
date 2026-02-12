@@ -369,26 +369,27 @@
   },
   "About": {
     "aboutUs": "About Us",
-    "intro": "We are an independent platform specialized in providing comprehensive reviews and comparisons of Prop Firms.\nOur platform aims to provide users with general information to help them understand the nature of funded accounts and how prop firms operate.\nWe do not provide funded accounts, manage trading programs, or act as a financial intermediary or investment advisor. Our role is limited to presenting information, analysis, and comparisons for educational and guidance purposes only.",
+    "intro": "Funded For You is an independent platform specializing in providing in-depth reviews and comparisons of proprietary trading firms (Prop Firms).\nThe platform aims to offer users general information to help them understand the nature of funded trading accounts and how prop firms operate.\nWe do not provide funded accounts, manage trading programs, act as a broker, or offer investment advice. Our role is strictly limited to presenting information, analysis, and comparisons for educational and informational purposes only.",
     "visionTitle": "Our Vision",
-    "visionText": "To be the most reliable Arabic reference in the field of funded accounts, and a trusted source for traders to understand prop firms and the accounts they offer before making any decision.",
+    "visionText": "To become the most trusted Arabic reference in the funded accounts industry, and a reliable source that traders can depend on to understand prop firms and their offerings before making any decisions.",
     "missionTitle": "Our Mission",
     "missionPoints": [
-      "Explain how funded accounts work and present them in a simple, easy-to-understand manner for traders.",
-      "Provide accurate and updated informational content about prop firms and their terms.",
-      "Help traders compare different options objectively.",
-      "Reduce the spread of misleading information and enhance credibility and transparency in this field."
+      "To explain how funded trading accounts work in a clear and simplified manner",
+      "To provide accurate and up-to-date informational content about prop firms and their conditions",
+      "To help traders objectively compare available options",
+      "To reduce the spread of misleading information and promote credibility and transparency in this field"
     ],
     "whatWeOfferTitle": "What We Offer",
     "whatWeOfferPoints": [
-      "Objective and detailed analysis of prop firms.",
-      "In-depth study of the advantages and disadvantages of prop firms based on real user experiences.",
-      "Clear comparisons between firms, accounts, terms, and prices.",
-      "Exclusive offers: Special benefits and discounts in collaboration with prop firms.",
-      "Continuous updates: Providing users with the latest developments and updates related to funded accounts from sources we believe to be reliable at the time of publication, without guaranteeing their accuracy or completeness permanently."
+      "Objective and detailed analysis of proprietary trading firms",
+      "In-depth evaluations of the strengths and weaknesses of prop firms based on real user experiences",
+      "Clear comparisons between firms, accounts, rules, and pricing",
+      "Exclusive offers: special benefits and discounts in collaboration with funded trading firms",
+      "Continuous updates: keeping users informed about the latest developments in the funded trading industry",
+      "Information sourced from references we believe to be reliable at the time of publication, without guaranteeing ongoing accuracy or completeness"
     ],
-    "commitmentTitle": "Our Commitment and Principles",
-    "commitmentText": "We are committed to providing a reliable experience that values the trader's time and effort. All our services and content are designed to serve serious traders, with full commitment to the principles of trust, transparency, and professionalism in everything we offer.\nWe do not sell funded accounts nor manage trading programs. Our role is limited to providing information with transparency and impartiality, ensuring that content is based on reliable sources and professional analysis that serves the trader's interest first.",
+    "commitmentTitle": "Our Commitment & Principles",
+    "commitmentText": "We are committed to delivering a trustworthy experience that respects the trader's time and effort. All of our content and services are designed to serve serious traders, with a strong commitment to trust, transparency, and professionalism.\nWe do not sell funded accounts or operate trading programs. Our role is solely to provide information with neutrality and transparency, ensuring that all content is based on reliable sources and professional analysis that serves the trader's best interest first.",
     "meetTitle": "Meet our",
     "meetSubtitle": "Founding Team",
     "ceo": "CEO",
@@ -633,7 +634,7 @@
   },
   "Terms": {
     "title": "Terms and Conditions",
-    "intro": "These Terms and Conditions govern the User's participation in and/or use of certain services or features of Funded For You Platform.\\n\\nBy using the Platform, the User agrees to be bound by these terms. The Platform's Privacy Policy is an integral part of these Terms and Conditions.\\n\\nWe provide an online resource dedicated to centralizing and simplifying access to information about proprietary trading firms, empowering traders to make informed decisions.",
+    "intro": "These Terms and Conditions govern the User's participation in and/or use of certain services or features of FundedForYou.com (the \"FFY Platform\"). By using FFY Platform, the User agrees to be bound by these terms of service (the \"Terms and Conditions\"). The integral part of these Terms and Conditions is FFY Platform Privacy Policy. FFY Platform privacy policy regarding processing of personal data is available at FFY Platform's website and is incorporated by reference into this Agreement as well as it is a part of these Terms and Conditions.\\n\\nWe provide an online resource dedicated to centralizing and simplifying access to information about proprietary trading firms (\"prop firms\"). The Platform's mission is to provide traders with comprehensive, verified, and comparative content about prop firms, empowering them to make informed decisions that align with their individual needs.\\n\\nIt is important to note that we do not provide any opinions, recommendations, or endorsements regarding any specific prop firm. The Platform is committed to furnishing impartial and verifiable information to support traders in their decision-making processes.",
     "acceptance": {
       "title": "1. Your Acceptance of this Agreement",
       "content": "These Terms and Conditions are entered into by and between You and Funded For You. The following terms and conditions govern your access to and use of fundedforyou.com.\\n\\nPlease read the Terms and Conditions carefully before you start to use the Website. By using the Website, you accept and agree to be bound by these Terms and Conditions.\\n\\nBy accessing and using this Website, you:",
