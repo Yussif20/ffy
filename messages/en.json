@@ -397,6 +397,14 @@
   "Privacy": {
     "title": "Privacy Policy",
     "intro": "Welcome to FundedForYou.com (the “Platform”). Your privacy is of utmost importance to us, and we are committed to protecting the personal information you share with us. This Privacy Policy outlines our practices for collecting, using, disclosing, and safeguarding your data when you interact with our website and services. We comply with global data protection laws, including the General Data Protection Regulation (GDPR) for users in the European Economic Area (EEA), the California Consumer Privacy Act (CCPA) for California residents, and other relevant regulations to ensure that your information is managed securely and transparently. By using our website and services, you confirm that you have read and understood this Privacy Policy. If you do not agree with its terms, please refrain from using our platform. This policy applies to all users of fundedforyou.com, regardless of location. It governs the processing of personal and non-personal data collected through your interactions with our website, services, or affiliated communications. Throughout this document, references to “we,” “us,” “our,” or the “site” refer to fundedforyou.com. Please note that this Privacy Policy is supplemented by our comprehensive Terms & Conditions.",
+    "introHeader": "This Privacy Policy explains:",
+    "introPoints": [
+      "What information (including personal data) we collect and why",
+      "How we collect and process your information",
+      "How your data is used and shared",
+      "Your rights over your data (e.g., access, correction, or deletion)",
+      "How to contact us for questions or concerns"
+    ],
     "dataCollection": {
       "title": "1. Data Collection",
       "intro": "We collect personal and non-personal information to provide you with the best possible experience on the platform. The types of information we collect include:",

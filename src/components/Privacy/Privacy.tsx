@@ -142,6 +142,17 @@ export default async function Privacy() {
                         <p className="text-base md:text-lg leading-relaxed">
                             {t("intro")}
                         </p>
+                        <p className="text-base md:text-lg font-semibold text-primary">
+                            {t("introHeader")}
+                        </p>
+                        <ul className="space-y-3">
+                            {(t.raw("introPoints") as string[]).map((point: string, idx: number) => (
+                                <li key={idx} className="flex gap-3 items-start text-base md:text-lg">
+                                    <span className="text-primary font-bold mt-1">•</span>
+                                    <span className="leading-relaxed">{point}</span>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
             </LinearBorder>
