@@ -12,5 +12,5 @@ export const AppConfig = {
   directBackendUrl:
     process.env.BACKEND_URL ||
     process.env.NEXT_PUBLIC_BASE_SERVER_URL ||
-    "http://31.220.111.98:5000",
+    "https://api.fundedforyou.com",
 };
