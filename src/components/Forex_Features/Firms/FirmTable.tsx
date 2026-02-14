@@ -32,12 +32,14 @@ export default function FirmTable({
     },
     {
       label: t("firmLogo"),
+      id: "titleLogo",
       field: "title",
       hideSort: true,
       className: "table-cell md:hidden",
     },
     {
       label: t("firmName"),
+      id: "titleName",
       field: "title",
       hideSort: !!shortVersion,
       className: "table-cell md:hidden",

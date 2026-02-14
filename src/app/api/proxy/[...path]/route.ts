@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_URL = process.env.BACKEND_URL || "https://api.fundedforyou.com";
+const BACKEND_URL = process.env.BACKEND_URL;
 
 async function proxyRequest(req: NextRequest, path: string) {
   const search = req.nextUrl.search;

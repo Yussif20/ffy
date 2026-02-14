@@ -14,6 +14,7 @@ export default function SortTableHeader({
   headers: {
     label: string | ReactNode;
     field: string;
+    id?: string;
     hideSort?: boolean;
     className?: string;
     center?: boolean;
@@ -47,7 +48,7 @@ export default function SortTableHeader({
           return (
             <TableHead
               center={header.center || false}
-              key={header.field}
+              key={header.id ?? header.field}
               className={cn(
                 "cursor-pointer select-none border relative",
                 header.className,
