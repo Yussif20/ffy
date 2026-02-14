@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_URL = process.env.BACKEND_URL || "http://31.220.111.98:5000";
+const BACKEND_URL = process.env.BACKEND_URL || "https://api.fundedforyou.com";
 
 async function proxyRequest(req: NextRequest, path: string) {
-  const url = `${BACKEND_URL}/api/v1/${path}`;
+  const search = req.nextUrl.search;
+  const url = `${BACKEND_URL}/api/v1/${path}${search}`;
 
   // Get request body for non-GET requests
   let body: string | undefined;
