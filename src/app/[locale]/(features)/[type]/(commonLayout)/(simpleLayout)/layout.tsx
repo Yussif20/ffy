@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 import Container from "@/components/Global/Container";
+import PageTransition from "@/components/Global/PageTransition";
 
 export const metadata: Metadata = {
   title: "Funded For You",
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <div>
       <div className="pb-20 pt-67">
-        <Container>{children}</Container>
+        <Container>
+          <PageTransition>{children}</PageTransition>
+        </Container>
       </div>
     </div>
   );

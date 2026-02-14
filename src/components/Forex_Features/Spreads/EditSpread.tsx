@@ -82,8 +82,7 @@ export default function EditSpread({
     }
   };
   return (
-    <div>
-      <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>{t("edit_spread")}</DialogTitle>
@@ -147,7 +146,6 @@ export default function EditSpread({
             </div>
           </CustomForm>
         </DialogContent>
-      </Dialog>
-    </div>
+    </Dialog>
   );
 }

@@ -158,12 +158,14 @@ export default function ChallengeTable({
     },
     {
       label: t("firmLogo"),
+      id: "titleLogo",
       field: "title",
       hideSort: true,
       className: "table-cell md:hidden",
     },
     {
       label: t("firmName"),
+      id: "titleName",
       field: "title",
       className: "table-cell md:hidden",
     },

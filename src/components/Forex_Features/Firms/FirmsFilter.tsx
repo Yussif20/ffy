@@ -7,7 +7,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { FaThumbsUp } from "react-icons/fa6";
 import { IconType } from "react-icons/lib";
 import useIsArabic from "@/hooks/useIsArabic";
-import SearchForm from "@/components/Forms/SearchForm";
 
 export default function FirmsFilter() {
   const t = useTranslations("Filters");
@@ -26,45 +25,42 @@ export default function FirmsFilter() {
     handleSetSearchParams(value, searchParams, router);
   };
   return (
-    <div className="flex gap-2 md:gap-4 items-center flex-wrap">
+    <div className="flex gap-2 md:gap-4 items-center overflow-x-auto">
+      <Button
+        className={cn(
+          "px-3! sm:px-6! text-xs sm:text-sm",
+          isArabic ? "text-base font-semibold" : ""
+        )}
+        onClick={() => {
+          handleSetCategory({ filterOpen: filterOpen ? "" : "true" });
+        }}
+        variant={filterOpen ? "defaultBH" : "secondary"}
+      >
+        <Filter /> {t("filter")}
+      </Button>
       <div className="flex gap-2 md:gap-4 items-center">
-        <Button
-          className={cn(
-            "px-3! sm:px-6! text-xs sm:text-sm",
-            isArabic ? "text-base font-semibold" : ""
-          )}
-          onClick={() => {
-            handleSetCategory({ filterOpen: filterOpen ? "" : "true" });
-          }}
-          variant={filterOpen ? "defaultBH" : "secondary"}
-        >
-          <Filter /> {t("filter")}
-        </Button>
-        <div className="flex gap-2 md:gap-4 items-center">
-          {categories.map((item) => {
-            const isActive = category === item.value;
-            return (
-              <Button
-                key={item.value}
-                className={cn(
-                  "px-3! sm:px-6! text-xs sm:text-sm",
-                  isArabic ? "text-base font-semibold" : ""
-                )}
-                onClick={() => handleSetCategory({ category: item.value })}
-                variant={isActive ? "default" : "outline"}
-              >
-                {item.icon && (
-                  <item.icon
-                    className={cn("text-primary", isActive && "text-foreground")}
-                  />
-                )}
-                {item.name}
-              </Button>
-            );
-          })}
-        </div>
+        {categories.map((item) => {
+          const isActive = category === item.value;
+          return (
+            <Button
+              key={item.value}
+              className={cn(
+                "px-3! sm:px-6! text-xs sm:text-sm",
+                isArabic ? "text-base font-semibold" : ""
+              )}
+              onClick={() => handleSetCategory({ category: item.value })}
+              variant={isActive ? "default" : "outline"}
+            >
+              {item.icon && (
+                <item.icon
+                  className={cn("text-primary", isActive && "text-foreground")}
+                />
+              )}
+              {item.name}
+            </Button>
+          );
+        })}
       </div>
-      <SearchForm />
     </div>
   );
 }

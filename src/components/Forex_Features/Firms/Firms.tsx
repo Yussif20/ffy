@@ -5,6 +5,7 @@ import { useQueryBuilder } from "@/hooks/usePagination";
 import { useGetAllFirmsQuery } from "@/redux/api/firms.api";
 import { useAppSelector } from "@/redux/store";
 import { usePathname, useSearchParams } from "next/navigation";
+import SearchForm from "@/components/Forms/SearchForm";
 import FirmAllFilters from "./FirmAllFilters";
 import FirmsFilter from "./FirmsFilter";
 import FirmTable from "./FirmTable";
@@ -77,9 +78,9 @@ export default function Firms() {
   console.log(countryNames());
   return (
     <div className="space-y-8 pb-20 md:pb-30">
-      <div className="flex flex-wrap items-center justify-between w-full gap-5">
+      <div className="w-full flex justify-between md:items-center flex-col lg:flex-row gap-5 overflow-x-hidden">
         <FirmsFilter />
-
+        <SearchForm />
         {user?.role === "SUPER_ADMIN" && <AddFirmDialog />}
       </div>
 

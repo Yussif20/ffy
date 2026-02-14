@@ -35,19 +35,19 @@ export default function HomeNavItems() {
     pathName === (isFutures ? "/futures" : "/")
       ? false
       : !pathName.startsWith(
-          isFutures ? "/futures/exclusive-offers" : "/exclusive-offers"
+          isFutures ? "/futures/exclusive-offers" : "/exclusive-offers",
         ) &&
         !pathName.startsWith(isFutures ? "/futures/challenges" : "/challenges");
 
   if (isNotMatchPathName) return "";
 
   return (
-    <div className="space-y-10 pb-20 md:pb-30">
+    <div id="tabs-section" className="space-y-10 pb-20 md:pb-30 scroll-mt-40">
       <div className="flex justify-center items-center gap-4">
         {pages.map((item) => {
           const isActive = checkActive(
             item.value,
-            isFutures ? ["/futures"] : ["/"]
+            isFutures ? ["/futures"] : ["/"],
           );
           return (
             <Link key={item.value} href={item.value}>

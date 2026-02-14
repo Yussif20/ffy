@@ -1,4 +1,5 @@
 "use client";
+import SearchForm from "@/components/Forms/SearchForm";
 import { useAppSelector } from "@/redux/store";
 import { UserRole } from "@/types";
 import AddNewOffer from "./AddNewOffer";
@@ -12,18 +13,15 @@ export default function Offers() {
   const isExclusive = searchParams.get("isExclusive") || "";
   const isCurrentMonth = searchParams.get("isCurrentMonth") || "";
   const filterKey = `${isExclusive}-${isCurrentMonth}`;
-  
+
   return (
-    <div>
-      {currUser && currUser.role !== UserRole.USER && (
-        <div className="flex items-center justify-end  mb-2 md:mb-5">
-          <AddNewOffer />
-        </div>
-      )}
-      <div className="space-y-8 pb-20 md:pb-30">
+    <div className="space-y-8 pb-20 md:pb-30">
+      <div className="w-full flex justify-between md:items-center flex-col lg:flex-row gap-5 overflow-x-hidden">
         <OfferFilter />
-        <OfferList key={filterKey} />
+        <SearchForm />
+        {currUser && currUser.role !== UserRole.USER && <AddNewOffer />}
       </div>
+      <OfferList key={filterKey} />
     </div>
   );
 }
