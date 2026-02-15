@@ -28,6 +28,9 @@ import DiscountText from "@/components/Global/DiscountText";
 import { visibleText } from "@/utils/visibleText";
 import { Separator } from "@/components/ui/separator";
 import CountdownTimer from "./CountdownTimer";
+import dynamic from "next/dynamic";
+
+const OfferCoinClient = dynamic(() => import("./OfferCoinClient"), { ssr: false });
 
 export default function SingleOffer({
   onlyShowMatch,
@@ -78,10 +81,19 @@ export default function SingleOffer({
   return (
     <Card
       className={cn(
-        "border-foreground/30 p-2 lg:p-6 bg-foreground/10 flex flex-col gap-4 lg:gap-8 relative",
+        "border-foreground/30 p-2 lg:p-6 bg-foreground/10 flex flex-col gap-4 lg:gap-8 relative overflow-hidden",
         onlyShowMatch && "border-none rounded-none bg-background px-0!"
       )}
     >
+      {/* EXCLUSIVE ribbon for top offers */}
+      {isTopOffer && !onlyShowMatch && (
+        <>
+          <div className="absolute top-4 right-[-28px] rotate-45 bg-primary text-white text-[10px] font-bold px-8 py-0.5 uppercase tracking-widest z-20 shadow-sm">
+            Exclusive
+          </div>
+          <OfferCoinClient />
+        </>
+      )}
       {!hideBlackHoles && (
         <div
           className={cn(
@@ -160,10 +172,12 @@ const OfferCard = ({
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
 
-  const endTime = offer.endDate && <CountdownTimer endDate={offer.endDate} />;
+  const endTime = offer.endDate && (
+    <CountdownTimer endDate={offer.endDate} startDate={offer.createdAt} />
+  );
   const percantCard = (
-    <Card className="py-6 lg:py-10 lg:h-25 w-full lg:w-auto lg:aspect-5/2 flex flex-col justify-center items-center gap-y-2 lg:gap-y-4 bg-transparent relative rounded-2xl">
-      <h1 className="text-2xl md:text-2xl font-bold uppercase py-0 leading-1">
+    <Card className="py-6 lg:py-10 lg:h-25 w-full lg:w-auto lg:aspect-5/2 flex flex-col justify-center items-center gap-y-2 lg:gap-y-4 bg-transparent relative rounded-2xl group hover:bg-primary/5 transition-colors duration-200">
+      <h1 className="text-4xl md:text-5xl font-bold uppercase py-0 leading-1">
         <DiscountText
           className="text-primary"
           percentage={offer.offerPercentage}

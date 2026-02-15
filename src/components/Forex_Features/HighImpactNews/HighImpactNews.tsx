@@ -7,7 +7,7 @@ export default async function HighImpactNews() {
     const t = await getTranslations('HighImpactNews');
 
     return (
-        <div className='space-y-8 pb-20 md:pb-30'>
+        <div className='space-y-8 pb-10 md:pb-14'>
             <SectionTitle
                 title={t('title')}
                 subtitle={t('subtitle')}

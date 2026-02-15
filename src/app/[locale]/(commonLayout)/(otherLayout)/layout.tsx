@@ -4,6 +4,9 @@ import Hero from "@/components/Global/hero";
 import Container from "@/components/Global/Container";
 import HomeNavItems from "@/components/Forex_Features/HomeNavItems";
 import Subscribe from "@/components/Forex_Features/Subscribe";
+import StatsStrip from "@/components/Global/StatsStrip";
+import SectionDivider from "@/components/Global/SectionDivider";
+import ScrollReveal from "@/components/Global/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Funded For You",
@@ -18,10 +21,18 @@ export default function RootLayout({
   return (
     <div>
       <Hero />
-      <div className="py-30">
-        <HomeNavItems />
-        <Container>{children}</Container>
-        <Subscribe />
+      <StatsStrip />
+      <div className="py-6 md:py-10">
+        <ScrollReveal delay={0.05}>
+          <HomeNavItems />
+        </ScrollReveal>
+        <ScrollReveal delay={0.1}>
+          <Container>{children}</Container>
+        </ScrollReveal>
+        <SectionDivider />
+        <ScrollReveal delay={0.05}>
+          <Subscribe />
+        </ScrollReveal>
       </div>
     </div>
   );

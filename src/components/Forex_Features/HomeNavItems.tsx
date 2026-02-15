@@ -8,6 +8,16 @@ import useIsFutures from "@/hooks/useIsFutures";
 import useIsActive from "@/hooks/useIsActive";
 import useIsArabic from "@/hooks/useIsArabic";
 import { cn } from "@/lib/utils";
+import { Building2, Tag, Trophy } from "lucide-react";
+import { useGetAllFirmsQuery } from "@/redux/api/firms.api";
+import { useGetAllChallengesQuery } from "@/redux/api/challenge";
+import { useGetAllOffersQuery } from "@/redux/api/offerApi";
+
+const tabIcons: Record<string, React.ReactNode> = {
+  "/": <Building2 size={16} />,
+  "/exclusive-offers": <Tag size={16} />,
+  "/challenges": <Trophy size={16} />,
+};
 
 export default function HomeNavItems() {
   const t = useTranslations("Navbar");
@@ -16,10 +26,28 @@ export default function HomeNavItems() {
   const comingPathname = usePathname();
   const pathName = `/${comingPathname.split("/").slice(2).join("/")}`;
   const checkActive = useIsActive();
-  let pages: { name: string; value: string }[] = [
-    { name: t("firms"), value: "/" },
-    { name: t("offers"), value: "/exclusive-offers" },
-    { name: t("challenges"), value: "/challenges" },
+
+  // Lightweight count-only queries (limit=1 just to get meta.total)
+  const firmType = isFutures ? "FUTURES" : "FOREX";
+  const { data: firmsData } = useGetAllFirmsQuery([
+    { name: "limit", value: 1 },
+    { name: "firmType", value: firmType },
+  ]);
+  const { data: challengesData } = useGetAllChallengesQuery([
+    { name: "limit", value: 1 },
+  ]);
+  const { data: offersData } = useGetAllOffersQuery({ limit: 1 });
+
+  const counts: Record<string, number | undefined> = {
+    "/": firmsData?.meta?.total,
+    "/exclusive-offers": offersData?.meta?.total,
+    "/challenges": challengesData?.meta?.total,
+  };
+
+  let pages: { name: string; value: string; baseValue: string }[] = [
+    { name: t("firms"), value: "/", baseValue: "/" },
+    { name: t("offers"), value: "/exclusive-offers", baseValue: "/exclusive-offers" },
+    { name: t("challenges"), value: "/challenges", baseValue: "/challenges" },
   ];
 
   // ---- APPLY FUTURES PREFIX EXACT LIKE NavItems ----
@@ -29,6 +57,7 @@ export default function HomeNavItems() {
       ? "/futures" + (item.value === "/" ? "" : item.value)
       : item.value,
   }));
+
 
   // ----- MATCH CHECK WITH FUTURES ----
   const isNotMatchPathName =
@@ -42,21 +71,38 @@ export default function HomeNavItems() {
   if (isNotMatchPathName) return "";
 
   return (
-    <div id="tabs-section" className="space-y-10 pb-20 md:pb-30 scroll-mt-40">
-      <div className="flex justify-center items-center gap-4">
+    <div id="tabs-section" className="space-y-5 pb-5 md:pb-8 scroll-mt-40">
+      <div className="flex justify-center items-center gap-2 md:gap-4">
         {pages.map((item) => {
           const isActive = checkActive(
             item.value,
             isFutures ? ["/futures"] : ["/"],
           );
+          const count = counts[item.baseValue];
           return (
             <Link key={item.value} href={item.value}>
               <Button
-                size={"xl"}
+                size={"default"}
                 variant={isActive ? "default" : "outline"}
-                className={cn(isArabic && "text-lg font-semibold")}
+                className={cn(
+                  "flex items-center gap-1.5 md:h-12 md:px-7 md:text-base md:gap-2",
+                  isArabic && "md:text-lg md:font-semibold"
+                )}
               >
+                {tabIcons[item.baseValue]}
                 {item.name}
+                {count !== undefined && (
+                  <span
+                    className={cn(
+                      "text-[10px] px-1.5 py-0.5 rounded-full font-medium tabular-nums",
+                      isActive
+                        ? "bg-white/20 text-white"
+                        : "bg-foreground/10 text-foreground/50"
+                    )}
+                  >
+                    {count > 999 ? "999+" : count}
+                  </span>
+                )}
               </Button>
             </Link>
           );

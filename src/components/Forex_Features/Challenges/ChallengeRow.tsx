@@ -15,6 +15,15 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { visibleText } from "@/utils/visibleText";
 import ChallengeIndexChange from "./ChallengeIndexChange";
+import { cn } from "@/lib/utils";
+
+const stepStyles: Record<string, string> = {
+  STEP1: "bg-blue-500/15 text-blue-400 border border-blue-500/30",
+  STEP2: "bg-purple-500/15 text-purple-400 border border-purple-500/30",
+  STEP3: "bg-orange-500/15 text-orange-400 border border-orange-500/30",
+  STEP4: "bg-pink-500/15 text-pink-400 border border-pink-500/30",
+  INSTANT: "bg-green-500/15 text-green-400 border border-green-500/30",
+};
 
 export default function ChallengeRow({
   challenge,
@@ -63,7 +72,14 @@ export default function ChallengeRow({
         <TableCell center>
           {formatCurrencyShort(challenge.accountSize, false)}
         </TableCell>
-        <TableCell center>{t(challenge?.steps)}</TableCell>
+        <TableCell center>
+          <span className={cn(
+            "inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold",
+            stepStyles[challenge?.steps] ?? "bg-foreground/10 text-foreground/60"
+          )}>
+            {t(challenge?.steps)}
+          </span>
+        </TableCell>
         <TableCell center>
           <div>
             {challenge?.profitTarget.length > 0
@@ -74,11 +90,14 @@ export default function ChallengeRow({
         <TableCell center>{challenge?.dailyLoss ? `${challenge.dailyLoss}%` : "-"}</TableCell>
         <TableCell center>{challenge?.maxLoss ? `${challenge.maxLoss}%` : "-"}</TableCell>
         <TableCell center>
-          <BatteryIndicator
-            percentage={challenge?.profitSplit}
-          />
+          <div className="flex flex-col items-center gap-0.5">
+            <BatteryIndicator percentage={challenge?.profitSplit} />
+            <span className="text-[10px] text-foreground/50 font-medium">
+              {challenge?.profitSplit}%
+            </span>
+          </div>
         </TableCell>
-        <TableCell center>
+        <TableCell center className="whitespace-normal max-w-[130px] text-center leading-snug">
           {visibleText(
             isArabic,
             challenge.payoutFrequency,
@@ -86,10 +105,10 @@ export default function ChallengeRow({
           )}
         </TableCell>
         <TableCell center>
-          <div className="flex gap-0.5 items-center justify-center">
-            <p className="w-17 text-center">{formatCurrencyShort(challenge?.price)}</p>
+          <div className="flex flex-col items-center gap-1.5">
+            <p className="text-sm font-bold text-foreground/80">{formatCurrencyShort(challenge?.price)}</p>
             <Link href={challenge.affiliateLink || ""} target="_blank">
-              <Button>{t("buy")}</Button>
+              <Button size="sm" className="h-7 px-3 text-xs">{t("buy")}</Button>
             </Link>
           </div>
         </TableCell>

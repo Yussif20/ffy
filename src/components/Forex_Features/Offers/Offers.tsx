@@ -15,7 +15,7 @@ export default function Offers() {
   const filterKey = `${isExclusive}-${isCurrentMonth}`;
 
   return (
-    <div className="space-y-8 pb-20 md:pb-30">
+    <div className="space-y-8 pb-10 md:pb-14">
       <div className="w-full flex justify-between md:items-center flex-col lg:flex-row gap-5 overflow-x-hidden">
         <OfferFilter />
         <SearchForm />

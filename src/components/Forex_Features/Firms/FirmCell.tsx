@@ -8,8 +8,12 @@ import Image, { StaticImageData } from "next/image";
 
 export default function FirmCell({
   company,
+  isNew,
+  isTrending,
 }: {
   company: { slug: string; image: string | StaticImageData; name: string };
+  isNew?: boolean;
+  isTrending?: boolean;
 }) {
   const isArabic = useIsArabic();
   const isFutures = useIsFutures();
@@ -29,7 +33,7 @@ export default function FirmCell({
           className="flex items-center gap-2"
         >
           <div className="bg-primary3 max-w-max rounded-lg overflow-hidden border border-border flex-shrink-0">
-            <div className="w-8 xl:w-12 aspect-square relative">
+            <div className="w-10 xl:w-14 aspect-square relative">
               <Image
                 src={company.image}
                 alt="image"
@@ -42,6 +46,20 @@ export default function FirmCell({
             <h2 className="text-base md:text-lg xl:text-xl font-semibold whitespace-nowrap">
               {company.name}
             </h2>
+            {(isNew || isTrending) && (
+              <div className="flex gap-1 mt-0.5">
+                {isNew && (
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 font-semibold uppercase tracking-wide">
+                    New
+                  </span>
+                )}
+                {isTrending && (
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-amber-500/15 text-amber-400 font-semibold uppercase tracking-wide">
+                    Trending
+                  </span>
+                )}
+              </div>
+            )}
           </div>
         </Link>
       </TableCell>
@@ -53,7 +71,7 @@ export default function FirmCell({
         )}
       >
         <Link href={linkHref} className="flex justify-center md:justify-start">
-          <div className="bg-primary3 rounded-lg overflow-hidden border border-border flex-shrink-0 w-8 xl:w-12 aspect-square relative">
+          <div className="bg-primary3 rounded-lg overflow-hidden border border-border flex-shrink-0 w-10 xl:w-14 aspect-square relative">
             <Image
               src={company.image}
               alt={company.name}

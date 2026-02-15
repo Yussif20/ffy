@@ -169,22 +169,20 @@ export default function ChallengeTable({
       field: "title",
       className: "table-cell md:hidden",
     },
-    { label: t("accountSize"), field: "accountSize" },
-    { label: t("steps"), field: "steps" },
-    { label: t("profitTarget"), field: "profitTarget" },
-    { label: t("dailyLoss"), field: "dailyLoss" },
-    { label: t("maxLoss"), field: "maxLoss" },
-    { label: t("profitSplit"), field: "profitSplit" },
-    { label: t("payoutFrequency"), field: "payoutFrequency" },
-    { label: t("price"), field: "price" },
+    { label: t("accountSize"), field: "accountSize", tooltip: "The funded trading capital provided by the firm" },
+    { label: t("steps"), field: "steps", tooltip: "Number of evaluation phases required before getting funded" },
+    { label: t("profitTarget"), field: "profitTarget", tooltip: "% gain required to pass each evaluation phase" },
+    { label: t("dailyLoss"), field: "dailyLoss", tooltip: "Maximum % loss allowed in a single trading day" },
+    { label: t("maxLoss"), field: "maxLoss", tooltip: "Maximum total % drawdown allowed across the account" },
+    { label: t("profitSplit"), field: "profitSplit", tooltip: "% of profits you keep after passing evaluation" },
+    { label: t("payoutFrequency"), field: "payoutFrequency", tooltip: "How often you can request profit withdrawals" },
+    { label: t("price"), field: "price", tooltip: "Cost to enter the challenge" },
     role === "SUPER_ADMIN"
       ? { label: t("action"), field: "action", hideSort: true }
       : null,
   ];
 
-  const headers = _headers.filter(
-    (h): h is { label: string; field: string } => h !== null,
-  );
+  const headers = _headers.filter(Boolean) as NonNullable<typeof _headers[number]>[];
 
   if (isLoading || isFetching)
     return (

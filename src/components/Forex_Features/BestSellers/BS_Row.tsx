@@ -32,14 +32,22 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 
+const rankMedals: Record<number, { emoji: string; className: string }> = {
+  1: { emoji: "🥇", className: "text-yellow-400" },
+  2: { emoji: "🥈", className: "text-slate-400" },
+  3: { emoji: "🥉", className: "text-amber-600" },
+};
+
 export default function BS_Row({
   company,
   prevCompany,
   nextCompany,
+  rank,
 }: {
   company: BestSeller;
   prevCompany: BestSeller | null;
   nextCompany: BestSeller | null;
+  rank: number;
 }) {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const user = useAppSelector(useCurrentUser);
@@ -126,25 +134,38 @@ export default function BS_Row({
     <LinearBorder className="rounded-2xl max-w-full" className2="rounded-2xl">
       <div className="p-4 md:p-8 flex justify-between items-center gap-4 md:gap-10">
         {/* ================= LEFT SIDE ================= */}
-        <Link
-          href={`/firms/${company.firm?.slug}`}
-          className="flex items-center gap-2"
-        >
-          <div className="bg-primary3 max-w-max rounded-lg overflow-hidden border border-border flex-shrink-0">
-            <div className="w-8 xl:w-12 aspect-square relative">
-              <Image
-                src={company.firm?.logoUrl || ""}
-                alt="image"
-                fill
-                className="object-cover"
-              />
-            </div>
-          </div>
+        <div className="flex items-center gap-3">
+          {/* Rank medal */}
+          {rankMedals[rank] ? (
+            <span className={`text-xl flex-shrink-0 ${rankMedals[rank].className}`} title={`#${rank}`}>
+              {rankMedals[rank].emoji}
+            </span>
+          ) : (
+            <span className="text-sm text-foreground/40 font-semibold w-6 text-center flex-shrink-0">
+              #{rank}
+            </span>
+          )}
 
-          <h2 className="text-sm sm:text-base md:text-lg xl:text-xl font-semibold">
-            {company.firm?.title || ""}
-          </h2>
-        </Link>
+          <Link
+            href={`/firms/${company.firm?.slug}`}
+            className="flex items-center gap-2"
+          >
+            <div className="bg-primary3 max-w-max rounded-lg overflow-hidden border border-border flex-shrink-0">
+              <div className="w-8 xl:w-12 aspect-square relative">
+                <Image
+                  src={company.firm?.logoUrl || ""}
+                  alt="image"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+
+            <h2 className="text-sm sm:text-base md:text-lg xl:text-xl font-semibold">
+              {company.firm?.title || ""}
+            </h2>
+          </Link>
+        </div>
 
         {/* ================= RIGHT SIDE ================= */}
         <div className="flex justify-center items-center gap-2 md:gap-4">

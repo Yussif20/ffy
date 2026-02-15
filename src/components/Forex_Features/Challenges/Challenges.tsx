@@ -4,7 +4,7 @@ import ChallengeTable from "./ChallengeTable";
 
 export default function Challenges({ locale }: { locale: string }) {
   return (
-    <div className="space-y-8 pb-20 md:pb-30">
+    <div className="space-y-8 pb-10 md:pb-14">
       <ChallengeFilter />
       <div className="flex">
         <div className="max-w-sm flex">

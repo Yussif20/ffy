@@ -3,12 +3,15 @@
 import { PresentationControls } from "@react-three/drei";
 import Scene from "./Scene";
 import CandlestickModel from "./models/CandlestickModel";
+import { usePrimaryColor } from "@/hooks/usePrimaryColor";
 
 interface CandlestickSceneProps {
   className?: string;
 }
 
 export default function CandlestickScene({ className }: CandlestickSceneProps) {
+  const { primary } = usePrimaryColor();
+
   return (
     <Scene
       className={className}
@@ -17,7 +20,7 @@ export default function CandlestickScene({ className }: CandlestickSceneProps) {
     >
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 8, 5]} intensity={1} />
-      <pointLight position={[0, 3, 3]} intensity={0.6} color="#059666" />
+      <pointLight position={[0, 3, 3]} intensity={0.6} color={primary} />
 
       <PresentationControls
         global

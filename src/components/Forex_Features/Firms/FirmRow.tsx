@@ -40,14 +40,28 @@ export default function FirmRow({
     }
     return a;
   }, []);
+
+  // New = established within the last 2 years
+  const isNew = (() => {
+    if (!company.dateEstablished) return false;
+    const established = new Date(company.dateEstablished).getTime();
+    const twoYearsAgo = Date.now() - 2 * 365 * 24 * 60 * 60 * 1000;
+    return established >= twoYearsAgo;
+  })();
+
+  // Trending = has an active discount offer >= 15%
+  const isTrending = Boolean(company.offerPercentage && company.offerPercentage >= 15);
+
   return (
-    <TableRow className="relative">
+    <TableRow className="relative border-l-2 border-l-transparent hover:border-l-primary hover:bg-foreground/5 transition-all duration-150">
       <FirmCell
         company={{
           image: company.logoUrl,
           name: company.title,
           slug: company.slug,
         }}
+        isNew={isNew}
+        isTrending={isTrending}
       />
       <TableCell>
         <div className="flex items-center gap-1 justify-center">
@@ -71,7 +85,7 @@ export default function FirmRow({
       {!shortVersion && (
         <>
           <TableCell>
-            <div className="flex flex-wrap gap-2 w-[200px]">
+            <div className="flex flex-wrap gap-2 max-w-[180px]">
               {instruments?.map((item) => (
                 <Badge variant={"secondary"} key={item}>
                   {item}
@@ -95,7 +109,7 @@ export default function FirmRow({
                 }}
               />
             ) : (
-              <p className="text-center font-bold text-base">N/A</p>
+              <p className="text-center text-foreground/30 text-base font-medium">—</p>
             )}
           </TableCell>
         </>

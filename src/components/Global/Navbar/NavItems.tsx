@@ -5,6 +5,7 @@ import useIsFutures from "@/hooks/useIsFutures";
 import { Link, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { Home, Tag, Trophy, BarChart2 } from "lucide-react";
 
 export default function NavItems() {
   const t = useTranslations("Navbar");
@@ -17,6 +18,7 @@ export default function NavItems() {
     {
       name: t("home"),
       href: "/",
+      icon: <Home size={13} />,
       part: 1,
       scrollToTabs: false,
       scrollToTop: true,
@@ -24,6 +26,7 @@ export default function NavItems() {
     {
       name: t("offers"),
       href: "/exclusive-offers",
+      icon: <Tag size={13} />,
       part: 1,
       scrollToTabs: true,
       scrollToTop: false,
@@ -31,6 +34,7 @@ export default function NavItems() {
     {
       name: t("challenges"),
       href: "/challenges",
+      icon: <Trophy size={13} />,
       part: 2,
       scrollToTabs: true,
       scrollToTop: false,
@@ -41,8 +45,10 @@ export default function NavItems() {
           {
             name: t("spreads"),
             href: "/spreads",
+            icon: <BarChart2 size={13} />,
             part: 3,
             badge: t("comingSoon"),
+            badgeTooltip: "Spread data across all firms — launching soon",
             scrollToTabs: false,
             scrollToTop: false,
           },
@@ -115,6 +121,10 @@ export default function NavItems() {
   };
   return (
     <>
+      <div className="relative">
+        {/* Left fade hint for mobile horizontal scroll */}
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-10 bg-gradient-to-r from-background to-transparent z-10 md:hidden" />
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-background to-transparent z-10 md:hidden" />
       <div
         className={cn("flex md:grid grid-cols-5 w-full overflow-x-auto")}
         style={{
@@ -131,14 +141,21 @@ export default function NavItems() {
               "flex flex-col items-center gap-0.5",
             )}
           >
-            <span>{item.name}</span>
+            <span className="flex items-center gap-1">
+              {"icon" in item && item.icon}
+              {item.name}
+            </span>
             {item.badge && (
-              <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
+              <span
+                title={"badgeTooltip" in item ? item.badgeTooltip : undefined}
+                className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium cursor-help"
+              >
                 {item.badge}
               </span>
             )}
           </Link>
         ))}
+      </div>
       </div>
     </>
   );

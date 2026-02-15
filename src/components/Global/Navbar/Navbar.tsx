@@ -124,8 +124,27 @@ const Navbar = () => {
                       </SheetTrigger>
                       <SheetContent side="left" className="w-[280px] px-5">
                         <div className="flex flex-col gap-6 mt-8">
+                          {/* Nav links */}
+                          <nav className="flex flex-col gap-1">
+                            {[
+                              { label: t("home"), href: "/" },
+                              { label: t("offers"), href: "/exclusive-offers" },
+                              { label: t("challenges"), href: "/challenges" },
+                              { label: t("bestSellers"), href: "/best-sellers" },
+                              { label: t("spreads"), href: "/spreads" },
+                            ].map((item) => (
+                              <Link
+                                key={item.href}
+                                href={item.href}
+                                className="text-foreground/70 hover:text-foreground hover:bg-foreground/5 px-3 py-2 rounded-md transition-colors text-sm font-medium"
+                              >
+                                {item.label}
+                              </Link>
+                            ))}
+                          </nav>
+                          <div className="h-px bg-border" />
                           {!isLogIn && (
-                            <div className="flex flex-col gap-3 mt-4">
+                            <div className="flex flex-col gap-3">
                               <Link href="/auth/sign-in">
                                 <Button variant="outline" className="w-full">
                                   {t("signIn")}
@@ -157,7 +176,9 @@ const Navbar = () => {
             <ForexFeatureToggle />
           </div>
 
-          <NavItems />
+          <div className="hidden md:block">
+            <NavItems />
+          </div>
         </div>
       </Container>
     </nav>

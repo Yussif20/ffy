@@ -18,6 +18,7 @@ export default function SortTableHeader({
     hideSort?: boolean;
     className?: string;
     center?: boolean;
+    tooltip?: string;
   }[];
   skipSort?: boolean;
   skipSortOptionFor?: string[];
@@ -49,10 +50,12 @@ export default function SortTableHeader({
             <TableHead
               center={header.center || false}
               key={header.id ?? header.field}
+              title={header.tooltip}
               className={cn(
                 "cursor-pointer select-none border relative",
                 header.className,
                 isArabic ? "text-base font-semibold" : "",
+                header.tooltip ? "underline decoration-dotted decoration-foreground/30 underline-offset-4" : "",
               )}
               onClick={() => handleSort(header.field, header.hideSort)}
             >

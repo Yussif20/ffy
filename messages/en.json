@@ -8,7 +8,9 @@
   "HomePage": {
     "heroTitle": {
       "title1": "Find the Best funded for you For You, Get New & Exclusive Offers, Join the Traders Who",
-      "title2": "Trust Our Platform"
+      "title2": "Trust Our Platform",
+      "subtitle": "The #1 platform to compare prop trading firms, challenges, and exclusive offers — all in one place.",
+      "cta": "Compare Firms"
     }
   },
   "Navbar": {
@@ -215,7 +217,8 @@
     "stayConnected": "STAY CONNECTED",
     "title": "Subscribe For The Latest In Prop Trading News And Deals",
     "emailPlaceholder": "Your Email",
-    "subscribeButton": "Subscribe"
+    "subscribeButton": "Subscribe",
+    "socialProof": "Join thousands of traders who get exclusive alerts first."
   },
   "BestSellers": {
     "seeAllOffers": "See all offers",
