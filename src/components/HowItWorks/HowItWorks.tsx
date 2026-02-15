@@ -3,6 +3,7 @@ import SectionTitle from "../Global/SectionTitle";
 import BatIcon from "../Global/Icons/BatIcon";
 import { getTranslations } from "next-intl/server";
 import HowItWorksLine from "./HowItWorksLine";
+import CandlestickSectionClient from "./CandlestickSectionClient";
 
 export default async function HowItWorks() {
   const t = await getTranslations("HowItWorks");
@@ -24,6 +25,8 @@ export default async function HowItWorks() {
   return (
     <div className="max-w-3xl mx-auto space-y-8 pb-20 md:pb-30">
       <SectionTitle title={t("title")} subtitle={t("subtitle")} />
+
+      <CandlestickSectionClient />
 
       <div className="relative">
         {steps.map((step, index) => (

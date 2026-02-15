@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import Container from "./Container";
-import Logo from "@/utils/Logo";
+import HeroCoinClient from "./HeroCoinClient";
 
 export default async function Hero() {
   const t = await getTranslations("HomePage");
@@ -18,8 +18,8 @@ export default async function Hero() {
             </h1>
 
             <div className="mx-auto">
-              <div className="aspect-8/9 h-45 md:h-[220px] lg:h-[280px]  xl:h-[303px] relative">
-                <Logo />
+              <div className="aspect-8/9 h-64 md:h-[340px] lg:h-[440px] xl:h-[500px] relative">
+                <HeroCoinClient />
               </div>
             </div>
           </Container>
