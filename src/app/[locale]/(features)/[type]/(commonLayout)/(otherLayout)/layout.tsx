@@ -5,7 +5,7 @@ import Container from "@/components/Global/Container";
 import HomeNavItems from "@/components/Forex_Features/HomeNavItems";
 import Subscribe from "@/components/Forex_Features/Subscribe";
 import PageTransition from "@/components/Global/PageTransition";
-import StatsStrip from "@/components/Global/StatsStrip";
+// import StatsStrip from "@/components/Global/StatsStrip";
 import SectionDivider from "@/components/Global/SectionDivider";
 import ScrollReveal from "@/components/Global/ScrollReveal";
 
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <div>
       <Hero />
-      <StatsStrip />
+      {/* <StatsStrip /> */}
       <div className="py-6 md:py-10">
         <ScrollReveal delay={0.05}>
           <HomeNavItems />
