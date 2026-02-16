@@ -11,7 +11,7 @@ import { formatCurrencyShort } from "@/lib/formatCurrencyShort ";
 import { cn, handleSetSearchParams } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import useIsArabic from "@/hooks/useIsArabic";
 
@@ -43,10 +43,19 @@ export default function SelectOptions({
   const router = useRouter();
   const categoriesText = searchParams.get(name) || "";
   const categories = categoriesText ? categoriesText.split(",") : [];
+  const hasAppliedDefault = useRef(false);
 
-  // Set default value when no param exists (e.g. 100k for size filter)
+  // Set default value only on initial load when no param exists (e.g. 100k for size filter)
+  // Don't re-apply when user explicitly clears the selection
   useEffect(() => {
-    if (defaultValue && !searchParams.get(name) && !searchParams.get(`${name}_range`)) {
+    if (hasAppliedDefault.current) return;
+    const hasParam = searchParams.get(name) || searchParams.get(`${name}_range`);
+    if (hasParam) {
+      hasAppliedDefault.current = true;
+      return;
+    }
+    if (defaultValue) {
+      hasAppliedDefault.current = true;
       handleSetSearchParams({ [name]: defaultValue }, searchParams, router);
     }
   }, [defaultValue, name, searchParams, router]);
