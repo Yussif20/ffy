@@ -1,6 +1,7 @@
 import FDTabs from "@/components/FirmDetails/FDTabs";
 import FirmDetails from "@/components/FirmDetails/FirmDetails";
 import FirmNavigate from "@/components/Forex_Features/Firms/FirmNavigate";
+import ScrollToTopOnOpen from "@/components/FirmDetails/ScrollToTopOnOpen";
 import SingleOffer from "@/components/Forex_Features/Offers/SingleOffer";
 import { serverApi } from "@/lib/serverAxios";
 import "@/styles/globals.css";
@@ -26,11 +27,12 @@ export default async function RootLayout({
 
   return (
     <div>
+      <ScrollToTopOnOpen />
       <FirmNavigate firmType={data.data.firmType} />
       <div className="space-y-12 relative">
         <FirmDetails data={data.data} />
 
-        <div className="lg:sticky lg:top-22.5 bg-background z-30">
+        <div className="md:sticky md:top-28 bg-background z-30">
           <SingleOffer hideBlackHoles data={data.data} />
         </div>
         <FDTabs slug={slug} count={data.data.count} />

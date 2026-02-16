@@ -69,46 +69,46 @@ export default function ChallengeRow({
             slug: challenge?.firm?.slug,
           }}
         />
-        <TableCell center>
+        <TableCell center className="text-sm md:text-base">
           {formatCurrencyShort(challenge.accountSize, false)}
         </TableCell>
-        <TableCell center>
+        <TableCell center className="text-sm md:text-base">
           <span className={cn(
-            "inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold",
+            "inline-flex items-center px-2 py-0.5 rounded-full text-xs md:text-sm font-semibold",
             stepStyles[challenge?.steps] ?? "bg-foreground/10 text-foreground/60"
           )}>
             {t(challenge?.steps)}
           </span>
         </TableCell>
-        <TableCell center>
+        <TableCell center className="text-sm md:text-base">
           <div>
             {challenge?.profitTarget.length > 0
               ? challenge.profitTarget.map((item) => item + "%").join(" | ")
               : "-"}
           </div>
         </TableCell>
-        <TableCell center>{challenge?.dailyLoss ? `${challenge.dailyLoss}%` : "-"}</TableCell>
-        <TableCell center>{challenge?.maxLoss ? `${challenge.maxLoss}%` : "-"}</TableCell>
-        <TableCell center>
-          <div className="flex flex-col items-center gap-0.5">
-            <BatteryIndicator percentage={challenge?.profitSplit} />
-            <span className="text-[10px] text-foreground/50 font-medium">
+        <TableCell center className="text-sm md:text-base">{challenge?.dailyLoss ? `${challenge.dailyLoss}%` : "-"}</TableCell>
+        <TableCell center className="text-sm md:text-base">{challenge?.maxLoss ? `${challenge.maxLoss}%` : "-"}</TableCell>
+        <TableCell center className="text-sm md:text-base">
+          <div className="flex items-center justify-center gap-2">
+            <BatteryIndicator percentage={challenge?.profitSplit} showNumber={false} />
+            <span className="text-xs md:text-sm text-foreground/80 font-medium">
               {challenge?.profitSplit}%
             </span>
           </div>
         </TableCell>
-        <TableCell center className="whitespace-normal max-w-[130px] text-center leading-snug">
+        <TableCell center className="whitespace-normal max-w-[130px] text-center leading-snug text-xs md:text-sm">
           {visibleText(
             isArabic,
             challenge.payoutFrequency,
             challenge.payoutFrequencyArabic,
           )}
         </TableCell>
-        <TableCell center>
+        <TableCell center className="text-sm md:text-base">
           <div className="flex flex-col items-center gap-1.5">
-            <p className="text-sm font-bold text-foreground/80">{formatCurrencyShort(challenge?.price)}</p>
+            <p className="text-base md:text-lg font-bold text-foreground/80">{formatCurrencyShort(challenge?.price)}</p>
             <Link href={challenge.affiliateLink || ""} target="_blank">
-              <Button size="sm" className="h-7 px-3 text-xs">{t("buy")}</Button>
+              <Button size="sm" className="h-7 px-3 text-xs font-bold">{t("buy")}</Button>
             </Link>
           </div>
         </TableCell>
