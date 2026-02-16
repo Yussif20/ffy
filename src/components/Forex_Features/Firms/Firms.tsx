@@ -9,7 +9,6 @@ import SearchForm from "@/components/Forms/SearchForm";
 import FirmAllFilters from "./FirmAllFilters";
 import FirmsFilter from "./FirmsFilter";
 import FirmTable from "./FirmTable";
-import { countryNames } from "@/data";
 
 export default function Firms() {
   const { getParamsWithKey } = useQueryBuilder();
