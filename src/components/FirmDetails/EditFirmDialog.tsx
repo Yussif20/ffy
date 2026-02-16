@@ -249,32 +249,34 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
           </Button>
         </div>
 
-        <AlertDialogDescription>
-          {isFetchingFirm ? (
-            <div className="flex items-center justify-center py-8">
-              <p>Loading firm data...</p>
-            </div>
-          ) : defaultValues ? (
-            <CustomForm
-              onSubmit={handleSubmit}
-              defaultValues={defaultValues}
-              className="space-y-6 py-4"
-            >
-              <FirmForm
-                open={open}
-                logoUrl={firmData.data.logoUrl}
-                showOffer={showOffer}
-                setShowOffer={setShowOffer}
-              />
-              <Button
-                disabled={isUpdating}
-                type="submit"
-                className="w-full h-11"
+        <AlertDialogDescription asChild>
+          <div className="text-muted-foreground text-sm">
+            {isFetchingFirm ? (
+              <div className="flex items-center justify-center py-8">
+                Loading firm data...
+              </div>
+            ) : defaultValues ? (
+              <CustomForm
+                onSubmit={handleSubmit}
+                defaultValues={defaultValues}
+                className="space-y-6 py-4"
               >
-                {isUpdating ? t("updatingFirm") : t("updateFirm")}
-              </Button>
-            </CustomForm>
-          ) : null}
+                <FirmForm
+                  open={open}
+                  logoUrl={firmData.data.logoUrl}
+                  showOffer={showOffer}
+                  setShowOffer={setShowOffer}
+                />
+                <Button
+                  disabled={isUpdating}
+                  type="submit"
+                  className="w-full h-11"
+                >
+                  {isUpdating ? t("updatingFirm") : t("updateFirm")}
+                </Button>
+              </CustomForm>
+            ) : null}
+          </div>
         </AlertDialogDescription>
       </AlertDialogContent>
     </AlertDialog>
