@@ -11,6 +11,7 @@ import { formatCurrencyShort } from "@/lib/formatCurrencyShort ";
 import { cn, handleSetSearchParams } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import useIsArabic from "@/hooks/useIsArabic";
 
@@ -19,6 +20,7 @@ type PropType = {
   options: { name: string; value: string }[];
   name: string;
   title: string;
+  defaultValue?: string;
   custom?: {
     show: true;
     max: number;
@@ -33,16 +35,25 @@ export default function SelectOptions({
   name,
   title,
   custom,
+  defaultValue,
 }: PropType) {
   const text = useTranslations("SelectOption");
   const isArabic = useIsArabic();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const categoriesText = searchParams.get(name) || "";
   const categories = categoriesText ? categoriesText.split(",") : [];
+
+  // Set default value when no param exists (e.g. 100k for size filter)
+  useEffect(() => {
+    if (defaultValue && !searchParams.get(name) && !searchParams.get(`${name}_range`)) {
+      handleSetSearchParams({ [name]: defaultValue }, searchParams, router);
+    }
+  }, [defaultValue, name, searchParams, router]);
   const rangeText = searchParams.get(`${name}_range`);
   const range = rangeText?.split("-").map(Number) || [];
   const isCustom = !!rangeText;
-  const router = useRouter();
+
   const handleSetCategory = (value: string) => {
     const isExist = categories.find((item) => item === value);
     const newCategories = isExist

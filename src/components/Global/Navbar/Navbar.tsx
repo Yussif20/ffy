@@ -105,12 +105,12 @@ const Navbar = () => {
                 <>
                   <div className="hidden md:flex items-center justify-end gap-2 lg:gap-3">
                     <Link className="hidden sm:block" href="/auth/sign-in">
-                      <Button variant="outline" className="h-9 px-4!">
+                      <Button variant="outline" className="h-9 px-4! font-bold">
                         {t("signIn")}
                       </Button>
                     </Link>
                     <Link href="/auth/sign-up">
-                      <Button className="h-9 px-2 sm:px-4!">
+                      <Button className="h-9 px-2 sm:px-4! font-bold">
                         {t("signUp")}
                       </Button>
                     </Link>
@@ -146,12 +146,12 @@ const Navbar = () => {
                           {!isLogIn && (
                             <div className="flex flex-col gap-3">
                               <Link href="/auth/sign-in">
-                                <Button variant="outline" className="w-full">
+                                <Button variant="outline" className="w-full font-bold">
                                   {t("signIn")}
                                 </Button>
                               </Link>
                               <Link href="/auth/sign-up">
-                                <Button className="w-full">
+                                <Button className="w-full font-bold">
                                   {t("signUp")}
                                 </Button>
                               </Link>

@@ -11,7 +11,7 @@ export default function FO_Sidebar() {
   const isArabic = useIsArabic();
   const sidebarItems = [
     { label: t("items.firmOverview"), value: "firm-overview" },
-    { label: t("items.leverage"), value: "leverage" },
+    { label: t("items.leverage"), value: "leverages" },
     { label: t("items.commissions"), value: "commissions" },
     { label: t("items.accountSizes"), value: "account-sizes" },
     { label: t("items.maxAllocation"), value: "max-allocation" },

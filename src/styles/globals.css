@@ -168,6 +168,14 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark !important;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 /* ── Custom scrollbar ───────────────────────────────────────── */
@@ -212,6 +220,8 @@ html {
 body {
   font-family: var(--font-montserrat) !important;
   background: var(--color-background);
+  margin: 0;
+  padding: 0;
 }
 
 button {

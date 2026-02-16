@@ -56,13 +56,14 @@ export default function ChallengeFilter({
           options={[
             { name: "$5K", value: "5000" },
             { name: "$10K", value: "10000" },
-            { name: "$30K", value: "30000" },
-            { name: "$75K", value: "75000" },
-            { name: "$120K", value: "120000" },
+            { name: "$25K", value: "25000" },
+            { name: "$50K", value: "50000" },
+            { name: "$100K", value: "100000" },
             { name: "$200K", value: "200000" },
-            { name: "$350K", value: "350000" },
+            { name: "$300K", value: "300000" },
             { name: "$500K", value: "500000" },
           ]}
+          defaultValue="100000"
           custom={{
             show: true,
             max: 2000000,
