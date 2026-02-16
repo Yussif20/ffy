@@ -75,7 +75,7 @@ export default function Firms() {
 
   const firms = dataRaw?.firms || [];
   const firmsMeta = dataRaw?.meta || {};
-  console.log(countryNames());
+
   return (
     <div className="space-y-8 pb-10 md:pb-14">
       <div className="w-full flex justify-between md:items-center flex-col lg:flex-row gap-5 overflow-x-hidden">

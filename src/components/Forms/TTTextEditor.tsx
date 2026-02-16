@@ -11,7 +11,7 @@ import { Table } from "@tiptap/extension-table";
 import TableRow from "@tiptap/extension-table-row";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Bold,
@@ -72,9 +72,9 @@ export default function TTTextEditor({
   } | null>(null);
   const [, forceUpdate] = useState({});
 
-  const editor = useEditor({
-    immediatelyRender: false,
-    extensions: [
+  // Memoize extensions to prevent duplicate extension warnings on re-renders
+  const extensions = useMemo(
+    () => [
       StarterKit.configure({
         heading: {
           levels: [1, 2, 3],
@@ -115,9 +115,14 @@ export default function TTTextEditor({
         },
       }),
     ],
+    []
+  );
+
+  const editor = useEditor({
+    immediatelyRender: false,
+    extensions,
     content: value || "",
     onUpdate: ({ editor }) => {
-      console.log(editor.getHTML());
       onChange(editor.getHTML());
     },
     editorProps: {

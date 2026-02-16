@@ -7,10 +7,11 @@ async function proxyRequest(req: NextRequest, path: string) {
   const url = `${BACKEND_URL}/api/v1/${path}${search}`;
 
   // Get request body for non-GET requests
-  let body: string | undefined;
+  // Use arrayBuffer to preserve binary data (important for FormData/multipart)
+  let body: ArrayBuffer | undefined;
   if (req.method !== "GET" && req.method !== "HEAD") {
     try {
-      body = await req.text();
+      body = await req.arrayBuffer();
     } catch {
       body = undefined;
     }
@@ -35,13 +36,22 @@ async function proxyRequest(req: NextRequest, path: string) {
   });
 
   try {
+    // Log auth header presence for debugging (redact actual token)
+    const hasAuth = headers.has("authorization");
+    console.log(`[Proxy] ${req.method} ${path} - Auth: ${hasAuth ? "present" : "missing"}`);
+
     const response = await fetch(url, {
       method: req.method,
       headers,
-      body: body || undefined,
+      body: body && body.byteLength > 0 ? body : undefined,
       // @ts-expect-error - duplex is required for streaming but not in types
       duplex: "half",
     });
+
+    // Log response status for debugging
+    if (response.status >= 400) {
+      console.log(`[Proxy] ${req.method} ${path} - Response: ${response.status}`);
+    }
 
     // Create response with backend's response
     const responseHeaders = new Headers();
@@ -74,7 +84,7 @@ async function proxyRequest(req: NextRequest, path: string) {
       headers: responseHeaders,
     });
   } catch (error) {
-    console.error("Proxy error:", error);
+    console.error("[Proxy] Error:", error);
     return NextResponse.json(
       { error: "Failed to connect to backend server" },
       { status: 502 },

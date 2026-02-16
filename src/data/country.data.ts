@@ -1729,7 +1729,7 @@ export const countries = [
     currency: "ANG",
   },
 ];
-console.log(countries);
+
 export const countryData = (code: string) => {
   return countries.find((item) => item.code === code);
 };
