@@ -61,7 +61,7 @@ export default function FDTabs({
   });
 
   return (
-    <div className="flex sm:justify-center items-center gap-5 w-full overflow-auto">
+    <div className="flex flex-wrap sm:justify-center items-center gap-3 sm:gap-5 w-full overflow-auto">
       {tabs.map((item, index) => (
         <Link key={index} href={item.value}>
           <Button

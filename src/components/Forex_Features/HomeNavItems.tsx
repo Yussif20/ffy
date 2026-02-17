@@ -72,7 +72,7 @@ export default function HomeNavItems() {
 
   return (
     <div id="tabs-section" className="space-y-5 pb-5 md:pb-8 scroll-mt-40">
-      <div className="flex justify-center items-center gap-2 md:gap-4">
+      <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4">
         {pages.map((item) => {
           const isActive = checkActive(
             item.value,
