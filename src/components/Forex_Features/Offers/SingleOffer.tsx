@@ -48,7 +48,7 @@ function OfferPercentageBadge({
   isArabic: boolean;
   className?: string;
 }) {
-  const gift = visibleText(isArabic, giftText, giftTextArabic);
+  const gift = visibleText(isArabic, giftText ?? undefined, giftTextArabic ?? undefined);
   return (
     <div
       className={cn(
