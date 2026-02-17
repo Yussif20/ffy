@@ -94,7 +94,7 @@ const CustomInput = ({
                   onClick={handleRightClick}
                   className={cn(
                     "absolute z-10 text-sm h-full flex justify-end items-center cursor-pointer",
-                    isArabic ? "left-0 pl-1" : "right-0 pr-1"
+                    isArabic ? "left-0" : "right-0"
                   )}
                   style={{
                     width: (RightIconWidth || 32) + "px",
@@ -118,11 +118,18 @@ const CustomInput = ({
                 disabled={disabled}
                 min={type === "number" ? 0 : undefined}
                 step={type === "number" ? 0.01 : undefined}
+                style={{
+                  ...(RightIcon && RightIconWidth != null
+                    ? isArabic
+                      ? { paddingLeft: `${RightIconWidth}px` }
+                      : { paddingRight: `${RightIconWidth}px` }
+                    : {}),
+                }}
                 className={cn(
-                  "w-full text-sm  disabled:opacity-95",
+                  "w-full min-w-0 text-sm disabled:opacity-95",
                   fieldClassName,
                   Icon && (isArabic ? "pr-9" : "pl-9"),
-                  RightIcon && (isArabic ? "pl-14" : "pr-14"),
+                  RightIcon && RightIconWidth == null && (isArabic ? "pl-14" : "pr-14"),
                   isArabic && "text-right"
                 )}
               />

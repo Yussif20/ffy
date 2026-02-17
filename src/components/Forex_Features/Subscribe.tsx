@@ -1,27 +1,31 @@
 import { getTranslations } from 'next-intl/server';
 import Container from '../Global/Container';
 import SubscribeForm from './SubscribeForm';
-import SubscribeCoinClient from './SubscribeCoinClient';
 
 export default async function Subscribe() {
     const t = await getTranslations('Subscribe');
 
     return (
-        <Container className='pb-8 md:pb-12'>
-            <div className='w-full rounded-2xl py-12 md:py-16 border-primary border relative flex justify-center items-center px-5 sm:px-10 md:px-20 overflow-hidden shadow-[0_0_40px_rgba(5,150,102,0.08)] hover:shadow-[0_0_60px_rgba(5,150,102,0.15)] transition-shadow duration-500'>
-                {/* Asymmetric glow blobs */}
-                <div className='absolute w-72 h-72 bg-primary/30 blur-[100px] -left-10 bottom-0 rounded-full pointer-events-none'></div>
-                <div className='absolute w-28 h-28 bg-primary/20 blur-[60px] right-10 top-4 rounded-full pointer-events-none'></div>
-                {/* 3D coin decoration */}
-                <SubscribeCoinClient />
+        <Container className='pb-10 md:pb-16'>
+            <div className='w-full relative flex justify-center items-center overflow-hidden rounded-2xl border border-primary/40 bg-gradient-to-b from-primary/5 to-primary/10 py-14 md:py-20 px-6 sm:px-10 md:px-16 shadow-[0_0_0_1px_rgba(5,150,102,0.06),0_4px_24px_rgba(5,150,102,0.08)] hover:shadow-[0_0_0_1px_rgba(5,150,102,0.1),0_8px_32px_rgba(5,150,102,0.12)] transition-all duration-300'>
+                {/* Soft glow accents */}
+                <div className='absolute inset-0 overflow-hidden rounded-2xl pointer-events-none'>
+                    <div className='absolute -left-20 -bottom-20 w-80 h-80 bg-primary/20 blur-[120px] rounded-full' />
+                    <div className='absolute -right-20 -top-20 w-64 h-64 bg-primary/15 blur-[100px] rounded-full' />
+                </div>
 
-                <div className='space-y-6 relative z-10 w-full max-w-2xl'>
-                    <h4 className='text-base md:text-lg font-semibold text-primary text-center uppercase'>{t('stayConnected')}</h4>
-                    <h1 className='text-2xl md:text-3xl font-semibold uppercase text-center'>{t('title')}</h1>
-                    <SubscribeForm />
-                    <p className='text-center text-xs text-foreground/40'>
-                        {t('socialProof')}
-                    </p>
+                <div className='relative z-10 w-full max-w-2xl space-y-7 text-center'>
+                    <div className='space-y-2'>
+                        <p className='text-xs md:text-sm font-medium tracking-[0.2em] text-primary uppercase opacity-90'>
+                            {t('stayConnected')}
+                        </p>
+                        <h2 className='text-xl md:text-3xl lg:text-4xl font-bold text-foreground tracking-tight'>
+                            {t('title')}
+                        </h2>
+                    </div>
+                    <div className='flex justify-center'>
+                        <SubscribeForm />
+                    </div>
                 </div>
             </div>
         </Container>

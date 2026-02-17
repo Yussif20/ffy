@@ -34,11 +34,11 @@ export default function SubscribeForm() {
   };
 
   return (
-    <div>
+    <div className="w-full min-w-0">
       <CustomForm
         onSubmit={handleSubmit}
         defaultValues={defaultValues}
-        className=""
+        className="w-full"
       >
         <CustomInput
           type="email"
