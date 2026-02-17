@@ -12,9 +12,26 @@ import { toast } from "sonner";
 import CustomForm from "../Forms/CustomForm";
 import CustomInput from "../Forms/CustomInput";
 import AuthContainer from "./AuthContainer";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -278,7 +295,9 @@ export default function SignUp() {
   const [consentToMarketing, setConsentToMarketing] = useState(false);
   const [countryCodeValue, setCountryCodeValue] = useState(() => {
     const c = countryCodes.find((x) => x.code === "+966");
-    return c ? `${c.code}::${c.country}` : `${countryCodes[0].code}::${countryCodes[0].country}`;
+    return c
+      ? `${c.code}::${c.country}`
+      : `${countryCodes[0].code}::${countryCodes[0].country}`;
   });
   const [openCountrySelect, setOpenCountrySelect] = useState(false);
   const countryCode = countryCodeValue.split("::")[0];
@@ -340,25 +359,31 @@ export default function SignUp() {
 
           {/* Country Code Selector - Separate row on mobile */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold pb-2 block">{t("fields.phone.label")}</label>
+            <label className="text-sm font-semibold pb-2 block">
+              {t("fields.phone.label")}
+            </label>
             <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-2">
               {/* Desktop: Select, Mobile: Popover with search */}
               <div className="hidden md:block w-fit min-w-0">
-                <Select value={countryCodeValue} onValueChange={setCountryCodeValue} disabled={isLoading}>
-                  <SelectTrigger className="rounded-xl h-11 border-border bg-background w-fit min-w-[7rem]">
+                <Select
+                  value={countryCodeValue}
+                  onValueChange={setCountryCodeValue}
+                  disabled={isLoading}
+                >
+                  <SelectTrigger className="rounded-xl h-11 border-border bg-background w-fit min-w-28">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     {countryCodes.map((item) => {
                       const itemValue = `${item.code}::${item.country}`;
                       return (
-                      <SelectItem key={itemValue} value={itemValue}>
-                        <span className="flex items-center gap-2">
-                          <span>{item.flag}</span>
-                          <span>{item.code}</span>
-                        </span>
-                      </SelectItem>
-                    );
+                        <SelectItem key={itemValue} value={itemValue}>
+                          <span className="flex items-center gap-2">
+                            <span>{item.flag}</span>
+                            <span>{item.code}</span>
+                          </span>
+                        </SelectItem>
+                      );
                     })}
                   </SelectContent>
                 </Select>
@@ -366,7 +391,10 @@ export default function SignUp() {
 
               {/* Mobile: Popover with Command (searchable) */}
               <div className="md:hidden">
-                <Popover open={openCountrySelect} onOpenChange={setOpenCountrySelect}>
+                <Popover
+                  open={openCountrySelect}
+                  onOpenChange={setOpenCountrySelect}
+                >
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
@@ -376,7 +404,14 @@ export default function SignUp() {
                       disabled={isLoading}
                     >
                       <span className="flex items-center gap-2">
-                        <span>{countryCodes.find(c => `${c.code}::${c.country}` === countryCodeValue)?.flag}</span>
+                        <span>
+                          {
+                            countryCodes.find(
+                              (c) =>
+                                `${c.code}::${c.country}` === countryCodeValue,
+                            )?.flag
+                          }
+                        </span>
                         <span>{countryCode}</span>
                       </span>
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -391,27 +426,31 @@ export default function SignUp() {
                           {countryCodes.map((item) => {
                             const itemValue = `${item.code}::${item.country}`;
                             return (
-                            <CommandItem
-                              key={itemValue}
-                              value={`${item.code} ${item.country}`}
-                              onSelect={() => {
-                                setCountryCodeValue(itemValue);
-                                setOpenCountrySelect(false);
-                              }}
-                            >
-                              <Check
-                                className={cn(
-                                  "mr-2 h-4 w-4",
-                                  countryCodeValue === itemValue ? "opacity-100" : "opacity-0"
-                                )}
-                              />
-                              <span className="flex items-center gap-2">
-                                <span>{item.flag}</span>
-                                <span>{item.code}</span>
-                                <span className="text-muted-foreground">{item.country}</span>
-                              </span>
-                            </CommandItem>
-                          );
+                              <CommandItem
+                                key={itemValue}
+                                value={`${item.code} ${item.country}`}
+                                onSelect={() => {
+                                  setCountryCodeValue(itemValue);
+                                  setOpenCountrySelect(false);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    countryCodeValue === itemValue
+                                      ? "opacity-100"
+                                      : "opacity-0",
+                                  )}
+                                />
+                                <span className="flex items-center gap-2">
+                                  <span>{item.flag}</span>
+                                  <span>{item.code}</span>
+                                  <span className="text-muted-foreground">
+                                    {item.country}
+                                  </span>
+                                </span>
+                              </CommandItem>
+                            );
                           })}
                         </CommandGroup>
                       </CommandList>
@@ -475,11 +514,17 @@ export default function SignUp() {
             />
             <span className="text-sm font-medium text-foreground/90 group-hover:text-foreground">
               {t("checkboxes.agreeTerms1")}{" "}
-              <Link href="/terms" className="text-primary hover:underline font-semibold">
+              <Link
+                href="/terms"
+                className="text-primary hover:underline font-semibold"
+              >
                 {t("checkboxes.terms")}
               </Link>{" "}
               {t("checkboxes.and")}{" "}
-              <Link href="/privacy" className="text-primary hover:underline font-semibold">
+              <Link
+                href="/privacy"
+                className="text-primary hover:underline font-semibold"
+              >
                 {t("checkboxes.privacy")}
               </Link>
               .
@@ -513,7 +558,10 @@ export default function SignUp() {
         <div className="text-center pt-6 border-t border-border">
           <p className="text-sm font-medium text-muted-foreground">
             {t("alreadyHaveAccount")}{" "}
-            <Link href="/auth/sign-in" className="text-primary font-semibold hover:underline">
+            <Link
+              href="/auth/sign-in"
+              className="text-primary font-semibold hover:underline"
+            >
               {t("signInLink")}
             </Link>
           </p>

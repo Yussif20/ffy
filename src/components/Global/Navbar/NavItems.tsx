@@ -123,39 +123,39 @@ export default function NavItems() {
     <>
       <div className="relative">
         {/* Left fade hint for mobile horizontal scroll */}
-        <div className="pointer-events-none absolute left-0 top-0 h-full w-10 bg-gradient-to-r from-background to-transparent z-10 md:hidden" />
-        <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-background to-transparent z-10 md:hidden" />
-      <div
-        className={cn("flex md:grid grid-cols-5 w-full overflow-x-auto")}
-        style={{
-          gridTemplateColumns: `repeat(${navItems.length}, minmax(0, 1fr))`,
-        }}
-      >
-        {navItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            onClick={(e) => handleClick(e, item)}
-            className={cn(
-              linkClass(item.href),
-              "flex flex-col items-center gap-0.5",
-            )}
-          >
-            <span className="flex items-center gap-1">
-              {"icon" in item && item.icon}
-              {item.name}
-            </span>
-            {item.badge && (
-              <span
-                title={"badgeTooltip" in item ? item.badgeTooltip : undefined}
-                className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium cursor-help"
-              >
-                {item.badge}
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-10 bg-linear-to-r from-background to-transparent z-10 md:hidden" />
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-linear-to-l from-background to-transparent z-10 md:hidden" />
+        <div
+          className={cn("flex md:grid grid-cols-5 w-full overflow-x-auto")}
+          style={{
+            gridTemplateColumns: `repeat(${navItems.length}, minmax(0, 1fr))`,
+          }}
+        >
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={(e) => handleClick(e, item)}
+              className={cn(
+                linkClass(item.href),
+                "flex flex-col items-center gap-0.5",
+              )}
+            >
+              <span className="flex items-center gap-1">
+                {"icon" in item && item.icon}
+                {item.name}
               </span>
-            )}
-          </Link>
-        ))}
-      </div>
+              {item.badge && (
+                <span
+                  title={"badgeTooltip" in item ? item.badgeTooltip : undefined}
+                  className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium cursor-help"
+                >
+                  {item.badge}
+                </span>
+              )}
+            </Link>
+          ))}
+        </div>
       </div>
     </>
   );
