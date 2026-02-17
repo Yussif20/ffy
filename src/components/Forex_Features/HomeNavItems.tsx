@@ -66,6 +66,7 @@ export default function HomeNavItems() {
       : !pathName.startsWith(
           isFutures ? "/futures/exclusive-offers" : "/exclusive-offers",
         ) &&
+        !pathName.startsWith(isFutures ? "/futures/offers" : "/offers") &&
         !pathName.startsWith(isFutures ? "/futures/challenges" : "/challenges");
 
   if (isNotMatchPathName) return "";
@@ -74,10 +75,13 @@ export default function HomeNavItems() {
     <div id="tabs-section" className="space-y-5 pb-5 md:pb-8 scroll-mt-40">
       <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4">
         {pages.map((item) => {
-          const isActive = checkActive(
-            item.value,
-            isFutures ? ["/futures"] : ["/"],
-          );
+          const isActive =
+            (item.baseValue === "/exclusive-offers" &&
+              (pathName.includes("exclusive-offers") || pathName.endsWith("/offers") || pathName === "/offers")) ||
+            checkActive(
+              item.value,
+              isFutures ? ["/futures"] : ["/"],
+            );
           const count = counts[item.baseValue];
           return (
             <Link key={item.value} href={item.value}>

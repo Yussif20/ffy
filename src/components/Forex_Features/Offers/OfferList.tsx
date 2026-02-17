@@ -4,7 +4,7 @@ import { Pagination } from "@/components/Global/Pagination";
 import { PaginationSkeleton } from "@/components/Global/Skeleton";
 import { useGetAllOffersQuery } from "@/redux/api/offerApi";
 import { Package } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import SingleOffer from "./SingleOffer";
 import { OfferListSkeleton } from "./Skeleton";
 import useIsFutures from "@/hooks/useIsFutures";
@@ -12,10 +12,11 @@ import { useMemo, useEffect } from "react";
 
 export default function OfferList({ companySlug }: { companySlug?: string }) {
   const isFutures = useIsFutures();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page") || 1);
   const searchTerm = searchParams.get("search") || "";
-  const isExclusive = searchParams.get("isExclusive") === "true";
+  const isExclusive = pathname.includes("exclusive-offers");
   const isCurrentMonth = searchParams.get("isCurrentMonth") === "true";
 
   // Build filter parameters from URL query params with useMemo to ensure recalculation

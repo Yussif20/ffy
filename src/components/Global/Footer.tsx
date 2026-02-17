@@ -8,8 +8,8 @@ import { FiYoutube } from "react-icons/fi";
 import { LiaTelegramPlane } from "react-icons/lia";
 import { AiOutlineDiscord } from "react-icons/ai";
 import { getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
 import BackToTop from "./BackToTop";
+import FooterLink from "./FooterLink";
 
 const Footer = async () => {
   const t = await getTranslations("Footer");
@@ -27,7 +27,7 @@ const Footer = async () => {
       title: t("offers"),
       links: [
         { label: t("exclusiveOffers"), href: "exclusive-offers" },
-        { label: t("allCurrentOffers"), href: "exclusive-offers" },
+        { label: t("allCurrentOffers"), href: "offers" },
         { label: t("highImpactNews"), href: "high-impact-news" },
       ],
     },
@@ -90,14 +90,14 @@ const Footer = async () => {
                   </p>
                   <div className="flex gap-3 flex-wrap justify-center lg:justify-start">
                     {socialLinks.map((social, i) => (
-                      <Link
+                      <FooterLink
                         key={i}
                         href={social.href}
                         target="_blank"
                         className="text-foreground/60 hover:text-primary hover:scale-110 transition-all duration-150"
                       >
                         {social.icon}
-                      </Link>
+                      </FooterLink>
                     ))}
                   </div>
                 </div>
@@ -111,13 +111,13 @@ const Footer = async () => {
                   </h3>
                   <div className="flex flex-col gap-2.5 items-center lg:items-start">
                     {section.links.map((link, i) => (
-                      <Link
+                      <FooterLink
                         key={i}
                         href={link.href}
                         className="text-foreground/55 hover:text-foreground text-sm transition-colors hover:translate-x-0.5 inline-block"
                       >
                         {link.label}
-                      </Link>
+                      </FooterLink>
                     ))}
                   </div>
                 </div>
@@ -133,13 +133,13 @@ const Footer = async () => {
               </p>
               <div className="flex items-center gap-4 flex-wrap justify-center">
                 {legalLinks.map((link, i) => (
-                  <Link
+                  <FooterLink
                     key={i}
                     href={link.href}
                     className="text-foreground/40 hover:text-foreground text-xs transition-colors"
                   >
                     {link.label}
-                  </Link>
+                  </FooterLink>
                 ))}
                 <div className="h-3 border-r border-foreground/20" />
                 <BackToTop />

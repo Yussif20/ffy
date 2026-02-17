@@ -5,13 +5,15 @@ import { UserRole } from "@/types";
 import AddNewOffer from "./AddNewOffer";
 import OfferFilter from "./OfferFilter";
 import OfferList from "./OfferList";
+import { usePathname } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
 export default function Offers() {
   const currUser = useAppSelector((state) => state.auth.user);
+  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const isExclusive = searchParams.get("isExclusive") || "";
   const isCurrentMonth = searchParams.get("isCurrentMonth") || "";
+  const isExclusive = pathname.includes("exclusive-offers");
   const filterKey = `${isExclusive}-${isCurrentMonth}`;
 
   return (
