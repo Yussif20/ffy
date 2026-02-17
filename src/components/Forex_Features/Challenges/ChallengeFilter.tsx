@@ -34,8 +34,8 @@ export default function ChallengeFilter({
   };
 
   return (
-    <div className="w-full flex justify-between md:items-center flex-col lg:flex-row gap-5 overflow-x-hidden">
-      <div className="flex gap-2 md:gap-4 items-center overflow-x-auto">
+    <div className="w-full flex flex-wrap justify-between md:items-center flex-col lg:flex-row gap-5 overflow-x-hidden">
+      <div className="flex flex-wrap gap-2 md:gap-4 items-center">
         {!hideAllFilter && (
           <Button
             className={cn(
