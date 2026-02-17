@@ -88,6 +88,12 @@
   --sidebar-ring: #059666;
 }
 
+/* Checkbox & radio checked state use app primary */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--primary);
+}
+
 /* {
   --background: #030310;
   --foreground: #ffffff;

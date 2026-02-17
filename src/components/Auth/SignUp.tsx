@@ -276,8 +276,12 @@ export default function SignUp() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [consentToMarketing, setConsentToMarketing] = useState(false);
-  const [countryCode, setCountryCode] = useState("+966");
+  const [countryCodeValue, setCountryCodeValue] = useState(() => {
+    const c = countryCodes.find((x) => x.code === "+966");
+    return c ? `${c.code}::${c.country}` : `${countryCodes[0].code}::${countryCodes[0].country}`;
+  });
   const [openCountrySelect, setOpenCountrySelect] = useState(false);
+  const countryCode = countryCodeValue.split("::")[0];
 
   const handleSubmit = async (data: FieldValues) => {
     if (data.password !== data.confirmPassword) {
@@ -309,14 +313,13 @@ export default function SignUp() {
   };
 
   return (
-    <AuthContainer
-      className="max-w-2xl"
-      title={t("title")}>
+    <AuthContainer className="max-w-2xl" title={t("title")}>
       <CustomForm
         onSubmit={handleSubmit}
         defaultValues={defaultValues}
-        className="space-y-6">
-        <div className="space-y-4">
+        className="space-y-6"
+      >
+        <div className="space-y-5">
           <CustomInput
             required
             name="fullName"
@@ -337,23 +340,26 @@ export default function SignUp() {
 
           {/* Country Code Selector - Separate row on mobile */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">{t("fields.phone.label")}</label>
-            <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-2">
+            <label className="text-sm font-semibold pb-2 block">{t("fields.phone.label")}</label>
+            <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-2">
               {/* Desktop: Select, Mobile: Popover with search */}
-              <div className="hidden md:block">
-                <Select value={countryCode} onValueChange={setCountryCode} disabled={isLoading}>
-                  <SelectTrigger>
+              <div className="hidden md:block w-fit min-w-0">
+                <Select value={countryCodeValue} onValueChange={setCountryCodeValue} disabled={isLoading}>
+                  <SelectTrigger className="rounded-xl h-11 border-border bg-background w-fit min-w-[7rem]">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {countryCodes.map((item) => (
-                      <SelectItem key={item.code} value={item.code}>
+                    {countryCodes.map((item) => {
+                      const itemValue = `${item.code}::${item.country}`;
+                      return (
+                      <SelectItem key={itemValue} value={itemValue}>
                         <span className="flex items-center gap-2">
                           <span>{item.flag}</span>
                           <span>{item.code}</span>
                         </span>
                       </SelectItem>
-                    ))}
+                    );
+                    })}
                   </SelectContent>
                 </Select>
               </div>
@@ -366,11 +372,11 @@ export default function SignUp() {
                       variant="outline"
                       role="combobox"
                       aria-expanded={openCountrySelect}
-                      className="w-full justify-between"
+                      className="w-full justify-between rounded-xl h-11 border-border"
                       disabled={isLoading}
                     >
                       <span className="flex items-center gap-2">
-                        <span>{countryCodes.find(c => c.code === countryCode)?.flag}</span>
+                        <span>{countryCodes.find(c => `${c.code}::${c.country}` === countryCodeValue)?.flag}</span>
                         <span>{countryCode}</span>
                       </span>
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -382,19 +388,21 @@ export default function SignUp() {
                       <CommandList>
                         <CommandEmpty>No country found.</CommandEmpty>
                         <CommandGroup>
-                          {countryCodes.map((item) => (
+                          {countryCodes.map((item) => {
+                            const itemValue = `${item.code}::${item.country}`;
+                            return (
                             <CommandItem
-                              key={item.code}
+                              key={itemValue}
                               value={`${item.code} ${item.country}`}
                               onSelect={() => {
-                                setCountryCode(item.code);
+                                setCountryCodeValue(itemValue);
                                 setOpenCountrySelect(false);
                               }}
                             >
                               <Check
                                 className={cn(
                                   "mr-2 h-4 w-4",
-                                  countryCode === item.code ? "opacity-100" : "opacity-0"
+                                  countryCodeValue === itemValue ? "opacity-100" : "opacity-0"
                                 )}
                               />
                               <span className="flex items-center gap-2">
@@ -403,7 +411,8 @@ export default function SignUp() {
                                 <span className="text-muted-foreground">{item.country}</span>
                               </span>
                             </CommandItem>
-                          ))}
+                          );
+                          })}
                         </CommandGroup>
                       </CommandList>
                     </Command>
@@ -454,58 +463,58 @@ export default function SignUp() {
         </div>
 
         {/* Checkboxes */}
-        <div className="space-y-3">
-          <div className="flex items-start gap-2">
+        <div className="space-y-4 rounded-xl border border-border bg-muted/30 p-4">
+          <label className="flex items-start gap-3 cursor-pointer group">
             <input
               type="checkbox"
               id="terms"
               checked={agreeToTerms}
               onChange={(e) => setAgreeToTerms(e.target.checked)}
               disabled={isLoading}
-              className="mt-1 h-4 w-4 rounded text-primary focus:ring-primary"
+              className="mt-0.5 h-4 w-4 rounded border-border accent-primary focus:ring-2 focus:ring-primary/20 focus:ring-offset-0"
             />
-            <label htmlFor="terms" className="text-sm text-foreground/80">
+            <span className="text-sm font-medium text-foreground/90 group-hover:text-foreground">
               {t("checkboxes.agreeTerms1")}{" "}
-              <Link href="/terms" className="text-primary hover:underline">
+              <Link href="/terms" className="text-primary hover:underline font-semibold">
                 {t("checkboxes.terms")}
               </Link>{" "}
               {t("checkboxes.and")}{" "}
-              <Link href="/privacy" className="text-primary hover:underline">
+              <Link href="/privacy" className="text-primary hover:underline font-semibold">
                 {t("checkboxes.privacy")}
               </Link>
               .
-            </label>
-          </div>
+            </span>
+          </label>
 
-          <div className="flex items-start gap-2">
+          <label className="flex items-start gap-3 cursor-pointer group">
             <input
               type="checkbox"
               id="marketing"
               checked={consentToMarketing}
               onChange={(e) => setConsentToMarketing(e.target.checked)}
               disabled={isLoading}
-              className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+              className="mt-0.5 h-4 w-4 rounded border-border accent-primary focus:ring-2 focus:ring-primary/20 focus:ring-offset-0"
             />
-            <label htmlFor="marketing" className="text-sm text-foreground/80">
+            <span className="text-sm font-medium text-foreground/90 group-hover:text-foreground">
               {t("checkboxes.marketing")}
-            </label>
-          </div>
+            </span>
+          </label>
         </div>
 
-        <Button type="submit" size="lg" className="w-full" disabled={isLoading}>
+        <Button
+          type="submit"
+          size="lg"
+          className="w-full rounded-xl h-11 font-semibold bg-primary hover:bg-primary-dark"
+          disabled={isLoading}
+        >
           {isLoading ? t("submit.loading") : t("submit.default")}
         </Button>
 
-        <div className="text-center">
-          <p className="text-sm text-foreground/80">
+        <div className="text-center pt-6 border-t border-border">
+          <p className="text-sm font-medium text-muted-foreground">
             {t("alreadyHaveAccount")}{" "}
-            <Link href="/auth/sign-in">
-              <Button
-                variant="link"
-                className="px-0 text-sm text-primary"
-                disabled={isLoading}>
-                {t("signInLink")}
-              </Button>
+            <Link href="/auth/sign-in" className="text-primary font-semibold hover:underline">
+              {t("signInLink")}
             </Link>
           </p>
         </div>

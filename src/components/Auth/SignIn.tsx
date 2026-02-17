@@ -57,7 +57,7 @@ export default function SignIn() {
       <CustomForm
         onSubmit={handleSubmit}
         defaultValues={defaultValues}
-        className="space-y-4"
+        className="space-y-5"
       >
         {/* Email Field */}
         <CustomInput
@@ -82,36 +82,27 @@ export default function SignIn() {
           disabled={isLoading}
         />
         {/* Forgot Password */}
-        <div className="flex items-center justify-end">
-          <Link href={"/auth/forget-password"}>
-            <Button
-              type="button"
-              variant="link"
-              className="px-0 text-sm"
-              disabled={isLoading}
-            >
-              {t("forgotPassword")}
-            </Button>
+        <div className="flex items-center justify-end -mt-1">
+          <Link href="/auth/forget-password" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            {t("forgotPassword")}
           </Link>
         </div>
         {/* Submit Button */}
-        <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
+        <Button
+          type="submit"
+          className="w-full rounded-xl h-11 font-semibold bg-primary hover:bg-primary-dark"
+          size="lg"
+          disabled={isLoading}
+        >
           {isLoading ? t("submit.loading") : t("submit.default")}
         </Button>
       </CustomForm>
       {/* Sign Up Link */}
-      <div className="text-center mt-6">
-        <p className="text-sm text-foreground/80">
+      <div className="text-center pt-6 border-t border-border">
+        <p className="text-sm font-medium text-muted-foreground">
           {t("noAccount")}{" "}
-          <Link href="/auth/sign-up">
-            <Button
-              type="button"
-              variant="link"
-              className="px-0 text-sm"
-              disabled={isLoading}
-            >
-              {t("signUpLink")}
-            </Button>
+          <Link href="/auth/sign-up" className="text-primary font-semibold hover:underline">
+            {t("signUpLink")}
           </Link>
         </p>
       </div>

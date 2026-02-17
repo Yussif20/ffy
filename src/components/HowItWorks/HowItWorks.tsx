@@ -1,6 +1,5 @@
 import SectionTitle from "../Global/SectionTitle";
 import { getTranslations } from "next-intl/server";
-import CandlestickSectionClient from "./CandlestickSectionClient";
 import HowItWorksStepsClient from "./HowItWorksStepsClient";
 
 export default async function HowItWorks() {
@@ -14,7 +13,6 @@ export default async function HowItWorks() {
   return (
     <div className="max-w-3xl mx-auto space-y-10 pb-10 md:pb-14">
       <SectionTitle title={t("title")} subtitle={t("subtitle")} />
-      <CandlestickSectionClient />
       <HowItWorksStepsClient steps={steps} />
     </div>
   );
