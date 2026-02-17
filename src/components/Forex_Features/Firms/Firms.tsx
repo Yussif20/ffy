@@ -36,6 +36,7 @@ export default function Firms() {
   const category = getParamsWithKey("category");
   const drawdown = searchParams.get("drawdown") || "";
   const otherFeatures = searchParams.get("otherFeatures") || "";
+  const programType = searchParams.get("programType") || "";
   const query = [
     page,
     limit,
@@ -60,6 +61,9 @@ export default function Firms() {
   }
   if (otherFeatures) {
     query.push({ name: "array_otherFeatures", value: otherFeatures });
+  }
+  if (programType) {
+    query.push({ name: "oneItemArray_programTypes", value: programType });
   }
   if (sort) {
     let value = sort[0] === "-" ? sort.slice(1) : sort;
