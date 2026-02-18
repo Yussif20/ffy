@@ -1303,6 +1303,7 @@
     "challengeCreated": "تم إنشاء التحدي بنجاح!",
     "challengeCreateFailed": "فشل في إنشاء التحدي",
     "firm": "الشركة",
+    "firmLogo": "شعار الشركة",
     "loadingFirms": "جارٍ تحميل الشركات...",
     "selectFirm": "اختر شركة",
     "title": "العنوان",

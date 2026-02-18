@@ -1306,6 +1306,7 @@
     "challengeCreated": "Challenge created successfully!",
     "challengeCreateFailed": "Failed to create challenge",
     "firm": "Firm",
+    "firmLogo": "Firm Logo",
     "loadingFirms": "Loading firms...",
     "selectFirm": "Select firm",
     "title": "Title",
