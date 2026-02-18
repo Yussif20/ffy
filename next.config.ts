@@ -1,6 +1,17 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+
 const nextConfig: NextConfig = {
+  // Proxy all routes to / (Coming Soon) – no middleware, avoids Vercel middleware.js.nft.json ENOENT
+  async rewrites() {
+    return [
+      {
+        // Rewrite everything except /api and /_next to show Coming Soon at /
+        source: "/((?!api|_next).*)",
+        destination: "/",
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
