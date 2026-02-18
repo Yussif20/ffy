@@ -12,10 +12,12 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { useGetAllPaymentMethodQuery } from "@/redux/api/paymentMethodApi";
+import { useGetAllFirmsQuery } from "@/redux/api/firms.api";
 import { useGetPlatformsQuery } from "@/redux/api/spreadApi";
 import { PaymentMethod } from "@/types/payment-method";
 import { Platform_T } from "@/types/spread.types";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import useIsFutures from "@/hooks/useIsFutures";
@@ -44,9 +46,12 @@ const handleSetSearchParams = (
   router.push(`?${newParams.toString()}`, { scroll: false });
 };
 
+const COMPANIES_PER_PAGE = 8;
+
 export default function FirmAllFilters() {
   const t = useTranslations("Filters");
   const [isMobile, setIsMobile] = useState(false);
+  const [companyPage, setCompanyPage] = useState(1);
   const searchParams = useSearchParams();
   const router = useRouter();
   const isFutures = useIsFutures();
@@ -65,9 +70,15 @@ export default function FirmAllFilters() {
     },
   ]);
 
-  const paymentMethods = dataRaw?.data || [];
+  const firmType = isFutures ? "FUTURES" : "FOREX";
+  const { data: firmsData } = useGetAllFirmsQuery([
+    { name: "limit", value: 500 },
+    { name: "firmType", value: firmType },
+  ]);
 
+  const paymentMethods = dataRaw?.data || [];
   const platforms = dataRawPlatforms?.data?.platforms || [];
+  const firms = firmsData?.firms || [];
 
   const countryList = [
     { name: t("afghanistan"), value: "Afghanistan" },
@@ -122,6 +133,10 @@ export default function FirmAllFilters() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    setCompanyPage(1);
+  }, [firms.length]);
+
   const getYearsInOperation = () => {
     const years = searchParams.get("range_yearsInOperation");
     return years
@@ -142,6 +157,7 @@ export default function FirmAllFilters() {
   };
 
   const filters = {
+    in_firmId: getArrayParam("in_firmId"),
     range_yearsInOperation: getYearsInOperation(),
     // assets: getArrayParam("assets"),
     paymentMethods: getArrayParam("paymentMethods"),
@@ -159,7 +175,11 @@ export default function FirmAllFilters() {
     const updated = current.includes(value)
       ? current.filter((item) => item !== value)
       : [...current, value];
-    handleSetSearchParams({ [key]: updated.join(",") }, searchParams, router);
+    handleSetSearchParams(
+      { [key]: updated.length ? updated.join(",") : "" },
+      searchParams,
+      router,
+    );
   };
 
   const resetFilters = () => {
@@ -183,6 +203,95 @@ export default function FirmAllFilters() {
         onValueChange={handleAccordionChange}
         className="w-full"
       >
+        {/* Company - first filter */}
+        <AccordionItem value="in_firmId" className="border-gray-800">
+          <AccordionTrigger className="text-sm font-semibold hover:no-underline">
+            {t("company")}
+          </AccordionTrigger>
+          <AccordionContent className="space-y-3 pt-4">
+            {(() => {
+              const totalCompanyPages = Math.ceil(
+                firms.length / COMPANIES_PER_PAGE,
+              );
+              const paginatedFirms = firms.slice(
+                (companyPage - 1) * COMPANIES_PER_PAGE,
+                companyPage * COMPANIES_PER_PAGE,
+              );
+              return (
+                <>
+                  <div className="flex flex-col gap-2">
+                    {paginatedFirms.map((firm) => (
+                      <button
+                        type="button"
+                        key={firm.id}
+                        onClick={() => toggleMultiSelect("in_firmId", firm.id)}
+                        className={cn(
+                          "flex items-center gap-3 w-full rounded-lg border-2 p-2.5 text-left transition-colors",
+                          filters["in_firmId"].includes(firm.id)
+                            ? "border-primary bg-primary/10"
+                            : "border-border hover:border-muted-foreground/50",
+                        )}
+                      >
+                        <span className="relative flex h-9 w-9 shrink-0 overflow-hidden rounded-md bg-muted">
+                          {firm.logoUrl ? (
+                            <Image
+                              src={firm.logoUrl}
+                              alt={firm.title}
+                              fill
+                              className="object-contain"
+                              sizes="36px"
+                            />
+                          ) : (
+                            <span className="flex h-full w-full items-center justify-center text-xs font-medium text-muted-foreground">
+                              {firm.title.slice(0, 1)}
+                            </span>
+                          )}
+                        </span>
+                        <span className="truncate text-sm font-medium">
+                          {firm.title}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                  {totalCompanyPages > 1 && (
+                    <div className="flex items-center justify-between gap-2 pt-2 border-t border-border">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        className="shrink-0"
+                        disabled={companyPage <= 1}
+                        onClick={() =>
+                          setCompanyPage((p) => Math.max(1, p - 1))
+                        }
+                      >
+                        {t("previous")}
+                      </Button>
+                      <span className="text-xs text-muted-foreground tabular-nums">
+                        {companyPage} / {totalCompanyPages}
+                      </span>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        className="shrink-0"
+                        disabled={companyPage >= totalCompanyPages}
+                        onClick={() =>
+                          setCompanyPage((p) =>
+                            Math.min(totalCompanyPages, p + 1),
+                          )
+                        }
+                      >
+                        {t("next")}
+                      </Button>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
+          </AccordionContent>
+        </AccordionItem>
+
         <AccordionItem value="countries" className="border-gray-800">
           <AccordionTrigger className="text-sm font-semibold hover:no-underline">
             {t("countries")}

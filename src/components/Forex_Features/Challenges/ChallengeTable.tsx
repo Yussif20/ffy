@@ -43,6 +43,7 @@ export default function ChallengeTable({
   const accounsSize = params.get("size") || "";
   const accountSizeRange = params.get("size_range") || "";
   const in_steps = params.get("in_steps") || "";
+  const in_firmId = params.get("in_firmId") || "";
   const searchTerm = params.get("search") || "";
 
   const sort = params.get("sort") || "";
@@ -80,6 +81,10 @@ export default function ChallengeTable({
 
   if (companySlug) {
     queries.push({ name: "firm.slug", value: companySlug });
+  }
+
+  if (in_firmId) {
+    queries.push({ name: "in_firmId", value: in_firmId });
   }
 
   if (payoutMethods) {

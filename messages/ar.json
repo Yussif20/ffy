@@ -47,6 +47,7 @@
     "new": "جديد",
     "all": "الكل",
     "filter": "الفلاتر",
+    "company": "الشركة",
     "typeOfFirm": "نوع الشركة",
     "cfd": "عقود الفروقات",
     "firms": "الشركات",
@@ -155,7 +156,9 @@
     "threeStep": "ثلاث خطوات",
     "fourStep": "أربع خطوات",
     "maxAllocation": "أقصى مبلغ",
-    "resetFilter": "إعادة الفلاتر"
+    "resetFilter": "إعادة الفلاتر",
+    "previous": "السابق",
+    "next": "التالي"
   },
   "Firms": {
     "popular": "شائع",
@@ -331,6 +334,7 @@
   },
   "Challenges": {
     "filter": "الفلاتر",
+    "company": "الشركة",
     "assets": "الأصول",
     "size": "الحجم",
     "fx": "الفوركس",

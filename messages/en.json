@@ -47,6 +47,7 @@
     "new": "New",
     "all": "All",
     "filter": "Filter",
+    "company": "Company",
     "firms": "Firms",
     "symbols": "Symbols",
     "typeOfFirm": "Type Of Firm",
@@ -155,7 +156,9 @@
     "threeStep": "3 Step",
     "fourStep": "4 Step",
     "maxAllocation": "Max Allocation",
-    "resetFilter": "Reset filter"
+    "resetFilter": "Reset filter",
+    "previous": "Previous",
+    "next": "Next"
   },
   "Firms": {
     "popular": "Popular",
@@ -334,6 +337,7 @@
   },
   "Challenges": {
     "filter": "Filter",
+    "company": "Company",
     "assets": "Assets",
     "size": "Size",
     "fx": "FX",
