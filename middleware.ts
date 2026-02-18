@@ -1,9 +1,14 @@
+import createMiddleware from "next-intl/middleware";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { routing } from "./src/i18n/routing";
 
 // Supported locales
 const locales = ["en", "ar"];
 const defaultLocale = "en";
+
+// Create the next-intl middleware
+const intlMiddleware = createMiddleware(routing);
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -27,7 +32,7 @@ export function middleware(request: NextRequest) {
   );
 
   if (isComingSoonPage) {
-    return NextResponse.next();
+    return intlMiddleware(request);
   }
 
   // Extract locale from path if present
