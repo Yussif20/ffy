@@ -15,7 +15,7 @@ import { useGetAllOffersQuery } from "@/redux/api/offerApi";
 
 const tabIcons: Record<string, React.ReactNode> = {
   "/": <Building2 size={16} />,
-  "/exclusive-offers": <Tag size={16} />,
+  "/offers": <Tag size={16} />,
   "/challenges": <Trophy size={16} />,
 };
 
@@ -40,13 +40,13 @@ export default function HomeNavItems() {
 
   const counts: Record<string, number | undefined> = {
     "/": firmsData?.meta?.total,
-    "/exclusive-offers": offersData?.meta?.total,
+    "/offers": offersData?.meta?.total,
     "/challenges": challengesData?.meta?.total,
   };
 
   let pages: { name: string; value: string; baseValue: string }[] = [
     { name: t("firms"), value: "/", baseValue: "/" },
-    { name: t("offers"), value: "/exclusive-offers", baseValue: "/exclusive-offers" },
+    { name: t("offers"), value: "/offers", baseValue: "/offers" },
     { name: t("challenges"), value: "/challenges", baseValue: "/challenges" },
   ];
 
@@ -63,10 +63,10 @@ export default function HomeNavItems() {
   const isNotMatchPathName =
     pathName === (isFutures ? "/futures" : "/")
       ? false
-      : !pathName.startsWith(
+      : !pathName.startsWith(isFutures ? "/futures/offers" : "/offers") &&
+        !pathName.startsWith(
           isFutures ? "/futures/exclusive-offers" : "/exclusive-offers",
         ) &&
-        !pathName.startsWith(isFutures ? "/futures/offers" : "/offers") &&
         !pathName.startsWith(isFutures ? "/futures/challenges" : "/challenges");
 
   if (isNotMatchPathName) return "";
@@ -76,7 +76,7 @@ export default function HomeNavItems() {
       <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4">
         {pages.map((item) => {
           const isActive =
-            (item.baseValue === "/exclusive-offers" &&
+            (item.baseValue === "/offers" &&
               (pathName.includes("exclusive-offers") || pathName.endsWith("/offers") || pathName === "/offers")) ||
             checkActive(
               item.value,

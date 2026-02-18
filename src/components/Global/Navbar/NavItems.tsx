@@ -25,7 +25,7 @@ export default function NavItems() {
     },
     {
       name: t("offers"),
-      href: "/exclusive-offers",
+      href: "/offers",
       icon: <Tag size={13} />,
       part: 1,
       scrollToTabs: true,

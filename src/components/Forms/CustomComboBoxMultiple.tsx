@@ -158,9 +158,9 @@ export default function CustomComboBoxMultiple({
                 >
                   {selectedValues.length ? (
                     <div className="flex flex-wrap gap-1 z-10">
-                      {selectedOptions.map((item) => (
+                      {selectedOptions.map((item, index) => (
                         <div
-                          key={item.value}
+                          key={`${item.value}-${index}`}
                           className="flex items-center gap-1 bg-muted px-2 py-1.5 rounded text-xs"
                         >
                           {item.image && (

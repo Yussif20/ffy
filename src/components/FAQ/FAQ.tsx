@@ -15,7 +15,7 @@ export default async function FAQComponent({ locale }: { locale?: string }) {
   const allFaqData = data?.data || [];
 
   return (
-    <div className="space-y-6 md:space-y-12 overflow-x-hidden">
+    <div className="space-y-8 md:space-y-14 overflow-x-hidden">
       <div>
         <div className="flex items-center w-full justify-center">
           <SectionTitle
@@ -29,18 +29,18 @@ export default async function FAQComponent({ locale }: { locale?: string }) {
         <AddFaq />
       </div>
       <LinearBorder
-        className="rounded-xl w-full max-w-5xl mx-auto overflow-hidden px-4"
-        className2="rounded-xl relative overflow-hidden"
+        className="rounded-2xl w-full max-w-5xl mx-auto overflow-hidden px-4"
+        className2="rounded-2xl relative overflow-hidden"
       >
-        <div className="p-4 md:p-5 bg-background relative rounded-xl overflow-hidden">
+        <div className="p-6 md:p-8 bg-background relative rounded-2xl overflow-hidden">
           <div className="absolute w-50 aspect-square bg-primary/40 blur-[80px] -left-10 -top-30 hidden md:block"></div>
 
-          <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 relative">
+          <h2 className="text-2xl md:text-3xl font-bold md:font-extrabold mb-6 md:mb-8 relative text-foreground">
             {t("commonQuestions")}
           </h2>
 
           {allFaqData.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
+            <div className="text-center py-10 text-muted-foreground text-base md:text-lg">
               No FAQs available
             </div>
           ) : (
