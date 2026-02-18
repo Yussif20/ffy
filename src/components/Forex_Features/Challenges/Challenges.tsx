@@ -8,7 +8,7 @@ export default function Challenges({ locale }: { locale: string }) {
       <ChallengeFilter />
       <div className="flex items-start gap-6">
         <div className="max-w-sm flex shrink-0">
-          <FirmAllFilters />
+          <FirmAllFilters showCompanyFilter />
         </div>
         <ChallengeTable locale={locale} />
       </div>

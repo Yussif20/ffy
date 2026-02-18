@@ -48,7 +48,11 @@ const handleSetSearchParams = (
 
 const COMPANIES_PER_PAGE = 8;
 
-export default function FirmAllFilters() {
+export default function FirmAllFilters({
+  showCompanyFilter = false,
+}: {
+  showCompanyFilter?: boolean;
+}) {
   const t = useTranslations("Filters");
   const [isMobile, setIsMobile] = useState(false);
   const [companyPage, setCompanyPage] = useState(1);
@@ -71,14 +75,17 @@ export default function FirmAllFilters() {
   ]);
 
   const firmType = isFutures ? "FUTURES" : "FOREX";
-  const { data: firmsData } = useGetAllFirmsQuery([
-    { name: "limit", value: 500 },
-    { name: "firmType", value: firmType },
-  ]);
+  const { data: firmsData } = useGetAllFirmsQuery(
+    [
+      { name: "limit", value: 500 },
+      { name: "firmType", value: firmType },
+    ],
+    { skip: !showCompanyFilter },
+  );
 
   const paymentMethods = dataRaw?.data || [];
   const platforms = dataRawPlatforms?.data?.platforms || [];
-  const firms = firmsData?.firms || [];
+  const firms = showCompanyFilter ? (firmsData?.firms || []) : [];
 
   const countryList = [
     { name: t("afghanistan"), value: "Afghanistan" },
@@ -203,7 +210,8 @@ export default function FirmAllFilters() {
         onValueChange={handleAccordionChange}
         className="w-full"
       >
-        {/* Company - first filter */}
+        {/* Company - first filter (Challenges only) */}
+        {showCompanyFilter && (
         <AccordionItem value="in_firmId" className="border-gray-800">
           <AccordionTrigger className="text-sm font-semibold hover:no-underline">
             {t("company")}
@@ -291,6 +299,7 @@ export default function FirmAllFilters() {
             })()}
           </AccordionContent>
         </AccordionItem>
+        )}
 
         <AccordionItem value="countries" className="border-gray-800">
           <AccordionTrigger className="text-sm font-semibold hover:no-underline">
