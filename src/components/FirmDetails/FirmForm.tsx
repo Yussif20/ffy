@@ -96,6 +96,15 @@ export default function FirmForm({
               { value: "false", label: t("no") },
             ]}
           />
+          <CustomSelect
+            name="inNew"
+            label={t("showInNewSection")}
+            placeholder={t("selectStatus")}
+            options={[
+              { value: "true", label: t("yes") },
+              { value: "false", label: t("no") },
+            ]}
+          />
           <CustomInput
             type="text"
             label={t("ceo")}
