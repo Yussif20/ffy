@@ -359,6 +359,12 @@ button {
   text-align: left;
 }
 
+/* Hide last column in leverage tables */
+#leverages .danger-html table tr th:last-child,
+#leverages .danger-html table tr td:last-child {
+  display: none;
+}
+
 /* Forms */
 .danger-html input,
 .danger-html textarea,

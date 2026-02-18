@@ -122,7 +122,7 @@ export default async function FirmOverview({
             <SecTitle>
               {tSidebar("items.leverage")}
             </SecTitle>
-            <div className="text-sm md:text-base">
+            <div className="text-base md:text-lg">
               <div
                 className="danger-html"
                 dangerouslySetInnerHTML={{
