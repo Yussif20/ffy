@@ -4,7 +4,6 @@ import { SinglePropFirm } from "@/types/firm.types";
 import Image from "next/image";
 import { Separator } from "../ui/separator";
 import FO_Sidebar from "./FO_Sidebar";
-import { formatCurrencyShort } from "@/lib/formatCurrencyShort ";
 import { serverApi } from "@/lib/serverAxios";
 import { getTranslations } from "next-intl/server";
 import { ProfitShare, RiskManagement } from "./FuturesHiddenParts";
@@ -196,10 +195,6 @@ export default async function FirmOverview({
             </SecTitle>
             <div>
               <ul className="space-y-2 pl-5">
-                <li>
-                  {t("sections.allocationText")}{" "}
-                  {formatCurrencyShort(company?.maxAllocation || 0)}
-                </li>
                 {company?.allocationRules && (
                   <div className="text-sm md:text-base">
                     <div
