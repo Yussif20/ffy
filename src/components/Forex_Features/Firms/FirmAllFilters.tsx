@@ -332,7 +332,12 @@ export default function FirmAllFilters() {
             {t("yearsInOperation")}
           </AccordionTrigger>
           <AccordionContent>
-            <CustomSlider max={10} min={0} name="range_yearsInOperation" hideCurrency={true} />
+            <CustomSlider
+              max={10}
+              min={0}
+              name="range_yearsInOperation"
+              hideCurrency={true}
+            />
           </AccordionContent>
         </AccordionItem>
 

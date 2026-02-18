@@ -96,7 +96,12 @@ export default function FirmRow({
           <PlatformCell platforms={company.platforms} />
           <TableCell>
             <p className="text-center font-bold text-base">
-              {formatCurrencyShort(company.maxAllocation)}
+              {(() => {
+                const n = Number(company.maxAllocation);
+                return !Number.isNaN(n)
+                  ? `${n.toLocaleString("en-US", { maximumFractionDigits: 0 })}$`
+                  : formatCurrencyShort(company.maxAllocation);
+              })()}
             </p>
           </TableCell>
           <TableCell>
