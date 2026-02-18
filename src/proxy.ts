@@ -11,11 +11,39 @@ const rateLimitStore = new Map<
 const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
 const RATE_LIMIT_MAX_REQUESTS = 1000;
 
+/* -------------------- Locales -------------------- */
+const locales = ["en", "ar"];
+const defaultLocale = "en";
+
 /* -------------------- next-intl middleware -------------------- */
 const intlMiddleware = createMiddleware(routing);
 
 /* -------------------- Main Middleware -------------------- */
 export function proxy(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+
+  // Check if the path is already a coming-soon page
+  const isComingSoonPage = locales.some(
+    (locale) =>
+      pathname === `/${locale}/coming-soon` || pathname === "/coming-soon"
+  );
+
+  // If not coming-soon, redirect to coming-soon
+  if (!isComingSoonPage) {
+    // Extract locale from path if present
+    const pathnameLocale = locales.find(
+      (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+    );
+
+    const locale = pathnameLocale || defaultLocale;
+
+    // Redirect to coming-soon page
+    const url = req.nextUrl.clone();
+    url.pathname = `/${locale}/coming-soon`;
+    return NextResponse.redirect(url);
+  }
+
+  // Rate limiting
   const clientIp =
     req.headers.get("x-forwarded-for")?.split(",")[0] ?? "unknown";
 
