@@ -183,7 +183,10 @@ export default function FirmAllFilters({
       ? current.filter((item) => item !== value)
       : [...current, value];
     handleSetSearchParams(
-      { [key]: updated.length ? updated.join(",") : "" },
+      {
+        [key]: updated.length ? updated.join(",") : "",
+        page: "1",
+      },
       searchParams,
       router,
     );
@@ -455,6 +458,7 @@ export default function FirmAllFilters({
               min={0}
               name="range_yearsInOperation"
               hideCurrency={true}
+              extraQuery={{ page: "1" }}
             />
           </AccordionContent>
         </AccordionItem>
@@ -558,6 +562,7 @@ export default function FirmAllFilters({
               max={6000000}
               min={100000}
               name="range_maxAllocation"
+              extraQuery={{ page: "1" }}
             />
           </AccordionContent>
         </AccordionItem>
