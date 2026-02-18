@@ -36,7 +36,6 @@ export type SinglePropFirm = {
   payoutMethods: PayoutMethod[];
   offerPercentage: any;
   offerCode: any;
-  inNew?: boolean;
   typeOfInstruments: string[];
   countries: string[];
   leverage: string;

@@ -60,7 +60,6 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
         offerPercentage: firm.offerPercentage || undefined,
         offerCode: firm.offerCode || "",
         isPopular: firm.isPopular ? "true" : "false",
-        inNew: firm.inNew ? "true" : "false",
         affiliateLink: firm.affiliateLink || "",
         maxAllocation: firm.maxAllocation || 0,
         country: firm.country || "",
@@ -173,7 +172,6 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
       minimumTradingDays: data.minimumTradingDays,
       minimumTradingDaysArabic: data.minimumTradingDaysArabic,
       isPopular: data.isPopular === "true" ? true : false,
-      inNew: data.inNew === "true",
 
       ...(showOffer && {
         offerPercentage: Number(data.offerPercentage) || 0,

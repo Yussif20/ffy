@@ -41,9 +41,8 @@ export default function FirmRow({
     return a;
   }, []);
 
-  // New = explicitly marked inNew, or established within the last 2 years
+  // New = established within the last 2 years
   const isNew = (() => {
-    if (company.inNew === true) return true;
     if (!company.dateEstablished) return false;
     const established = new Date(company.dateEstablished).getTime();
     const twoYearsAgo = Date.now() - 2 * 365 * 24 * 60 * 60 * 1000;
