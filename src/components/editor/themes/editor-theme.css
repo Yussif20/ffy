@@ -1,3 +1,14 @@
+/* Text direction classes — used by editor-theme.ts for ltr/rtl */
+.EditorTheme__ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+.EditorTheme__rtl {
+  direction: rtl;
+  text-align: right;
+}
+
 .EditorTheme__code {
   background-color: transparent;
   font-family: Menlo, Consolas, Monaco, monospace;

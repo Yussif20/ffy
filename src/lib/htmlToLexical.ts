@@ -1,8 +1,10 @@
 export function htmlToLexical(htmlString: string): string {
   try {
-    // Create a temporary DOM element to parse HTML
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, "text/html");
+
+    const getDir = (el: HTMLElement): "ltr" | "rtl" =>
+      el.getAttribute("dir") === "rtl" ? "rtl" : "ltr";
 
     // Process nodes recursively
     const processNode = (node: Node): any => {
@@ -14,7 +16,7 @@ export function htmlToLexical(htmlString: string): string {
         return {
           type: "text",
           text: textContent,
-          format: 0, // Default no formatting
+          format: 0,
           style: "",
           mode: "normal",
           detail: 0,
@@ -36,7 +38,7 @@ export function htmlToLexical(htmlString: string): string {
             type: "paragraph",
             format: "",
             indent: 0,
-            direction: "ltr",
+            direction: getDir(element),
             children: children.length
               ? children
               : [{ type: "text", text: "", format: 0 }],
@@ -54,7 +56,7 @@ export function htmlToLexical(htmlString: string): string {
             tag: tagName,
             format: "",
             indent: 0,
-            direction: "ltr",
+            direction: getDir(element),
             children: children.length
               ? children
               : [{ type: "text", text: "", format: 0 }],
@@ -73,7 +75,7 @@ export function htmlToLexical(htmlString: string): string {
             listType: tagName === "ul" ? "bullet" : "number",
             format: "",
             indent: 0,
-            direction: "ltr",
+            direction: getDir(element),
             children: children,
           };
         }
@@ -86,11 +88,28 @@ export function htmlToLexical(htmlString: string): string {
 
           return {
             type: "listitem",
-            value: 1, // Default value for ordered lists
+            value: 1,
             checked: false,
             format: "",
             indent: 0,
-            direction: "ltr",
+            direction: getDir(element),
+            children: children.length
+              ? children
+              : [{ type: "text", text: "", format: 0 }],
+          };
+        }
+
+        // Blockquotes
+        if (tagName === "blockquote") {
+          const children = Array.from(element.childNodes)
+            .map(processNode)
+            .filter(Boolean);
+
+          return {
+            type: "quote",
+            format: "",
+            indent: 0,
+            direction: getDir(element),
             children: children.length
               ? children
               : [{ type: "text", text: "", format: 0 }],
@@ -111,7 +130,7 @@ export function htmlToLexical(htmlString: string): string {
             title: element.getAttribute("title") || null,
             format: "",
             indent: 0,
-            direction: "ltr",
+            direction: getDir(element),
             children: children.length
               ? children
               : [{ type: "text", text: "", format: 0 }],
@@ -130,7 +149,7 @@ export function htmlToLexical(htmlString: string): string {
             language: element.getAttribute("data-language") || "javascript",
             format: "",
             indent: 0,
-            direction: "ltr",
+            direction: getDir(element),
             children: [
               {
                 type: "text",
@@ -149,6 +168,87 @@ export function htmlToLexical(htmlString: string): string {
           return {
             type: "linebreak",
             version: 1,
+          };
+        }
+
+        // Table
+        if (tagName === "table") {
+          const rows: Element[] = [];
+          Array.from(element.children).forEach((child) => {
+            const ct = child.tagName.toLowerCase();
+            if (ct === "tr") {
+              rows.push(child);
+            } else if (["thead", "tbody", "tfoot"].includes(ct)) {
+              Array.from(child.children).forEach((row) => {
+                if (row.tagName.toLowerCase() === "tr") rows.push(row);
+              });
+            }
+          });
+
+          return {
+            type: "table",
+            format: "",
+            indent: 0,
+            direction: getDir(element),
+            children: rows.map(processNode).filter(Boolean),
+          };
+        }
+
+        // Table row
+        if (tagName === "tr") {
+          const children = Array.from(element.children)
+            .filter((child) =>
+              ["td", "th"].includes(child.tagName.toLowerCase()),
+            )
+            .map(processNode)
+            .filter(Boolean);
+
+          return {
+            type: "tablerow",
+            format: "",
+            indent: 0,
+            direction: "ltr",
+            children,
+          };
+        }
+
+        // Table cell
+        if (tagName === "td" || tagName === "th") {
+          const isHeader = tagName === "th";
+          let cellChildren = Array.from(element.childNodes)
+            .map(processNode)
+            .filter(Boolean);
+
+          // Lexical table cells require block-level children — wrap bare text in a paragraph
+          if (
+            cellChildren.length === 0 ||
+            cellChildren.some((c: any) => c.type === "text")
+          ) {
+            cellChildren = [
+              {
+                type: "paragraph",
+                format: "",
+                indent: 0,
+                direction: getDir(element),
+                children:
+                  cellChildren.length > 0
+                    ? cellChildren
+                    : [{ type: "text", text: "", format: 0 }],
+              },
+            ];
+          }
+
+          return {
+            type: "tablecell",
+            headerState: isHeader ? 1 : 0,
+            colSpan: parseInt(element.getAttribute("colspan") || "1", 10),
+            rowSpan: parseInt(element.getAttribute("rowspan") || "1", 10),
+            width: null,
+            backgroundColor: null,
+            format: "",
+            indent: 0,
+            direction: getDir(element),
+            children: cellChildren,
           };
         }
 
@@ -207,7 +307,7 @@ export function htmlToLexical(htmlString: string): string {
             type: "paragraph",
             format: "",
             indent: 0,
-            direction: "ltr",
+            direction: getDir(element),
             children: children,
           };
         }

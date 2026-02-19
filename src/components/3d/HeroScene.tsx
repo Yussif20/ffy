@@ -132,12 +132,7 @@ export default function HeroScene({
         </Suspense>
       </group>
 
-      {/* Limited rotation controls (no zoom) */}
-      <OrbitControls
-        enableZoom={false}
-        maxPolarAngle={Math.PI / 1.5}
-        minPolarAngle={Math.PI / 3}
-      />
+      <OrbitControls enabled={false} />
     </Canvas>
   );
 }

@@ -331,13 +331,21 @@ button {
 /* Lists */
 .danger-html ul,
 .danger-html ol {
-  margin: 0 0 1em 1.5em;
+  margin: 0 0 1em;
   padding: 0;
+  padding-inline-start: 1.5em;
+}
+
+.danger-html ul {
+  list-style-type: disc;
+}
+
+.danger-html ol {
+  list-style-type: decimal;
 }
 
 .danger-html li {
   margin-bottom: 0.5em;
-  list-style-type: disc;
 }
 
 /* Images */
@@ -351,12 +359,18 @@ button {
 .danger-html table {
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 1em;
 }
 
 .danger-html th,
 .danger-html td {
-  padding: 0.5em;
-  text-align: left;
+  padding: 0.5em 0.75em;
+  text-align: start;
+  border: 1px solid #e5e7eb;
+}
+
+.danger-html th {
+  font-weight: bold;
 }
 
 /* Hide last column in leverage tables */
@@ -385,7 +399,9 @@ button {
 /* Blockquotes */
 .danger-html blockquote {
   margin: 1em 0;
-  padding: 0.5em 1em;
+  padding: 0.5em 0;
+  padding-inline-start: 1em;
+  border-inline-start: 2px solid currentColor;
   font-style: italic;
 }
 

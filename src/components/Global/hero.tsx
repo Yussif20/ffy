@@ -110,16 +110,6 @@ export default function Hero() {
               isArabic && "items-end lg:ml-auto",
             )}
           >
-            {/* Decorative accent */}
-            <motion.div variants={itemVariants} className={cn("flex items-center gap-3", isArabic && "flex-row-reverse")}>
-              <div className="h-px w-14 bg-primary/70" />
-              <div className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-              </div>
-              <div className="h-px w-8 bg-primary/30" />
-            </motion.div>
-
             {/* Heading */}
             <motion.h1
               variants={itemVariants}

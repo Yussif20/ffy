@@ -3,8 +3,8 @@ import { EditorThemeClasses } from "lexical"
 import "./editor-theme.css"
 
 export const editorTheme: EditorThemeClasses = {
-  ltr: "text-left",
-  rtl: "text-right",
+  ltr: "EditorTheme__ltr",
+  rtl: "EditorTheme__rtl",
   heading: {
     h1: "scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl",
     h2: "scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0",
@@ -14,7 +14,7 @@ export const editorTheme: EditorThemeClasses = {
     h6: "scroll-m-20 text-base font-semibold tracking-tight",
   },
   paragraph: "leading-7 [&:not(:first-child)]:mt-6",
-  quote: "mt-6 border-l-2 pl-6 italic",
+  quote: "mt-6 border-s-2 ps-6 italic",
   link: "text-blue-600 hover:underline hover:cursor-pointer",
   list: {
     checklist: "relative",

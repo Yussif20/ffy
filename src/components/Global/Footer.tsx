@@ -80,7 +80,6 @@ const Footer = async () => {
                     textClassName="text-lg sm:text-xl"
                     isScrolled={false}
                   />
-                  <p className="text-foreground/50 text-sm mt-2 lg:pl-1">Compare. Choose. Trade.</p>
                 </div>
 
                 {/* Social icons */}
