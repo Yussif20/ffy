@@ -5,6 +5,21 @@ import { useTranslations, useLocale } from "next-intl";
 import HeroScene from "@/components/3d/HeroScene";
 import Container from "./Container";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring" as const, stiffness: 80, damping: 18 },
+  },
+};
 
 const COLOR_SCHEMES = {
   forex:   { spotlight: "#4ae79e", candlestick: "#4ae79e" },
@@ -82,7 +97,10 @@ export default function Hero() {
         <Container className="w-full">
 
           {/* Text column */}
-          <div
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
             className={cn(
               "pointer-events-auto",
               "flex flex-col gap-5 sm:gap-7 lg:gap-7",
@@ -93,17 +111,18 @@ export default function Hero() {
             )}
           >
             {/* Decorative accent */}
-            <div className={cn("flex items-center gap-3", isArabic && "flex-row-reverse")}>
+            <motion.div variants={itemVariants} className={cn("flex items-center gap-3", isArabic && "flex-row-reverse")}>
               <div className="h-px w-14 bg-primary/70" />
               <div className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-60" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
               </div>
               <div className="h-px w-8 bg-primary/30" />
-            </div>
+            </motion.div>
 
             {/* Heading */}
-            <h1
+            <motion.h1
+              variants={itemVariants}
               className={cn(
                 "font-extrabold leading-[1.1] tracking-tight",
                 "text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl",
@@ -113,10 +132,11 @@ export default function Hero() {
             >
               {t("heroTitle.title1")}
               <span className="text-primary block mt-1"> {t("heroTitle.title2")}</span>
-            </h1>
+            </motion.h1>
 
             {/* Subtitle */}
-            <p
+            <motion.p
+              variants={itemVariants}
               className={cn(
                 "text-muted-foreground/90 leading-relaxed",
                 "text-sm sm:text-base lg:text-lg",
@@ -126,8 +146,8 @@ export default function Hero() {
               )}
             >
               {t("heroTitle.subtitle")}
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
         </Container>
       </div>

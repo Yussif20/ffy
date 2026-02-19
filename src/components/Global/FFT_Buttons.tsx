@@ -7,54 +7,65 @@ import { usePathname, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import useIsArabic from "@/hooks/useIsArabic";
 import { motion } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 export default function FFT_Buttons() {
   const t = useTranslations("Navbar");
   const pathname = usePathname();
   const router = useRouter();
   const isArabic = useIsArabic();
-  const isFutures = pathname.startsWith("/futures");
 
-  // Track cumulative rotation so it always spins forward
-  const [rotation, setRotation] = useState(isFutures ? 180 : 0);
-  const prevIsFutures = useRef(isFutures);
+  const routerIsFutures = pathname.startsWith("/futures");
 
+  // Optimistic state — updates immediately on click so animation doesn't
+  // wait for Next.js router to finish navigating.
+  const [isFutures, setIsFutures] = useState(routerIsFutures);
+  const [rotation, setRotation] = useState(routerIsFutures ? 180 : 0);
+
+  // Keep in sync when pathname changes externally (back/forward navigation).
   useEffect(() => {
-    if (prevIsFutures.current !== isFutures) {
-      setRotation((prev) => prev + 180);
-      prevIsFutures.current = isFutures;
-    }
-  }, [isFutures]);
+    setIsFutures(routerIsFutures);
+  }, [routerIsFutures]);
 
   const handleChange = (value: "/" | "/futures") => {
-    if (value === "/futures" && isFutures) return null;
-    if (value === "/" && !isFutures) return null;
+    const newIsFutures = value === "/futures";
+    if (newIsFutures === isFutures) return;
+
+    // Animate immediately — no waiting for the router.
+    setIsFutures(newIsFutures);
+    setRotation((prev) => prev + 180);
+
     if (value === "/futures") {
-      const newPathName = value + pathname;
-      router.push(newPathName, { scroll: false });
-    }
-    if (value === "/") {
-      const newPathName = pathname.split("/futures")[1]
-        ? pathname.split("/futures")[1]
-        : "/";
-      router.push(newPathName, { scroll: false });
+      router.push(value + pathname, { scroll: false });
+    } else {
+      const after = pathname.split("/futures")[1] || "/";
+      router.push(after, { scroll: false });
     }
   };
 
   return (
     <div className="border max-w-max p-0.5 flex justify-center items-center gap-1 sm:gap-2 rounded-full bg-primary/10">
       {/* Forex Button */}
-      <Button
-        className={cn(
-          "px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24 transition-all duration-300",
-          isArabic && "text-base md:text-lg",
+      <div className="relative">
+        {!isFutures && (
+          <motion.div
+            layoutId="fft-pill"
+            className="absolute inset-0 rounded-full bg-primary"
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          />
         )}
-        variant={isFutures ? "ghost" : "default"}
-        onClick={() => handleChange("/")}
-      >
-        {t("forex")}
-      </Button>
+        <Button
+          className={cn(
+            "relative z-10 px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24",
+            "bg-transparent! hover:bg-white/10! shadow-none!",
+            isArabic && "text-base md:text-lg",
+          )}
+          variant="ghost"
+          onClick={() => handleChange("/")}
+        >
+          {t("forex")}
+        </Button>
+      </div>
 
       {/* Switch Icons */}
       <motion.div
@@ -67,16 +78,26 @@ export default function FFT_Buttons() {
       </motion.div>
 
       {/* Futures Button */}
-      <Button
-        className={cn(
-          "px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24 transition-all duration-300",
-          isArabic && "text-base md:text-lg",
+      <div className="relative">
+        {isFutures && (
+          <motion.div
+            layoutId="fft-pill"
+            className="absolute inset-0 rounded-full bg-primary"
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          />
         )}
-        variant={isFutures ? "default" : "ghost"}
-        onClick={() => handleChange("/futures")}
-      >
-        {t("futures")}
-      </Button>
+        <Button
+          className={cn(
+            "relative z-10 px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24",
+            "bg-transparent! hover:bg-white/10! shadow-none!",
+            isArabic && "text-base md:text-lg",
+          )}
+          variant="ghost"
+          onClick={() => handleChange("/futures")}
+        >
+          {t("futures")}
+        </Button>
+      </div>
     </div>
   );
 }

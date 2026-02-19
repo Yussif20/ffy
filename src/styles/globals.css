@@ -424,3 +424,34 @@ button {
   display: table;
   clear: both;
 }
+
+/* ── Animation & Style Utilities ───────────────────────────── */
+
+/* Primary gradient text */
+.text-primary-gradient {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary1) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Card hover glow */
+.card-glow {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.card-glow:hover {
+  box-shadow: 0 0 0 1px rgba(5, 150, 102, 0.2), 0 4px 24px rgba(5, 150, 102, 0.08);
+  border-color: rgba(5, 150, 102, 0.2);
+}
+
+/* Shimmer for skeleton */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(90deg,
+    var(--muted) 25%, rgba(255,255,255,0.06) 50%, var(--muted) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+}

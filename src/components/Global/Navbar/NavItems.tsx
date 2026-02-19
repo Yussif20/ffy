@@ -6,6 +6,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { Home, Tag, Trophy, BarChart2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function NavItems() {
   const t = useTranslations("Navbar");
@@ -110,12 +111,9 @@ export default function NavItems() {
     }
   };
 
-  const linkClass = (path: string) => {
-    const cleanPath = path.split("#")[0];
+  const linkClass = () => {
     return cn(
       "text-foreground/80 hover:text-foreground transition-colors text-center pb-1 hover:border-b-3 hover:border-primary/20 transition-all text-[13px] duration-100 min-w-30",
-      isActive(cleanPath, isFutures ? ["/futures"] : ["/"]) &&
-        "border-b-3 border-primary hover:border-primary",
       isArabic && "text-base md:text-lg font-semibold",
     );
   };
@@ -131,30 +129,37 @@ export default function NavItems() {
             gridTemplateColumns: `repeat(${navItems.length}, minmax(0, 1fr))`,
           }}
         >
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={(e) => handleClick(e, item)}
-              className={cn(
-                linkClass(item.href),
-                "flex flex-col items-center gap-0.5",
-              )}
-            >
-              <span className="flex items-center gap-1">
-                {"icon" in item && item.icon}
-                {item.name}
-              </span>
-              {item.badge && (
-                <span
-                  title={"badgeTooltip" in item ? item.badgeTooltip : undefined}
-                  className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium cursor-help"
-                >
-                  {item.badge}
+          {navItems.map((item) => {
+            const isActiveItem = isActive(item.href.split("#")[0], isFutures ? ["/futures"] : ["/"]);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={(e) => handleClick(e, item)}
+                className={cn(linkClass(), "flex flex-col items-center gap-0.5")}
+              >
+                <span className="relative flex items-center gap-1">
+                  {"icon" in item && item.icon}
+                  {item.name}
+                  {isActiveItem && (
+                    <motion.span
+                      layoutId="nav-underline"
+                      className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-primary rounded-full"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
                 </span>
-              )}
-            </Link>
-          ))}
+                {item.badge && (
+                  <span
+                    title={"badgeTooltip" in item ? item.badgeTooltip : undefined}
+                    className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium cursor-help"
+                  >
+                    {item.badge}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </>
