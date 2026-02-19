@@ -1,5 +1,5 @@
 import { TableCell, TableRow } from "@/components/ui/table";
-import { formatCurrencyLong } from "@/lib/formatCurrencyShort ";
+import { formatCurrencyLong, formatMaxAllocationToK } from "@/lib/formatCurrencyShort ";
 import { Button } from "@/components/ui/button";
 import BatteryIndicator from "@/components/Global/BatteryIndecator";
 import FirmCell from "../Firms/FirmCell";
@@ -70,7 +70,7 @@ export default function ChallengeRow({
           }}
         />
         <TableCell center className="text-sm md:text-base">
-          {formatCurrencyLong(challenge.accountSize, false)}
+          {formatMaxAllocationToK(challenge.accountSize)}
         </TableCell>
         <TableCell center className="text-sm md:text-base">
           <span className={cn(

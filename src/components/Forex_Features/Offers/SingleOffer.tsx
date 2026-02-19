@@ -72,13 +72,17 @@ function OfferDescription({
   );
 }
 
-/** Prominent percentage badge like the reference image, using primary colors */
+/** Prominent percentage badge — two variants:
+ *  "default" → large solid primary badge (used for the main total-sale in the left half)
+ *  "subtle"  → smaller outlined badge (used for sub-offer badges in the right half)
+ */
 function OfferPercentageBadge({
   percentage,
   showGift,
   giftText,
   giftTextArabic,
   isArabic,
+  variant = "default",
   className,
 }: {
   percentage: number;
@@ -86,9 +90,31 @@ function OfferPercentageBadge({
   giftText?: string | null;
   giftTextArabic?: string | null;
   isArabic: boolean;
+  variant?: "default" | "subtle";
   className?: string;
 }) {
   const gift = visibleText(isArabic, giftText ?? undefined, giftTextArabic ?? undefined);
+
+  if (variant === "subtle") {
+    return (
+      <div
+        className={cn(
+          "flex flex-col items-center justify-center rounded-lg w-[72px] min-w-[72px] py-2.5",
+          "bg-primary/10 text-primary border border-primary/30",
+          className
+        )}
+      >
+        <span className="text-base font-bold tabular-nums leading-tight">{percentage}%</span>
+        <span className="text-[10px] font-semibold uppercase tracking-wider opacity-80">OFF</span>
+        {showGift && gift && (
+          <div className="mt-1 px-1.5 py-0.5 rounded bg-primary/10 text-[9px] font-medium text-center leading-tight">
+            <GiftBox size={8} className="inline-block align-middle text-success" /> {gift}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div
       className={cn(
@@ -375,6 +401,7 @@ const OfferCard = ({
       giftText={offer.giftText}
       giftTextArabic={offer.giftTextArabic}
       isArabic={isArabic}
+      variant={hideCompany ? "subtle" : "default"}
     />
   );
   const percantCard = (
