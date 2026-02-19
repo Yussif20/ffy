@@ -41,17 +41,6 @@ export default function FirmRow({
     return a;
   }, []);
 
-  // New = established within the last 2 years
-  const isNew = (() => {
-    if (!company.dateEstablished) return false;
-    const established = new Date(company.dateEstablished).getTime();
-    const twoYearsAgo = Date.now() - 2 * 365 * 24 * 60 * 60 * 1000;
-    return established >= twoYearsAgo;
-  })();
-
-  // Trending = has an active discount offer >= 15%
-  const isTrending = Boolean(company.offerPercentage && company.offerPercentage >= 15);
-
   return (
     <TableRow className="relative border-l-2 border-l-transparent hover:border-l-primary hover:bg-foreground/5 transition-all duration-150">
       <FirmCell
@@ -60,8 +49,6 @@ export default function FirmRow({
           name: company.title,
           slug: company.slug,
         }}
-        isNew={isNew}
-        isTrending={isTrending}
       />
       <TableCell>
         <div className="flex items-center gap-1 justify-center">
