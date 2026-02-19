@@ -9,6 +9,12 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import useIsArabic from "@/hooks/useIsArabic";
@@ -31,6 +37,40 @@ import CountdownTimer from "./CountdownTimer";
 import dynamic from "next/dynamic";
 
 const OfferCoinClient = dynamic(() => import("./OfferCoinClient"), { ssr: false });
+
+/** Styled offer description with line-clamp and full-text tooltip */
+function OfferDescription({
+  text,
+  className,
+}: {
+  text: string;
+  className?: string;
+}) {
+  return (
+    <TooltipProvider delayDuration={300}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div
+            className={cn(
+              "flex items-start px-3 py-2 rounded-lg border-l-2 border-primary/60 bg-primary/5 cursor-default",
+              className
+            )}
+          >
+            <p className="text-sm font-medium text-foreground/80 line-clamp-2 leading-relaxed">
+              {text}
+            </p>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent
+          side="top"
+          className="max-w-72 text-sm leading-relaxed whitespace-normal"
+        >
+          {text}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
 
 /** Prominent percentage badge like the reference image, using primary colors */
 function OfferPercentageBadge({
@@ -73,45 +113,57 @@ function CompanyHeader({
   companyData,
   isTopOffer,
   offer,
+  badge,
 }: {
   companyData: { title: string; logoUrl: string; slug: string };
   isTopOffer?: boolean;
   offer: Offer;
+  badge?: React.ReactNode;
 }) {
   const isFutures = useIsFutures();
   return (
-    <div className="shrink-0 lg:w-1/2 lg:pr-6 lg:border-r lg:border-border">
-      <Link
-        href={`${isFutures ? "/futures/" : "/"}firms/${companyData.slug}/exclusive-offers`}
-        className="flex items-center gap-3 w-fit rounded-lg p-2 -m-2 hover:bg-muted/50 transition-colors"
-      >
-        <div className="rounded-lg overflow-hidden border border-border bg-card shrink-0">
-          <div className="w-10 sm:w-12 xl:w-14 aspect-square relative">
-            <Image
-              src={companyData.logoUrl}
-              alt=""
-              fill
-              className="object-cover"
-            />
+    <div className="shrink-0 lg:w-1/2 lg:pr-6 lg:border-r lg:border-border flex flex-col lg:flex-row lg:self-stretch">
+      {/* Company logo + name — occupies space left of the dotted divider.
+          Width = card's left-padding (1.5rem) subtracted from left-75 (18.75rem) = 17.25rem */}
+      <div className="lg:w-[17.25rem] shrink-0 flex items-center">
+        <Link
+          href={`${isFutures ? "/futures/" : "/"}firms/${companyData.slug}/exclusive-offers`}
+          className="flex items-center gap-3 w-fit rounded-lg p-2 -m-2 hover:bg-muted/50 transition-colors"
+        >
+          <div className="rounded-lg overflow-hidden border border-border bg-card shrink-0">
+            <div className="w-10 sm:w-12 xl:w-14 aspect-square relative">
+              <Image
+                src={companyData.logoUrl}
+                alt=""
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
+          <div>
+            <h2 className="text-base md:text-lg xl:text-xl font-semibold text-foreground flex flex-wrap items-center gap-1">
+              {companyData.title}
+              {isTopOffer && (
+                <span className="items-center gap-1 md:flex hidden text-primary">
+                  (
+                  <DiscountText
+                    className="text-primary"
+                    mainClassName="px-0! py-0"
+                    percentage={offer.offerPercentage}
+                  />
+                  )
+                </span>
+              )}
+            </h2>
+          </div>
+        </Link>
+      </div>
+      {/* Total sale badge — occupies space right of the dotted divider */}
+      {badge && (
+        <div className="hidden lg:flex flex-1 items-center justify-center">
+          {badge}
         </div>
-        <div>
-          <h2 className="text-base md:text-lg xl:text-xl font-semibold text-foreground flex flex-wrap items-center gap-1">
-            {companyData.title}
-            {isTopOffer && (
-              <span className="items-center gap-1 md:flex hidden text-primary">
-                (
-                <DiscountText
-                  className="text-primary"
-                  mainClassName="px-0! py-0"
-                  percentage={offer.offerPercentage}
-                />
-                )
-              </span>
-            )}
-          </h2>
-        </div>
-      </Link>
+      )}
     </div>
   );
 }
@@ -192,7 +244,20 @@ export default function SingleOffer({
       {/* Left: company once. Right: all offers (no repeated company) */}
       {!onlyShowMatch ? (
         <div className="flex flex-col lg:flex-row lg:gap-6 w-full">
-          <CompanyHeader companyData={companyData} isTopOffer={isTopOffer} offer={offerFirstData} />
+          <CompanyHeader
+            companyData={companyData}
+            isTopOffer={isTopOffer}
+            offer={offerFirstData}
+            badge={
+              <OfferPercentageBadge
+                percentage={offerFirstData.offerPercentage}
+                showGift={offerFirstData.showGift}
+                giftText={offerFirstData.giftText}
+                giftTextArabic={offerFirstData.giftTextArabic}
+                isArabic={isArabic}
+              />
+            }
+          />
           <div className="flex-1 min-w-0 mt-4 lg:mt-0">
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="item-1" className="border-none">
@@ -206,6 +271,7 @@ export default function SingleOffer({
                   isAdmin={isAdmin}
                   isTopOffer={isTopOffer}
                   hideCompany
+                  hideBadge
                 />
                 <AccordionContent>
                   <div className="flex flex-col gap-4 lg:gap-6 pt-2">
@@ -270,6 +336,7 @@ const OfferCard = ({
   onlyShowMatch,
   isAdmin,
   hideCompany = false,
+  hideBadge = false,
 }: {
   isTopOffer?: boolean;
   offer: Offer;
@@ -286,6 +353,7 @@ const OfferCard = ({
   onlyShowMatch?: boolean;
   isAdmin?: boolean;
   hideCompany?: boolean;
+  hideBadge?: boolean;
 }) => {
   const isArabic = useIsArabic();
   const isFutures = useIsFutures();
@@ -404,9 +472,9 @@ const OfferCard = ({
           <Separator
             className={cn("my-2 w-full ", !onlyShowMatch && "lg:block hidden")}
           />
-          <p className="font-medium text-sm">
-            {visibleText(isArabic, offer.text, offer.textArabic)}
-          </p>
+          <OfferDescription
+            text={visibleText(isArabic, offer.text, offer.textArabic)}
+          />
         </>
       ) : null}
     </div>
@@ -420,9 +488,9 @@ const OfferCard = ({
       </div>
       {endTime && <div className="flex justify-center items-center">{endTime}</div>}
       {offer.text || offer.textArabic ? (
-        <p className="font-medium text-sm">
-          {visibleText(isArabic, offer.text, offer.textArabic)}
-        </p>
+        <OfferDescription
+          text={visibleText(isArabic, offer.text, offer.textArabic)}
+        />
       ) : null}
     </div>
   );
@@ -438,15 +506,15 @@ const OfferCard = ({
           !showTag && "border-t border-border pt-6"
         )}
       >
-        {/* Left: prominent % OFF badge (our primary colors) */}
-        <div className="shrink-0">{percentageBadge}</div>
+        {/* Badge: only shown when not moved to the company column */}
+        {!hideBadge && <div className="shrink-0">{percentageBadge}</div>}
 
         {/* Middle: offer description + countdown */}
-        <div className="min-w-0 flex-1 space-y-1">
+        <div className="min-w-0 flex-1 space-y-2">
           {offer.text || offer.textArabic ? (
-            <p className="font-medium text-sm text-foreground/90">
-              {visibleText(isArabic, offer.text, offer.textArabic)}
-            </p>
+            <OfferDescription
+              text={visibleText(isArabic, offer.text, offer.textArabic)}
+            />
           ) : null}
           {endTime && <div className="flex items-center">{endTime}</div>}
         </div>
