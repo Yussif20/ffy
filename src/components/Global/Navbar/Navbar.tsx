@@ -7,7 +7,7 @@ import { useCurrentUser } from "@/redux/authSlice";
 import { useAppSelector } from "@/redux/store";
 import { Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Container from "../Container";
 import ForexFeatureToggle from "../ForexFeatureToggle";
 import NavProfile from "../NavProfile";
@@ -22,6 +22,7 @@ const Navbar = () => {
   const userData = useAppSelector(useCurrentUser);
   const isLogIn = userData?.id;
   const [isScrolled, setIsScrolled] = useState(false);
+  const isScrolledRef = useRef(false);
 
   useEffect(() => {
     let ticking = false;
@@ -30,9 +31,11 @@ const Navbar = () => {
         window.requestAnimationFrame(() => {
           const scrollY = window.scrollY;
           // Hysteresis: different thresholds for going down vs going up
-          if (scrollY > 100 && !isScrolled) {
+          if (scrollY > 100 && !isScrolledRef.current) {
+            isScrolledRef.current = true;
             setIsScrolled(true);
-          } else if (scrollY < 50 && isScrolled) {
+          } else if (scrollY < 50 && isScrolledRef.current) {
+            isScrolledRef.current = false;
             setIsScrolled(false);
           }
           ticking = false;
@@ -42,7 +45,7 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isScrolled]);
+  }, []);
 
   return (
     <nav

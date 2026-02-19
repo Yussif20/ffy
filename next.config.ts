@@ -1,6 +1,22 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 const nextConfig: NextConfig = {
+  experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "framer-motion",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-select",
+      "@radix-ui/react-tabs",
+      "@radix-ui/react-tooltip",
+      "@radix-ui/react-popover",
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-checkbox",
+      "@radix-ui/react-switch",
+      "@radix-ui/react-slider",
+    ],
+  },
   images: {
     remotePatterns: [
       {
@@ -28,6 +44,8 @@ const nextConfig: NextConfig = {
         hostname: "31.220.111.98",
       },
     ],
+    minimumCacheTTL: 2592000,
+    formats: ["image/avif", "image/webp"],
   },
 };
 

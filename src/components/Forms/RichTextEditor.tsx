@@ -1,8 +1,18 @@
 "use client";
 
 import { useFormContext, Controller } from "react-hook-form";
-import { Editor } from "../blocks/editor-x/editor";
+import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
+
+const Editor = dynamic(
+  () => import("../blocks/editor-x/editor").then((m) => m.Editor),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="border rounded p-2 min-h-[100px] animate-pulse bg-muted" />
+    ),
+  },
+);
 
 type TEditorFieldProps = {
   name: string;

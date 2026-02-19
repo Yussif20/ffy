@@ -96,6 +96,7 @@ export default function FirmTable({
               company={item}
               prevCompany={firms[index - 1]}
               nextCompany={firms[index + 1]}
+              userRole={user?.role}
             />
           ))}
         </TableBody>

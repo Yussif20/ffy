@@ -10,36 +10,43 @@ import {
 import { formatCurrencyShort, formatMaxAllocationToK } from "@/lib/formatCurrencyShort ";
 import { SinglePropFirm } from "@/types/firm.types";
 import Image from "next/image";
+import React, { useMemo } from "react";
 import FirmCell from "./FirmCell";
 import PlatformCell from "./PlatformCell";
 import { EditFirmDialog } from "@/components/FirmDetails/EditFirmDialog";
-import { useAppSelector } from "@/redux/store";
-import { useCurrentUser } from "@/redux/authSlice";
 import DeleteFirmDialog from "@/components/FirmDetails/DeleteFirmDialog";
 import FirmIndexChange from "./FirmIndexChange";
 import { calculateYearsInOperation } from "@/utils/calculateYearsInOperation";
 
-export default function FirmRow({
+function FirmRow({
   company,
   prevCompany,
   nextCompany,
   shortVersion,
+  userRole,
 }: {
   company: SinglePropFirm;
   prevCompany: SinglePropFirm;
   nextCompany: SinglePropFirm;
   shortVersion?: boolean;
+  userRole?: string;
 }) {
-  const user = useAppSelector(useCurrentUser);
-  const instrumentSet = new Set(company.typeOfInstruments);
+  const instrumentSet = useMemo(
+    () => new Set(company.typeOfInstruments),
+    [company.typeOfInstruments],
+  );
   const country =
     countryDataByCountry(company.country) || countryData(company.country);
-  const instruments = propFirmInstrumentTypes.reduce<string[]>((a, b) => {
-    if (instrumentSet.has(b.value)) {
-      a.push(b.name);
-    }
-    return a;
-  }, []);
+  const instruments = useMemo(
+    () =>
+      propFirmInstrumentTypes.reduce<string[]>((a, b) => {
+        if (instrumentSet.has(b.value)) {
+          a.push(b.name);
+        }
+        return a;
+      }, []),
+    [instrumentSet],
+  );
 
   return (
     <TableRow className="relative border-l-2 border-l-transparent hover:border-l-primary hover:bg-foreground/5 transition-all duration-150">
@@ -106,7 +113,7 @@ export default function FirmRow({
           </TableCell>
         </>
       )}
-      {user?.role === "SUPER_ADMIN" && (
+      {userRole === "SUPER_ADMIN" && (
         <TableCell>
           <div className="flex gap-2">
             <EditFirmDialog firmId={company.id} />
@@ -123,3 +130,5 @@ export default function FirmRow({
     </TableRow>
   );
 }
+
+export default React.memo(FirmRow);
