@@ -1,6 +1,7 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
+import { PerspectiveCamera } from "@react-three/drei";
 import { Suspense } from "react";
 
 interface SceneProps {
@@ -19,10 +20,10 @@ export default function Scene({
   return (
     <Canvas
       className={className}
-      dpr={[1, 1.5]}
+      dpr={[1, 2]}
       gl={{ alpha: true, antialias: true }}
-      camera={{ position: cameraPosition, fov }}
     >
+      <PerspectiveCamera makeDefault position={cameraPosition} fov={fov} />
       <Suspense fallback={null}>{children}</Suspense>
     </Canvas>
   );

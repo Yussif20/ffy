@@ -22,10 +22,6 @@ export default function HeroScene({
   candlestickColor = "#4ae79e",
   mirror = false,
 }: HeroSceneProps) {
-  // Mobile positioning offsets (in pixels, converted to 3D units)
-  const mobileOffsetX = -150;
-  const mobileOffsetY = 200;
-
   // Responsive scaling
   const [scale, setScale] = useState(1);
   const [cameraZ, setCameraZ] = useState(8);
@@ -37,39 +33,53 @@ export default function HeroScene({
     const handleResize = () => {
       const width = window.innerWidth;
 
-      // Scale from 0.6 (mobile) to 1.0 (desktop)
+      // Smoothly interpolate scale and cameraZ across breakpoints
       const minWidth = 320;
-      const maxWidth = 1920;
-      const minScale = 0.6;
-      const maxScale = 1.0;
-      const minCameraZ = 11;
-      const maxCameraZ = 8;
+      const maxWidth = 2560; // support 4K/ultrawide
+      const minScale = 0.52;
+      const maxScale = 1.15; // slight boost on large displays
+      const minCameraZ = 13;
+      const maxCameraZ = 7.5;
 
       const clampedWidth = Math.max(minWidth, Math.min(maxWidth, width));
       const normalizedWidth = (clampedWidth - minWidth) / (maxWidth - minWidth);
-      const smoothScale = minScale + (maxScale - minScale) * normalizedWidth;
-      const smoothCameraZ =
-        minCameraZ + (maxCameraZ - minCameraZ) * normalizedWidth;
+      // Use ease-out curve so small screens get more benefit per pixel
+      const easedWidth = 1 - Math.pow(1 - normalizedWidth, 2);
+      const smoothScale = minScale + (maxScale - minScale) * easedWidth;
+      const smoothCameraZ = minCameraZ + (maxCameraZ - minCameraZ) * easedWidth;
 
       setScale(smoothScale);
       setCameraZ(smoothCameraZ);
 
-      // Apply mobile offsets based on breakpoint
-      if (width < 768) {
-        // Small phones — original offset
-        setScenePosition([mobileOffsetX / 100, mobileOffsetY / 100, 0]);
+      // On lg+ screens the hero uses a 1/3 text | 2/3 3D split.
+      // Shifting the scene group toward the center (negative X for LTR) pulls the
+      // objects away from the far edge so they fill the right two-thirds cleanly.
+      // On smaller screens the 3D is a full-background layer; push it high so it
+      // doesn't sit on top of the bottom-anchored text.
+      if (width < 480) {
+        const xDir = mirror ? 1.3 : -1.3;
+        setScenePosition([xDir, 2.8, 0]);
+      } else if (width < 768) {
+        const xDir = mirror ? 1.0 : -1.0;
+        setScenePosition([xDir, 2.2, 0]);
       } else if (width < 1024) {
-        // Tablets (md→lg) — push scene higher to avoid clashing with text
-        setScenePosition([mobileOffsetX / 100, 4, 0]);
+        const xDir = mirror ? 0.5 : -0.5;
+        setScenePosition([xDir, 2.0, 0]);
+      } else if (width < 1280) {
+        // Small laptops: text column starts, shift 3D toward center-right
+        const xShift = mirror ? 0.8 : -0.8;
+        setScenePosition([xShift, 0, 0]);
       } else {
-        setScenePosition([0, 0, 0]);
+        // Desktop / 4K: strong shift so objects fill the right 2/3
+        const xShift = mirror ? 1.0 : -1.0;
+        setScenePosition([xShift, 0, 0]);
       }
     };
 
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [mirror]); // mirror affects X offset direction
 
   return (
     <Canvas
