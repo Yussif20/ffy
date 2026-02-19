@@ -1,5 +1,5 @@
 import { TableCell, TableRow } from "@/components/ui/table";
-import { formatCurrencyShort } from "@/lib/formatCurrencyShort ";
+import { formatCurrencyLong } from "@/lib/formatCurrencyShort ";
 import { Button } from "@/components/ui/button";
 import BatteryIndicator from "@/components/Global/BatteryIndecator";
 import FirmCell from "../Firms/FirmCell";
@@ -70,7 +70,7 @@ export default function ChallengeRow({
           }}
         />
         <TableCell center className="text-sm md:text-base">
-          {formatCurrencyShort(challenge.accountSize, false)}
+          {formatCurrencyLong(challenge.accountSize, false)}
         </TableCell>
         <TableCell center className="text-sm md:text-base">
           <span className={cn(
@@ -106,7 +106,7 @@ export default function ChallengeRow({
         </TableCell>
         <TableCell center className="text-sm md:text-base">
           <div className="flex flex-col items-center gap-1.5">
-            <p className="text-base md:text-lg font-bold text-foreground/80">{formatCurrencyShort(challenge?.price)}</p>
+            <p className="text-base md:text-lg font-bold text-foreground/80">{formatCurrencyLong(challenge?.price)}</p>
             <Link href={challenge.affiliateLink || ""} target="_blank">
               <Button size="sm" className="h-7 px-3 text-xs font-bold">{t("buy")}</Button>
             </Link>

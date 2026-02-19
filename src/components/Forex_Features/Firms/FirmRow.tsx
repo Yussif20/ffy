@@ -7,7 +7,7 @@ import {
   countryDataByCountry,
   propFirmInstrumentTypes,
 } from "@/data";
-import { formatCurrencyShort } from "@/lib/formatCurrencyShort ";
+import { formatCurrencyShort, formatMaxAllocationToK } from "@/lib/formatCurrencyShort ";
 import { SinglePropFirm } from "@/types/firm.types";
 import Image from "next/image";
 import FirmCell from "./FirmCell";
@@ -99,7 +99,7 @@ export default function FirmRow({
               {(() => {
                 const n = Number(company.maxAllocation);
                 return !Number.isNaN(n)
-                  ? `${n.toLocaleString("en-US", { maximumFractionDigits: 0 })}$`
+                  ? `$${formatMaxAllocationToK(company.maxAllocation)}`
                   : formatCurrencyShort(company.maxAllocation);
               })()}
             </p>
