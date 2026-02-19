@@ -78,12 +78,13 @@ export default function Hero() {
       {/* ── Layout ──
           Mobile/tablet : text centred in the full screen.
           Desktop (lg+)  : strict 1/3 text | 2/3 3D side-by-side. */}
-      <div className="absolute inset-0 z-20 flex items-center">
+      <div className="pointer-events-none absolute inset-0 z-20 flex items-center">
         <Container className="w-full">
 
           {/* Text column */}
           <div
             className={cn(
+              "pointer-events-auto",
               "flex flex-col gap-5 sm:gap-7 lg:gap-7",
               // Mobile: full width centred; desktop: left 1/3
               "w-full lg:w-1/3",
