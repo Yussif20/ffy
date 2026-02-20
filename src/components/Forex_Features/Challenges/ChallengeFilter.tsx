@@ -81,6 +81,7 @@ export default function ChallengeFilter({
             { name: t("STEP3"), value: "STEP3" },
             { name: t("STEP4"), value: "STEP4" },
           ]}
+          defaultValue="STEP1"
           cols={2}
         />
       </div>

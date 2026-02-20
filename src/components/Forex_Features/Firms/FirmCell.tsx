@@ -39,7 +39,7 @@ export default function FirmCell({
             </div>
           </div>
           <div className="overflow-hidden transition-all duration-200 md:!max-w-none">
-            <h2 className="text-base md:text-lg xl:text-xl font-semibold whitespace-nowrap">
+            <h2 className="text-sm md:text-base xl:text-lg font-semibold whitespace-nowrap">
               {company.name}
             </h2>
           </div>
@@ -67,7 +67,7 @@ export default function FirmCell({
       <TableCell className={cn("bg-background z-10 table-cell md:hidden")}>
         <Link href={linkHref} className="flex justify-center md:justify-start">
           <div className="overflow-hidden transition-all duration-200 md:!max-w-none text-center md:text-left">
-            <h2 className="text-base md:text-lg xl:text-xl font-semibold whitespace-nowrap">
+            <h2 className="text-sm md:text-base xl:text-lg font-semibold whitespace-nowrap">
               {company.name}
             </h2>
           </div>

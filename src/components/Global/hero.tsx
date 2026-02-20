@@ -115,7 +115,7 @@ export default function Hero() {
               variants={itemVariants}
               className={cn(
                 "font-extrabold leading-[1.1] tracking-tight",
-                "text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl",
+                "text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-5xl",
                 !isArabic && "text-center lg:text-left",
                 isArabic && "text-right",
               )}
@@ -129,7 +129,7 @@ export default function Hero() {
               variants={itemVariants}
               className={cn(
                 "text-muted-foreground/90 leading-relaxed",
-                "text-sm sm:text-base lg:text-lg",
+                "text-sm sm:text-base lg:text-lg 2xl:text-base",
                 "max-w-xs sm:max-w-sm lg:max-w-none",
                 !isArabic && "text-center lg:text-left",
                 isArabic && "text-right",

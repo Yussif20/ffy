@@ -92,7 +92,7 @@ export default function ChallengeRow({
         <TableCell center className="text-sm md:text-base">
           <div className="flex items-center justify-center gap-2">
             <BatteryIndicator percentage={challenge?.profitSplit} showNumber={false} />
-            <span className="text-xs md:text-sm text-foreground/80 font-medium">
+            <span className="text-sm md:text-base font-semibold">
               {challenge?.profitSplit}%
             </span>
           </div>
