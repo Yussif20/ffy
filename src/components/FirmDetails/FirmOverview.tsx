@@ -248,15 +248,24 @@ export default async function FirmOverview({
               {tSidebar("items.drawdown")}
             </SecTitle>
 
-            <ul className="space-y-2 pl-5">
+            <div className="space-y-4">
               {company?.drawDownTexts.map((item, idx) => {
                 return (
-                  <li className="list-disc" key={idx}>
-                    {visibleText(isArabic, item.englishText, item.arabicText)}
-                  </li>
+                  <div key={idx} className="space-y-1">
+                    <div
+                      className="danger-html text-sm md:text-base"
+                      dangerouslySetInnerHTML={{
+                        __html: visibleText(
+                          isArabic,
+                          item.englishText,
+                          item.arabicText,
+                        ),
+                      }}
+                    />
+                  </div>
                 );
               })}
-            </ul>
+            </div>
           </section>
           <Separator />
 

@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from "react-hook-form";
-import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import TTTextEditor from "../Forms/TTTextEditor";
 import { DrawDownText } from "@/types/firm.types";
 const drawDowns = {
   balanceBased: "Balance Based",
@@ -10,7 +10,6 @@ const drawDowns = {
   smartDd: "Smart DD",
 } as const;
 type DrawDownKey = keyof typeof drawDowns;
-import { Card, CardContent } from "../ui/card";
 import { useTranslations } from "next-intl";
 import {
   Select,
@@ -152,48 +151,31 @@ export function DrawDownTexts() {
             <Label>{tSidebar("items.drawdownTexts")}</Label>
             <div className="space-y-4">
               {drawDownTexts.map((drawDownText, index) => (
-                <Card key={index}>
-                  <CardContent className="space-y-4 relative pt-3">
-                    <div className="flex justify-between items-center gap-2">
-                      <Label className="font-semibold">
-                        {drawDowns[drawDownText.drawdown as DrawDownKey]}
-                      </Label>
+                <div key={index} className="space-y-4">
+                  <h3 className="text-sm font-semibold border-b pb-2">
+                    {drawDowns[drawDownText.drawdown as DrawDownKey]}
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label>English Text</Label>
+                      <TTTextEditor
+                        value={drawDownText.englishText}
+                        onChange={(value) =>
+                          handleChangeValue(index, "englishText", value)
+                        }
+                      />
                     </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      <div className="space-y-2">
-                        <Label>English Text</Label>
-                        <Input
-                          type="text"
-                          placeholder="English Text"
-                          value={drawDownText.englishText}
-                          onChange={(e) =>
-                            handleChangeValue(
-                              index,
-                              "englishText",
-                              e.target.value,
-                            )
-                          }
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label>Arabic Text</Label>
-                        <Input
-                          type="text"
-                          placeholder="Arabic Text"
-                          value={drawDownText.arabicText}
-                          onChange={(e) =>
-                            handleChangeValue(
-                              index,
-                              "arabicText",
-                              e.target.value,
-                            )
-                          }
-                        />
-                      </div>
+                    <div className="space-y-2">
+                      <Label>Arabic Text</Label>
+                      <TTTextEditor
+                        value={drawDownText.arabicText}
+                        onChange={(value) =>
+                          handleChangeValue(index, "arabicText", value)
+                        }
+                      />
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
