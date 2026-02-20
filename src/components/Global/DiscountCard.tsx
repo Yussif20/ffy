@@ -1,6 +1,5 @@
 import { Copy, Check } from "lucide-react";
 import { useState } from "react";
-import DiscountText from "./DiscountText";
 
 export default function DiscountCard({
   discount,
@@ -16,10 +15,8 @@ export default function DiscountCard({
   const handleCopy = async () => {
     try {
       if (navigator.clipboard && window.isSecureContext) {
-        // Modern API (works on HTTPS)
         await navigator.clipboard.writeText(discount.code);
       } else {
-        // Fallback for HTTP / older browsers
         const textArea = document.createElement("textarea");
         textArea.value = discount.code;
         textArea.style.position = "fixed";
@@ -30,7 +27,6 @@ export default function DiscountCard({
         document.execCommand("copy");
         document.body.removeChild(textArea);
       }
-
       setCopied(true);
       setTimeout(() => setCopied(false), 3000);
     } catch (error) {
@@ -39,20 +35,30 @@ export default function DiscountCard({
   };
 
   return (
-    <div
-      onClick={handleCopy}
-      className="px-2 py-0.5 md:py-1 rounded-xl bg-linear-to-t from-primary1 to-primary2  cursor-pointer select-none"
-    >
-      <h1 className="font-semibold text-sm sm:text-base md:text-lg text-center leading-none">
-        <DiscountText percentage={discount.offerPercentage} />
-      </h1>
+    <div className="flex justify-center items-center">
+      <div
+        onClick={handleCopy}
+        className="inline-flex flex-col items-center gap-1 px-2.5 py-1.5 rounded-lg
+          bg-gradient-to-b from-primary/90 to-primary/60
+          border border-primary/40 shadow-sm shadow-primary/20
+          cursor-pointer select-none
+          hover:shadow-md hover:shadow-primary/30 hover:scale-105
+          transition-all duration-200"
+      >
+        <span className="text-[11px] font-bold text-primary-foreground tracking-wider leading-none uppercase">
+          {discount.offerPercentage}% OFF
+        </span>
 
-      {discount.code && (
-        <div className="w-full rounded-lg md:rounded-xl bg-background/70 py-1.5 flex justify-center items-center gap-2 text-xs sm:text-sm md:text-base font-medium px-4 md:px-8 ">
-          {discount?.code}
-          {copied ? <Check size={16} /> : <Copy size={16} />}
-        </div>
-      )}
+        {discount.code && (
+          <div className="flex items-center gap-1 bg-background/85 rounded-md px-2 py-0.5">
+            <span className="text-[10px] font-semibold tracking-wide">{discount.code}</span>
+            {copied
+              ? <Check size={9} className="text-primary shrink-0" />
+              : <Copy size={9} className="text-foreground/50 shrink-0" />
+            }
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -10,6 +10,7 @@ import { ProfitShare, RiskManagement } from "./FuturesHiddenParts";
 import { visibleText } from "@/utils/visibleText";
 import SecTitle from "./FO_SecTitle";
 import { cn } from "@/lib/utils";
+import Subscribe from "@/components/Forex_Features/Subscribe";
 
 export default async function FirmOverview({
   slug,
@@ -622,6 +623,11 @@ export default async function FirmOverview({
                 ))}
             </div>
           </section>
+
+          {/* Subscribe */}
+          <div className="mt-16 pt-8 border-t border-border">
+            <Subscribe />
+          </div>
         </div>
       </div>
     </div>
