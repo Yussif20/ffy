@@ -56,7 +56,7 @@ function OfferDescription({
               className
             )}
           >
-            <p className="text-sm font-medium text-foreground/80 line-clamp-2 leading-relaxed">
+            <p className="text-sm md:text-base font-semibold text-foreground line-clamp-2 leading-relaxed">
               {text}
             </p>
           </div>
@@ -167,7 +167,7 @@ function CompanyHeader({
             </div>
           </div>
           <div>
-            <h2 className="text-base md:text-lg xl:text-xl font-semibold text-foreground flex flex-wrap items-center gap-1">
+            <h2 className="text-sm md:text-base xl:text-lg font-semibold text-foreground flex flex-wrap items-center gap-1">
               {companyData.title}
               {isTopOffer && (
                 <span className="items-center gap-1 md:flex hidden text-primary">
@@ -383,6 +383,9 @@ const OfferCard = ({
 }) => {
   const isArabic = useIsArabic();
   const isFutures = useIsFutures();
+  const codeBorderCls = isFutures ? "border-yellow-400 hover:bg-yellow-400/10" : "border-green-400 hover:bg-green-400/10";
+  const codeLabelCls = isFutures ? "text-yellow-500" : "text-green-500";
+  const copyIconHoverCls = isFutures ? "hover:text-yellow-500" : "hover:text-green-500";
   const { isCopied, copyToClipboard } = useCopyToClipboard({
     successMessage: t("codeCopied") || "Code copied to clipboard!",
     errorMessage: t("copyFailed") || "Failed to copy code",
@@ -449,7 +452,7 @@ const OfferCard = ({
               />
             </div>
           </div>
-          <h2 className="text-base md:text-lg xl:text-xl font-semibold flex gap-1">
+          <h2 className="text-sm md:text-base xl:text-lg font-semibold flex gap-1">
             {companyData.title}{" "}
             {isTopOffer && (
               <span className=" items-center gap-1 md:flex hidden">
@@ -471,10 +474,10 @@ const OfferCard = ({
           offer.code ? (
             <button
               onClick={() => copyToClipboard(offer?.code)}
-              className="flex justify-center items-center gap-2 border-2 border-primary px-2 md:px-2.5 py-1 md:py-1.5 rounded-full border-dashed text-[11px] sm:text-sm"
+              className={cn("flex justify-center items-center gap-2 border-2 border-dashed px-2 md:px-2.5 py-1 md:py-1.5 rounded-full text-[11px] sm:text-sm transition-colors", codeBorderCls)}
             >
-              <span className="text-primary font-normal">{t("code")}</span>
-              {/* <span className="text-primary font-normal">{t("code")}</span> */}
+              <span className={cn("font-normal", codeLabelCls)}>{t("code")}</span>
+              {/* <span className={cn("font-normal", codeLabelCls)}>{t("code")}</span> */}
               <p className="h-6 border-r border-foreground/20"></p>
               <span className="font-semibold uppercase">{offer?.code}</span>
               {isCopied ? (
@@ -482,7 +485,7 @@ const OfferCard = ({
               ) : (
                 <Copy
                   size={14}
-                  className="cursor-pointer hover:text-primary transition-colors"
+                  className={cn("cursor-pointer transition-colors", copyIconHoverCls)}
                 />
               )}
             </button>
@@ -551,15 +554,15 @@ const OfferCard = ({
           {offer.code && (
             <button
               onClick={() => copyToClipboard(offer?.code)}
-              className="inline-flex items-center gap-2 rounded-lg bg-muted border border-border px-3 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-accent transition-colors"
+              className={cn("flex justify-center items-center gap-2 border-2 border-dashed px-2.5 md:px-3 py-1.5 md:py-2 rounded-full text-[11px] sm:text-sm transition-colors", codeBorderCls)}
             >
-              <span className="text-muted-foreground">{t("code")}</span>
-              <span className="h-4 w-px bg-border" />
+              <span className={cn("font-normal", codeLabelCls)}>{t("code")}</span>
+              <p className="h-6 border-r border-foreground/20"></p>
               <span className="font-semibold uppercase">{offer?.code}</span>
               {isCopied ? (
-                <Check size={14} className="text-primary" />
+                <Check size={14} className="text-green-500 transition-colors" />
               ) : (
-                <Copy size={14} className="text-muted-foreground" />
+                <Copy size={14} className={cn("cursor-pointer transition-colors", copyIconHoverCls)} />
               )}
             </button>
           )}
@@ -612,9 +615,9 @@ const OfferCard = ({
             offer.code ? (
               <button
                 onClick={() => copyToClipboard(offer?.code)}
-                className="flex justify-center items-center gap-2 border-2 border-primary px-2 md:px-2.5 py-1 md:py-1.5 rounded-full border-dashed text-[11px] sm:text-sm"
+                className={cn("flex justify-center items-center gap-2 border-2 border-dashed px-2 md:px-2.5 py-1 md:py-1.5 rounded-full text-[11px] sm:text-sm transition-colors", codeBorderCls)}
               >
-                <span className="text-primary font-normal">{t("code")}</span>
+                <span className={cn("font-normal", codeLabelCls)}>{t("code")}</span>
                 <p className="h-6 border-r border-foreground/20"></p>
                 <span className="font-semibold uppercase">{offer?.code}</span>
                 {isCopied ? (
@@ -652,7 +655,7 @@ const OfferCard = ({
                     {offer.code && (
                       <button
                         onClick={() => copyToClipboard(offer?.code)}
-                        className="flex justify-center items-center gap-2 border-2 border-primary px-2.5 md:px-3 py-1.5 md:py-2 rounded-full border-dashed text-[11px] sm:text-sm w-full lg:w-auto"
+                        className={cn("flex justify-center items-center gap-2 border-2 border-dashed px-2.5 md:px-3 py-1.5 md:py-2 rounded-full text-[11px] sm:text-sm w-full lg:w-auto transition-colors", codeBorderCls)}
                       >
                         <span className="text-primary font-normal">
                           {t("code")}
