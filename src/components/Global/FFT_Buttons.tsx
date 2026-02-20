@@ -7,9 +7,10 @@ import { usePathname, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import useIsArabic from "@/hooks/useIsArabic";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId } from "react";
 
 export default function FFT_Buttons() {
+  const id = useId();
   const t = useTranslations("Navbar");
   const pathname = usePathname();
   const router = useRouter();
@@ -27,7 +28,7 @@ export default function FFT_Buttons() {
     setIsFutures(routerIsFutures);
   }, [routerIsFutures]);
 
-  const handleChange = (value: "/" | "/futures") => {
+  const handleChange = (value: "/forex" | "/futures") => {
     const newIsFutures = value === "/futures";
     if (newIsFutures === isFutures) return;
 
@@ -35,11 +36,14 @@ export default function FFT_Buttons() {
     setIsFutures(newIsFutures);
     setRotation((prev) => prev + 180);
 
+    window.scrollTo({ top: 0, behavior: "instant" });
+
     if (value === "/futures") {
-      router.push(value + pathname, { scroll: false });
+      const path = pathname.startsWith("/forex") ? pathname.slice(6) : pathname;
+      router.push("/futures" + path, { scroll: false });
     } else {
-      const after = pathname.split("/futures")[1] || "/";
-      router.push(after, { scroll: false });
+      const after = pathname.split("/futures")[1] || "";
+      router.push("/forex" + after, { scroll: false });
     }
   };
 
@@ -49,7 +53,7 @@ export default function FFT_Buttons() {
       <div className="relative">
         {!isFutures && (
           <motion.div
-            layoutId="fft-pill"
+            layoutId={`fft-pill-${id}`}
             className="absolute inset-0 rounded-full bg-primary"
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           />
@@ -61,7 +65,7 @@ export default function FFT_Buttons() {
             isArabic && "text-base md:text-lg",
           )}
           variant="ghost"
-          onClick={() => handleChange("/")}
+          onClick={() => handleChange("/forex")}
         >
           {t("forex")}
         </Button>
@@ -81,7 +85,7 @@ export default function FFT_Buttons() {
       <div className="relative">
         {isFutures && (
           <motion.div
-            layoutId="fft-pill"
+            layoutId={`fft-pill-${id}`}
             className="absolute inset-0 rounded-full bg-primary"
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           />

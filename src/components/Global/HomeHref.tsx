@@ -12,7 +12,7 @@ export default function HomeHref({
   };
 }) {
   const isFutures = useIsFutures();
-  const links = isFutures ? "/futures#top" : "/#top";
+  const links = isFutures ? "/futures#top" : "/forex#top";
   return (
     <Link href={links} className="hover:underline">
       <Subtitle className="text-foreground/80">{link.label}</Subtitle>

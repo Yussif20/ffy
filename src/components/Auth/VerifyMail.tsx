@@ -31,7 +31,7 @@ export default function VerifyMail() {
       try {
         await verify({ token }).unwrap();
         toast.success(t("toast.success"));
-        router.push("/");
+        router.push("/forex");
       } catch {
         setStatusMessage(t("errors.verificationFailed"));
         setError(true);

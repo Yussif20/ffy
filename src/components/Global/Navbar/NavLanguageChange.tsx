@@ -46,7 +46,7 @@ export default function NavLanguageChange({ triggerClassName }: { triggerClassNa
       newPath = `/en${basePath}`;
     }
 
-    router.push(`${newPath}${queryString}#top`);
+    router.replace(`${newPath}${queryString}#top`);
   };
 
   // Update language state when pathname changes externally

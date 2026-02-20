@@ -50,24 +50,24 @@ export default function HomeNavItems() {
     { name: t("challenges"), value: "/challenges", baseValue: "/challenges" },
   ];
 
-  // ---- APPLY FUTURES PREFIX EXACT LIKE NavItems ----
+  // ---- APPLY TYPE PREFIX ----
   pages = pages.map((item) => ({
     ...item,
     value: isFutures
       ? "/futures" + (item.value === "/" ? "" : item.value)
-      : item.value,
+      : "/forex" + (item.value === "/" ? "" : item.value),
   }));
 
 
-  // ----- MATCH CHECK WITH FUTURES ----
+  // ----- MATCH CHECK WITH TYPE ----
   const isNotMatchPathName =
-    pathName === (isFutures ? "/futures" : "/")
+    pathName === (isFutures ? "/futures" : "/forex")
       ? false
-      : !pathName.startsWith(isFutures ? "/futures/offers" : "/offers") &&
+      : !pathName.startsWith(isFutures ? "/futures/offers" : "/forex/offers") &&
         !pathName.startsWith(
-          isFutures ? "/futures/exclusive-offers" : "/exclusive-offers",
+          isFutures ? "/futures/exclusive-offers" : "/forex/exclusive-offers",
         ) &&
-        !pathName.startsWith(isFutures ? "/futures/challenges" : "/challenges");
+        !pathName.startsWith(isFutures ? "/futures/challenges" : "/forex/challenges");
 
   if (isNotMatchPathName) return "";
 
@@ -80,7 +80,7 @@ export default function HomeNavItems() {
               (pathName.includes("exclusive-offers") || pathName.endsWith("/offers") || pathName === "/offers")) ||
             checkActive(
               item.value,
-              isFutures ? ["/futures"] : ["/"],
+              isFutures ? ["/futures"] : ["/forex"],
             );
           const count = counts[item.baseValue];
           return (

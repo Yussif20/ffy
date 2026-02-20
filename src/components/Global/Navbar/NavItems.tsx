@@ -18,7 +18,7 @@ export default function NavItems() {
   const navItems = [
     {
       name: t("home"),
-      href: "/",
+      href: "/forex",
       icon: <Home size={13} />,
       part: 1,
       scrollToTabs: false,
@@ -57,7 +57,7 @@ export default function NavItems() {
   ].map((item) => ({
     ...item,
     href: isFutures
-      ? "/futures" + (item.href === "/" ? "" : item.href)
+      ? "/futures" + (item.href === "/forex" ? "" : item.href.replace(/^\/forex/, ""))
       : item.href,
   }));
 
@@ -130,7 +130,7 @@ export default function NavItems() {
           }}
         >
           {navItems.map((item) => {
-            const isActiveItem = isActive(item.href.split("#")[0], isFutures ? ["/futures"] : ["/"]);
+            const isActiveItem = isActive(item.href.split("#")[0], isFutures ? ["/futures"] : ["/forex"]);
             return (
               <Link
                 key={item.href}

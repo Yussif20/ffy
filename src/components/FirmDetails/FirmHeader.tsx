@@ -5,7 +5,6 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getTranslations } from "next-intl/server";
-import { headers } from "next/headers";
 import NextLink from "next/link";
 import { Link } from "@/i18n/navigation";
 import { calculateYearsInOperation } from "@/utils/calculateYearsInOperation";
@@ -14,9 +13,8 @@ export default async function FirmHeader({
 }: {
   company: SinglePropFirm;
 }) {
-  const headersList = await headers();
-  const referer = headersList.get("referer") || "/";
   const t = await getTranslations("FirmHeader");
+  const backHref = company.firmType === "FUTURES" ? "/futures" : "/forex";
 
   const country =
     countryDataByCountry(company.country) || countryData(company.country);
@@ -24,7 +22,7 @@ export default async function FirmHeader({
     <div className="space-y-8">
       {/* Top Row */}
       <div className="flex items-center gap-2">
-        <Link href={referer}>
+        <Link href={backHref}>
           <Button variant="outline2" size="icon" className="rounded-full">
             <ArrowLeft className="h-5 w-5" />
           </Button>

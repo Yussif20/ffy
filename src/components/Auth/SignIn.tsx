@@ -41,7 +41,7 @@ export default function SignIn() {
         dispatch(
           setUser({ user: result.data.user, token: result.data.accessToken })
         );
-        router.push("/");
+        router.push("/forex");
         toast.success(t("toast.success"), { id: toastId });
       } else {
         router.push(`/auth/check-email?email=${email}`);
