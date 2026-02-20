@@ -194,24 +194,20 @@ export default async function FirmOverview({
             <SecTitle>
               {tSidebar("items.maxAllocation")}
             </SecTitle>
-            <div>
-              <ul className="space-y-2 pl-5">
-                {company?.allocationRules && (
-                  <div className="text-sm md:text-base">
-                    <div
-                      className="danger-html"
-                      dangerouslySetInnerHTML={{
-                        __html: visibleText(
-                          isArabic,
-                          company?.allocationRules,
-                          company?.allocationRulesArabic,
-                        ),
-                      }}
-                    ></div>
-                  </div>
-                )}
-              </ul>
-            </div>
+            {company?.allocationRules && (
+              <div className="text-sm md:text-base">
+                <div
+                  className="danger-html"
+                  dangerouslySetInnerHTML={{
+                    __html: visibleText(
+                      isArabic,
+                      company?.allocationRules,
+                      company?.allocationRulesArabic,
+                    ),
+                  }}
+                ></div>
+              </div>
+            )}
           </section>
           <Separator />
 
