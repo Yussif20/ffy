@@ -160,7 +160,7 @@ export function DrawDownTexts() {
                       <Label>English Text</Label>
                       <TTTextEditor
                         value={drawDownText.englishText}
-                        onChange={(value) =>
+                        onChange={(value: string) =>
                           handleChangeValue(index, "englishText", value)
                         }
                       />
@@ -169,7 +169,7 @@ export function DrawDownTexts() {
                       <Label>Arabic Text</Label>
                       <TTTextEditor
                         value={drawDownText.arabicText}
-                        onChange={(value) =>
+                        onChange={(value: string) =>
                           handleChangeValue(index, "arabicText", value)
                         }
                       />
