@@ -136,7 +136,16 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
   }, [firmData]);
 
   const handleSubmit = async (data: FieldValues) => {
+    // Preserve the existing logoUrl when no new file is being uploaded
+    const existingLogoUrl =
+      data.logoUrl instanceof File
+        ? undefined
+        : typeof data.logoUrl === "string"
+          ? data.logoUrl
+          : firmData?.data?.logoUrl;
+
     const formData = {
+      ...(existingLogoUrl !== undefined && { logoUrl: existingLogoUrl }),
       title: data.title,
       dateEstablished: new Date(data.dateEstablished),
       ceo: data.ceo,
