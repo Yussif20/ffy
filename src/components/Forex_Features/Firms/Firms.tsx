@@ -33,7 +33,7 @@ export default function Firms() {
   const brokersArray_id = searchParams.get("brokers.array_id") || "";
   const platformsArray_id = searchParams.get("platforms") || "";
   const sort = searchParams.get("sort") || "";
-  const categoryParam = searchParams.get("category") || "";
+  const category = getParamsWithKey("category");
   const drawdown = searchParams.get("drawdown") || "";
   const otherFeatures = searchParams.get("otherFeatures") || "";
   const programType = searchParams.get("programType") || "";
@@ -50,9 +50,7 @@ export default function Firms() {
     { name: "range_yearsInOperation", value: range_yearsInOperation },
     { name: "brokers.array_id", value: brokersArray_id },
     { name: "platforms.array_id", value: platformsArray_id },
-    categoryParam === "NEW"
-      ? { name: "isPopular", value: "true" }
-      : { name: "category", value: categoryParam },
+    category,
     {
       name: "firmType",
       value: isFuturesPage ? "FUTURES" : "FOREX",
