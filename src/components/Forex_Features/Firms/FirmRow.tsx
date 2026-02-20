@@ -1,16 +1,16 @@
 import DiscountCard from "@/components/Global/DiscountCard";
 import GaugeMeter from "@/components/Global/Icons/GaugeMeter";
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 import { TableCell, TableRow } from "@/components/ui/table";
 import {
   countryData,
   countryDataByCountry,
-  propFirmInstrumentTypes,
+  // propFirmInstrumentTypes,
 } from "@/data";
 import { formatCurrencyShort, formatMaxAllocationToK } from "@/lib/formatCurrencyShort ";
 import { SinglePropFirm } from "@/types/firm.types";
 import Image from "next/image";
-import React, { useMemo } from "react";
+import React from "react";
 import FirmCell from "./FirmCell";
 import PlatformCell from "./PlatformCell";
 import { EditFirmDialog } from "@/components/FirmDetails/EditFirmDialog";
@@ -31,22 +31,22 @@ function FirmRow({
   shortVersion?: boolean;
   userRole?: string;
 }) {
-  const instrumentSet = useMemo(
-    () => new Set(company.typeOfInstruments),
-    [company.typeOfInstruments],
-  );
+  // const instrumentSet = useMemo(
+  //   () => new Set(company.typeOfInstruments),
+  //   [company.typeOfInstruments],
+  // );
   const country =
     countryDataByCountry(company.country) || countryData(company.country);
-  const instruments = useMemo(
-    () =>
-      propFirmInstrumentTypes.reduce<string[]>((a, b) => {
-        if (instrumentSet.has(b.value)) {
-          a.push(b.name);
-        }
-        return a;
-      }, []),
-    [instrumentSet],
-  );
+  // const instruments = useMemo(
+  //   () =>
+  //     propFirmInstrumentTypes.reduce<string[]>((a, b) => {
+  //       if (instrumentSet.has(b.value)) {
+  //         a.push(b.name);
+  //       }
+  //       return a;
+  //     }, []),
+  //   [instrumentSet],
+  // );
 
   return (
     <TableRow className="relative border-l-2 border-l-transparent hover:border-l-primary hover:bg-foreground/5 transition-all duration-150">
@@ -78,7 +78,7 @@ function FirmRow({
       </TableCell>
       {!shortVersion && (
         <>
-          <TableCell>
+          {/* <TableCell>
             <div className="flex flex-wrap gap-2 max-w-[180px]">
               {instruments?.map((item) => (
                 <Badge variant={"secondary"} key={item}>
@@ -86,7 +86,7 @@ function FirmRow({
                 </Badge>
               ))}
             </div>
-          </TableCell>
+          </TableCell> */}
           <PlatformCell platforms={company.platforms} />
           <TableCell>
             <p className="text-center font-bold text-base">

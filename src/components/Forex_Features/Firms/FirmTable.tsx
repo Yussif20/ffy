@@ -53,11 +53,11 @@ export default function FirmTable({
     ...(shortVersion
       ? []
       : [
-        {
-          label: t("instruments"),
-          field: "typeOfInstruments",
-          hideSort: !!shortVersion,
-        },
+        // {
+        //   label: t("instruments"),
+        //   field: "typeOfInstruments",
+        //   hideSort: !!shortVersion,
+        // },
         {
           label: t("platforms"),
           field: "platforms",

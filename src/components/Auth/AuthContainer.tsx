@@ -27,6 +27,7 @@ export default function AuthContainer({
             subtitle={subtitle}
             titleClass="text-2xl md:text-3xl"
             subtitleClass="text-foreground/70 text-sm md:text-base"
+            hideLine
           />
           <div className="pt-1">{children}</div>
         </CardContent>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
 import LinearBorder from "../LinearBorder";
 import { Globe } from "lucide-react";
 import { TiArrowSortedDown } from "react-icons/ti";
@@ -13,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-export default function NavLanguageChange() {
+export default function NavLanguageChange({ triggerClassName }: { triggerClassName?: string }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -58,7 +59,7 @@ export default function NavLanguageChange() {
       <DropdownMenuTrigger className="relative" asChild>
         <div className="z-30">
           <LinearBorder>
-            <div className="px-1 sm:px-2 py-1 flex items-center gap-1 cursor-pointer text-sm sm:text-base">
+            <div className={cn("px-1 sm:px-2 py-1 flex items-center gap-1 cursor-pointer text-sm sm:text-base", triggerClassName)}>
               <Globe className="w-5 sm:w-6" />
               <span className="hidden md:block">
                 {language === "en" ? "E" : "أب"}

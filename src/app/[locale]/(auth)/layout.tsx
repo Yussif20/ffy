@@ -29,13 +29,13 @@ export default async function RootLayout({
       <Container className="w-full min-h-screen  flex justify-center items-center py-20 px-5 relative">
         <div className="absolute top-5 left-5 flex gap-3 z-10">
           <Link href={"/#top"}>
-            <Button variant={"outline"}>
+            <Button variant={"outline"} size="lg">
               <ArrowLeft /> {t("home")}
             </Button>
           </Link>
         </div>
         <div className="absolute top-5 right-5">
-          <NavLanguageChange />
+          <NavLanguageChange triggerClassName="px-3 py-2 text-base gap-2" />
         </div>
         <div className="flex justify-center items-center flex-col gap-5  min-h-full w-full">
           {children}
