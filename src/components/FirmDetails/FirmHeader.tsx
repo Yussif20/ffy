@@ -24,7 +24,7 @@ export default async function FirmHeader({
       <div className="flex items-center gap-2">
         <Link href={backHref}>
           <Button variant="outline2" size="icon" className="rounded-full">
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeft className="h-5 w-5 rtl:rotate-180" />
           </Button>
         </Link>
 

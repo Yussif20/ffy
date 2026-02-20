@@ -116,6 +116,7 @@
     "baseline-browser-mapping": "^2.9.19",
     "eslint": "^10.0.0",
     "eslint-config-next": "^0.2.4",
+    "puppeteer": "^24.37.5",
     "tailwindcss": "^4",
     "typescript": "5.9.3"
   },

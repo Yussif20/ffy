@@ -50,7 +50,7 @@ export default function FDTabs({
     // },
   ].map((item) => {
     const newLink =
-      (isFutures ? "/futures/" : "/") +
+      (isFutures ? "/futures/" : "/forex/") +
       "firms/" +
       slug +
       (item.value !== "overview" ? "/" + item.value : "");

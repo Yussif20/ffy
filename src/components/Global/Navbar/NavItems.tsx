@@ -7,8 +7,10 @@ import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { Home, Tag, Trophy, BarChart2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useId } from "react";
 
 export default function NavItems() {
+  const id = useId();
   const t = useTranslations("Navbar");
   const isActive = useIsActive();
   const isFutures = useIsFutures();
@@ -124,10 +126,8 @@ export default function NavItems() {
         <div className="pointer-events-none absolute left-0 top-0 h-full w-10 bg-linear-to-r from-background to-transparent z-10 md:hidden" />
         <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-linear-to-l from-background to-transparent z-10 md:hidden" />
         <div
-          className={cn("flex md:grid grid-cols-5 w-full overflow-x-auto")}
-          style={{
-            gridTemplateColumns: `repeat(${navItems.length}, minmax(0, 1fr))`,
-          }}
+          className={cn("w-full flex md:grid", !isFutures && "overflow-x-auto")}
+          style={{ gridTemplateColumns: `repeat(${navItems.length}, minmax(0, 1fr))` }}
         >
           {navItems.map((item) => {
             const isActiveItem = isActive(item.href.split("#")[0], isFutures ? ["/futures"] : ["/forex"]);
@@ -143,7 +143,7 @@ export default function NavItems() {
                   {item.name}
                   {isActiveItem && (
                     <motion.span
-                      layoutId="nav-underline"
+                      layoutId={`nav-underline-${id}`}
                       className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-primary rounded-full"
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
