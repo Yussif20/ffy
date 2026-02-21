@@ -23,7 +23,7 @@ const itemVariants = {
 
 const COLOR_SCHEMES = {
   forex:   { spotlight: "#4ae79e", candlestick: "#4ae79e" },
-  futures: { spotlight: "#ffd23f", candlestick: "#ffd23f" },
+  futures: { spotlight: "#c9a227", candlestick: "#c9a227" },
 } as const;
 
 export default function Hero() {

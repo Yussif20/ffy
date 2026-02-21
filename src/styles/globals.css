@@ -140,11 +140,11 @@ input[type="radio"] {
   --card-foreground: #ffffff;
   --popover: #18181b;
   --popover-foreground: #ffffff;
-  --primary: #e6b100;
-  --primary1: #f3c725;
-  --primary2: #695300;
-  --success: #edc900;
-  --primary-dark: #b38e00;
+  --primary: #c9a227;
+  --primary1: #ddb83a;
+  --primary2: #5c4a1a;
+  --success: #d4af37;
+  --primary-dark: #a68520;
   --primary-foreground: #ffffff;
   --secondary: #27272a;
   --secondary-foreground: #ffffff;
@@ -155,20 +155,20 @@ input[type="radio"] {
   --destructive: #dc2626;
   --border: #27272a;
   --input: #27272a;
-  --ring: #e6b100;
-  --chart-1: #f3c725;
-  --chart-2: #e6b100;
-  --chart-3: #b38e00;
-  --chart-4: #695300;
-  --chart-5: #403200;
+  --ring: #c9a227;
+  --chart-1: #ddb83a;
+  --chart-2: #c9a227;
+  --chart-3: #a68520;
+  --chart-4: #5c4a1a;
+  --chart-5: #403208;
   --sidebar: #18181b;
   --sidebar-foreground: #ffffff;
-  --sidebar-primary: #e6b100;
+  --sidebar-primary: #c9a227;
   --sidebar-primary-foreground: #030310;
   --sidebar-accent: #27272a;
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: #27272a;
-  --sidebar-ring: #e6b100;
+  --sidebar-ring: #c9a227;
 }
 
 html {
