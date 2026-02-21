@@ -58,7 +58,7 @@ const Footer = async () => {
   ];
 
   return (
-    <div className="bg-foreground rounded-t-4xl">
+    <div className="bg-foreground">
       <div className="px-2 relative bg-background/95">
         <div className="bg-primary/30 absolute w-50 aspect-square rounded-full right-5 bottom-5 blur-3xl"></div>
         <div className="flex justify-center w-full h-full absolute top-0 left-0 flex-col gap-20">
