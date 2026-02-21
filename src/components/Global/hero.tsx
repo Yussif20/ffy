@@ -38,7 +38,7 @@ export default function Hero() {
   return (
     <div
       id="top"
-      className="relative h-screen overflow-hidden bg-background rounded-b-[50px]"
+      className="relative overflow-hidden bg-background rounded-b-[50px] lg:min-h-[60vh]"
     >
       {/* 3D Scene — desktop only (lg+) */}
       <div className="absolute inset-0 z-0 hidden lg:block">
@@ -91,9 +91,9 @@ export default function Hero() {
       <div className="pointer-events-none absolute bottom-0 left-1/2 z-10 h-40 w-[600px] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
 
       {/* ── Layout ──
-          Mobile/tablet : text centred in the full screen.
-          Desktop (lg+)  : strict 1/3 text | 2/3 3D side-by-side. */}
-      <div className="pointer-events-none absolute inset-0 z-20 flex items-center">
+          Mobile/tablet : text centred.
+          Desktop (lg+) : strict 1/3 text | 2/3 3D side-by-side. */}
+      <div className="relative z-20 flex items-center py-16 md:py-24 lg:py-28">
         <Container className="w-full">
 
           {/* Text column */}
