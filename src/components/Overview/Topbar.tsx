@@ -4,7 +4,8 @@ import Image from "next/image";
 
 import { useGetMeQuery } from "@/redux/api/userApi";
 import Container from "../Global/Container";
-import { Skeleton } from "@/components/ui/skeleton"; // make sure ShadCN skeleton is imported
+// import ThemeToggle from "../Global/ThemeToggle";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import userImg from "@/assets/user.png";
 import { Link } from "@/i18n/navigation";
@@ -50,7 +51,8 @@ const Topbar = ({ isOpen }: { isOpen: boolean }) => {
             Welcome back
           </h2>
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center gap-3">
+          {/* <ThemeToggle variant="ghost" size="icon" className="h-9 w-9 shrink-0" /> */}
           <Link
             href={`/profile`}
             className="rounded-full overflow-hidden border"

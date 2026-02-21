@@ -5,7 +5,7 @@ import useIsFutures from "@/hooks/useIsFutures";
 import { Link, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import { Home, Tag, Trophy, BarChart2 } from "lucide-react";
+import { TrendingUp, Gift, Trophy, GitCompareArrows } from "lucide-react";
 import { motion } from "framer-motion";
 import { useId } from "react";
 
@@ -21,7 +21,7 @@ export default function NavItems() {
     {
       name: t("home"),
       href: "/forex",
-      icon: <Home size={13} />,
+      icon: <TrendingUp size={13} />,
       part: 1,
       scrollToTabs: false,
       scrollToTop: true,
@@ -29,7 +29,7 @@ export default function NavItems() {
     {
       name: t("offers"),
       href: "/offers",
-      icon: <Tag size={13} />,
+      icon: <Gift size={13} />,
       part: 1,
       scrollToTabs: true,
       scrollToTop: false,
@@ -48,7 +48,7 @@ export default function NavItems() {
           {
             name: t("spreads"),
             href: "/spreads",
-            icon: <BarChart2 size={13} />,
+            icon: <GitCompareArrows size={13} />,
             part: 3,
             badge: t("comingSoon"),
             badgeTooltip: "Spread data across all firms — launching soon",

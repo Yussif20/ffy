@@ -48,7 +48,47 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-:root,
+/* Light theme (default when .dark is not on html) */
+:root {
+  --radius: 0.65rem;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #059666;
+  --primary1: #51a687;
+  --primary2: #06402b;
+  --success: #10b981;
+  --primary-dark: #047857;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #e2e8f0;
+  --muted-foreground: #64748b;
+  --accent: #e2e8f0;
+  --accent-foreground: #0f172a;
+  --destructive: #dc2626;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #059666;
+  --chart-1: #34d399;
+  --chart-2: #10b981;
+  --chart-3: #059669;
+  --chart-4: #047857;
+  --chart-5: #065f46;
+  --sidebar: #f1f5f9;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #059666;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e2e8f0;
+  --sidebar-accent-foreground: #0f172a;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #059666;
+}
+
+/* Dark theme (when .dark is on html) */
 .dark {
   --radius: 0.65rem;
   --background: #030310;
@@ -132,7 +172,46 @@ input[type="radio"] {
   --sidebar-ring: #059666;
 } */
 
-.yellow-theme,
+/* Yellow theme — light (Futures, when .dark is not on html) */
+.yellow-theme {
+  --background: #faf9f5;
+  --foreground: #1c1917;
+  --card: #ffffff;
+  --card-foreground: #1c1917;
+  --popover: #ffffff;
+  --popover-foreground: #1c1917;
+  --primary: #b8860b;
+  --primary1: #c9a227;
+  --primary2: #5c4a1a;
+  --success: #b8860b;
+  --primary-dark: #996f09;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f4;
+  --secondary-foreground: #1c1917;
+  --muted: #e7e5e4;
+  --muted-foreground: #78716c;
+  --accent: #e7e5e4;
+  --accent-foreground: #1c1917;
+  --destructive: #dc2626;
+  --border: #e7e5e4;
+  --input: #e7e5e4;
+  --ring: #b8860b;
+  --chart-1: #ddb83a;
+  --chart-2: #c9a227;
+  --chart-3: #a68520;
+  --chart-4: #5c4a1a;
+  --chart-5: #403208;
+  --sidebar: #f5f5f4;
+  --sidebar-foreground: #1c1917;
+  --sidebar-primary: #b8860b;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e7e5e4;
+  --sidebar-accent-foreground: #1c1917;
+  --sidebar-border: #e7e5e4;
+  --sidebar-ring: #b8860b;
+}
+
+/* Yellow theme — dark (Futures, when .dark is on html) */
 .yellow-theme.dark {
   --background: #030310;
   --foreground: #ffffff;
@@ -173,9 +252,13 @@ input[type="radio"] {
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark !important;
+  color-scheme: light;
   margin: 0;
   padding: 0;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 html,
@@ -191,7 +274,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #18181b;
+  background: var(--card);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -204,13 +287,13 @@ body {
 }
 
 ::-webkit-scrollbar-corner {
-  background: #18181b;
+  background: var(--card);
 }
 
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--primary) #18181b;
+  scrollbar-color: var(--primary) var(--card);
 }
 /* ─────────────────────────────────────────────────────────── */
 @layer base {
@@ -224,10 +307,15 @@ body {
 }
 
 body {
-  font-family: var(--font-montserrat) !important;
+  font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
   background: var(--color-background);
   margin: 0;
   padding: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+[lang="ar"] body {
+  font-family: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
 }
 
 button {
@@ -366,7 +454,7 @@ button {
 .danger-html td {
   padding: 0.5em 0.75em;
   text-align: start;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
 }
 
 .danger-html th {

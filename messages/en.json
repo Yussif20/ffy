@@ -32,7 +32,12 @@
     "profile": "Profile",
     "onboarding": "Onboarding",
     "logout": "Logout",
-    "profileImage": "Profile Image"
+    "profileImage": "Profile Image",
+    "switchToLightTheme": "Switch to light theme",
+    "switchToDarkTheme": "Switch to dark theme",
+    "lightTheme": "Light",
+    "darkTheme": "Dark",
+    "systemTheme": "System"
   },
   "Features": {
     "title": "Exclusive Forex Offers",

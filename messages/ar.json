@@ -32,7 +32,12 @@
     "profile": "الملف الشخصي",
     "onboarding": "التهيئة",
     "logout": "تسجيل الخروج",
-    "profileImage": "صورة الملف"
+    "profileImage": "صورة الملف",
+    "switchToLightTheme": "تفعيل الوضع الفاتح",
+    "switchToDarkTheme": "تفعيل الوضع الداكن",
+    "lightTheme": "فاتح",
+    "darkTheme": "داكن",
+    "systemTheme": "النظام"
   },
   "Features": {
     "title": "عروض الفوركس الحصرية",

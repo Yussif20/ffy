@@ -5,12 +5,20 @@ import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { Montserrat } from "next/font/google";
+import { Cairo, Space_Grotesk } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Providers } from "./providers";
 import NextTopLoader from "nextjs-toploader";
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+
+const cairo = Cairo({
+  variable: "--font-cairo",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  subsets: ["latin", "arabic"],
+});
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   weight: ["400", "500", "600", "700"],
   display: "swap",
   subsets: ["latin"],
@@ -42,13 +50,13 @@ export default async function RootLayout({ children, params }: Props) {
       lang={locale}
       suppressHydrationWarning
     >
-      <body className={`${montserrat.variable} relative`}>
+      <body className={`${cairo.variable} ${spaceGrotesk.variable} relative`}>
         <TopGradient className="absolute top-0 left-0 w-full flex justify-center items-center z-10" />
         <ThemeProvider>
           <Providers>
             {/* Provide locale and messages */}
             <NextIntlClientProvider locale={locale} messages={messages}>
-              <NextTopLoader color="#fff" />
+              <NextTopLoader color="var(--primary)" />
               {children}
             </NextIntlClientProvider>
             <SetTheme />

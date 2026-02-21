@@ -15,6 +15,7 @@ import NavbarLogo from "./NavbarLogo";
 import NavItems from "./NavItems";
 import NavLanguageChange from "./NavLanguageChange";
 import NavSearch from "./NavSearch";
+// import ThemeToggle from "../ThemeToggle";
 import WebToggler from "./WebToggler";
 
 const Navbar = () => {
@@ -101,6 +102,7 @@ const Navbar = () => {
 
             <div className="flex items-center justify-end gap-1 md:gap-2 lg:gap-3">
               <NavLanguageChange />
+              {/* <ThemeToggle variant="ghost" size="icon" className="h-9 w-9 shrink-0" /> */}
 
               {isLogIn ? (
                 <NavProfile />
@@ -127,6 +129,8 @@ const Navbar = () => {
                       </SheetTrigger>
                       <SheetContent side="left" className="w-[280px] px-5">
                         <div className="flex flex-col gap-6 mt-8">
+                          {/* <ThemeToggle variant="outline" size="sm" className="shrink-0" /> */}
+                          <div className="h-px bg-border" />
                           {/* Nav links */}
                           <nav className="flex flex-col gap-1">
                             {[

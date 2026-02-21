@@ -4,92 +4,52 @@ import { useState, useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import LinearBorder from "../LinearBorder";
-import { Globe } from "lucide-react";
-import { TiArrowSortedDown } from "react-icons/ti";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Languages } from "lucide-react";
 
 export default function NavLanguageChange({ triggerClassName }: { triggerClassName?: string }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // Detect current locale from path
   const currentLocale = pathname.startsWith("/ar") ? "ar" : "en";
   const [language, setLanguage] = useState(currentLocale);
 
-  // Function to remove any locale prefix (/en or /ar)
   const stripLocalePrefix = (path: string) => {
     return path.replace(/^\/(en|ar)(?=\/|$)/, "") || "/";
   };
 
-  // Handle language change
-  const handleChange = (newLang: string) => {
+  const toggleLanguage = () => {
+    const newLang = language === "en" ? "ar" : "en";
     setLanguage(newLang);
 
     const params = searchParams.toString();
     const queryString = params ? `?${params}` : "";
-
-    // Remove any locale prefix first
     const basePath = stripLocalePrefix(pathname);
-
-    let newPath = basePath;
-
-    if (newLang === "ar") {
-      newPath = `/ar${basePath}`;
-    } else if (newLang === "en") {
-      newPath = `/en${basePath}`;
-    }
+    const newPath = newLang === "ar" ? `/ar${basePath}` : `/en${basePath}`;
 
     router.replace(`${newPath}${queryString}#top`);
   };
 
-  // Update language state when pathname changes externally
   useEffect(() => {
     setLanguage(pathname.startsWith("/ar") ? "ar" : "en");
   }, [pathname]);
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className="relative" asChild>
-        <div className="z-30">
-          <LinearBorder>
-            <div className={cn("px-1 sm:px-2 py-1 flex items-center gap-1 cursor-pointer text-sm sm:text-base", triggerClassName)}>
-              <Globe className="w-5 sm:w-6" />
-              <span className="hidden md:block">
-                {language === "en" ? "E" : "أب"}
-              </span>
-              <TiArrowSortedDown />
-            </div>
-          </LinearBorder>
+    <button
+      type="button"
+      onClick={toggleLanguage}
+      aria-label={language === "en" ? "Switch to Arabic" : "Switch to English"}
+      className={cn(
+        "group z-30 flex items-center justify-center rounded-lg p-0 transition-colors",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        triggerClassName
+      )}
+    >
+      <LinearBorder className2="transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+        <div className="flex h-9 w-9 items-center justify-center sm:h-9 sm:w-9">
+          <Languages className="h-5 w-5 sm:h-5 sm:w-5" />
         </div>
-      </DropdownMenuTrigger>
-
-      <DropdownMenuContent align="end" className="w-36 p-2">
-        <RadioGroup
-          value={language}
-          onValueChange={handleChange}
-          className="flex flex-col gap-2"
-        >
-          <DropdownMenuItem asChild>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <RadioGroupItem value="en" />
-              English
-            </label>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <RadioGroupItem value="ar" />
-              Arabic
-            </label>
-          </DropdownMenuItem>
-        </RadioGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </LinearBorder>
+    </button>
   );
 }

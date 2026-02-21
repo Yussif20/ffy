@@ -3,7 +3,7 @@ import ChatApp from "@/components/Messages/ChatApp";
 
 export default function page() {
   return (
-    <div className="pt-24 lg:pt-40 bg-[#F9FAFB]">
+    <div className="pt-24 lg:pt-40 bg-muted">
       <ConnectSocket />
       <ChatApp />
     </div>

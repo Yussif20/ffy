@@ -8,14 +8,14 @@ import useIsFutures from "@/hooks/useIsFutures";
 import useIsActive from "@/hooks/useIsActive";
 import useIsArabic from "@/hooks/useIsArabic";
 import { cn } from "@/lib/utils";
-import { Building2, Tag, Trophy } from "lucide-react";
+import { Building2, Gift, Trophy } from "lucide-react";
 import { useGetAllFirmsQuery } from "@/redux/api/firms.api";
 import { useGetAllChallengesQuery } from "@/redux/api/challenge";
 import { useGetAllOffersQuery } from "@/redux/api/offerApi";
 
 const tabIcons: Record<string, React.ReactNode> = {
   "/": <Building2 size={16} />,
-  "/offers": <Tag size={16} />,
+  "/offers": <Gift size={16} />,
   "/challenges": <Trophy size={16} />,
 };
 

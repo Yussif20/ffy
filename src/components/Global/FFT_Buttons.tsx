@@ -48,7 +48,7 @@ export default function FFT_Buttons() {
   };
 
   return (
-    <div className="border max-w-max p-0.5 flex justify-center items-center gap-1 sm:gap-2 rounded-full bg-primary/10">
+    <div className="border max-w-max flex justify-center items-center gap-1 sm:gap-2 rounded-full bg-primary/10">
       {/* Forex Button */}
       <div className="relative">
         {!isFutures && (
@@ -60,7 +60,7 @@ export default function FFT_Buttons() {
         )}
         <Button
           className={cn(
-            "relative z-10 px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24",
+            "relative z-10 rounded-full! px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24",
             "bg-transparent! hover:bg-white/10! shadow-none!",
             isArabic && "text-base md:text-lg",
           )}
@@ -92,7 +92,7 @@ export default function FFT_Buttons() {
         )}
         <Button
           className={cn(
-            "relative z-10 px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24",
+            "relative z-10 rounded-full! px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24",
             "bg-transparent! hover:bg-white/10! shadow-none!",
             isArabic && "text-base md:text-lg",
           )}
