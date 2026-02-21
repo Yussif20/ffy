@@ -38,7 +38,7 @@ export default function Hero() {
   return (
     <div
       id="top"
-      className="relative overflow-hidden bg-background rounded-b-[50px] lg:min-h-[60vh]"
+      className="relative overflow-hidden bg-background min-h-[55vh] lg:min-h-[60vh]"
     >
       {/* 3D Scene — desktop only (lg+) */}
       <div className="absolute inset-0 z-0 hidden lg:block">
@@ -91,10 +91,10 @@ export default function Hero() {
       <div className="pointer-events-none absolute bottom-0 left-1/2 z-10 h-40 w-[600px] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
 
       {/* ── Layout ──
-          Mobile/tablet : text centred.
+          Mobile/tablet : centered content, proper padding.
           Desktop (lg+) : strict 1/3 text | 2/3 3D side-by-side. */}
-      <div className="relative z-20 flex items-center py-16 md:py-24 lg:py-28">
-        <Container className="w-full">
+      <div className="relative z-20 flex min-h-[55vh] items-center justify-center py-16 md:py-24 lg:min-h-[60vh] lg:py-28 lg:justify-start">
+        <Container className="w-full px-6 sm:px-8 lg:px-5">
 
           {/* Text column */}
           <motion.div
@@ -104,10 +104,10 @@ export default function Hero() {
             className={cn(
               "pointer-events-auto",
               "flex flex-col gap-5 sm:gap-7 lg:gap-7",
-              // Mobile: full width centred; desktop: left 1/3
-              "w-full lg:w-1/3",
+              // Mobile/tablet: constrained width, centered; desktop: left 1/3
+              "w-full max-w-xl max-lg:mx-auto lg:max-w-none lg:w-1/3",
               !isArabic && "items-center lg:items-start",
-              isArabic && "items-end lg:ml-auto",
+              isArabic && "items-center lg:items-end lg:ml-auto",
             )}
           >
             {/* Heading */}
@@ -116,8 +116,9 @@ export default function Hero() {
               className={cn(
                 "font-extrabold leading-[1.1] tracking-tight",
                 "text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-5xl",
-                !isArabic && "text-center lg:text-left",
-                isArabic && "text-right",
+                "text-center",
+                !isArabic && "lg:text-left",
+                isArabic && "lg:text-right",
               )}
             >
               {t("heroTitle.title1")}
@@ -131,8 +132,9 @@ export default function Hero() {
                 "text-muted-foreground/90 leading-relaxed",
                 "text-sm sm:text-base lg:text-lg 2xl:text-base",
                 "max-w-xs sm:max-w-sm lg:max-w-none",
-                !isArabic && "text-center lg:text-left",
-                isArabic && "text-right",
+                "text-center",
+                !isArabic && "lg:text-left",
+                isArabic && "lg:text-right",
               )}
             >
               {t("heroTitle.subtitle")}
