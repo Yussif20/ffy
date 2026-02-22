@@ -51,10 +51,24 @@ export default function HINTable() {
 
   return (
     <div className="max-w-full w-full space-y-8">
+      <div className="flex items-center justify-end">
+        <Select value={gmt} onValueChange={handleGmtChange}>
+          <SelectTrigger className="px-7 w-full max-w-[180px] h-9" withoutLinearBorder>
+            <SelectValue placeholder={t("gmt")} />
+          </SelectTrigger>
+          <SelectContent>
+            {options.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
       {newsData.map((item) => {
         return (
           <div className="space-y-5" key={item.date}>
-            <div className="flex items-center justify-between gap-2 md:gap-4 flex-wrap">
+            <div className="flex items-center gap-2 md:gap-4 flex-wrap">
               <Button
                 className="cursor-default!"
                 variant={"outline"}
@@ -62,20 +76,6 @@ export default function HINTable() {
               >
                 <Calendar className="text-primary" /> {item.date}
               </Button>
-              <div>
-                <Select defaultValue={gmt} onValueChange={handleGmtChange}>
-                  <SelectTrigger className="px-7 w-full h-9" withoutLinearBorder>
-                    <SelectValue placeholder={t("gmt")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {options.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
             </div>
             <Table className="text-xs md:text-sm">
               <SortTableHeader
