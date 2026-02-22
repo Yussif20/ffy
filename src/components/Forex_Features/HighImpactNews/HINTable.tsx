@@ -23,7 +23,10 @@ export default function HINTable() {
     { name: "tab", value: week },
   ]);
   const t = useTranslations("HighImpactNews");
-  const newsData = data?.data || [];
+  // Earliest date at top, newest at bottom (ascending by date)
+  const newsData = (data?.data || []).slice().sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+  );
 
   const options: { label: string; value: string }[] = Array.from(
     { length: 27 },
