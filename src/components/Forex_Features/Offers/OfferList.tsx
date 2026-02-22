@@ -111,7 +111,17 @@ export default function OfferList({ companySlug }: { companySlug?: string }) {
     );
   }
 
-  // Success state with data
+  // Pagination: only show when we have more than one page for the current view.
+  // For exclusive offers, treat as 1 page when this page's results don't fill the limit (so we never show "all offers" page count).
+  // Hide while fetching so we never show stale pagination from the other tab.
+  const limit = filterParams.limit;
+  const totalPage =
+    isExclusive && data.firms.length <= limit
+      ? 1
+      : (data.meta?.totalPage ?? 1);
+  const showPagination =
+    !isFetching && totalPage > 1 && data.meta != null;
+
   return (
     <div className="space-y-8">
       {/* Offers List */}
@@ -128,9 +138,9 @@ export default function OfferList({ companySlug }: { companySlug?: string }) {
         </div>
       )}
 
-      {/* Pagination */}
-      {data.meta && data.meta.totalPage > 1 && (
-        <Pagination totalPages={data.meta.totalPage} />
+      {/* Pagination: only for current view, hidden when 1 page or when data is stale */}
+      {showPagination && (
+        <Pagination totalPages={totalPage} />
       )}
     </div>
   );
