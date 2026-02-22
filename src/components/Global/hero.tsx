@@ -38,7 +38,7 @@ export default function Hero() {
   return (
     <div
       id="top"
-      className="relative overflow-hidden bg-background min-h-[55vh] lg:min-h-[60vh]"
+      className="relative overflow-hidden bg-background min-h-[55vh] lg:min-h-[60vh] lg:px-4"
     >
       {/* 3D Scene — desktop only (lg+), aligned to container end */}
       <div
@@ -119,15 +119,15 @@ export default function Hero() {
             <motion.h1
               variants={itemVariants}
               className={cn(
-                "font-extrabold leading-[1.1] tracking-tight",
+                "font-extrabold tracking-tight",
                 "text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-5xl",
                 "text-center",
-                !isArabic && "lg:text-left",
-                isArabic && "lg:text-right",
+                !isArabic && "lg:text-left leading-[1.4]",
+                isArabic && "lg:text-right leading-[1.4]",
               )}
             >
               {t("heroTitle.title1")}
-              <span className="text-primary block mt-1"> {t("heroTitle.title2")}</span>
+              <span className="text-primary block mt-3 sm:mt-1 leading-[1.4]"> {t("heroTitle.title2")}</span>
             </motion.h1>
 
             {/* Subtitle */}
