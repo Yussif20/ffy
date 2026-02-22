@@ -87,7 +87,7 @@ export default function Firms() {
         {user?.role === "SUPER_ADMIN" && <AddFirmDialog />}
       </div>
 
-      <div className="flex items-start gap-8 w-full">
+      <div className="flex items-start gap-6 w-full">
         <div className="max-w-sm flex shrink-0">
           <FirmAllFilters />
         </div>
