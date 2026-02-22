@@ -40,8 +40,13 @@ export default function Hero() {
       id="top"
       className="relative overflow-hidden bg-background min-h-[55vh] lg:min-h-[60vh]"
     >
-      {/* 3D Scene — desktop only (lg+) */}
-      <div className="absolute inset-0 z-0 hidden lg:block">
+      {/* 3D Scene — desktop only (lg+), aligned to container end */}
+      <div
+        className={cn(
+          "absolute inset-y-0 z-0 hidden lg:block w-2/3",
+          isArabic ? "left-0" : "right-0",
+        )}
+      >
         <HeroScene
           spotlightColor={currentColors.spotlight}
           candlestickColor={currentColors.candlestick}
@@ -93,7 +98,7 @@ export default function Hero() {
       {/* ── Layout ──
           Mobile/tablet : centered content, proper padding.
           Desktop (lg+) : strict 1/3 text | 2/3 3D side-by-side. */}
-      <div className="relative z-20 flex min-h-[55vh] items-center justify-center py-16 md:py-24 lg:min-h-[60vh] lg:py-28 lg:justify-start">
+      <div className="relative z-20 flex min-h-[55vh] items-center justify-between py-16 md:py-24 lg:min-h-[60vh] lg:py-28 lg:justify-start">
         <Container className="w-full px-6 sm:px-8 lg:px-5">
 
           {/* Text column */}
