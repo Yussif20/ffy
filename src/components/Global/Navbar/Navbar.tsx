@@ -110,12 +110,17 @@ const Navbar = () => {
                 <>
                   <div className="hidden md:flex items-center justify-end gap-2 lg:gap-3">
                     <Link className="hidden sm:block" href="/auth/sign-in">
-                      <Button variant="outline" className="h-9 px-4! font-bold">
+                      <Button
+                        variant="outline"
+                        className="h-9 px-4! font-bold transition-all duration-200 hover:scale-[1.02] hover:shadow-md active:scale-[0.98]"
+                      >
                         {t("signIn")}
                       </Button>
                     </Link>
                     <Link href="/auth/sign-up">
-                      <Button className="h-9 px-2 sm:px-4! font-bold">
+                      <Button
+                        className="h-9 px-2 sm:px-4! font-bold transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98]"
+                      >
                         {t("signUp")}
                       </Button>
                     </Link>
@@ -153,12 +158,17 @@ const Navbar = () => {
                           {!isLogIn && (
                             <div className="flex flex-col gap-3">
                               <Link href="/auth/sign-in">
-                                <Button variant="outline" className="w-full font-bold">
+                                <Button
+                                  variant="outline"
+                                  className="w-full font-bold transition-all duration-200 hover:scale-[1.02] hover:shadow-md active:scale-[0.98]"
+                                >
                                   {t("signIn")}
                                 </Button>
                               </Link>
                               <Link href="/auth/sign-up">
-                                <Button className="w-full font-bold">
+                                <Button
+                                  className="w-full font-bold transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98]"
+                                >
                                   {t("signUp")}
                                 </Button>
                               </Link>

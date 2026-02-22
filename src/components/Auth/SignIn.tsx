@@ -90,7 +90,7 @@ export default function SignIn() {
         {/* Submit Button */}
         <Button
           type="submit"
-          className="w-full rounded-xl h-11 font-semibold bg-primary hover:bg-primary-dark"
+          className="w-full rounded-xl h-11 font-semibold bg-primary hover:bg-primary-dark transition-all duration-200 hover:scale-[1.01] hover:shadow-lg hover:shadow-primary/30 active:scale-[0.99]"
           size="lg"
           disabled={isLoading}
         >

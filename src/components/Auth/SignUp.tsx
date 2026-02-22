@@ -549,7 +549,7 @@ export default function SignUp() {
         <Button
           type="submit"
           size="lg"
-          className="w-full rounded-xl h-11 font-semibold bg-primary hover:bg-primary-dark"
+          className="w-full rounded-xl h-11 font-semibold bg-primary hover:bg-primary-dark transition-all duration-200 hover:scale-[1.01] hover:shadow-lg hover:shadow-primary/30 active:scale-[0.99]"
           disabled={isLoading}
         >
           {isLoading ? t("submit.loading") : t("submit.default")}
