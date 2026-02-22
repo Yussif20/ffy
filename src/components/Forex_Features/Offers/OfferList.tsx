@@ -4,7 +4,7 @@ import { Pagination } from "@/components/Global/Pagination";
 import { PaginationSkeleton } from "@/components/Global/Skeleton";
 import { useGetAllOffersQuery } from "@/redux/api/offerApi";
 import { Package } from "lucide-react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import SingleOffer from "./SingleOffer";
 import { OfferListSkeleton } from "./Skeleton";
 import useIsFutures from "@/hooks/useIsFutures";
@@ -14,10 +14,21 @@ export default function OfferList({ companySlug }: { companySlug?: string }) {
   const isFutures = useIsFutures();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const currentPage = Number(searchParams.get("page") || 1);
   const searchTerm = searchParams.get("search") || "";
   const isExclusive = pathname.includes("exclusive-offers");
   const isCurrentMonth = searchParams.get("isCurrentMonth") === "true";
+
+  // When on exclusive offers, reset page to 1 so pagination doesn't stick from "all offers"
+  useEffect(() => {
+    if (isExclusive && currentPage > 1) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("page");
+      const query = params.toString();
+      router.replace(pathname + (query ? `?${query}` : ""), { scroll: false });
+    }
+  }, [isExclusive, currentPage, pathname, router, searchParams.toString()]);
 
   // Build filter parameters from URL query params with useMemo to ensure recalculation
   const filterParams = useMemo(() => {

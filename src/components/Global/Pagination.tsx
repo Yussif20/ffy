@@ -25,8 +25,18 @@ export function Pagination({ totalPages }: PaginationWithParamsProps) {
     );
   };
 
+  const scrollToSectionStart = () => {
+    const el = document.getElementById("tabs-section");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   const goToPage = (page: number) => {
     createPageURL(page);
+    scrollToSectionStart();
   };
 
   if (totalPages < 2) {
