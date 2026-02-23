@@ -205,6 +205,10 @@ export default function FirmAllFilters({
     handleSetSearchParams({ expanded: values.join() }, searchParams, router);
   };
 
+  const handleSetCategory = () => {
+    handleSetSearchParams({ filterOpen: "" }, searchParams, router);
+  };
+
   const items = (
     <>
       <Accordion
@@ -568,9 +572,17 @@ export default function FirmAllFilters({
         </AccordionItem>
       </Accordion>
 
-      <div className="pt-4 border-t border-border/50">
+      <div className="pt-4 border-t border-border/50 flex flex-col gap-2">
         <Button
           variant="default"
+          size="lg"
+          className="w-full text-base font-semibold"
+          onClick={handleSetCategory}
+        >
+          {t("confirmFilters")}
+        </Button>
+        <Button
+          variant="outline"
           size="lg"
           className="w-full text-base font-semibold"
           onClick={resetFilters}
@@ -580,10 +592,6 @@ export default function FirmAllFilters({
       </div>
     </>
   );
-
-  const handleSetCategory = () => {
-    handleSetSearchParams({ filterOpen: "" }, searchParams, router);
-  };
 
   return (
     <>

@@ -296,31 +296,33 @@ export default async function FirmOverview({
             )}
           </section>
 
-          <Separator />
-
-          {/* Minimum Trading days */}
-          <section
-            id="minimum-trading-days"
-            className="overflow-x-auto space-y-6 scroll-mt-[270px]"
-          >
-            <SecTitle>
-              {tSidebar("items.minimumTradingDays")}
-            </SecTitle>
-            <div className="text-sm md:text-base">
-              <div
-                className="danger-html"
-                dangerouslySetInnerHTML={{
-                  __html: visibleText(
-                    isArabic,
-                    company?.minimumTradingDays,
-                    company?.minimumTradingDaysArabic,
-                  ),
-                }}
-              ></div>
-            </div>
-          </section>
-
-          <Separator />
+          {!isFutures && (
+            <>
+              <Separator />
+              {/* Minimum Trading days — Forex only */}
+              <section
+                id="minimum-trading-days"
+                className="overflow-x-auto space-y-6 scroll-mt-[270px]"
+              >
+                <SecTitle>
+                  {tSidebar("items.minimumTradingDays")}
+                </SecTitle>
+                <div className="text-sm md:text-base">
+                  <div
+                    className="danger-html"
+                    dangerouslySetInnerHTML={{
+                      __html: visibleText(
+                        isArabic,
+                        company?.minimumTradingDays,
+                        company?.minimumTradingDaysArabic,
+                      ),
+                    }}
+                  ></div>
+                </div>
+              </section>
+              <Separator />
+            </>
+          )}
 
           {/* news Trading */}
           <section id="news-trading" className="space-y-6 scroll-mt-[270px]">
@@ -517,31 +519,33 @@ export default async function FirmOverview({
             )}
           </section>
 
-          <Separator />
-
-          {/* Scale up plan */}
-          <section
-            id="scale-up-plan"
-            className="overflow-x-auto space-y-6 scroll-mt-[270px]"
-          >
-            <SecTitle>
-              {tSidebar("items.scaleUpPlan")}
-            </SecTitle>
-            <div className="text-sm md:text-base">
-              <div
-                className="danger-html"
-                dangerouslySetInnerHTML={{
-                  __html: visibleText(
-                    isArabic,
-                    company?.scaleupPlans,
-                    company?.scaleupPlansArabic,
-                  ),
-                }}
-              ></div>
-            </div>
-          </section>
-
-          <Separator />
+          {!isFutures && (
+            <>
+              <Separator />
+              {/* Scale up plan — Forex only */}
+              <section
+                id="scale-up-plan"
+                className="overflow-x-auto space-y-6 scroll-mt-[270px]"
+              >
+                <SecTitle>
+                  {tSidebar("items.scaleUpPlan")}
+                </SecTitle>
+                <div className="text-sm md:text-base">
+                  <div
+                    className="danger-html"
+                    dangerouslySetInnerHTML={{
+                      __html: visibleText(
+                        isArabic,
+                        company?.scaleupPlans,
+                        company?.scaleupPlansArabic,
+                      ),
+                    }}
+                  ></div>
+                </div>
+              </section>
+              <Separator />
+            </>
+          )}
 
           {/* inatctivity rules*/}
           <section
