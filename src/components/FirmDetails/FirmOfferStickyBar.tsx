@@ -29,7 +29,6 @@ export default function FirmOfferStickyBar({ firm }: { firm: SinglePropFirm }) {
   const codeBorderCls = isFutures
     ? "border-yellow-400/70 hover:bg-yellow-400/10"
     : "border-primary/70 hover:bg-primary/10";
-  const codeLabelCls = isFutures ? "text-yellow-600 dark:text-yellow-400" : "text-primary";
 
   const firmHref = isFutures ? `/futures/firms/${firm.slug}` : `/forex/firms/${firm.slug}`;
 
