@@ -73,20 +73,20 @@ export default async function FirmHeader({
               </h1>
             </NextLink>
 
-            {/* Details */}
-            <div className="flex flex-wrap items-center gap-6 text-sm">
+            {/* Details: 2x2 grid on small/medium (CEO+Country, Date+Years), one line on large */}
+            <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:gap-x-8 sm:gap-y-6 lg:flex lg:flex-wrap lg:items-center lg:gap-6 text-sm">
               {/* CEO */}
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-0.5">
                 <span className="text-muted-foreground font-semibold">
                   {t("labels.ceo")}
                 </span>
                 <span className="font-medium">{company?.ceo}</span>
               </div>
 
-              <div className="hidden sm:block h-8 w-px bg-border" />
+              <div className="hidden lg:block h-8 w-px bg-border" />
 
               {/* Country */}
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-0.5">
                 <span className="text-muted-foreground font-semibold">
                   {t("labels.country")}
                 </span>
@@ -105,10 +105,10 @@ export default async function FirmHeader({
                 </div>
               </div>
 
-              <div className="hidden sm:block h-8 w-px bg-border" />
+              <div className="hidden lg:block h-8 w-px bg-border" />
 
               {/* Date Created */}
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-0.5">
                 <span className="text-muted-foreground font-semibold">
                   {t("labels.dateCreated")}
                 </span>
@@ -117,10 +117,10 @@ export default async function FirmHeader({
                 </span>
               </div>
 
-              <div className="hidden sm:block h-8 w-px bg-border" />
+              <div className="hidden lg:block h-8 w-px bg-border" />
 
               {/* Years in Operation */}
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-0.5">
                 <span className="text-muted-foreground font-semibold">
                   {t("labels.yearsInOperation")}
                 </span>
@@ -167,14 +167,14 @@ export function FirmHeaderSkeleton() {
           <div className="flex flex-col gap-3">
             <Skeleton className="h-8 w-48 hidden sm:block" />
 
-            <div className="flex flex-wrap items-center gap-6 text-sm">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:gap-x-8 sm:gap-y-6 lg:flex lg:flex-wrap lg:items-center lg:gap-6 text-sm">
               {/* CEO */}
               <div className="flex flex-col gap-1">
                 <Skeleton className="h-4 w-20" />
                 <Skeleton className="h-4 w-28" />
               </div>
 
-              <div className="hidden sm:block h-8 w-px bg-border" />
+              <div className="hidden lg:block h-8 w-px bg-border" />
 
               {/* Country */}
               <div className="flex flex-col gap-1">
@@ -185,7 +185,7 @@ export function FirmHeaderSkeleton() {
                 </div>
               </div>
 
-              <div className="hidden sm:block h-8 w-px bg-border" />
+              <div className="hidden lg:block h-8 w-px bg-border" />
 
               {/* Date Created */}
               <div className="flex flex-col gap-1">
@@ -193,7 +193,7 @@ export function FirmHeaderSkeleton() {
                 <Skeleton className="h-4 w-28" />
               </div>
 
-              <div className="hidden sm:block h-8 w-px bg-border" />
+              <div className="hidden lg:block h-8 w-px bg-border" />
 
               {/* Years in Operation */}
               <div className="flex flex-col gap-1">

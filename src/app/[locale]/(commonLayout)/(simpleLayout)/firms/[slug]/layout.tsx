@@ -1,5 +1,6 @@
 import FDTabs from "@/components/FirmDetails/FDTabs";
 import FirmDetails from "@/components/FirmDetails/FirmDetails";
+import FirmOfferStickyBar from "@/components/FirmDetails/FirmOfferStickyBar";
 import FirmNavigate from "@/components/Forex_Features/Firms/FirmNavigate";
 import ScrollToTopOnOpen from "@/components/FirmDetails/ScrollToTopOnOpen";
 import SingleOffer from "@/components/Forex_Features/Offers/SingleOffer";
@@ -35,6 +36,7 @@ export default async function RootLayout({
           <SingleOffer hideBlackHoles data={data.data} />
         </div>
         <FDTabs slug={slug} count={data?.data?.count} />
+        <FirmOfferStickyBar firm={data.data} />
         <div>{children}</div>
       </div>
 
