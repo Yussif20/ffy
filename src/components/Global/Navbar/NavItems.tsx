@@ -5,7 +5,7 @@ import useIsFutures from "@/hooks/useIsFutures";
 import { Link, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import { TrendingUp, Gift, Trophy, GitCompareArrows } from "lucide-react";
+import { TrendingUp, Gift, Trophy, GitCompareArrows, HelpCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { useId } from "react";
 
@@ -40,6 +40,14 @@ export default function NavItems() {
       icon: <Trophy size={13} />,
       part: 2,
       scrollToTabs: true,
+      scrollToTop: false,
+    },
+    {
+      name: t("faq"),
+      href: "/forex/faq",
+      icon: <HelpCircle size={13} />,
+      part: 2,
+      scrollToTabs: false,
       scrollToTop: false,
     },
     ...(isFutures

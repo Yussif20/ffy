@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Link } from "@/i18n/navigation";
 import { useCurrentUser } from "@/redux/authSlice";
 import { useAppSelector } from "@/redux/store";
@@ -105,7 +105,48 @@ const Navbar = () => {
               {/* <ThemeToggle variant="ghost" size="icon" className="h-9 w-9 shrink-0" /> */}
 
               {isLogIn ? (
-                <NavProfile />
+                <>
+                  <div className="md:hidden flex items-center gap-1">
+                    <Sheet>
+                      <SheetTrigger asChild>
+                        <Button variant="ghost" size="sm">
+                          <Menu className="h-5 w-5" />
+                        </Button>
+                      </SheetTrigger>
+                      <SheetContent side="left" className="w-[280px] px-5">
+                        <SheetTitle className="sr-only">
+                          {t("menu")}
+                        </SheetTitle>
+                        <div className="flex flex-col gap-6 mt-8">
+                          <div className="h-px bg-border" />
+                          <nav className="flex flex-col gap-1">
+                            {[
+                              { label: t("home"), href: "/" },
+                              { label: t("offers"), href: "/offers" },
+                              { label: t("challenges"), href: "/challenges" },
+                              { label: t("bestSellers"), href: "/best-sellers" },
+                              { label: t("spreads"), href: "/spreads" },
+                              { label: t("faq"), href: "/faq" },
+                            ].map((item) => (
+                              <Link
+                                key={item.href}
+                                href={item.href}
+                                className="text-foreground/70 hover:text-foreground hover:bg-foreground/5 px-3 py-2 rounded-md transition-colors text-sm font-medium"
+                              >
+                                {item.label}
+                              </Link>
+                            ))}
+                          </nav>
+                          <div className="h-px bg-border" />
+                        </div>
+                      </SheetContent>
+                    </Sheet>
+                    <NavProfile />
+                  </div>
+                  <div className="hidden md:block">
+                    <NavProfile />
+                  </div>
+                </>
               ) : (
                 <>
                   <div className="hidden md:flex items-center justify-end gap-2 lg:gap-3">
@@ -133,10 +174,11 @@ const Navbar = () => {
                         </Button>
                       </SheetTrigger>
                       <SheetContent side="left" className="w-[280px] px-5">
+                        <SheetTitle className="sr-only">
+                          {t("menu")}
+                        </SheetTitle>
                         <div className="flex flex-col gap-6 mt-8">
-                          {/* <ThemeToggle variant="outline" size="sm" className="shrink-0" /> */}
                           <div className="h-px bg-border" />
-                          {/* Nav links */}
                           <nav className="flex flex-col gap-1">
                             {[
                               { label: t("home"), href: "/" },
@@ -144,6 +186,7 @@ const Navbar = () => {
                               { label: t("challenges"), href: "/challenges" },
                               { label: t("bestSellers"), href: "/best-sellers" },
                               { label: t("spreads"), href: "/spreads" },
+                              { label: t("faq"), href: "/faq" },
                             ].map((item) => (
                               <Link
                                 key={item.href}
@@ -155,27 +198,25 @@ const Navbar = () => {
                             ))}
                           </nav>
                           <div className="h-px bg-border" />
-                          {!isLogIn && (
-                            <div className="flex flex-col gap-3">
-                              <Link href="/auth/sign-in">
-                                <Button
-                                  variant="outline"
-                                  className="w-full font-bold transition-all duration-200 hover:scale-[1.02] hover:shadow-md active:scale-[0.98]"
-                                >
-                                  {t("signIn")}
-                                </Button>
-                              </Link>
-                              <Link href="/auth/sign-up">
-                                <Button
-                                  className="w-full font-bold transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98]"
-                                >
-                                  {t("signUp")}
-                                </Button>
-                              </Link>
-                            </div>
-                          )}
+                          <div className="flex flex-col gap-3">
+                            <Link href="/auth/sign-in">
+                              <Button
+                                variant="outline"
+                                className="w-full font-bold transition-all duration-200 hover:scale-[1.02] hover:shadow-md active:scale-[0.98]"
+                              >
+                                {t("signIn")}
+                              </Button>
+                            </Link>
+                            <Link href="/auth/sign-up">
+                              <Button
+                                className="w-full font-bold transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98]"
+                              >
+                                {t("signUp")}
+                              </Button>
+                            </Link>
+                          </div>
                         </div>
-                      </SheetContent>
+                        </SheetContent>
                     </Sheet>
                   </div>
                 </>

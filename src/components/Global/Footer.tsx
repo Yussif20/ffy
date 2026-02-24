@@ -37,7 +37,6 @@ const Footer = async () => {
         { label: t("aboutUs"), href: "about" },
         { label: t("faq"), href: "faq" },
         { label: t("contactUs"), href: "contact" },
-        { label: t("howItWorks"), href: "how-it-works" },
       ],
     },
   ];

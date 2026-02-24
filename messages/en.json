@@ -15,7 +15,9 @@
   },
   "Navbar": {
     "home": "Home",
+    "menu": "Navigation menu",
     "firms": "Firms",
+    "faq": "FAQ",
     "offers": "Offers",
     "exclusiveOffers": "Exclusive Offers",
     "allCurrentOffers": "All Current Offers",
