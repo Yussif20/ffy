@@ -1139,7 +1139,7 @@
         }
       },
       "assetsTraded": {
-        "label": "What instruments do you trade?",
+        "label": "What markets do you trade?",
         "options": {
           "forex": "Forex",
           "futures": "Futures",

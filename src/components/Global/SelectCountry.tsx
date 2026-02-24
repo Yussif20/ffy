@@ -28,7 +28,9 @@ export default function SelectCountry({ state }: { state?: { value: string, setV
     const [defaultValue, setDefaultValue] = React.useState("")
     const usedValue = state ? state.value : defaultValue;
     const usedSetValue = state ? state.setValue : setDefaultValue;
-    const selectedValue = countries.find((country) => country.country === usedValue);
+    const selectedValue = countries.find(
+        (c) => c.code === usedValue || c.country === usedValue
+    );
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
@@ -63,11 +65,12 @@ export default function SelectCountry({ state }: { state?: { value: string, setV
                         <CommandGroup>
                             {countries.map((country) => (
                                 <CommandItem
-                                    key={country.country}
+                                    key={`${country.code}-${country.country}`}
                                     value={country.country}
-                                    onSelect={(currentValue) => {
-                                        usedSetValue(currentValue === usedValue ? "" : currentValue)
-                                        setOpen(false)
+                                    onSelect={() => {
+                                        const next = usedValue === country.code ? "" : country.code;
+                                        usedSetValue(next);
+                                        setOpen(false);
                                     }}
                                 >
                                     <div className="flex gap-2 items-center">
@@ -84,7 +87,7 @@ export default function SelectCountry({ state }: { state?: { value: string, setV
                                     <Check
                                         className={cn(
                                             "ml-auto",
-                                            usedValue === country.country ? "opacity-100" : "opacity-0"
+                                            usedValue === country.code ? "opacity-100" : "opacity-0"
                                         )}
                                     />
                                 </CommandItem>
