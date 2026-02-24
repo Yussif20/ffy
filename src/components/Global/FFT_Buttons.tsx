@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
 import SwitchIcon from "./Icons/SwitchIcon";
+import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import useIsArabic from "@/hooks/useIsArabic";
@@ -13,8 +14,11 @@ export default function FFT_Buttons() {
   const id = useId();
   const t = useTranslations("Navbar");
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
   const isArabic = useIsArabic();
+  const queryString = searchParams.toString();
+  const suffix = queryString ? "?" + queryString : "";
 
   const routerIsFutures = pathname.startsWith("/futures");
 
@@ -40,10 +44,10 @@ export default function FFT_Buttons() {
 
     if (value === "/futures") {
       const path = pathname.startsWith("/forex") ? pathname.slice(6) : pathname;
-      router.push("/futures" + path, { scroll: false });
+      router.push("/futures" + path + suffix, { scroll: false });
     } else {
       const after = pathname.split("/futures")[1] || "";
-      router.push("/forex" + after, { scroll: false });
+      router.push("/forex" + after + suffix, { scroll: false });
     }
   };
 

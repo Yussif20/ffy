@@ -4,10 +4,10 @@ import SearchForm from "@/components/Forms/SearchForm";
 import { Button } from "@/components/ui/button";
 import { cn, handleSetSearchParams } from "@/lib/utils";
 import { Filter, Plus } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import SelectOptions from "./SelectOptions";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CreateChallengeModal from "./CreateChallengeModal";
 import { useCurrentUser } from "@/redux/authSlice";
 import { useAppSelector } from "@/redux/store";
@@ -26,15 +26,42 @@ export default function ChallengeFilter({
   onSearchChange,
 }: ChallengeFilterProps) {
   const t = useTranslations("Challenges");
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
   const filterOpen = searchParams.get("filterOpen") === "true";
   const isArabic = useIsArabic();
 
   const [openModal, setOpenModal] = useState(false);
+  const hasAppliedChallengeDefaults = useRef(false);
+  const prevPathnameRef = useRef(pathname);
 
   const user = useAppSelector(useCurrentUser);
   const role = user?.role;
+
+  // When switching Forex <-> Futures, reset so we re-apply defaults on the new tab
+  if (pathname !== prevPathnameRef.current) {
+    prevPathnameRef.current = pathname;
+    hasAppliedChallengeDefaults.current = false;
+  }
+
+  // Set default size (100K) and steps (STEP1) together so URL ends up as ?in_steps=STEP1&size=100000
+  useEffect(() => {
+    if (hasAppliedChallengeDefaults.current) return;
+    const hasSize = searchParams.get("size") || searchParams.get("size_range");
+    const hasSteps = searchParams.get("in_steps");
+    if (hasSize && hasSteps) {
+      hasAppliedChallengeDefaults.current = true;
+      return;
+    }
+    const next: Record<string, string> = {};
+    if (!hasSize) next.size = "100000";
+    if (!hasSteps) next.in_steps = "STEP1";
+    if (Object.keys(next).length > 0) {
+      hasAppliedChallengeDefaults.current = true;
+      handleSetSearchParams(next, searchParams, router);
+    }
+  }, [pathname, searchParams, router]);
 
   const handleSetCategory = (value: Record<string, string>) => {
     handleSetSearchParams(value, searchParams, router);
@@ -75,7 +102,6 @@ export default function ChallengeFilter({
             { name: "$300K", value: "300000" },
             { name: "$500K", value: "500000" },
           ]}
-          defaultValue="100000"
           custom={{
             show: true,
             max: 2000000,
@@ -93,7 +119,6 @@ export default function ChallengeFilter({
             { name: t("STEP3"), value: "STEP3" },
             { name: t("STEP4"), value: "STEP4" },
           ]}
-          defaultValue="STEP1"
           cols={2}
         />
       </div>

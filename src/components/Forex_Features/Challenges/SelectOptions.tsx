@@ -135,8 +135,13 @@ export default function SelectOptions({
               return (
                 <Button
                   onClick={() => handleSetCategory(item.value)}
-                  className={cn("w-full", isArabic && "font-semibold")}
-                  variant={isExist ? "outline" : "outline2"}
+                  className={cn(
+                    "w-full",
+                    isArabic && "font-semibold",
+                    isExist &&
+                      "bg-primary/15 border-2 border-primary text-primary font-semibold hover:bg-primary/25 hover:border-primary"
+                  )}
+                  variant={isExist ? "outline2" : "outline2"}
                   key={item.value}
                 >
                   {item.name}
@@ -153,8 +158,13 @@ export default function SelectOptions({
                   )
                 }
                 size={"lg"}
-                className={cn("w-full", isArabic && "font-semibold")}
-                variant={isCustom ? "outline" : "outline2"}
+                className={cn(
+                  "w-full",
+                  isArabic && "font-semibold",
+                  isCustom &&
+                    "bg-primary/15 border-2 border-primary text-primary font-semibold hover:bg-primary/25 hover:border-primary"
+                )}
+                variant="outline2"
               >
                 {text("custom")}
               </Button>
