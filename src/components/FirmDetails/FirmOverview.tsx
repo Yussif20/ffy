@@ -43,8 +43,8 @@ export default async function FirmOverview({
           <FO_Sidebar />
         </div>
 
-        {/* Main Content */}
-        <div className="flex-1 space-y-6">
+        {/* Main Content - right padding for breathing room, extra in Arabic */}
+        <div className={cn("flex-1 space-y-6 pr-4", isArabic && "pr-6")}>
           {/* Firm Overview */}
           <section id="firm-overview" className="space-y-6 scroll-mt-[270px]">
             <SecTitle>

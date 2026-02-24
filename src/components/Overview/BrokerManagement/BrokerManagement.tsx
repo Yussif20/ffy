@@ -1,7 +1,6 @@
 "use client";
 import SearchForm from "@/components/Forms/SearchForm";
-import Title from "@/components/Global/Title";
-
+import { useTranslations } from "next-intl";
 import {
   Table,
   TableBody,
@@ -21,6 +20,7 @@ import UpdateBroker from "./UpdateBroker";
 import DeleteBroker from "./DeleteBroker";
 
 export default function BrokerManagement() {
+  const t = useTranslations("Overview.brokerManagement");
   const searchParams = useSearchParams();
 
   const search = searchParams.get("search") || "";
@@ -31,31 +31,30 @@ export default function BrokerManagement() {
   const brokers: Broker[] = data?.data?.brokers || [];
 
   return (
-    <div>
-      <div className="mb-8">
-        <Title>Broker Management</Title>
+    <div className="space-y-6">
+      <div className="pb-4 border-b border-border/60">
+        <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+          {t("title")}
+        </h1>
       </div>
 
-      <div className="flex justify-between items-center mb-6 flex-col md:flex-row gap-4">
-        <div className="w-full">
+      <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+        <div className="w-full sm:max-w-xs">
           <SearchForm />
         </div>
-
-        <div className="w-full md:w-auto">
-          <CreateBroker />
-        </div>
+        <CreateBroker />
       </div>
 
       {isLoading ? (
-        <TableSkeleton headers={["Logo", "Title", "Actions"]} />
+        <TableSkeleton headers={[t("logo"), t("titleLabel"), t("actions")]} />
       ) : (
-        <div className="overflow-x-auto">
+        <div className="rounded-xl border border-border/60 bg-card overflow-hidden shadow-sm">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Logo</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t("logo")}</TableHead>
+                <TableHead>{t("titleLabel")}</TableHead>
+                <TableHead>{t("actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody colSpan={3}>
@@ -76,12 +75,12 @@ export default function BrokerManagement() {
                       {" "}
                       <UpdateBroker broker={broker}>
                         <Button size="sm" variant="outline">
-                          Edit
+                          {t("edit")}
                         </Button>
                       </UpdateBroker>
                       <DeleteBroker broker={broker}>
                         <Button size="sm" variant="destructive">
-                          Delete
+                          {t("delete")}
                         </Button>
                       </DeleteBroker>
                     </div>
@@ -91,7 +90,7 @@ export default function BrokerManagement() {
               {brokers.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={3} className="text-center py-4">
-                    No brokers found.
+                    {t("noBrokers")}
                   </TableCell>
                 </TableRow>
               )}

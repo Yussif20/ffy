@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { FieldValues } from "react-hook-form";
 import { Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import CustomForm from "@/components/Forms/CustomForm";
 import CustomInput from "@/components/Forms/CustomInput";
 import { useCreatePaymentMethodMutation } from "@/redux/api/paymentMethodApi";
@@ -20,6 +21,7 @@ import { toast } from "sonner";
 import ImageUpload from "./PMImageUpload";
 
 export default function CreatePayMethod() {
+  const t = useTranslations("Overview.payMethodManagement");
   const [create, { isLoading: createLoading }] =
     useCreatePaymentMethodMutation();
   const [openDialog, setOpenDialog] = useState(false);
@@ -31,33 +33,33 @@ export default function CreatePayMethod() {
 
   const handleSubmit = async (data: FieldValues) => {
     if (!data.title || !data.logoUrl) {
-      toast.error("Please fill all the fields");
+      toast.error(t("pleaseFillAll"));
       return;
     }
-    const toastId = toast.loading("Creating payment method...");
+    const toastId = toast.loading(t("creatingPaymentMethod"));
     try {
       const formData = new FormData();
       formData.append("data", JSON.stringify({ title: data.title }));
       formData.append("logo", data.logoUrl);
       await create(formData).unwrap();
-      toast.success("Payment method created successfully", { id: toastId });
+      toast.success(t("createSuccess"), { id: toastId });
       setOpenDialog(false);
     } catch (error) {
-      toast.error("Failed to create payment method", { id: toastId });
+      toast.error(t("createError"), { id: toastId });
     }
   };
 
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button>
-          <Plus /> Add Payment Method
+          <Plus /> {t("addPaymentMethod")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
-            Add Payment Method
+            {t("addPaymentMethodTitle")}
           </DialogTitle>
         </DialogHeader>
 
@@ -68,13 +70,13 @@ export default function CreatePayMethod() {
         >
           <div className="space-y-2">
             <Label htmlFor="title" className="text-sm font-medium">
-              Title
+              {t("titleLabel")}
             </Label>
             <CustomInput
               type="text"
               name="title"
               fieldClassName="h-11"
-              placeholder="Enter payment method title"
+              placeholder={t("titlePlaceholder")}
               required
             />
           </div>
@@ -87,10 +89,10 @@ export default function CreatePayMethod() {
               variant="outline"
               onClick={() => setOpenDialog(false)}
             >
-              Cancel
+              {t("cancel")}
             </Button>
             <Button disabled={createLoading} type="submit">
-              {createLoading ? "Creating..." : "Add Payment Method"}
+              {createLoading ? t("creating") : t("addPaymentMethod")}
             </Button>
           </DialogFooter>
         </CustomForm>

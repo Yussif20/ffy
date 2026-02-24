@@ -1,81 +1,52 @@
 "use client";
 
-import Image from "next/image";
-
 import { useGetMeQuery } from "@/redux/api/userApi";
 import Container from "../Global/Container";
-// import ThemeToggle from "../Global/ThemeToggle";
 import { Skeleton } from "@/components/ui/skeleton";
-
-import userImg from "@/assets/user.png";
 import { Link } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
+import Logo from "@/utils/Logo";
+import NavLanguageChange from "../Global/Navbar/NavLanguageChange";
+import NavProfile from "../Global/NavProfile";
 
 const Topbar = ({ isOpen }: { isOpen: boolean }) => {
-  const { data, isLoading } = useGetMeQuery(undefined);
+  const { isLoading } = useGetMeQuery(undefined);
 
-  // Loader while fetching user
+  const headerClassName = cn(
+    "h-16 fixed top-0 left-0 w-full z-50 transition-[padding] duration-300 pl-16",
+    "bg-card/95 backdrop-blur-sm border-b border-border/80",
+    "shadow-[0_4px_24px_-4px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_24px_-4px_rgba(0,0,0,0.2)]",
+    isOpen && "md:pl-64"
+  );
+
   if (isLoading) {
     return (
-      <div
-        className={`bg-background border-b h-16 fixed top-0 left-0 w-full z-50 translate-all duration-200 pl-16 ${
-          isOpen && "md:pl-64"
-        }`}
-      >
+      <header className={headerClassName}>
         <Container className="flex items-center justify-between h-full">
-          <div className="flex items-center">
-            <Skeleton className="w-40 h-6 rounded-md" />
-          </div>
-          <div className="flex items-center space-x-4">
-            <Skeleton className="w-10 h-10 rounded-full" />
-            <div className="space-y-1">
-              <Skeleton className="w-24 h-4 rounded-md" />
-              <Skeleton className="w-16 h-3 rounded-md" />
-            </div>
+          <Skeleton className="h-8 w-32 rounded-lg" />
+          <div className="flex items-center gap-3">
+            <Skeleton className="h-9 w-9 rounded-lg" />
+            <Skeleton className="h-9 w-9 rounded-full" />
           </div>
         </Container>
-      </div>
+      </header>
     );
   }
 
-  const user = data?.data?.user;
-
   return (
-    <div
-      className={`border-b h-16 fixed top-0 left-0 w-full z-50 translate-all duration-200 pl-16 bg-background ${
-        isOpen && "md:pl-64"
-      }`}
-    >
+    <header className={headerClassName}>
       <Container className="flex items-center justify-between h-full">
-        <div className="flex items-center">
-          <h2 className="text-xl font-semibold text-foreground">
-            Welcome back
-          </h2>
-        </div>
-        <div className="flex items-center gap-3">
-          {/* <ThemeToggle variant="ghost" size="icon" className="h-9 w-9 shrink-0" /> */}
-          <Link
-            href={`/profile`}
-            className="rounded-full overflow-hidden border"
-          >
-            <Image
-              src={!user?.profile ? userImg : `${user?.profile}`}
-              alt={`${user?.fullName}`}
-              width={50}
-              height={50}
-              className="w-10 h-10 rounded-full object-cover"
-            />
-          </Link>
-          <div>
-            <h4 className="text-sm md:text-base font-semibold text-foreground">
-              {user?.fullName}
-            </h4>
-            <h4 className="text-xs md:text-sm text-foreground/70">
-              {user?.role}
-            </h4>
+        <Link href="/" className="flex items-center shrink-0" aria-label="Home">
+          <div className="relative h-8 w-8 sm:h-9 sm:w-9 aspect-square overflow-hidden rounded-md" dir="ltr">
+            <Logo />
           </div>
+        </Link>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <NavLanguageChange triggerClassName="h-9 w-9 shrink-0" />
+          <NavProfile />
         </div>
       </Container>
-    </div>
+    </header>
   );
 };
 

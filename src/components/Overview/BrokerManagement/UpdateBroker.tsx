@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { FieldValues } from "react-hook-form";
 import { Pencil } from "lucide-react";
+import { useTranslations } from "next-intl";
 import CustomForm from "@/components/Forms/CustomForm";
 import CustomInput from "@/components/Forms/CustomInput";
 import { toast } from "sonner";
@@ -25,6 +26,7 @@ interface UpdateBrokerProps {
 }
 
 export default function UpdateBroker({ broker, children }: UpdateBrokerProps) {
+  const t = useTranslations("Overview.brokerManagement");
   const [update, { isLoading: updateLoading }] = useUpdateBrokerMutation();
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -35,11 +37,11 @@ export default function UpdateBroker({ broker, children }: UpdateBrokerProps) {
 
   const handleSubmit = async (data: FieldValues) => {
     if (!data.title) {
-      toast.error("Please fill all the fields");
+      toast.error(t("pleaseFillAll"));
       return;
     }
 
-    const toastId = toast.loading("Updating broker...");
+    const toastId = toast.loading(t("updatingBroker"));
 
     try {
       const formData = new FormData();
@@ -51,10 +53,10 @@ export default function UpdateBroker({ broker, children }: UpdateBrokerProps) {
       }
 
       await update({ brokerId: broker.id, data: formData }).unwrap();
-      toast.success("Broker updated successfully", { id: toastId });
+      toast.success(t("updateSuccess"), { id: toastId });
       setOpenDialog(false);
     } catch (error) {
-      toast.error("Failed to update broker", { id: toastId });
+      toast.error(t("updateError"), { id: toastId });
     }
   };
 
@@ -70,7 +72,7 @@ export default function UpdateBroker({ broker, children }: UpdateBrokerProps) {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
-            Update Broker
+            {t("updateBrokerTitle")}
           </DialogTitle>
         </DialogHeader>
         <CustomForm
@@ -80,13 +82,13 @@ export default function UpdateBroker({ broker, children }: UpdateBrokerProps) {
         >
           <div className="space-y-2">
             <Label htmlFor="title" className="text-sm font-medium">
-              Title
+              {t("titleLabel")}
             </Label>
             <CustomInput
               type="text"
               name="title"
               fieldClassName="h-11"
-              placeholder="Enter broker title"
+              placeholder={t("titlePlaceholder")}
               required
             />
           </div>
@@ -98,10 +100,10 @@ export default function UpdateBroker({ broker, children }: UpdateBrokerProps) {
               variant="outline"
               onClick={() => setOpenDialog(false)}
             >
-              Cancel
+              {t("cancel")}
             </Button>
             <Button disabled={updateLoading} type="submit">
-              {updateLoading ? "Updating..." : "Update Broker"}
+              {updateLoading ? t("updating") : t("updateBrokerTitle")}
             </Button>
           </DialogFooter>
         </CustomForm>

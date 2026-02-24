@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useDeletePaymentMethodMutation } from "@/redux/api/paymentMethodApi";
 import { toast } from "sonner";
 
@@ -30,19 +31,20 @@ export default function DeletePayMethod({
   paymentMethod,
   children,
 }: DeletePayMethodProps) {
+  const t = useTranslations("Overview.payMethodManagement");
   const [deletePaymentMethod, { isLoading: deleteLoading }] =
     useDeletePaymentMethodMutation();
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleDelete = async () => {
-    const toastId = toast.loading("Deleting payment method...");
+    const toastId = toast.loading(t("deletingPaymentMethod"));
 
     try {
       await deletePaymentMethod(paymentMethod.id).unwrap();
-      toast.success("Payment method deleted successfully", { id: toastId });
+      toast.success(t("deleteSuccess"), { id: toastId });
       setOpenDialog(false);
     } catch (error) {
-      toast.error("Failed to delete payment method", { id: toastId });
+      toast.error(t("deleteError"), { id: toastId });
     }
   };
 
@@ -57,24 +59,23 @@ export default function DeletePayMethod({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>{t("deleteTitle")}</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the
-            payment method{" "}
+            {t("deleteDescription")}{" "}
             <span className="font-semibold text-foreground">
               "{paymentMethod.title}"
             </span>{" "}
-            from the system.
+            {t("fromTheSystem")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={deleteLoading}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={deleteLoading}>{t("cancel")}</AlertDialogCancel>
           <AlertDialogAction
             disabled={deleteLoading}
             onClick={handleDelete}
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
           >
-            {deleteLoading ? "Deleting..." : "Delete"}
+            {deleteLoading ? t("deleting") : t("delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useDeletePlatformMutation } from "@/redux/api/platformApi";
 import { toast } from "sonner";
 
@@ -30,19 +31,20 @@ export default function Deleteplatform({
   platform,
   children,
 }: DeleteplatformProps) {
+  const t = useTranslations("Overview.platformManagement");
   const [deletePlatform, { isLoading: deleteLoading }] =
     useDeletePlatformMutation();
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleDelete = async () => {
-    const toastId = toast.loading("Deleting platform method...");
+    const toastId = toast.loading(t("deletingPlatform"));
 
     try {
       await deletePlatform(platform.id).unwrap();
-      toast.success("Platform method deleted successfully", { id: toastId });
+      toast.success(t("deleteSuccess"), { id: toastId });
       setOpenDialog(false);
     } catch (error) {
-      toast.error("Failed to delete platform method", { id: toastId });
+      toast.error(t("deleteError"), { id: toastId });
     }
   };
 
@@ -57,24 +59,23 @@ export default function Deleteplatform({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>{t("deleteTitle")}</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the
-            platform method{" "}
+            {t("deleteDescription")}{" "}
             <span className="font-semibold text-foreground">
               "{platform.title}"
             </span>{" "}
-            from the system.
+            {t("fromTheSystem")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={deleteLoading}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={deleteLoading}>{t("cancel")}</AlertDialogCancel>
           <AlertDialogAction
             disabled={deleteLoading}
             onClick={handleDelete}
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
           >
-            {deleteLoading ? "Deleting..." : "Delete"}
+            {deleteLoading ? t("deleting") : t("delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

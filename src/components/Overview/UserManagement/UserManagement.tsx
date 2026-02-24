@@ -16,10 +16,10 @@ import {
 } from "@/redux/api/userApi";
 import { useSearchParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 import { Pagination } from "@/components/Global/Pagination";
 import TableSkeleton from "@/components/Global/TableSkeleton";
 import SearchForm from "@/components/Forms/SearchForm";
-import Title from "@/components/Global/Title";
 
 export type TUser = {
   id: string;
@@ -35,6 +35,7 @@ export type TUser = {
 };
 
 export default function UserManagement() {
+  const t = useTranslations("Overview.userManagement");
   const params = useSearchParams();
   const router = useRouter();
   const page = Number(params.get("page")) || 1;
@@ -60,37 +61,39 @@ export default function UserManagement() {
       id: user.id,
       data: { status: newStatus },
     });
-    toast.success("User status updated successfully");
+    toast.success(t("userStatusUpdated"));
     // Refresh page after update
     router.refresh();
   };
 
   return (
-    <div>
-      <div className="mb-8">
-        <Title>User Management</Title>
+    <div className="space-y-6">
+      <div className="pb-4 border-b border-border/60">
+        <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+          {t("title")}
+        </h1>
       </div>
 
-      <div className="mb-6">
+      <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
         <SearchForm />
       </div>
 
       {isLoading || isFetching ? (
         <TableSkeleton
-          headers={["Name", "Email", "Role", "Status", "Join Date", "Actions"]}
+          headers={[t("name"), t("email"), t("role"), t("status"), t("joinDate"), t("actions")]}
         />
       ) : (
         <>
-          <div className="bg-card border border-border rounded-lg overflow-hidden shadow-sm w-full overflow-hidden border-2">
+          <div className="rounded-xl border border-border/60 bg-card overflow-hidden shadow-sm">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Role</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Join Date</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead>{t("name")}</TableHead>
+                  <TableHead>{t("email")}</TableHead>
+                  <TableHead>{t("role")}</TableHead>
+                  <TableHead>{t("status")}</TableHead>
+                  <TableHead>{t("joinDate")}</TableHead>
+                  <TableHead className="text-right">{t("actions")}</TableHead>
                 </TableRow>
               </TableHeader>
 
@@ -134,7 +137,7 @@ export default function UserManagement() {
                         disabled={isStatusUpdating}
                         onClick={() => handleStatusUpdate(user)}
                       >
-                        {user.status === "BLOCKED" ? "Unban" : "Ban"}
+                        {user.status === "BLOCKED" ? t("unban") : t("ban")}
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -142,13 +145,11 @@ export default function UserManagement() {
               </TableBody>
             </Table>
           </div>
-          <div className=" mt-4">
+          <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <p className="text-sm text-muted-foreground">
+              Showing {users.length} of {users.length} users
+            </p>
             <Pagination totalPages={totalPages} />
-          </div>
-
-          {/* Count */}
-          <div className="mt-6 text-sm text-muted-foreground">
-            Showing {users.length} of {users.length} users
           </div>
         </>
       )}

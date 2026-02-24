@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { FieldValues } from "react-hook-form";
 import { Pencil } from "lucide-react";
+import { useTranslations } from "next-intl";
 import CustomForm from "@/components/Forms/CustomForm";
 import CustomInput from "@/components/Forms/CustomInput";
 import { useUpdatePaymentMethodMutation } from "@/redux/api/paymentMethodApi";
@@ -33,6 +34,7 @@ export default function UpdatePayMethod({
   paymentMethod,
   children,
 }: UpdatePayMethodProps) {
+  const t = useTranslations("Overview.payMethodManagement");
   const [update, { isLoading: updateLoading }] =
     useUpdatePaymentMethodMutation();
   const [openDialog, setOpenDialog] = useState(false);
@@ -44,11 +46,11 @@ export default function UpdatePayMethod({
 
   const handleSubmit = async (data: FieldValues) => {
     if (!data.title) {
-      toast.error("Please fill all the fields");
+      toast.error(t("pleaseFillAll"));
       return;
     }
 
-    const toastId = toast.loading("Updating payment method...");
+    const toastId = toast.loading(t("updatingPaymentMethod"));
 
     try {
       const formData = new FormData();
@@ -60,10 +62,10 @@ export default function UpdatePayMethod({
       }
 
       await update({ paymentMethodId: paymentMethod.id, formData }).unwrap();
-      toast.success("Payment method updated successfully", { id: toastId });
+      toast.success(t("updateSuccess"), { id: toastId });
       setOpenDialog(false);
     } catch (error) {
-      toast.error("Failed to update payment method", { id: toastId });
+      toast.error(t("updateError"), { id: toastId });
     }
   };
 
@@ -79,7 +81,7 @@ export default function UpdatePayMethod({
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
-            Update Payment Method
+            {t("updatePaymentMethodTitle")}
           </DialogTitle>
         </DialogHeader>
         <CustomForm
@@ -89,13 +91,13 @@ export default function UpdatePayMethod({
         >
           <div className="space-y-2">
             <Label htmlFor="title" className="text-sm font-medium">
-              Title
+              {t("titleLabel")}
             </Label>
             <CustomInput
               type="text"
               name="title"
               fieldClassName="h-11"
-              placeholder="Enter payment method title"
+              placeholder={t("titlePlaceholder")}
               required
             />
           </div>
@@ -107,10 +109,10 @@ export default function UpdatePayMethod({
               variant="outline"
               onClick={() => setOpenDialog(false)}
             >
-              Cancel
+              {t("cancel")}
             </Button>
             <Button disabled={updateLoading} type="submit">
-              {updateLoading ? "Updating..." : "Update Payment Method"}
+              {updateLoading ? t("updating") : t("updatePaymentMethodTitle")}
             </Button>
           </DialogFooter>
         </CustomForm>

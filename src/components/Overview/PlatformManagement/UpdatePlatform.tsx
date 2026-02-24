@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { FieldValues } from "react-hook-form";
 import { Pencil } from "lucide-react";
+import { useTranslations } from "next-intl";
 import CustomForm from "@/components/Forms/CustomForm";
 import CustomInput from "@/components/Forms/CustomInput";
 import { toast } from "sonner";
@@ -33,6 +34,7 @@ export default function UpdatePlatform({
   platform,
   children,
 }: UpdatePlatformProps) {
+  const t = useTranslations("Overview.platformManagement");
   const [update, { isLoading: updateLoading }] = useUpdatePlatformMutation();
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -43,11 +45,11 @@ export default function UpdatePlatform({
 
   const handleSubmit = async (data: FieldValues) => {
     if (!data.title) {
-      toast.error("Please fill all the fields");
+      toast.error(t("pleaseFillAll"));
       return;
     }
 
-    const toastId = toast.loading("Updating platform method...");
+    const toastId = toast.loading(t("updatingPlatform"));
 
     try {
       const formData = new FormData();
@@ -59,10 +61,10 @@ export default function UpdatePlatform({
       }
 
       await update({ platformId: platform.id, formData }).unwrap();
-      toast.success("Platform method updated successfully", { id: toastId });
+      toast.success(t("updateSuccess"), { id: toastId });
       setOpenDialog(false);
     } catch (error) {
-      toast.error("Failed to update platform method", { id: toastId });
+      toast.error(t("updateError"), { id: toastId });
     }
   };
 
@@ -78,7 +80,7 @@ export default function UpdatePlatform({
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
-            Update Platform Method
+            {t("updatePlatformTitle")}
           </DialogTitle>
         </DialogHeader>
         <CustomForm
@@ -88,13 +90,13 @@ export default function UpdatePlatform({
         >
           <div className="space-y-2">
             <Label htmlFor="title" className="text-sm font-medium">
-              Title
+              {t("titleLabel")}
             </Label>
             <CustomInput
               type="text"
               name="title"
               fieldClassName="h-11"
-              placeholder="Enter platform method title"
+              placeholder={t("titlePlaceholder")}
               required
             />
           </div>
@@ -106,10 +108,10 @@ export default function UpdatePlatform({
               variant="outline"
               onClick={() => setOpenDialog(false)}
             >
-              Cancel
+              {t("cancel")}
             </Button>
             <Button disabled={updateLoading} type="submit">
-              {updateLoading ? "Updating..." : "Update Platform Method"}
+              {updateLoading ? t("updating") : t("updatePlatformTitle")}
             </Button>
           </DialogFooter>
         </CustomForm>
