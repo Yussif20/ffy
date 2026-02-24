@@ -615,15 +615,15 @@ export default async function FirmOverview({
                 .map((item) => (
                   <div
                     key={item.country}
-                    className="flex items-center gap-2 bg-muted px-3 py-2 rounded text-sm"
+                    className="flex items-center gap-1.5 bg-muted px-2 py-1 rounded-md text-xs"
                   >
                     {item.flag && (
-                      <div className="w-8 h-6 relative overflow-hidden">
+                      <div className="w-5 h-3.5 relative overflow-hidden shrink-0">
                         <Image
                           src={item.flag}
                           alt={item.country}
-                          width={32}
-                          height={24}
+                          width={20}
+                          height={14}
                           className="object-cover"
                         />
                       </div>
