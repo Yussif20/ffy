@@ -10,7 +10,7 @@ import useIsArabic from "@/hooks/useIsArabic";
 import { motion } from "framer-motion";
 import { useState, useEffect, useId } from "react";
 
-export default function FFT_Buttons() {
+export default function FFT_Buttons({ compact }: { compact?: boolean }) {
   const id = useId();
   const t = useTranslations("Navbar");
   const pathname = usePathname();
@@ -52,7 +52,12 @@ export default function FFT_Buttons() {
   };
 
   return (
-    <div className="border max-w-max flex justify-center items-center gap-1 sm:gap-2 rounded-full bg-primary/10">
+    <div
+      className={cn(
+        "border max-w-max flex justify-center items-center rounded-full bg-primary/10",
+        compact ? "gap-1 rounded-xl py-0.5" : "gap-1 sm:gap-2",
+      )}
+    >
       {/* Forex Button */}
       <div className="relative">
         {!isFutures && (
@@ -64,9 +69,11 @@ export default function FFT_Buttons() {
         )}
         <Button
           className={cn(
-            "relative z-10 rounded-full! px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24",
-            "bg-transparent! hover:bg-white/10! shadow-none!",
-            isArabic && "text-base md:text-lg",
+            "relative z-10 rounded-full! bg-transparent! hover:bg-white/10! shadow-none!",
+            compact
+              ? "h-7 min-w-14 px-2! text-xs"
+              : "px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24",
+            isArabic && !compact && "text-base md:text-lg",
           )}
           variant="ghost"
           onClick={() => handleChange("/forex")}
@@ -77,7 +84,7 @@ export default function FFT_Buttons() {
 
       {/* Switch Icons */}
       <motion.div
-        className="max-w-max"
+        className={cn("max-w-max", compact && "scale-75")}
         animate={{ rotate: rotation }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
       >
@@ -96,9 +103,11 @@ export default function FFT_Buttons() {
         )}
         <Button
           className={cn(
-            "relative z-10 rounded-full! px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24",
-            "bg-transparent! hover:bg-white/10! shadow-none!",
-            isArabic && "text-base md:text-lg",
+            "relative z-10 rounded-full! bg-transparent! hover:bg-white/10! shadow-none!",
+            compact
+              ? "h-7 min-w-14 px-2! text-xs"
+              : "px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24",
+            isArabic && !compact && "text-base md:text-lg",
           )}
           variant="ghost"
           onClick={() => handleChange("/futures")}

@@ -1,9 +1,11 @@
 import FFT_Buttons from "./FFT_Buttons";
 import LinearBorder from "./LinearBorder";
-export default function ForexFeatureToggle() {
+import { cn } from "@/lib/utils";
+
+export default function ForexFeatureToggle({ compact }: { compact?: boolean }) {
   return (
-    <LinearBorder>
-      <FFT_Buttons />
+    <LinearBorder className={cn(compact && "rounded-xl shadow-md")}>
+      <FFT_Buttons compact={compact} />
     </LinearBorder>
   );
 }

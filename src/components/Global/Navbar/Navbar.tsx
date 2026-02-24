@@ -18,12 +18,22 @@ import NavSearch from "./NavSearch";
 // import ThemeToggle from "../ThemeToggle";
 import WebToggler from "./WebToggler";
 
+const MOBILE_BREAKPOINT = 768;
+
 const Navbar = () => {
   const t = useTranslations("Navbar");
   const userData = useAppSelector(useCurrentUser);
   const isLogIn = userData?.id;
   const [isScrolled, setIsScrolled] = useState(false);
   const isScrolledRef = useRef(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(typeof window !== "undefined" && window.innerWidth < MOBILE_BREAKPOINT);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -87,14 +97,14 @@ const Navbar = () => {
                 <NavbarLogo isScrolled={isScrolled} />
               </div>
 
-              {/* Feature Toggle (Scrolled State) */}
+              {/* Feature Toggle (Scrolled State) - smaller on mobile only */}
               <div
                 className={`transition-all duration-150 ease-out ${isScrolled
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-8 absolute pointer-events-none"
                   }`}
               >
-                <ForexFeatureToggle />
+                <ForexFeatureToggle compact={isMobile} />
               </div>
             </div>
 
@@ -224,14 +234,14 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Feature Toggle Below (Normal State) */}
+          {/* Feature Toggle Below (Normal State) - smaller on mobile only */}
           <div
             className={`flex justify-center items-center  transition-all duration-500 ease-in-out overflow-hidden mb-3  ${!isScrolled
                 ? "opacity-100 max-h-20 mt-4 mb-4"
                 : "opacity-0 max-h-0"
               }`}
           >
-            <ForexFeatureToggle />
+            <ForexFeatureToggle compact={isMobile} />
           </div>
 
           <div className="hidden md:block">
