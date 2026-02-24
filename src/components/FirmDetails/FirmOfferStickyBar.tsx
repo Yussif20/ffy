@@ -10,10 +10,14 @@ import { Check, Copy, ArrowUpRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import NextLink from "next/link";
+import { useEffect, useState } from "react";
+
+const MD_BREAKPOINT = 768;
 
 export default function FirmOfferStickyBar({ firm }: { firm: SinglePropFirm }) {
   const t = useTranslations("Offers");
   const isFutures = useIsFutures();
+  const [isSmallScreen, setIsSmallScreen] = useState(true);
   const { isCopied, copyToClipboard } = useCopyToClipboard({
     successMessage: t("codeCopied") ?? "Code copied!",
     errorMessage: t("copyFailed") ?? "Failed to copy",
@@ -24,6 +28,14 @@ export default function FirmOfferStickyBar({ firm }: { firm: SinglePropFirm }) {
   const hasPercent = firstOffer?.offerPercentage != null && firstOffer.offerPercentage > 0;
   const hasAffiliate = Boolean(firm?.affiliateLink);
 
+  useEffect(() => {
+    const check = () => setIsSmallScreen(typeof window !== "undefined" && window.innerWidth < MD_BREAKPOINT);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  if (!isSmallScreen) return null;
   if (!hasCode && !hasPercent && !hasAffiliate) return null;
 
   const codeBorderCls = isFutures
