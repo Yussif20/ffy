@@ -13,7 +13,11 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
       <table
         data-slot="table"
         className={cn(
-          "w-full caption-bottom text-sm  border-collapse",
+          "w-full caption-bottom text-sm border-collapse",
+          "[&_th:first-child]:border-s [&_td:first-child]:border-s",
+          "[&_th:first-child]:border-foreground/10 [&_td:first-child]:border-foreground/10",
+          "[&_th:last-child]:border-r [&_td:last-child]:border-r",
+          "[&_th:last-child]:border-foreground/10 [&_td:last-child]:border-foreground/10",
           className,
         )}
         {...props}
@@ -44,7 +48,7 @@ function TableBody({
   return (
     <tbody
       data-slot="table-body"
-      className={cn("[&_tr:last-child]:border-0", className)}
+      className={cn(className)}
       {...newProps}
     >
       {hasChildren ? (

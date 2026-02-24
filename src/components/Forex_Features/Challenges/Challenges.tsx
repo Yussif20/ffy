@@ -27,14 +27,16 @@ export default function Challenges({ locale }: { locale: string }) {
         searchValue={searchInput}
         onSearchChange={handleSearchChange}
       />
-      <div className="flex items-start gap-6">
-        <div className="max-w-sm flex shrink-0">
+      <div className="flex items-start gap-0 lg:gap-6 w-full">
+        <div className="w-0 min-w-0 max-w-0 overflow-hidden lg:w-auto lg:max-w-sm lg:overflow-visible flex shrink-0">
           <FirmAllFilters showCompanyFilter />
         </div>
-        <ChallengeTable
-          locale={locale}
-          searchTermFromState={searchTerm}
-        />
+        <div className="flex-1 min-w-0">
+          <ChallengeTable
+            locale={locale}
+            searchTermFromState={searchTerm}
+          />
+        </div>
       </div>
     </div>
   );

@@ -5,7 +5,6 @@ import { PiTiktokLogo } from "react-icons/pi";
 import { FaXTwitter } from "react-icons/fa6";
 import { SlSocialFacebook } from "react-icons/sl";
 import { FiYoutube } from "react-icons/fi";
-import { LiaTelegramPlane } from "react-icons/lia";
 import { AiOutlineDiscord } from "react-icons/ai";
 import { getTranslations } from "next-intl/server";
 import BackToTop from "./BackToTop";
@@ -46,14 +45,14 @@ const Footer = async () => {
     { label: t("termsConditions"), href: "terms-and-conditions" },
   ];
 
+  const iconSize = 26;
   const socialLinks = [
-    { icon: <Instagram size={22} />, href: "https://instagram.com" },
-    { icon: <PiTiktokLogo size={22} />, href: "https://tiktok.com" },
-    { icon: <FaXTwitter size={22} />, href: "https://twitter.com" },
-    { icon: <SlSocialFacebook size={22} />, href: "https://facebook.com" },
-    { icon: <FiYoutube size={22} />, href: "https://youtube.com" },
-    { icon: <LiaTelegramPlane size={22} />, href: "https://t.me" },
-    { icon: <AiOutlineDiscord size={22} />, href: "https://discord.com" },
+    { icon: <Instagram size={iconSize} />, href: "https://instagram.com" },
+    { icon: <PiTiktokLogo size={iconSize} />, href: "https://tiktok.com" },
+    { icon: <FaXTwitter size={iconSize} />, href: "https://twitter.com" },
+    { icon: <SlSocialFacebook size={iconSize} />, href: "https://facebook.com" },
+    { icon: <FiYoutube size={iconSize} />, href: "https://youtube.com" },
+    { icon: <AiOutlineDiscord size={iconSize} />, href: "https://discord.com" },
   ];
 
   return (
