@@ -152,7 +152,7 @@ function CompanyHeader({
       {/* Company logo + name — centered on small screens, left-aligned on desktop */}
       <div className="w-full lg:w-[17.25rem] shrink-0 flex items-center justify-center lg:justify-start">
         <Link
-          href={`${isFutures ? "/futures/" : "/"}firms/${companyData.slug}/exclusive-offers`}
+          href={`${isFutures ? "/futures/" : "/"}firms/${companyData.slug}`}
           className="flex items-center gap-3 w-fit rounded-lg p-2 -m-2 hover:bg-muted/50 transition-colors"
         >
           <div className="rounded-lg overflow-hidden border border-border bg-card shrink-0">
@@ -438,7 +438,7 @@ const OfferCard = ({
         <Link
           href={`${isFutures ? "/futures/" : "/"}firms/${
             companyData.slug
-          }/exclusive-offers`}
+          }`}
           className="flex items-center gap-2"
         >
           <div className="bg-primary3 max-w-max rounded-lg overflow-hidden border border-border">

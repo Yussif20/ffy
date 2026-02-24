@@ -38,7 +38,8 @@ export default async function FirmOverview({
 
       <div className="flex gap-8 relative flex-col lg:flex-row">
         {/* Sidebar Navigation */}
-        <div className="sticky top-45 lg:top-52 h-max bg-background z-20">
+        {/* Sticky section bar: on mobile sit flush under fixed nav (top-14 ≈ 56px), on lg keep top-52 */}
+        <div className="sticky top-14 lg:top-52 h-max bg-background z-20">
           <FO_Sidebar />
         </div>
 
