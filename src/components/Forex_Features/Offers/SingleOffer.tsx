@@ -118,7 +118,7 @@ function OfferPercentageBadge({
   return (
     <div
       className={cn(
-        "relative flex flex-col items-center justify-center rounded-xl min-w-[100px] w-[100px] sm:min-w-[120px] sm:w-[120px] py-4 sm:py-5",
+        "relative flex flex-col items-center justify-center rounded-xl w-full min-w-0 py-4 sm:py-5 lg:min-w-[100px] lg:w-[100px]",
         "bg-primary text-primary-foreground shadow-lg",
         "border border-primary-dark/50",
         className
@@ -149,9 +149,8 @@ function CompanyHeader({
   const isFutures = useIsFutures();
   return (
     <div className="shrink-0 lg:w-1/2 lg:pr-6 lg:border-r lg:border-border flex flex-col lg:flex-row lg:self-stretch">
-      {/* Company logo + name — occupies space left of the dotted divider.
-          Width = card's left-padding (1.5rem) subtracted from left-75 (18.75rem) = 17.25rem */}
-      <div className="lg:w-[17.25rem] shrink-0 flex items-center">
+      {/* Company logo + name — centered on small screens, left-aligned on desktop */}
+      <div className="w-full lg:w-[17.25rem] shrink-0 flex items-center justify-center lg:justify-start">
         <Link
           href={`${isFutures ? "/futures/" : "/"}firms/${companyData.slug}/exclusive-offers`}
           className="flex items-center gap-3 w-fit rounded-lg p-2 -m-2 hover:bg-muted/50 transition-colors"
@@ -184,9 +183,9 @@ function CompanyHeader({
           </div>
         </Link>
       </div>
-      {/* Total sale badge — occupies space right of the dotted divider */}
+      {/* Total sale badge — half width centered on small screens, right of divider on desktop */}
       {badge && (
-        <div className="hidden lg:flex flex-1 items-center justify-center">
+        <div className="flex w-1/2 lg:w-auto mx-auto lg:mx-0 flex-1 items-center justify-center mt-4 lg:mt-0">
           {badge}
         </div>
       )}
@@ -549,28 +548,30 @@ const OfferCard = ({
           {endTime && <div className="flex items-center">{endTime}</div>}
         </div>
 
-        {/* Right: Code (muted) + Apply (primary) + More */}
-        <div className="flex flex-wrap items-center gap-2 sm:gap-3 shrink-0">
-          {offer.code && (
-            <button
-              onClick={() => copyToClipboard(offer?.code)}
-              className={cn("flex justify-center items-center gap-2 border-2 border-dashed px-2.5 md:px-3 py-1.5 md:py-2 rounded-full text-[11px] sm:text-sm transition-colors", codeBorderCls)}
-            >
-              <span className={cn("font-normal", codeLabelCls)}>{t("code")}</span>
-              <p className="h-6 border-r border-foreground/20"></p>
-              <span className="font-semibold uppercase">{offer?.code}</span>
-              {isCopied ? (
-                <Check size={14} className="text-green-500 transition-colors" />
-              ) : (
-                <Copy size={14} className={cn("cursor-pointer transition-colors", copyIconHoverCls)} />
-              )}
-            </button>
-          )}
-          <Link href={companyData.affiliateLink} target="_blank" className="block">
-            <Button size="sm" className="rounded-lg bg-primary hover:bg-primary-dark text-primary-foreground font-semibold px-4">
-              {t("buy")}
-            </Button>
-          </Link>
+        {/* Right: Code + Buy 50-50 on small screens, then More */}
+        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3 shrink-0 w-full sm:w-auto">
+          <div className="grid grid-cols-2 gap-2 sm:contents min-w-0">
+            {offer.code && (
+              <button
+                onClick={() => copyToClipboard(offer?.code)}
+                className={cn("flex justify-center items-center gap-2 border-2 border-dashed px-2.5 md:px-3 h-11 min-h-11 sm:h-auto sm:min-h-0 py-1.5 md:py-2 rounded-full text-sm w-full min-w-0 sm:w-auto transition-colors", codeBorderCls)}
+              >
+                <span className={cn("font-normal", codeLabelCls)}>{t("code")}</span>
+                <p className="h-5 border-r border-foreground/20"></p>
+                <span className="font-semibold uppercase truncate">{offer?.code}</span>
+                {isCopied ? (
+                  <Check size={14} className="text-green-500 transition-colors shrink-0" />
+                ) : (
+                  <Copy size={14} className={cn("cursor-pointer transition-colors shrink-0", copyIconHoverCls)} />
+                )}
+              </button>
+            )}
+            <Link href={companyData.affiliateLink} target="_blank" className="block w-full min-w-0 sm:w-auto">
+              <Button size="sm" className="rounded-lg w-full h-11 min-h-11 sm:h-auto sm:min-h-0 text-sm bg-primary hover:bg-primary-dark text-primary-foreground font-semibold px-4">
+                {t("buy")}
+              </Button>
+            </Link>
+          </div>
           {moreBtn && <div className="w-full sm:w-auto">{moreBtn}</div>}
         </div>
 
@@ -650,29 +651,29 @@ const OfferCard = ({
             <div className="hidden lg:block w-full">{leftContent}</div>
             <div className="flex items-center gap-2.5 justify-end ml-auto lg:ml-0 w-full lg:w-auto">
               <div className="flex flex-col gap-4 lg:gap-5 ml-0 lg:ml-4 justify-center items-center w-full">
-                <div className="grid grid-cols-2 lg:flex items-center gap-3 lg:gap-4 w-full">
-                  <div className="space-y-2.5 lg:space-y-3 h-full lg:h-auto">
+                <div className="grid grid-cols-2 lg:flex items-center gap-3 lg:gap-4 w-full min-w-0">
+                  <div className="space-y-2.5 lg:space-y-3 h-full lg:h-auto min-w-0">
                     {offer.code && (
                       <button
                         onClick={() => copyToClipboard(offer?.code)}
-                        className={cn("flex justify-center items-center gap-2 border-2 border-dashed px-2.5 md:px-3 py-1.5 md:py-2 rounded-full text-[11px] sm:text-sm w-full lg:w-auto transition-colors", codeBorderCls)}
+                        className={cn("flex justify-center items-center gap-2 border-2 border-dashed px-2.5 md:px-3 h-11 min-h-11 lg:h-auto lg:min-h-0 py-1.5 md:py-2 rounded-full text-sm w-full min-w-0 lg:w-auto transition-colors", codeBorderCls)}
                       >
                         <span className="text-primary font-normal">
                           {t("code")}
                         </span>
-                        <p className="h-6 border-r border-foreground/20"></p>
-                        <span className="font-semibold uppercase">
+                        <p className="h-5 border-r border-foreground/20"></p>
+                        <span className="font-semibold uppercase truncate">
                           {offer?.code}
                         </span>
                         {isCopied ? (
                           <Check
                             size={14}
-                            className="text-green-500 transition-colors"
+                            className="text-green-500 transition-colors shrink-0"
                           />
                         ) : (
                           <Copy
                             size={14}
-                            className="cursor-pointer hover:text-primary transition-colors"
+                            className="cursor-pointer hover:text-primary transition-colors shrink-0"
                           />
                         )}
                       </button>
@@ -682,13 +683,13 @@ const OfferCard = ({
                     </div>
                   </div>
                   <div className="border-border border-r-3 h-6 hidden lg:block" />
-                  <div className="space-y-2.5 lg:space-y-3">
+                  <div className="space-y-2.5 lg:space-y-3 min-w-0">
                     <Link
                       href={companyData.affiliateLink}
                       target="_blank"
-                      className="block"
+                      className="block w-full min-w-0"
                     >
-                      <Button className="w-full lg:w-25 text-xs sm:text-sm px-3 sm:px-4">{t("buy")}</Button>
+                      <Button className="w-full h-11 min-h-11 lg:h-auto lg:min-h-0 lg:w-25 text-sm px-3 sm:px-4">{t("buy")}</Button>
                     </Link>
                     <div className="hidden lg:block"> {moreBtn}</div>
                   </div>
