@@ -295,6 +295,15 @@ body {
   scrollbar-width: thin;
   scrollbar-color: var(--primary) var(--card);
 }
+
+/* Hide scrollbar but keep scroll (e.g. sticky sidebar on mobile) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
 /* ─────────────────────────────────────────────────────────── */
 @layer base {
   * {
