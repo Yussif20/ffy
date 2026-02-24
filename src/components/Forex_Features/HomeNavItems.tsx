@@ -73,7 +73,7 @@ export default function HomeNavItems() {
 
   return (
     <div id="tabs-section" className="space-y-5 pb-5 md:pb-8 scroll-mt-40">
-      <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4">
+      <div className="flex flex-nowrap justify-center items-center gap-1.5 sm:gap-2 md:gap-4 overflow-x-auto">
         {pages.map((item) => {
           const isActive =
             (item.baseValue === "/offers" &&
@@ -84,21 +84,22 @@ export default function HomeNavItems() {
             );
           const count = counts[item.baseValue];
           return (
-            <Link key={item.value} href={item.value}>
+            <Link key={item.value} href={item.value} className="shrink-0">
               <Button
                 size={"default"}
                 variant={isActive ? "default" : "outline"}
                 className={cn(
-                  "flex items-center gap-1.5 md:h-12 md:px-7 md:text-base md:gap-2",
+                  "flex items-center gap-1 sm:gap-1.5 md:gap-2",
+                  "min-w-0 px-2 py-1.5 text-[11px] sm:px-3 sm:py-2 sm:text-xs md:h-12 md:px-7 md:text-base",
                   isArabic && "md:text-lg md:font-semibold"
                 )}
               >
                 {tabIcons[item.baseValue]}
-                {item.name}
+                <span className="truncate">{item.name}</span>
                 {count !== undefined && (
                   <span
                     className={cn(
-                      "text-[10px] px-1.5 py-0.5 rounded-full font-medium tabular-nums",
+                      "shrink-0 text-[9px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 rounded-full font-medium tabular-nums",
                       isActive
                         ? "bg-white/20 text-white"
                         : "bg-foreground/10 text-foreground/50"

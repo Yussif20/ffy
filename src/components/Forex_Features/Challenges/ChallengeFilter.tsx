@@ -13,11 +13,18 @@ import { useCurrentUser } from "@/redux/authSlice";
 import { useAppSelector } from "@/redux/store";
 import useIsArabic from "@/hooks/useIsArabic";
 
+type ChallengeFilterProps = {
+  hideAllFilter?: boolean;
+  /** When provided, search is controlled (no URL); parent holds state */
+  searchValue?: string;
+  onSearchChange?: (value: string) => void;
+};
+
 export default function ChallengeFilter({
   hideAllFilter,
-}: {
-  hideAllFilter?: boolean;
-}) {
+  searchValue,
+  onSearchChange,
+}: ChallengeFilterProps) {
   const t = useTranslations("Challenges");
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -33,13 +40,18 @@ export default function ChallengeFilter({
     handleSetSearchParams(value, searchParams, router);
   };
 
+  const searchFormProps =
+    searchValue !== undefined && onSearchChange
+      ? { value: searchValue, onSearchChange }
+      : undefined;
+
   return (
     <div className="w-full flex flex-wrap justify-between md:items-center flex-col lg:flex-row gap-5 overflow-x-hidden">
-      <div className="flex flex-wrap gap-2 md:gap-4 items-center">
+      <div className="flex flex-wrap gap-1.5 sm:gap-2 md:gap-4 items-center">
         {!hideAllFilter && (
           <Button
             className={cn(
-              "px-3! sm:px-6! text-xs sm:text-sm",
+              "h-8 px-2! text-[11px] sm:h-9 sm:px-3! sm:text-xs md:px-6! md:text-sm",
               isArabic && "font-semibold"
             )}
             onClick={() => {
@@ -85,7 +97,7 @@ export default function ChallengeFilter({
           cols={2}
         />
       </div>
-      <SearchForm />
+      <SearchForm {...searchFormProps} />
 
       {role === "SUPER_ADMIN" && (
         <div>

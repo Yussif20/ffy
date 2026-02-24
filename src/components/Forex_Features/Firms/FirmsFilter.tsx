@@ -25,11 +25,11 @@ export default function FirmsFilter() {
     handleSetSearchParams(value, searchParams, router);
   };
   return (
-    <div className="flex gap-2 md:gap-4 items-center overflow-x-auto">
+    <div className="flex gap-1.5 sm:gap-2 md:gap-4 items-center overflow-x-auto">
       <Button
         className={cn(
-          "px-3! sm:px-6! text-xs sm:text-sm",
-          isArabic ? "text-base font-semibold" : ""
+          "h-8 px-2! text-[11px] sm:h-9 sm:px-3! sm:text-xs md:px-6! md:text-sm",
+          isArabic ? "md:text-base font-semibold" : ""
         )}
         onClick={() => {
           handleSetCategory({ filterOpen: filterOpen ? "" : "true" });
@@ -38,15 +38,15 @@ export default function FirmsFilter() {
       >
         <Filter /> {t("filter")}
       </Button>
-      <div className="flex gap-2 md:gap-4 items-center">
+      <div className="flex gap-1.5 sm:gap-2 md:gap-4 items-center">
         {categories.map((item) => {
           const isActive = category === item.value;
           return (
             <Button
               key={item.value}
               className={cn(
-                "px-3! sm:px-6! text-xs sm:text-sm",
-                isArabic ? "text-base font-semibold" : ""
+                "h-8 px-2! text-[11px] sm:h-9 sm:px-3! sm:text-xs md:px-6! md:text-sm",
+                isArabic ? "md:text-base font-semibold" : ""
               )}
               onClick={() => handleSetCategory({ category: item.value })}
               variant={isActive ? "default" : "outline"}

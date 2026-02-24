@@ -4,7 +4,10 @@ import { AddFirmDialog } from "@/components/FirmDetails/AddFirmDialog";
 import { useQueryBuilder } from "@/hooks/usePagination";
 import { useGetAllFirmsQuery } from "@/redux/api/firms.api";
 import { useAppSelector } from "@/redux/store";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { useCallback, useState } from "react";
+import { useDebounce } from "use-debounce";
+import { handleSetSearchParams } from "@/lib/utils";
 import SearchForm from "@/components/Forms/SearchForm";
 import FirmAllFilters from "./FirmAllFilters";
 import FirmsFilter from "./FirmsFilter";
@@ -17,10 +20,19 @@ export default function Firms() {
   const pathname = usePathname();
   const isFuturesPage = pathname.includes("futures");
 
+  const router = useRouter();
   const page = getParamsWithKey("page", 1);
 
   const limit = getParamsWithKey("limit", 10);
-  const searchTerm = searchParams.get("search") || "";
+  const [searchInput, setSearchInput] = useState("");
+  const [searchTerm] = useDebounce(searchInput, 300);
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      setSearchInput(value);
+      handleSetSearchParams({ page: "1" }, searchParams, router);
+    },
+    [searchParams, router]
+  );
   const assets = searchParams.get("assets") || "";
   const countries = searchParams.get("countries") || "";
   const range_maxAllocation = searchParams.get("range_maxAllocation") || "";
@@ -83,7 +95,7 @@ export default function Firms() {
     <div className="space-y-8 pb-10 md:pb-14">
       <div className="w-full flex justify-between md:items-center flex-col lg:flex-row gap-5 overflow-x-hidden">
         <FirmsFilter />
-        <SearchForm />
+        <SearchForm value={searchInput} onSearchChange={handleSearchChange} />
         {user?.role === "SUPER_ADMIN" && <AddFirmDialog />}
       </div>
 

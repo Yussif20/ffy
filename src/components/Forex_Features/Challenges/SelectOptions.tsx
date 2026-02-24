@@ -21,6 +21,7 @@ type PropType = {
   name: string;
   title: string;
   defaultValue?: string;
+  triggerClassName?: string;
   custom?: {
     show: true;
     max: number;
@@ -36,6 +37,7 @@ export default function SelectOptions({
   title,
   custom,
   defaultValue,
+  triggerClassName,
 }: PropType) {
   const text = useTranslations("SelectOption");
   const isArabic = useIsArabic();
@@ -104,7 +106,11 @@ export default function SelectOptions({
       <DropdownMenuTrigger asChild>
         <div>
           <Button
-            className={cn(isArabic && "font-semibold")}
+            className={cn(
+              "h-8 px-2 text-[11px] sm:h-9 sm:px-3 sm:text-xs md:text-sm",
+              isArabic && "font-semibold",
+              triggerClassName
+            )}
             variant={"outline"}
           >
             {title}: <span>{showingText}</span> <ChevronDown />

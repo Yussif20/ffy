@@ -193,7 +193,13 @@ export default function FirmAllFilters({
   };
 
   const resetFilters = () => {
-    router.push(window.location.pathname, { scroll: false });
+    const params = new URLSearchParams();
+    params.set("filterOpen", "true");
+    const expanded = searchParams.get("expanded");
+    if (expanded) params.set("expanded", expanded);
+    router.push(`${window.location.pathname}?${params.toString()}`, {
+      scroll: false,
+    });
   };
 
   const getExpandedItems = () => {

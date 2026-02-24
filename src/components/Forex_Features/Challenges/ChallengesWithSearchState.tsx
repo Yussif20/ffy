@@ -4,11 +4,18 @@ import { useCallback, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { useRouter, useSearchParams } from "next/navigation";
 import { handleSetSearchParams } from "@/lib/utils";
-import FirmAllFilters from "../Firms/FirmAllFilters";
 import ChallengeFilter from "./ChallengeFilter";
 import ChallengeTable from "./ChallengeTable";
 
-export default function Challenges({ locale }: { locale: string }) {
+type Props = {
+  locale: string;
+  companySlug?: string;
+};
+
+export default function ChallengesWithSearchState({
+  locale,
+  companySlug,
+}: Props) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [searchInput, setSearchInput] = useState("");
@@ -22,16 +29,15 @@ export default function Challenges({ locale }: { locale: string }) {
   );
 
   return (
-    <div className="space-y-8 pb-10 md:pb-14">
+    <div className="space-y-8 pb-20 md:pb-30">
       <ChallengeFilter
+        hideAllFilter
         searchValue={searchInput}
         onSearchChange={handleSearchChange}
       />
-      <div className="flex items-start gap-6">
-        <div className="max-w-sm flex shrink-0">
-          <FirmAllFilters showCompanyFilter />
-        </div>
+      <div className="flex">
         <ChallengeTable
+          companySlug={companySlug}
           locale={locale}
           searchTermFromState={searchTerm}
         />
