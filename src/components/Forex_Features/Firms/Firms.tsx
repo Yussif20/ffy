@@ -104,7 +104,7 @@ export default function Firms() {
           <FirmAllFilters />
         </div>
 
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 -ms-5 -me-5 px-2 md:ms-0 md:me-0 md:px-0">
           <FirmTable
             firms={firms}
             // @ts-ignore

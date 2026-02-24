@@ -8,6 +8,7 @@ import { useAppSelector } from "@/redux/store";
 import { Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
 import Container from "../Container";
 import ForexFeatureToggle from "../ForexFeatureToggle";
 import NavProfile from "../NavProfile";
@@ -63,7 +64,11 @@ const Navbar = () => {
       className={`sticky z-50 w-full top-0 shadow-sm transition-all duration-150 ${isScrolled ? "py-2 bg-background/80 backdrop-blur-sm" : "py-6"
         }`}
     >
-      <Container>
+      <Container
+        className={cn(
+          isMobile && isScrolled && "!ps-0 !pe-0 md:!ps-5 md:!pe-5"
+        )}
+      >
         <div className="">
           <div className="grid grid-cols-[auto_1fr_auto] md:grid-cols-3 items-center">
             {/* Left Section */}

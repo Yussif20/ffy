@@ -5,7 +5,7 @@ import useIsFutures from "@/hooks/useIsFutures";
 import { Link, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import { TrendingUp, Gift, Trophy, GitCompareArrows, HelpCircle } from "lucide-react";
+import { TrendingUp, Gift, Trophy, GitCompareArrows } from "lucide-react";
 import { motion } from "framer-motion";
 import { useId } from "react";
 
@@ -40,14 +40,6 @@ export default function NavItems() {
       icon: <Trophy size={13} />,
       part: 2,
       scrollToTabs: true,
-      scrollToTop: false,
-    },
-    {
-      name: t("faq"),
-      href: "/forex/faq",
-      icon: <HelpCircle size={13} />,
-      part: 2,
-      scrollToTabs: false,
       scrollToTop: false,
     },
     ...(isFutures
@@ -123,8 +115,8 @@ export default function NavItems() {
 
   const linkClass = () => {
     return cn(
-      "text-foreground/80 hover:text-foreground transition-colors text-center pb-1 hover:border-b-3 hover:border-primary/20 transition-all text-[13px] duration-100 min-w-30",
-      isArabic && "text-base md:text-lg font-semibold",
+      "text-foreground/80 hover:text-foreground transition-colors text-center pb-1 hover:border-b-3 hover:border-primary/20 transition-all duration-100 min-w-30",
+      isArabic ? "text-base md:text-lg font-semibold" : "text-sm md:text-base",
     );
   };
   return (

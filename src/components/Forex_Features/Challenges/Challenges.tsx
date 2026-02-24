@@ -31,7 +31,7 @@ export default function Challenges({ locale }: { locale: string }) {
         <div className="w-0 min-w-0 max-w-0 overflow-hidden lg:w-auto lg:max-w-sm lg:overflow-visible flex shrink-0">
           <FirmAllFilters showCompanyFilter />
         </div>
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 -ms-5 -me-5 px-2 md:ms-0 md:me-0 md:px-0">
           <ChallengeTable
             locale={locale}
             searchTermFromState={searchTerm}

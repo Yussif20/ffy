@@ -8,16 +8,19 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
     <div
       data-slot="table-container"
-      className="relative w-full overflow-x-auto scrollbar-hide"
+      className={cn(
+        "relative w-full overflow-x-auto scrollbar-hide",
+        "rounded-xl border border-border/60 bg-card/50 shadow-sm",
+      )}
     >
       <table
         data-slot="table"
         className={cn(
-          "w-full caption-bottom text-sm border-collapse",
+          "w-full caption-bottom text-xs border-collapse",
           "[&_th:first-child]:border-s [&_td:first-child]:border-s",
-          "[&_th:first-child]:border-foreground/10 [&_td:first-child]:border-foreground/10",
+          "[&_th:first-child]:border-border/50 [&_td:first-child]:border-border/50",
           "[&_th:last-child]:border-r [&_td:last-child]:border-r",
-          "[&_th:last-child]:border-foreground/10 [&_td:last-child]:border-foreground/10",
+          "[&_th:last-child]:border-border/50 [&_td:last-child]:border-border/50",
           className,
         )}
         {...props}
@@ -30,7 +33,10 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
   return (
     <thead
       data-slot="table-header"
-      className={cn("[&_tr]:border-b bg-card", className)}
+      className={cn(
+        "[&_tr]:border-b [&_tr]:border-border/60 bg-muted/30 dark:bg-foreground/5",
+        className,
+      )}
       {...props}
     />
   );
@@ -54,10 +60,10 @@ function TableBody({
       {hasChildren ? (
         children
       ) : (
-        <tr data-slot="table-row" className="border-b">
+        <tr data-slot="table-row" className="border-b border-border/40">
           <td
             data-slot="table-cell"
-            className="p-2 align-middle text-center h-24 text-muted-foreground"
+            className="py-12 px-4 align-middle text-center text-muted-foreground text-xs italic"
             colSpan={colSpan}
           >
             {emptyMessage}
@@ -73,7 +79,7 @@ function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
     <tfoot
       data-slot="table-footer"
       className={cn(
-        "bg-muted/50 border-t font-medium [&>tr]:last:border-b-0",
+        "bg-muted/30 dark:bg-foreground/5 border-t border-border/60 font-medium [&>tr]:last:border-b-0",
         className,
       )}
       {...props}
@@ -86,7 +92,8 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
     <tr
       data-slot="table-row"
       className={cn(
-        "hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors",
+        "border-b border-border/40 transition-colors duration-150",
+        "hover:bg-muted/40 dark:hover:bg-foreground/5 data-[state=selected]:bg-muted/60",
         className,
       )}
       {...props}
@@ -104,7 +111,9 @@ function TableHead({
     <th
       data-slot="table-head"
       className={cn(
-        "text-foreground text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-0.5 p-2.5 text-xs border-r border-foreground/10",
+        "text-foreground text-left align-middle font-semibold whitespace-nowrap",
+        "[&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-0.5",
+        "py-3.5 px-3 text-xs tracking-tight border-r border-border/50",
         className,
       )}
       {...props}
@@ -128,8 +137,9 @@ function TableCell({
     <td
       data-slot="table-cell"
       className={cn(
-        " align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-0.5 p-2.5 text-xs border-r border-foreground/10",
-
+        "align-middle whitespace-nowrap text-foreground/90",
+        "[&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-0.5",
+        "py-3 px-3 text-xs border-r border-border/40",
         className,
       )}
       {...props}
@@ -150,7 +160,7 @@ function TableCaption({
   return (
     <caption
       data-slot="table-caption"
-      className={cn("text-muted-foreground mt-4 text-sm", className)}
+      className={cn("text-muted-foreground mt-4 text-xs font-medium", className)}
       {...props}
     />
   );

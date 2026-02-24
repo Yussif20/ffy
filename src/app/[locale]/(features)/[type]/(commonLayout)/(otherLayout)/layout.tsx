@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { getLocale } from "next-intl/server";
 import "@/styles/globals.css";
 import Hero from "@/components/Global/hero";
 import Container from "@/components/Global/Container";
 import HomeNavItems from "@/components/Forex_Features/HomeNavItems";
 import Subscribe from "@/components/Forex_Features/Subscribe";
+import FAQComponent from "@/components/FAQ/FAQ";
 import PageTransition from "@/components/Global/PageTransition";
 // import StatsStrip from "@/components/Global/StatsStrip";
 import SectionDivider from "@/components/Global/SectionDivider";
@@ -14,11 +16,12 @@ export const metadata: Metadata = {
   description: "Explore You Want",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
   return (
     <div>
       <Hero />
@@ -35,6 +38,9 @@ export default function RootLayout({
         <SectionDivider />
         <ScrollReveal delay={0.05}>
           <Subscribe />
+        </ScrollReveal>
+        <ScrollReveal delay={0.05}>
+          <FAQComponent locale={locale} />
         </ScrollReveal>
       </div>
     </div>
