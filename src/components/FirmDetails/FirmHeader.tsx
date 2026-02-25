@@ -19,7 +19,7 @@ export default async function FirmHeader({
   const country =
     countryDataByCountry(company.country) || countryData(company.country);
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 md:py-8">
       {/* Top Row */}
       <div className="flex items-center gap-2">
         <Link href={backHref}>
@@ -60,7 +60,7 @@ export default async function FirmHeader({
                 className="object-cover"
               />
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold block sm:hidden">
+            <h1 className="text-2xl sm:text-3xl font-bold block sm:hidden leading-snug pb-0.5">
               {company?.title}
             </h1>
           </div>
