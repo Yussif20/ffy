@@ -48,11 +48,15 @@ export default function FirmCell({
 
       <TableCell
         className={cn(
-          "bg-background z-10 table-cell md:hidden sticky left-0 shadow-[2px_0_4px_rgba(0,0,0,0.1)]",
-          isArabic && "right-0 shadow-[-2px_0_4px_rgba(0,0,0,0.1)]"
+          "bg-background z-10 table-cell md:hidden sticky left-0 shadow-[2px_0_4px_rgba(0,0,0,0.1)] border-r-0 overflow-visible",
+          !isArabic &&
+            "shadow-[2px_0_4px_rgba(0,0,0,0.1),8px_0_0_0_var(--background)]",
+          isArabic && "right-0 left-auto shadow-[-2px_0_4px_rgba(0,0,0,0.1)]"
         )}
       >
-        <Link href={linkHref} className="flex justify-center md:justify-start">
+        {/* Full-cell background layer for horizontal padding only (left/right of logo), so we don't overlay the header */}
+        <span className="absolute inset-y-0 -left-3 -right-3 bg-background -z-[1]" aria-hidden />
+        <Link href={linkHref} className="relative z-0 flex justify-center md:justify-start w-full min-w-0">
           <div className="bg-primary3 rounded-lg overflow-hidden border border-border flex-shrink-0 w-10 xl:w-14 aspect-square relative">
             <Image
               src={company.image}
