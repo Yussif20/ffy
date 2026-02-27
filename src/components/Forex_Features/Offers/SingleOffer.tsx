@@ -567,7 +567,10 @@ const OfferCard = ({
               </button>
             )}
             <Link href={companyData.affiliateLink} target="_blank" className="block w-full min-w-0 sm:w-auto">
-              <Button size="sm" className="rounded-lg w-full h-11 min-h-11 sm:h-auto sm:min-h-0 text-sm bg-primary hover:bg-primary-dark text-primary-foreground font-semibold px-4">
+              <Button
+                size="lg"
+                className="w-full !h-12 !min-h-12 sm:h-auto sm:min-h-0 rounded-full text-sm sm:text-base font-semibold px-5 bg-gradient-to-r from-primary to-primary-dark text-primary-foreground shadow-lg hover:shadow-xl hover:brightness-110 transition-all duration-200"
+              >
                 {t("buy")}
               </Button>
             </Link>
@@ -684,12 +687,10 @@ const OfferCard = ({
                   </div>
                   <div className="border-border border-r-3 h-6 hidden lg:block" />
                   <div className="space-y-2.5 lg:space-y-3 min-w-0">
-                    <Link
-                      href={companyData.affiliateLink}
-                      target="_blank"
-                      className="block w-full min-w-0"
-                    >
-                      <Button className="w-full h-11 min-h-11 lg:h-auto lg:min-h-0 lg:w-25 text-sm px-3 sm:px-4">{t("buy")}</Button>
+                    <Link href={companyData.affiliateLink} target="_blank" className="block w-full min-w-0">
+                      <Button className="w-full h-12 min-h-12 lg:h-auto lg:min-h-0 lg:w-28 rounded-full text-sm sm:text-base px-4 sm:px-5 font-semibold bg-gradient-to-r from-primary to-primary-dark text-primary-foreground shadow-lg hover:shadow-xl hover:brightness-110 transition-all duration-200">
+                        {t("buy")}
+                      </Button>
                     </Link>
                     <div className="hidden lg:block"> {moreBtn}</div>
                   </div>

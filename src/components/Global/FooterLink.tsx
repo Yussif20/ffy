@@ -1,7 +1,6 @@
 "use client";
 
-import { useRouter } from "@/i18n/navigation";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -23,17 +22,43 @@ function waitForElement(
   requestAnimationFrame(check);
 }
 
-function smoothScrollToTarget() {
-  waitForElement("tabs-section", (el) => {
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
+function scrollToTabsSection() {
+  const isAtTop = window.scrollY < 100;
+
+  waitForElement("tabs-section", (tabsSection) => {
+    const navbarOffset = isAtTop ? 400 : 200;
+    const elementPosition =
+      tabsSection.getBoundingClientRect().top + window.scrollY;
+
+    window.scrollTo({
+      top: elementPosition - navbarOffset,
+      behavior: "smooth",
+    });
   });
-  // Fallback: if no tabs-section (e.g. about, faq), smooth scroll to top
-  setTimeout(() => {
-    const tabs = document.getElementById("tabs-section");
-    if (!tabs) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, 500);
+}
+
+function getScrollOffset(path: string) {
+  // Normalize path (strip leading slash if present)
+  const cleanPath = path.replace(/^\//, "");
+
+  // Fine-tuned offsets per destination
+  if (cleanPath === "contact") {
+    // Scroll a bit further down so the contact form sits nicely in view
+    return 140;
+  }
+
+  if (cleanPath === "challenges") {
+    // Same idea for challenges section/page
+    return 140;
+  }
+
+  if (!cleanPath) {
+    // "All prop firms" link (empty href) – land slightly lower than the very top
+    return 200;
+  }
+
+  // Default: top of the page
+  return 0;
 }
 
 export default function FooterLink({
@@ -48,21 +73,14 @@ export default function FooterLink({
   target?: string;
 }) {
   const router = useRouter();
-  const isInternal = href.startsWith("/") || !href.startsWith("http");
+  const isExternal = href.startsWith("http");
 
-  const handleClick = (e: React.MouseEvent) => {
-    if (target === "_blank" || !isInternal) return;
-    e.preventDefault();
-    const path = href || "/";
-    router.push(path, { scroll: false });
-    setTimeout(smoothScrollToTarget, 150);
-  };
-
-  if (target === "_blank") {
+  // External links (social, etc.) open in a new tab without custom scrolling.
+  if (target === "_blank" || isExternal) {
     return (
       <a
         href={href}
-        target="_blank"
+        target={target || "_blank"}
         rel="noopener noreferrer"
         className={cn(className)}
       >
@@ -70,6 +88,36 @@ export default function FooterLink({
       </a>
     );
   }
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+
+    const rawPath = href || "/";
+    const targetPath =
+      rawPath === "/" ? "/" : rawPath.startsWith("/") ? rawPath : `/${rawPath}`;
+    const cleanPath = targetPath.replace(/^\//, "");
+
+    // For tabbed sections (offers/challenges), mimic navbar behavior:
+    // navigate, then scroll precisely to #tabs-section with dynamic offset.
+    if (cleanPath === "challenges" || cleanPath === "offers") {
+      router.push(targetPath, { scroll: false });
+      scrollToTabsSection();
+      return;
+    }
+
+    const offset = getScrollOffset(targetPath);
+
+    // Navigate without automatic scroll, then apply our own offset.
+    router.push(targetPath, { scroll: false });
+
+    // Give the new page/layout a short moment to render before scrolling.
+    setTimeout(() => {
+      window.scrollTo({
+        top: offset,
+        behavior: "smooth",
+      });
+    }, 200);
+  };
 
   return (
     <Link href={href || "/"} className={cn(className)} onClick={handleClick}>

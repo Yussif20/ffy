@@ -20,7 +20,10 @@ export default async function FAQComponent({ locale }: { locale?: string }) {
         <div className="flex items-center w-full justify-center">
           <SectionTitle
             title={t("title")}
-            subtitle={t("subtitle")}
+            subtitle={t("subtitle").replace(
+              "هل تحتاج إلى مساعدة أو مزيد من المعلومات؟",
+              "هل تحتاج إلى مساعدة أو مزيد من المعلومات؟\n"
+            )}
             subtitleClass="max-w-xl"
           />
         </div>

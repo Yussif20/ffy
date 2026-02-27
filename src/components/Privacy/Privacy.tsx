@@ -1,6 +1,6 @@
 import LinearBorder from "../Global/LinearBorder";
 import SectionTitle from "../Global/SectionTitle";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 type Subsection = {
   subtitle: string;
@@ -18,6 +18,8 @@ type Section = {
 
 export default async function Privacy() {
   const t = await getTranslations("Privacy");
+  const locale = await getLocale();
+  const isArabic = locale === "ar";
 
   const sections: Section[] = [
     {
@@ -34,18 +36,26 @@ export default async function Privacy() {
           content: t("dataCollection.nonPersonal.content"),
           points: t.raw("dataCollection.nonPersonal.points") as string[],
         },
-        {
-          subtitle: t("dataCollection.analytics.title"),
-          content: t("dataCollection.analytics.content"),
-        },
+        ...(!isArabic
+          ? [
+              {
+                subtitle: t("dataCollection.analytics.title"),
+                content: t("dataCollection.analytics.content"),
+              },
+            ]
+          : []),
         {
           subtitle: t("dataCollection.cookies.title"),
           content: t("dataCollection.cookies.content"),
         },
-        {
-          subtitle: t("dataCollection.consent.title"),
-          content: t("dataCollection.consent.content"),
-        },
+        ...(!isArabic
+          ? [
+              {
+                subtitle: t("dataCollection.consent.title"),
+                content: t("dataCollection.consent.content"),
+              },
+            ]
+          : []),
         {
           subtitle: t("dataCollection.thirdPartySources.title"),
           content: t("dataCollection.thirdPartySources.content"),
@@ -83,33 +93,37 @@ export default async function Privacy() {
       ],
       closing: t("purpose.closing"),
     },
-    {
-      title: t("legalBasis.title"),
-      content: t("legalBasis.intro"),
-      subsections: [
-        {
-          subtitle: t("legalBasis.consent.title"),
-          content: t("legalBasis.consent.content"),
-        },
-        {
-          subtitle: t("legalBasis.contractual.title"),
-          content: t("legalBasis.contractual.content"),
-        },
-        {
-          subtitle: t("legalBasis.legal.title"),
-          content: t("legalBasis.legal.content"),
-        },
-        {
-          subtitle: t("legalBasis.legitimate.title"),
-          content: t("legalBasis.legitimate.content"),
-        },
-        {
-          subtitle: t("legalBasis.vital.title"),
-          content: t("legalBasis.vital.content"),
-        },
-      ],
-      closing: t("legalBasis.closing"),
-    },
+    ...(!isArabic
+      ? [
+          {
+            title: t("legalBasis.title"),
+            content: t("legalBasis.intro"),
+            subsections: [
+              {
+                subtitle: t("legalBasis.consent.title"),
+                content: t("legalBasis.consent.content"),
+              },
+              {
+                subtitle: t("legalBasis.contractual.title"),
+                content: t("legalBasis.contractual.content"),
+              },
+              {
+                subtitle: t("legalBasis.legal.title"),
+                content: t("legalBasis.legal.content"),
+              },
+              {
+                subtitle: t("legalBasis.legitimate.title"),
+                content: t("legalBasis.legitimate.content"),
+              },
+              {
+                subtitle: t("legalBasis.vital.title"),
+                content: t("legalBasis.vital.content"),
+              },
+            ],
+            closing: t("legalBasis.closing"),
+          },
+        ]
+      : []),
     {
       title: t("dataSharing.title"),
       content: t("dataSharing.intro"),
@@ -144,18 +158,26 @@ export default async function Privacy() {
           subtitle: t("retention.period.title"),
           content: t("retention.period.content"),
         },
-        {
-          subtitle: t("retention.analytics.title"),
-          content: t("retention.analytics.content"),
-        },
+        ...(!isArabic
+          ? [
+              {
+                subtitle: t("retention.analytics.title"),
+                content: t("retention.analytics.content"),
+              },
+            ]
+          : []),
         {
           subtitle: t("retention.deletion.title"),
           content: t("retention.deletion.content"),
         },
-        {
-          subtitle: t("retention.storage.title"),
-          content: t("retention.storage.content"),
-        },
+        ...(!isArabic
+          ? [
+              {
+                subtitle: t("retention.storage.title"),
+                content: t("retention.storage.content"),
+              },
+            ]
+          : []),
         {
           subtitle: t("retention.security.title"),
           content: t("retention.security.content"),
@@ -178,26 +200,34 @@ export default async function Privacy() {
           subtitle: t("rights.deletion.title"),
           content: t("rights.deletion.content"),
         },
-        {
-          subtitle: t("rights.restriction.title"),
-          content: t("rights.restriction.content"),
-        },
+        ...(!isArabic
+          ? [
+              {
+                subtitle: t("rights.restriction.title"),
+                content: t("rights.restriction.content"),
+              },
+            ]
+          : []),
         {
           subtitle: t("rights.session.title"),
           content: t("rights.session.content"),
         },
-        {
-          subtitle: t("rights.objection.title"),
-          content: t("rights.objection.content"),
-        },
-        {
-          subtitle: t("rights.withdraw.title"),
-          content: t("rights.withdraw.content"),
-        },
-        {
-          subtitle: t("rights.complaints.title"),
-          content: t("rights.complaints.content"),
-        },
+        ...(!isArabic
+          ? [
+              {
+                subtitle: t("rights.objection.title"),
+                content: t("rights.objection.content"),
+              },
+              {
+                subtitle: t("rights.withdraw.title"),
+                content: t("rights.withdraw.content"),
+              },
+              {
+                subtitle: t("rights.complaints.title"),
+                content: t("rights.complaints.content"),
+              },
+            ]
+          : []),
         {
           subtitle: t("rights.optout.title"),
           content: t("rights.optout.content"),
@@ -216,10 +246,14 @@ export default async function Privacy() {
           subtitle: t("security.practices.title"),
           content: t("security.practices.content"),
         },
-        {
-          subtitle: t("security.accessControls.title"),
-          content: t("security.accessControls.content"),
-        },
+        ...(!isArabic
+          ? [
+              {
+                subtitle: t("security.accessControls.title"),
+                content: t("security.accessControls.content"),
+              },
+            ]
+          : []),
         {
           subtitle: t("security.responsibilities.title"),
           content: t("security.responsibilities.content"),

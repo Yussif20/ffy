@@ -24,7 +24,7 @@ export default async function About() {
           <div className="absolute w-50 aspect-square bg-primary/40 blur-[80px] -left-5 -bottom-5"></div>
 
           <div className="space-y-6 relative z-10">
-            <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-linear-to-t from-primary1 to-primary2 text-center">
+            <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-[1.3] text-transparent bg-clip-text bg-linear-to-t from-primary1 to-primary2 text-center">
               {t("aboutUs")}
             </h4>
             <p className="text-base md:text-lg text-center max-w-4xl whitespace-pre-line leading-relaxed">
@@ -43,7 +43,7 @@ export default async function About() {
           <div className="absolute w-50 aspect-square bg-primary/40 blur-[80px] right-5 -bottom-5"></div>
 
           <div className="space-y-6 relative z-10">
-            <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-linear-to-t from-primary1 to-primary2 text-center">
+            <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-[1.3] text-transparent bg-clip-text bg-linear-to-t from-primary1 to-primary2 text-center">
               {t("visionTitle")}
             </h4>
             <p className="text-base md:text-lg text-center max-w-4xl leading-relaxed">
@@ -62,7 +62,7 @@ export default async function About() {
           <div className="absolute w-50 aspect-square bg-primary/40 blur-[80px] -left-5 -bottom-5"></div>
 
           <div className="space-y-6 relative z-10">
-            <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-linear-to-t from-primary1 to-primary2 text-center">
+            <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-[1.3] text-transparent bg-clip-text bg-linear-to-t from-primary1 to-primary2 text-center">
               {t("missionTitle")}
             </h4>
             <ul className="space-y-4 max-w-4xl mx-auto">
@@ -89,7 +89,7 @@ export default async function About() {
           <div className="absolute w-50 aspect-square bg-primary/40 blur-[80px] right-5 -bottom-5"></div>
 
           <div className="space-y-6 relative z-10">
-            <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-linear-to-t from-primary1 to-primary2 text-center">
+            <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-[1.3] text-transparent bg-clip-text bg-linear-to-t from-primary1 to-primary2 text-center">
               {t("whatWeOfferTitle")}
             </h4>
             <ul className="space-y-4 max-w-4xl mx-auto">
@@ -134,9 +134,9 @@ export default async function About() {
         <div className="w-full rounded-2xl py-10 md:py-16 relative px-4 sm:px-8 md:px-16 overflow-hidden bg-background">
           <div className="absolute w-50 aspect-square bg-primary/40 blur-[80px] right-5 -bottom-5"></div>
 
-          <div className="space-y-8 relative z-10">
+            <div className="space-y-8 relative z-10">
             <div>
-              <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-linear-to-t from-primary1 to-primary2 text-center">
+              <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-[1.3] text-transparent bg-clip-text bg-linear-to-t from-primary1 to-primary2 text-center">
                 {t("meetTitle")}
               </h4>
               <h2 className="text-xl md:text-2xl font-semibold text-center mt-2">
