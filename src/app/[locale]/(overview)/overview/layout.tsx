@@ -29,8 +29,8 @@ export default async function OverviewLayout({ children, params }: Props) {
         <Sidebar />
       </div>
       <main className="flex-1 min-h-screen transition-[padding] duration-300">
-        <Container className="w-full pt-16 ps-0 pe-4 sm:pe-6 bg-card/80 lg:pe-8">
-          <div className="border border-border/60 border-s-0 bg-card/80 backdrop-blur-sm shadow-xl shadow-black/5 dark:shadow-black/20 p-6 sm:p-8 lg:p-10 min-h-[calc(100vh-4rem)]">
+        <Container className="w-full pt-16 ps-0 bg-card/80 ">
+          <div className="border border-border/60 border-s-0 bg-card/80 backdrop-blur-sm shadow-xl shadow-black/5 dark:shadow-black/20 min-h-[calc(100vh-4rem)]">
             {children}
           </div>
         </Container>

@@ -15,7 +15,8 @@ export default function PlatformCell({ platforms }: { platforms: Platform[] }) {
         {visiblePlatforms.map((item, index) => (
           <div
             key={index}
-            className="w-4 h-4 rounded-full relative overflow-hidden"
+            className="w-6 h-6 rounded-full relative overflow-hidden"
+            title={item.title || item.name}
           >
             <Image
               src={item.logoUrl}

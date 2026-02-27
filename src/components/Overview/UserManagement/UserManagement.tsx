@@ -25,7 +25,7 @@ export type TUser = {
   id: string;
   fullName: string;
   email: string;
-  status: "ACTIVE" | "BLOCKED";
+  status: "ACTIVE" | "BLOCKED" | "INACTIVE" | "DELETED";
   profile: string | null;
   location: string | null;
   authType: "EMAIL" | "GOOGLE" | "FACEBOOK";
@@ -46,7 +46,10 @@ export default function UserManagement() {
     { name: "searchTerm", value: searchTerm },
   ]);
 
-  const users: TUser[] = data?.data?.users || [];
+  const users: TUser[] =
+    (data?.data?.users as TUser[] | undefined)?.filter(
+      (user) => user.status !== "DELETED",
+    ) || [];
 
   // Mutation for updating user status
   const [updateUserStatus, { isLoading: isStatusUpdating }] =
@@ -63,6 +66,20 @@ export default function UserManagement() {
     });
     toast.success(t("userStatusUpdated"));
     // Refresh page after update
+    router.refresh();
+  };
+
+  const handleDeleteUser = async (user: TUser) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to remove ${user.fullName}?`,
+    );
+    if (!confirmed) return;
+
+    await updateUserStatus({
+      id: user.id,
+      data: { status: "DELETED" },
+    });
+    toast.success("User removed successfully");
     router.refresh();
   };
 
@@ -84,66 +101,85 @@ export default function UserManagement() {
         />
       ) : (
         <>
-          <div className="rounded-xl border border-border/60 bg-card overflow-hidden shadow-sm">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>{t("name")}</TableHead>
-                  <TableHead>{t("email")}</TableHead>
-                  <TableHead>{t("role")}</TableHead>
-                  <TableHead>{t("status")}</TableHead>
-                  <TableHead>{t("joinDate")}</TableHead>
-                  <TableHead className="text-right">{t("actions")}</TableHead>
-                </TableRow>
-              </TableHeader>
-
-              <TableBody colSpan={6}>
-                {users.map((user) => (
-                  <TableRow key={user.id} className="hover:bg-muted/50">
-                    <TableCell className="font-medium">
-                      {user.fullName}
-                    </TableCell>
-
-                    <TableCell className="text-sm">{user.email}</TableCell>
-
-                    <TableCell className="text-sm">{user.role}</TableCell>
-
-                    <TableCell>
-                      <Badge
-                        variant={
-                          user.status === "ACTIVE"
-                            ? "default"
-                            : user.status === "BLOCKED"
-                            ? "destructive"
-                            : "outline"
-                        }
-                      >
-                        {user.status}
-                      </Badge>
-                    </TableCell>
-
-                    <TableCell className="text-sm">
-                      {user.createdAt
-                        ? new Date(user.createdAt).toLocaleDateString()
-                        : "-"}
-                    </TableCell>
-
-                    <TableCell className="text-right">
-                      <Button
-                        size="sm"
-                        variant={
-                          user.status === "BLOCKED" ? "default" : "destructive"
-                        }
-                        disabled={isStatusUpdating}
-                        onClick={() => handleStatusUpdate(user)}
-                      >
-                        {user.status === "BLOCKED" ? t("unban") : t("ban")}
-                      </Button>
-                    </TableCell>
+          <div className="w-full overflow-x-auto">
+            <div className="rounded-xl border border-border/60 bg-card overflow-hidden shadow-sm">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>{t("name")}</TableHead>
+                    <TableHead>{t("email")}</TableHead>
+                    <TableHead>{t("role")}</TableHead>
+                    <TableHead>{t("status")}</TableHead>
+                    <TableHead>{t("joinDate")}</TableHead>
+                    <TableHead className="text-right">
+                      {t("actions")}
+                    </TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+
+                <TableBody colSpan={6}>
+                  {users.map((user) => (
+                    <TableRow key={user.id} className="hover:bg-muted/50">
+                      <TableCell className="font-medium">
+                        {user.fullName}
+                      </TableCell>
+
+                      <TableCell className="text-sm">{user.email}</TableCell>
+
+                      <TableCell className="text-sm">{user.role}</TableCell>
+
+                      <TableCell>
+                        <Badge
+                          variant={
+                            user.status === "ACTIVE"
+                              ? "default"
+                              : user.status === "BLOCKED"
+                              ? "destructive"
+                              : "outline"
+                          }
+                        >
+                          {user.status}
+                        </Badge>
+                      </TableCell>
+
+                      <TableCell className="text-sm">
+                        {user.createdAt
+                          ? new Date(user.createdAt).toLocaleDateString()
+                          : "-"}
+                      </TableCell>
+
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-2">
+                          <Button
+                            size="sm"
+                            variant={
+                              user.status === "BLOCKED"
+                                ? "default"
+                                : "destructive"
+                            }
+                            disabled={isStatusUpdating}
+                            onClick={() => handleStatusUpdate(user)}
+                          >
+                            {user.status === "BLOCKED" ? t("unban") : t("ban")}
+                          </Button>
+
+                          {user.role !== "SUPER_ADMIN" && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              disabled={isStatusUpdating}
+                              onClick={() => handleDeleteUser(user)}
+                            >
+                              Remove
+                            </Button>
+                          )}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </div>
           <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <p className="text-sm text-muted-foreground">
