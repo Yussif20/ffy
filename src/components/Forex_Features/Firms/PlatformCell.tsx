@@ -16,7 +16,7 @@ export default function PlatformCell({ platforms }: { platforms: Platform[] }) {
           <div
             key={index}
             className="w-6 h-6 rounded-full relative overflow-hidden"
-            title={item.title || item.name}
+            title={item.title}
           >
             <Image
               src={item.logoUrl}
