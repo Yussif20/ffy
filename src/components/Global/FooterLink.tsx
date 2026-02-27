@@ -47,11 +47,6 @@ function getScrollOffset(path: string) {
     return 140;
   }
 
-  if (cleanPath === "challenges") {
-    // Same idea for challenges section/page
-    return 140;
-  }
-
   if (!cleanPath) {
     // "All prop firms" link (empty href) – land slightly lower than the very top
     return 200;
@@ -97,9 +92,15 @@ export default function FooterLink({
       rawPath === "/" ? "/" : rawPath.startsWith("/") ? rawPath : `/${rawPath}`;
     const cleanPath = targetPath.replace(/^\//, "");
 
-    // For tabbed sections (offers/challenges), mimic navbar behavior:
+    // For tabbed sections, mimic navbar behavior:
     // navigate, then scroll precisely to #tabs-section with dynamic offset.
-    if (cleanPath === "challenges" || cleanPath === "offers") {
+    if (
+      cleanPath === "forex" ||
+      cleanPath === "futures" ||
+      cleanPath.endsWith("/challenges") ||
+      cleanPath.endsWith("/offers") ||
+      cleanPath.endsWith("/exclusive-offers")
+    ) {
       router.push(targetPath, { scroll: false });
       scrollToTabsSection();
       return;

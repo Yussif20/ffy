@@ -8,6 +8,7 @@ import PageTransition from "@/components/Global/PageTransition";
 // import StatsStrip from "@/components/Global/StatsStrip";
 import SectionDivider from "@/components/Global/SectionDivider";
 import ScrollReveal from "@/components/Global/ScrollReveal";
+import PrefetchTabData from "@/components/Global/PrefetchTabData";
 
 export const metadata: Metadata = {
   title: "Funded For You",
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <div>
       <Hero />
+      <PrefetchTabData />
       {/* <StatsStrip /> */}
       <div className="py-6 md:py-10">
         <ScrollReveal delay={0.05}>

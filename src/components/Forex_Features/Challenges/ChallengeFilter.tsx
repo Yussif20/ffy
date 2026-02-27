@@ -18,12 +18,15 @@ type ChallengeFilterProps = {
   /** When provided, search is controlled (no URL); parent holds state */
   searchValue?: string;
   onSearchChange?: (value: string) => void;
+  /** Server-resolved search params — used to skip the defaults useEffect when defaults are already in the URL */
+  initialSearchParams?: Record<string, string>;
 };
 
 export default function ChallengeFilter({
   hideAllFilter,
   searchValue,
   onSearchChange,
+  initialSearchParams,
 }: ChallengeFilterProps) {
   const t = useTranslations("Challenges");
   const pathname = usePathname();
@@ -33,7 +36,11 @@ export default function ChallengeFilter({
   const isArabic = useIsArabic();
 
   const [openModal, setOpenModal] = useState(false);
-  const hasAppliedChallengeDefaults = useRef(false);
+  // Pre-mark defaults as applied when the server already passed them in initialSearchParams
+  const serverHasDefaults = Boolean(
+    initialSearchParams?.size || initialSearchParams?.size_range || initialSearchParams?.in_steps
+  );
+  const hasAppliedChallengeDefaults = useRef(serverHasDefaults);
   const prevPathnameRef = useRef(pathname);
 
   const user = useAppSelector(useCurrentUser);

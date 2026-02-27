@@ -17,16 +17,16 @@ const Footer = async () => {
     {
       title: t("propFirms"),
       links: [
-        { label: t("allPropFirms"), href: "" },
-        { label: t("compareChallenges"), href: "challenges" },
+        { label: t("allPropFirms"), href: "/forex" },
+        { label: t("compareChallenges"), href: "/forex/challenges" },
         { label: t("bestSellers"), href: "best-sellers" },
       ],
     },
     {
       title: t("offers"),
       links: [
-        { label: t("exclusiveOffers"), href: "exclusive-offers" },
-        { label: t("allCurrentOffers"), href: "offers" },
+        { label: t("exclusiveOffers"), href: "/forex/exclusive-offers" },
+        { label: t("allCurrentOffers"), href: "/forex/offers" },
         { label: t("highImpactNews"), href: "high-impact-news" },
       ],
     },

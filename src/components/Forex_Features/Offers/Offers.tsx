@@ -8,7 +8,11 @@ import OfferList from "./OfferList";
 import { usePathname } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
-export default function Offers() {
+export default function Offers({
+  initialSearchParams: _initialSearchParams,
+}: {
+  initialSearchParams?: Record<string, string>;
+} = {}) {
   const currUser = useAppSelector((state) => state.auth.user);
   const pathname = usePathname();
   const searchParams = useSearchParams();

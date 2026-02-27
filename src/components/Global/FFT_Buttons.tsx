@@ -42,13 +42,11 @@ export default function FFT_Buttons({ compact }: { compact?: boolean }) {
 
     window.scrollTo({ top: 0, behavior: "instant" });
 
-    if (value === "/futures") {
-      const path = pathname.startsWith("/forex") ? pathname.slice(6) : pathname;
-      router.push("/futures" + path + suffix, { scroll: false });
-    } else {
-      const after = pathname.split("/futures")[1] || "";
-      router.push("/forex" + after + suffix, { scroll: false });
-    }
+    const currentBase = isFutures ? "/futures" : "/forex";
+    const strippedPath = pathname.startsWith(currentBase)
+      ? pathname.slice(currentBase.length)
+      : "";
+    router.push(value + strippedPath + suffix, { scroll: false });
   };
 
   return (

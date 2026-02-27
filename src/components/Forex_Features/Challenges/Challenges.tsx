@@ -8,7 +8,13 @@ import FirmAllFilters from "../Firms/FirmAllFilters";
 import ChallengeFilter from "./ChallengeFilter";
 import ChallengeTable from "./ChallengeTable";
 
-export default function Challenges({ locale }: { locale: string }) {
+export default function Challenges({
+  locale,
+  initialSearchParams,
+}: {
+  locale: string;
+  initialSearchParams?: Record<string, string>;
+}) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [searchInput, setSearchInput] = useState("");
@@ -26,6 +32,7 @@ export default function Challenges({ locale }: { locale: string }) {
       <ChallengeFilter
         searchValue={searchInput}
         onSearchChange={handleSearchChange}
+        initialSearchParams={initialSearchParams}
       />
       <div className="flex items-start gap-0 lg:gap-6 w-full">
         <div className="w-0 min-w-0 max-w-0 overflow-hidden lg:w-auto lg:max-w-sm lg:overflow-visible flex shrink-0">

@@ -13,7 +13,11 @@ import FirmAllFilters from "./FirmAllFilters";
 import FirmsFilter from "./FirmsFilter";
 import FirmTable from "./FirmTable";
 
-export default function Firms() {
+export default function Firms({
+  initialSearchParams: _initialSearchParams,
+}: {
+  initialSearchParams?: Record<string, string>;
+} = {}) {
   const { getParamsWithKey } = useQueryBuilder();
   const searchParams = useSearchParams();
   const user = useAppSelector((state) => state.auth.user);

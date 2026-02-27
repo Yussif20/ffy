@@ -6,6 +6,7 @@ import HomeNavItems from "@/components/Forex_Features/HomeNavItems";
 import Subscribe from "@/components/Forex_Features/Subscribe";
 import SectionDivider from "@/components/Global/SectionDivider";
 import ScrollReveal from "@/components/Global/ScrollReveal";
+import PrefetchTabData from "@/components/Global/PrefetchTabData";
 
 export const metadata: Metadata = {
   title: "Funded For You",
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <div>
       <Hero />
+      <PrefetchTabData />
       <div className="py-6 md:py-10">
         <ScrollReveal delay={0.05}>
           <HomeNavItems />
