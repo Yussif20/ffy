@@ -37,24 +37,12 @@ function scrollToTabsSection() {
   });
 }
 
-function getScrollOffset(path: string) {
-  // Normalize path (strip leading slash if present)
-  const cleanPath = path.replace(/^\//, "");
-
-  // Fine-tuned offsets per destination
-  if (cleanPath === "contact") {
-    // Scroll a bit further down so the contact form sits nicely in view
-    return 140;
-  }
-
-  if (!cleanPath) {
-    // "All prop firms" link (empty href) – land slightly lower than the very top
-    return 200;
-  }
-
-  // Default: top of the page
-  return 0;
-}
+const SECTION_IDS: Record<string, string> = {
+  "best-sellers": "best-sellers-section",
+  "high-impact-news": "high-impact-news-section",
+  "about": "about-section",
+  "contact": "contact-section",
+};
 
 export default function FooterLink({
   href,
@@ -106,18 +94,20 @@ export default function FooterLink({
       return;
     }
 
-    const offset = getScrollOffset(targetPath);
-
-    // Navigate without automatic scroll, then apply our own offset.
     router.push(targetPath, { scroll: false });
 
-    // Give the new page/layout a short moment to render before scrolling.
-    setTimeout(() => {
-      window.scrollTo({
-        top: offset,
-        behavior: "smooth",
+    const sectionId = SECTION_IDS[cleanPath];
+    if (sectionId) {
+      // Wait for the section element to appear in the DOM (RSC renders it),
+      // then scroll to it — data will load into the already-visible section.
+      waitForElement(sectionId, (el) => {
+        const top = el.getBoundingClientRect().top + window.scrollY - 90;
+        window.scrollTo({ top, behavior: "smooth" });
       });
-    }, 200);
+    } else {
+      // Fallback for pages without a known section ID (e.g. home).
+      setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 200);
+    }
   };
 
   return (

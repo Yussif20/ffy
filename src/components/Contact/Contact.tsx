@@ -7,7 +7,7 @@ export default async function Contact() {
     const t = await getTranslations("Contact");
 
     return (
-        <div className="w-full max-w-2xl pb-20 md:pb-30 mx-auto">
+        <div id="contact-section" className="w-full max-w-2xl pb-20 md:pb-30 mx-auto">
             <LinearBorder className2="rounded-xl max-w-full!" className="rounded-xl max-w-full!">
                 <div className="p-4 md:p-8 space-y-12">
 

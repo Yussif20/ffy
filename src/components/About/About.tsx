@@ -11,7 +11,7 @@ export default async function About() {
   ];
 
   return (
-    <div className="space-y-12 pb-20 md:pb-30">
+    <div id="about-section" className="space-y-12 pb-20 md:pb-30">
       {/* Main Title */}
       <SectionTitle title={t("aboutUs")} subtitle="" />
 
