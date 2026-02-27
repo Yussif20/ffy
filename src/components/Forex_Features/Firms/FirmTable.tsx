@@ -75,15 +75,7 @@ export default function FirmTable({
       : []),
   ];
 
-  if (isLoading)
-    return (
-      <TableSkeleton
-        className="w-full"
-        showHeader={false}
-        showViewAll={true}
-        headers={headers.map((header) => header.label)}
-      />
-    );
+  if (isLoading) return <TableSkeleton />;
   return (
     <div className="max-w-full w-full space-y-8 overflow-hidden">
       <Table>

@@ -43,11 +43,7 @@ export default function HINTable() {
     dispatch(changeGmt(value));
   };
 
-  if (isLoading) {
-    return (
-      <TableSkeleton headers={[t("gmtz"), t("currency"), t("eventTitle")]} />
-    );
-  }
+  if (isLoading) return <TableSkeleton />;
 
   return (
     <div className="max-w-full w-full space-y-8">

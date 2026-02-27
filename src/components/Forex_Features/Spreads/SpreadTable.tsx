@@ -148,17 +148,7 @@ export default function SpreadTable() {
     [currencyWithLabel],
   );
 
-  if (isSymbolLoading || isLoading) {
-    return (
-      <TableSkeleton
-        headers={[
-          t("firmLogo"),
-          t("platform"),
-          ...(currencyWithLabel || []).map((item) => item.field),
-        ]}
-      />
-    );
-  }
+  if (isSymbolLoading || isLoading) return <TableSkeleton />;
 
   return (
 
@@ -185,14 +175,7 @@ export default function SpreadTable() {
               ]}
             />
             {isLoading || isSymbolLoading ? (
-              <TableSkeleton
-                headers={[
-                  t("firmLogo"),
-                  t("platform"),
-                  ...currencyWithLabel.map((item) => item.field),
-                  ...(userRole === "SUPER_ADMIN" ? ["action"] : []),
-                ]}
-              />
+              <TableSkeleton />
             ) : (
               <TableBody colSpan={7}>
                 {(filterBySearch || []).map((item: any) => (

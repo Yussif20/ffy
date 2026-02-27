@@ -46,7 +46,7 @@ export default function BrokerManagement() {
       </div>
 
       {isLoading ? (
-        <TableSkeleton headers={[t("logo"), t("titleLabel"), t("actions")]} />
+        <TableSkeleton />
       ) : (
         <div className="rounded-xl border border-border/60 bg-card overflow-hidden shadow-sm">
           <Table>

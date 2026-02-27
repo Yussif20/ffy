@@ -197,15 +197,7 @@ export default function ChallengeTable({
 
   const headers = _headers.filter(Boolean) as NonNullable<typeof _headers[number]>[];
 
-  if (isLoading || isFetching)
-    return (
-      <TableSkeleton
-        className="w-full"
-        showHeader={false}
-        showViewAll={true}
-        headers={headers.map((header) => header.label)}
-      />
-    );
+  if (isLoading || isFetching) return <TableSkeleton />;
 
   return (
     <div className="max-w-full w-full space-y-8 overflow-hidden">

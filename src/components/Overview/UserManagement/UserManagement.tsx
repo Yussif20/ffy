@@ -96,9 +96,7 @@ export default function UserManagement() {
       </div>
 
       {isLoading || isFetching ? (
-        <TableSkeleton
-          headers={[t("name"), t("email"), t("role"), t("status"), t("joinDate"), t("actions")]}
-        />
+        <TableSkeleton />
       ) : (
         <>
           <div className="w-full overflow-x-auto">
