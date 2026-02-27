@@ -45,9 +45,9 @@ export default function ChallengeTable({
   } = useGetParams();
   const isFutures = useIsFutures();
   const page = Number(params.get("page")) || 1;
-  const accounsSize = params.get("size") || "100000";
+  const accounsSize = params.get("size") || "";
   const accountSizeRange = params.get("size_range") || "";
-  const in_steps = params.get("in_steps") || "STEP1";
+  const in_steps = params.get("in_steps") || "";
   const in_firmId = params.get("in_firmId") || "";
   const searchTerm =
     searchTermFromState !== undefined
