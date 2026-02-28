@@ -19,7 +19,7 @@ export default async function Subscribe() {
               <p className="text-xs md:text-sm font-medium tracking-[0.2em] text-primary uppercase opacity-90">
                 {t("stayConnected")}
               </p>
-              <h2 className="text-xl md:text-3xl lg:text-4xl font-bold text-foreground tracking-tight">
+              <h2 className="text-xl md:text-3xl lg:text-4xl font-bold text-foreground tracking-tight sm:whitespace-nowrap">
                 {t("title")}
               </h2>
             </div>
