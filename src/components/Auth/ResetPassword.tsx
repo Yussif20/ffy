@@ -40,7 +40,7 @@ export default function ResetPassword() {
 
         const formData = {
             newPassword: data.newPassword,
-            token: token,
+            resetToken: token,
         }
 
         const toastId = toast.loading(t('toast.resetting'))
