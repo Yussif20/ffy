@@ -33,6 +33,23 @@ const userApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["User"],
     }),
+    googleLogin: builder.mutation({
+      query: (credential: string) => ({
+        url: "/auth/google",
+        method: "POST",
+        body: { credential },
+      }),
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          const { accessToken, ...rest } = data.data as User & { accessToken: string };
+          if (accessToken) dispatch(setUser({ user: { ...rest }, token: accessToken }));
+        } catch (error) {
+          console.error("Google login failed:", error);
+        }
+      },
+      invalidatesTags: ["User"],
+    }),
     resendVerificationEmail: builder.mutation({
       query: (userInfo) => ({
         url: "/auth/resend-verification",
@@ -184,6 +201,7 @@ const userApi = baseApi.injectEndpoints({
 export const {
   useSignUpMutation,
   useLoginMutation,
+  useGoogleLoginMutation,
   useResendVerificationEmailMutation,
   useVerifyEmailMutation,
   useForgetPasswordMutation,

@@ -1,3 +1,4 @@
+import GoogleProviderWrapper from "@/components/Auth/GoogleProviderWrapper";
 import Container from "@/components/Global/Container";
 import NavLanguageChange from "@/components/Global/Navbar/NavLanguageChange";
 import { Button } from "@/components/ui/button";
@@ -38,7 +39,7 @@ export default async function RootLayout({
           <NavLanguageChange triggerClassName="px-3 py-2 text-base gap-2" />
         </div>
         <div className="flex justify-center items-center flex-col gap-5  min-h-full w-full">
-          {children}
+          <GoogleProviderWrapper>{children}</GoogleProviderWrapper>
         </div>
         {/* Right Column: Promotional Section */}
       </Container>

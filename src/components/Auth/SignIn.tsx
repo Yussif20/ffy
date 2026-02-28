@@ -2,7 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
-import { useLoginMutation } from "@/redux/api/userApi";
+import { useGoogleLoginMutation, useLoginMutation } from "@/redux/api/userApi";
+import { GoogleLogin } from "@react-oauth/google";
 import { setUser } from "@/redux/authSlice";
 import { useAppDispatch } from "@/redux/store";
 import cookie from "js-cookie";
@@ -24,9 +25,27 @@ const defaultValues = {
 export default function SignIn() {
   const t = useTranslations("Auth.SignIn");
   const [login, { isLoading }] = useLoginMutation();
+  const [googleLoginMutation] = useGoogleLoginMutation();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    if (!credentialResponse.credential) return;
+    const toastId = toast.loading(t("toast.loading"));
+    try {
+      const result = await googleLoginMutation(credentialResponse.credential).unwrap();
+      if (result?.data) {
+        cookie.set("accessToken", result.data.accessToken);
+        cookie.set("refreshToken", result.data.refreshToken);
+        dispatch(setUser({ user: result.data.user, token: result.data.accessToken }));
+        router.push("/forex");
+        toast.success(t("toast.success"), { id: toastId });
+      }
+    } catch (error: any) {
+      toast.error(error?.data?.message || t("toast.googleError"), { id: toastId });
+    }
+  };
 
   const handleSubmit = async (data: FieldValues) => {
     const { email, password } = data;
@@ -97,6 +116,28 @@ export default function SignIn() {
           {isLoading ? t("submit.loading") : t("submit.default")}
         </Button>
       </CustomForm>
+      {/* Google Sign In */}
+      <div className="relative my-6">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-border" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase tracking-wider">
+          <span className="bg-card px-3 text-muted-foreground font-medium">{t("orContinueWith")}</span>
+        </div>
+      </div>
+      <div className="flex justify-center w-full [&>div]:!w-full [&>div]:!flex [&>div]:!justify-center [&_iframe]:!rounded-xl [&_iframe]:!h-11 [&_iframe]:!min-h-11">
+        <div className="w-full max-w-[320px] overflow-hidden rounded-xl border border-border bg-card shadow-sm ring-offset-background transition-all duration-200 hover:shadow-md hover:border-primary/30 hover:scale-[1.01] active:scale-[0.99] focus-within:ring-2 focus-within:ring-primary/20 focus-within:ring-offset-2">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => toast.error(t("toast.googleError"))}
+            theme="outline"
+            shape="rectangular"
+            size="large"
+            text="signin_with"
+            width="320"
+          />
+        </div>
+      </div>
       {/* Sign Up Link */}
       <div className="text-center pt-6 border-t border-border">
         <p className="text-sm font-medium text-muted-foreground">

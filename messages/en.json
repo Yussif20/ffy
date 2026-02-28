@@ -873,11 +873,13 @@
       },
       "noAccount": "Don't have an account?",
       "signUpLink": "Sign up",
+      "orContinueWith": "or continue with",
       "toast": {
         "loading": "Logging in...",
         "success": "Login successful!",
         "verifyEmail": "Please Verify Email first!",
-        "error": "Login failed"
+        "error": "Login failed",
+        "googleError": "Google sign-in failed. Please try again."
       }
     },
     "SignUp": {
@@ -918,10 +920,12 @@
       },
       "alreadyHaveAccount": "Already have an account?",
       "signInLink": "Sign in",
+      "orContinueWith": "or continue with",
       "toast": {
         "loading": "Creating your account...",
         "success": "Account created successfully!",
-        "error": "Sign up failed"
+        "error": "Sign up failed",
+        "googleError": "Google sign-in failed. Please try again."
       },
       "errors": {
         "passwordMismatch": "Passwords do not match",
