@@ -1,9 +1,10 @@
 "use client";
 
-import SearchForm from "@/components/Forms/SearchForm";
+import LinearBorder from "@/components/Global/LinearBorder";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { cn, handleSetSearchParams } from "@/lib/utils";
-import { Filter, Plus } from "lucide-react";
+import { Filter, Plus, Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import SelectOptions from "./SelectOptions";
 import { useTranslations } from "next-intl";
@@ -29,6 +30,7 @@ export default function ChallengeFilter({
   initialSearchParams,
 }: ChallengeFilterProps) {
   const t = useTranslations("Challenges");
+  const tSearch = useTranslations("Search");
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -74,14 +76,9 @@ export default function ChallengeFilter({
     handleSetSearchParams(value, searchParams, router);
   };
 
-  const searchFormProps =
-    searchValue !== undefined && onSearchChange
-      ? { value: searchValue, onSearchChange }
-      : undefined;
-
   return (
     <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-center overflow-x-hidden">
-      <div className="flex flex-wrap justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
+      <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
         {!hideAllFilter && (
           <Button
             className={cn(
@@ -134,8 +131,50 @@ export default function ChallengeFilter({
           </Button>
         )}
       </div>
-      <div className="w-full min-w-0 flex justify-end order-1 lg:order-2">
-        <SearchForm {...searchFormProps} className="w-full max-w-none" />
+      <div className={cn("w-full min-w-0 flex order-1 lg:order-2 lg:min-w-0 lg:w-3/4", isArabic ? "justify-end" : "justify-start")}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            onSearchChange?.(searchValue ?? "");
+          }}
+          className="w-full max-w-none min-w-0 flex-1"
+        >
+          <LinearBorder className="w-full max-w-full">
+            <div className={cn("relative flex items-center w-full", isArabic && "flex-row-reverse")}>
+              <div
+                className={cn(
+                  "absolute top-1/2 -translate-y-1/2 z-10 text-muted-foreground pointer-events-none",
+                  isArabic ? "right-3" : "left-3"
+                )}
+              >
+                <Search className="h-4 w-4" />
+              </div>
+              <Input
+                type="search"
+                withoutLinearBorder
+                value={searchValue ?? ""}
+                onChange={(e) => onSearchChange?.(e.target.value)}
+                placeholder={tSearch("searchPlaceholder")}
+                dir={isArabic ? "rtl" : "ltr"}
+                className={cn(
+                  "h-11 w-full flex-1 min-w-0 pl-9 pr-11 rounded-full border-0 bg-transparent text-sm",
+                  isArabic ? "pr-9 pl-11 text-base font-semibold text-right" : ""
+                )}
+                aria-label={tSearch("searchPlaceholder")}
+              />
+              <div
+                className={cn(
+                  "absolute top-0 bottom-0 flex items-center shrink-0",
+                  isArabic ? "left-0 pl-1" : "right-0 pr-1"
+                )}
+              >
+                <Button type="submit" size="sm" className="h-9 w-9">
+                  <Search className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </LinearBorder>
+        </form>
       </div>
 
       <CreateChallengeModal
