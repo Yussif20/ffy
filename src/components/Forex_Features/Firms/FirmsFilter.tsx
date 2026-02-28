@@ -4,7 +4,6 @@ import { cn, handleSetSearchParams } from "@/lib/utils";
 import { Filter } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import { FaThumbsUp } from "react-icons/fa6";
 import { IconType } from "react-icons/lib";
 import useIsArabic from "@/hooks/useIsArabic";
 
@@ -16,8 +15,8 @@ export default function FirmsFilter() {
   const category = searchParams.get("category") || "";
   const filterOpen = searchParams.get("filterOpen") === "true" ? true : false;
 
+  // "New" filter hidden for now
   const categories: { name: string; value: string; icon?: IconType }[] = [
-    { name: t("new"), value: "NEW", icon: FaThumbsUp },
     { name: t("all"), value: "" },
   ];
 

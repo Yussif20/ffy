@@ -32,7 +32,14 @@ export default function SingleQuestion({
       </div>
       <AccordionContent>
         <div
-          className="danger-html text-base md:text-lg font-medium text-foreground/90 leading-relaxed"
+          className="mfs-content danger-html text-base md:text-lg font-medium text-foreground/90 leading-relaxed"
+          style={
+            faq.mobileFontSize
+              ? ({
+                  "--mobile-fs": `${faq.mobileFontSize}px`,
+                } as React.CSSProperties)
+              : undefined
+          }
           dangerouslySetInnerHTML={{
             __html: visibleText(isArabic, faq.answer, faq.answerArabic),
           }}

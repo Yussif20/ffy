@@ -84,6 +84,7 @@ import { FontColorToolbarPlugin } from "@/components/editor/plugins/toolbar/font
 import { FontFamilyToolbarPlugin } from "@/components/editor/plugins/toolbar/font-family-toolbar-plugin";
 import { FontFormatToolbarPlugin } from "@/components/editor/plugins/toolbar/font-format-toolbar-plugin";
 import { FontSizeToolbarPlugin } from "@/components/editor/plugins/toolbar/font-size-toolbar-plugin";
+import { MobileFontSizeToolbarPlugin } from "@/components/editor/plugins/toolbar/mobile-font-size-toolbar-plugin";
 import { HistoryToolbarPlugin } from "@/components/editor/plugins/toolbar/history-toolbar-plugin";
 import { LinkToolbarPlugin } from "@/components/editor/plugins/toolbar/link-toolbar-plugin";
 import { SubSuperToolbarPlugin } from "@/components/editor/plugins/toolbar/subsuper-toolbar-plugin";
@@ -99,7 +100,13 @@ import { Separator } from "@/components/ui/separator";
 const placeholder = "Press / for commands...";
 const maxLength = 100000;
 
-export function Plugins({}) {
+export function Plugins({
+  mobileFontSize,
+  onMobileFontSizeChange,
+}: {
+  mobileFontSize?: number;
+  onMobileFontSizeChange?: (size: number) => void;
+}) {
   const [floatingAnchorElem, setFloatingAnchorElem] =
     useState<HTMLDivElement | null>(null);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
@@ -205,6 +212,16 @@ export function Plugins({}) {
                 </>
               )}
             </div>
+
+            {/* Row 3: Document-level mobile font size */}
+            {(mobileFontSize !== undefined || onMobileFontSizeChange) && (
+              <div className="flex items-center gap-2 border-t pt-1 w-full">
+                <MobileFontSizeToolbarPlugin
+                  value={mobileFontSize ?? 14}
+                  onChange={onMobileFontSizeChange ?? (() => {})}
+                />
+              </div>
+            )}
           </div>
         )}
       </ToolbarPlugin>

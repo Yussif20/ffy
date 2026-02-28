@@ -125,7 +125,8 @@ export default async function FirmOverview({
             </SecTitle>
             <div className="text-base md:text-lg">
               <div
-                className="danger-html"
+                className="danger-html mfs-content"
+                style={company?.leverageMobileFontSize ? ({ "--mobile-fs": `${company.leverageMobileFontSize}px` } as React.CSSProperties) : undefined}
                 dangerouslySetInnerHTML={{
                   __html: visibleText(
                     isArabic,
@@ -149,7 +150,8 @@ export default async function FirmOverview({
             </SecTitle>
             <div className="text-sm md:text-base">
               <div
-                className="danger-html"
+                className="danger-html mfs-content"
+                style={company?.commissionMobileFontSize ? ({ "--mobile-fs": `${company.commissionMobileFontSize}px` } as React.CSSProperties) : undefined}
                 dangerouslySetInnerHTML={{
                   __html: visibleText(
                     isArabic,
@@ -173,7 +175,8 @@ export default async function FirmOverview({
             </SecTitle>
             <div className="text-sm md:text-base">
               <div
-                className="danger-html"
+                className="danger-html mfs-content"
+                style={company?.accountSizesMobileFontSize ? ({ "--mobile-fs": `${company.accountSizesMobileFontSize}px` } as React.CSSProperties) : undefined}
                 dangerouslySetInnerHTML={{
                   __html: visibleText(
                     isArabic,
@@ -198,7 +201,8 @@ export default async function FirmOverview({
             {company?.allocationRules && (
               <div className="text-sm md:text-base">
                 <div
-                  className="danger-html"
+                  className="danger-html mfs-content"
+                  style={company?.allocationRulesMobileFontSize ? ({ "--mobile-fs": `${company.allocationRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -222,7 +226,8 @@ export default async function FirmOverview({
             </SecTitle>
             <div className="text-sm md:text-base">
               <div
-                className="danger-html"
+                className="danger-html mfs-content"
+                style={company?.dailyMaxLossMobileFontSize ? ({ "--mobile-fs": `${company.dailyMaxLossMobileFontSize}px` } as React.CSSProperties) : undefined}
                 dangerouslySetInnerHTML={{
                   __html: visibleText(
                     isArabic,
@@ -284,7 +289,8 @@ export default async function FirmOverview({
             {company?.consistencyRules && (
               <div className="text-sm md:text-base">
                 <div
-                  className="danger-html"
+                  className="danger-html mfs-content"
+                  style={company?.consistencyRulesMobileFontSize ? ({ "--mobile-fs": `${company.consistencyRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -310,7 +316,8 @@ export default async function FirmOverview({
                 </SecTitle>
                 <div className="text-sm md:text-base">
                   <div
-                    className="danger-html"
+                    className="danger-html mfs-content"
+                    style={company?.minimumTradingDaysMobileFontSize ? ({ "--mobile-fs": `${company.minimumTradingDaysMobileFontSize}px` } as React.CSSProperties) : undefined}
                     dangerouslySetInnerHTML={{
                       __html: visibleText(
                         isArabic,
@@ -336,7 +343,8 @@ export default async function FirmOverview({
               </h2>
               <div className="text-sm md:text-base">
                 <div
-                  className="danger-html"
+                  className="danger-html mfs-content"
+                  style={company?.newsTradingAllowedRulesMobileFontSize ? ({ "--mobile-fs": `${company.newsTradingAllowedRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -353,7 +361,8 @@ export default async function FirmOverview({
               </h2>
               <div className="text-sm md:text-base">
                 <div
-                  className="danger-html"
+                  className="danger-html mfs-content"
+                  style={company?.newsTradingNotAllowedRulesMobileFontSize ? ({ "--mobile-fs": `${company.newsTradingNotAllowedRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -377,7 +386,8 @@ export default async function FirmOverview({
               {tSidebar("items.overnightWeekendsHolding")}
             </SecTitle>
             <div
-              className="danger-html"
+              className="danger-html mfs-content"
+              style={company?.overnightAndWeekendsHoldingMobileFontSize ? ({ "--mobile-fs": `${company.overnightAndWeekendsHoldingMobileFontSize}px` } as React.CSSProperties) : undefined}
               dangerouslySetInnerHTML={{
                 __html: visibleText(
                   isArabic,
@@ -401,7 +411,8 @@ export default async function FirmOverview({
               </h2>
               <div className="text-sm md:text-base">
                 <div
-                  className="danger-html"
+                  className="danger-html mfs-content"
+                  style={company?.copyTradingAllowedRulesMobileFontSize ? ({ "--mobile-fs": `${company.copyTradingAllowedRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -418,7 +429,8 @@ export default async function FirmOverview({
               </h2>
               <div className="text-sm md:text-base">
                 <div
-                  className="danger-html"
+                  className="danger-html mfs-content"
+                  style={company?.copyTradingNotAllowedRulesMobileFontSize ? ({ "--mobile-fs": `${company.copyTradingNotAllowedRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -444,7 +456,8 @@ export default async function FirmOverview({
               </h2>
               <div className="text-sm md:text-base">
                 <div
-                  className="danger-html"
+                  className="danger-html mfs-content"
+                  style={company?.expertsAllowedRulesMobileFontSize ? ({ "--mobile-fs": `${company.expertsAllowedRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -461,7 +474,8 @@ export default async function FirmOverview({
               </h2>
               <div className="text-sm md:text-base">
                 <div
-                  className="danger-html"
+                  className="danger-html mfs-content"
+                  style={company?.expertsNotAllowedRulesMobileFontSize ? ({ "--mobile-fs": `${company.expertsNotAllowedRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -480,7 +494,8 @@ export default async function FirmOverview({
           <section id="vpn-vps" className="space-y-6 scroll-mt-[270px]">
             <SecTitle>{tSidebar("items.vpnVps")}</SecTitle>
             <div
-              className="danger-html"
+              className="danger-html mfs-content"
+              style={company?.vpnVpsMobileFontSize ? ({ "--mobile-fs": `${company.vpnVpsMobileFontSize}px` } as React.CSSProperties) : undefined}
               dangerouslySetInnerHTML={{
                 __html: visibleText(
                   isArabic,
@@ -507,7 +522,8 @@ export default async function FirmOverview({
             {company?.payoutPolicy && (
               <div className="text-sm md:text-base">
                 <div
-                  className="danger-html"
+                  className="danger-html mfs-content"
+                  style={company?.payoutPolicyMobileFontSize ? ({ "--mobile-fs": `${company.payoutPolicyMobileFontSize}px` } as React.CSSProperties) : undefined}
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -533,7 +549,8 @@ export default async function FirmOverview({
                 </SecTitle>
                 <div className="text-sm md:text-base">
                   <div
-                    className="danger-html"
+                    className="danger-html mfs-content"
+                    style={company?.scaleupPlansMobileFontSize ? ({ "--mobile-fs": `${company.scaleupPlansMobileFontSize}px` } as React.CSSProperties) : undefined}
                     dangerouslySetInnerHTML={{
                       __html: visibleText(
                         isArabic,
@@ -559,7 +576,8 @@ export default async function FirmOverview({
             {company?.inactivityRules && (
               <div className="text-sm md:text-base">
                 <div
-                  className="danger-html"
+                  className="danger-html mfs-content"
+                  style={company?.inactivityRulesMobileFontSize ? ({ "--mobile-fs": `${company.inactivityRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -584,7 +602,8 @@ export default async function FirmOverview({
             {company?.prohibitedStrategies && (
               <div className="text-sm md:text-base">
                 <div
-                  className="danger-html"
+                  className="danger-html mfs-content"
+                  style={company?.prohibitedStrategiesMobileFontSize ? ({ "--mobile-fs": `${company.prohibitedStrategiesMobileFontSize}px` } as React.CSSProperties) : undefined}
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,

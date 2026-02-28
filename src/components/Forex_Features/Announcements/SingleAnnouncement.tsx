@@ -54,8 +54,15 @@ export default function SingleAnnouncement({
 
             {/* HTML CONTENT */}
             <div
-              className="space-y-4 text-sm text-muted-foreground danger-html"
+              className="mfs-content space-y-4 text-sm text-muted-foreground danger-html"
               dir="ltr"
+              style={
+                announcement?.mobileFontSize
+                  ? ({
+                      "--mobile-fs": `${announcement.mobileFontSize}px`,
+                    } as React.CSSProperties)
+                  : undefined
+              }
               dangerouslySetInnerHTML={{ __html: announcement?.description }}
             />
           </div>

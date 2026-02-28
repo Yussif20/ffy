@@ -9,6 +9,8 @@ export type Announcement_T = {
   firmId: string;
   firm: string;
 
+  mobileFontSize?: number | null;
+
   createdAt: string;
   updatedAt: string;
 };

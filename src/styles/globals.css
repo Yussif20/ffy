@@ -315,6 +315,13 @@ body {
   }
 }
 
+/* Mobile font-size override — set by admin via mobileFontSize field */
+@media (max-width: 768px) {
+  .mfs-content * {
+    font-size: var(--mobile-fs, inherit) !important;
+  }
+}
+
 body {
   font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
   background: var(--color-background);

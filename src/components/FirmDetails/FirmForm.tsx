@@ -254,7 +254,7 @@ export default function FirmForm({
           {tSidebar("items.leverage")}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <RichTextEditor2 name="leverage" label={"English"} required />
+          <RichTextEditor2 name="leverage" label={"English"} required mobileFontSizeName="leverageMobileFontSize" />
           <RichTextEditor2 name="leverageArabic" label={"Arabic"} required />
         </div>
       </div>
@@ -263,7 +263,7 @@ export default function FirmForm({
           {tSidebar("items.commissions")}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <RichTextEditor2 name="commission" label={"English"} required />
+          <RichTextEditor2 name="commission" label={"English"} required mobileFontSizeName="commissionMobileFontSize" />
           <RichTextEditor2 name="commissionArabic" label={"Arabic"} required />
         </div>
       </div>
@@ -272,7 +272,7 @@ export default function FirmForm({
           {tSidebar("items.accountSizes")}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <RichTextEditor2 name="accountSizes" label={"English"} required />
+          <RichTextEditor2 name="accountSizes" label={"English"} required mobileFontSizeName="accountSizesMobileFontSize" />
           <RichTextEditor2
             name="accountSizesArabic"
             label={"Arabic"}
@@ -309,6 +309,7 @@ export default function FirmForm({
             name="allocationRules"
             label={t("allocationRules")}
             required
+            mobileFontSizeName="allocationRulesMobileFontSize"
           />
           <RichTextEditor2
             name="allocationRulesArabic"
@@ -323,7 +324,7 @@ export default function FirmForm({
           {tSidebar("items.dailyMaximumLoss")}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <RichTextEditor2 name="dailyMaxLoss" label={"English"} required />
+          <RichTextEditor2 name="dailyMaxLoss" label={"English"} required mobileFontSizeName="dailyMaxLossMobileFontSize" />
           <RichTextEditor2
             name="dailyMaxLossArabic"
             label={"Arabic"}
@@ -355,7 +356,7 @@ export default function FirmForm({
             {tSidebar("items.riskManagement")}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <RichTextEditor2 name="riskManagement" label={"English"} required />
+            <RichTextEditor2 name="riskManagement" label={"English"} required mobileFontSizeName="riskManagementMobileFontSize" />
             <RichTextEditor2
               name="riskManagementArabic"
               label={"Arabic"}
@@ -370,7 +371,7 @@ export default function FirmForm({
           {tSidebar("items.consistencyRules")}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <RichTextEditor2 name="consistencyRules" label={"English"} required />
+          <RichTextEditor2 name="consistencyRules" label={"English"} required mobileFontSizeName="consistencyRulesMobileFontSize" />
           <RichTextEditor2
             name="consistencyRulesArabic"
             label={"Arabic"}
@@ -389,6 +390,7 @@ export default function FirmForm({
               name="minimumTradingDays"
               label={"English"}
               required
+              mobileFontSizeName="minimumTradingDaysMobileFontSize"
             />
             <RichTextEditor2
               name="minimumTradingDaysArabic"
@@ -409,6 +411,7 @@ export default function FirmForm({
             name="newsTradingAllowedRules"
             label={"Allowed Rules"}
             required
+            mobileFontSizeName="newsTradingAllowedRulesMobileFontSize"
           />
           <RichTextEditor2
             name="newsTradingAllowedRulesArabic"
@@ -421,6 +424,7 @@ export default function FirmForm({
             name="newsTradingNotAllowedRules"
             label={"Not Allowed Rules"}
             required
+            mobileFontSizeName="newsTradingNotAllowedRulesMobileFontSize"
           />
           <RichTextEditor2
             name="newsTradingNotAllowedRulesArabic"
@@ -439,6 +443,7 @@ export default function FirmForm({
             name="overnightAndWeekendsHolding"
             label={"English"}
             required
+            mobileFontSizeName="overnightAndWeekendsHoldingMobileFontSize"
           />
           <RichTextEditor2
             name="overnightAndWeekendsHoldingArabic"
@@ -458,6 +463,7 @@ export default function FirmForm({
             name="copyTradingAllowedRules"
             label={"Allowed Rules English"}
             required
+            mobileFontSizeName="copyTradingAllowedRulesMobileFontSize"
           />
           <RichTextEditor2
             name="copyTradingAllowedRulesArabic"
@@ -470,6 +476,7 @@ export default function FirmForm({
             name="copyTradingNotAllowedRules"
             label={"Not Allowed Rules English"}
             required
+            mobileFontSizeName="copyTradingNotAllowedRulesMobileFontSize"
           />
           <RichTextEditor2
             name="copyTradingNotAllowedRulesArabic"
@@ -488,6 +495,7 @@ export default function FirmForm({
           <RichTextEditor2
             name="expertsAllowedRules"
             label={"Allowed Rules English"}
+            mobileFontSizeName="expertsAllowedRulesMobileFontSize"
           />
           <RichTextEditor2
             name="expertsAllowedRulesArabic"
@@ -496,6 +504,7 @@ export default function FirmForm({
           <RichTextEditor2
             name="expertsNotAllowedRules"
             label={"Not Allowed Rules English"}
+            mobileFontSizeName="expertsNotAllowedRulesMobileFontSize"
           />
           <RichTextEditor2
             name="expertsNotAllowedRulesArabic"
@@ -509,7 +518,7 @@ export default function FirmForm({
           {tSidebar("items.vpnVps")}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <RichTextEditor2 name="vpnVps" label={"English"} required />
+          <RichTextEditor2 name="vpnVps" label={"English"} required mobileFontSizeName="vpnVpsMobileFontSize" />
           <RichTextEditor2 name="vpnVpsArabic" label={"Arabic"} required />
         </div>
       </div>
@@ -521,7 +530,7 @@ export default function FirmForm({
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <RichTextEditor2 name="profitShare" label={"English"} required />
+            <RichTextEditor2 name="profitShare" label={"English"} required mobileFontSizeName="profitShareMobileFontSize" />
             <RichTextEditor2
               name="profitShareArabic"
               label={"Arabic"}
@@ -536,7 +545,7 @@ export default function FirmForm({
           {tSidebar("items.payoutPolicy")}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <RichTextEditor2 name="payoutPolicy" label={"English"} required />
+          <RichTextEditor2 name="payoutPolicy" label={"English"} required mobileFontSizeName="payoutPolicyMobileFontSize" />
           <RichTextEditor2
             name="payoutPolicyArabic"
             label={"Arabic"}
@@ -551,7 +560,7 @@ export default function FirmForm({
             {tSidebar("items.scaleUpPlan")}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <RichTextEditor2 name="scaleupPlans" label={"English"} />
+            <RichTextEditor2 name="scaleupPlans" label={"English"} mobileFontSizeName="scaleupPlansMobileFontSize" />
             <RichTextEditor2 name="scaleupPlansArabic" label={"Arabic"} />
           </div>
         </div>
@@ -562,7 +571,7 @@ export default function FirmForm({
           {tSidebar("items.inactivityRules")}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <RichTextEditor2 name="inactivityRules" label={"English"} required />
+          <RichTextEditor2 name="inactivityRules" label={"English"} required mobileFontSizeName="inactivityRulesMobileFontSize" />
           <RichTextEditor2
             name="inactivityRulesArabic"
             label={"Arabic"}
@@ -579,6 +588,7 @@ export default function FirmForm({
             name="prohibitedStrategies"
             label={"English"}
             required
+            mobileFontSizeName="prohibitedStrategiesMobileFontSize"
           />
           <RichTextEditor2
             name="prohibitedStrategiesArabic"
