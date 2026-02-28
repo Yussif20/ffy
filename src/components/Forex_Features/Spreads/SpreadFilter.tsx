@@ -1,5 +1,6 @@
 "use client";
-import SearchForm from "@/components/Forms/SearchForm";
+
+import SearchInputField from "@/components/Forms/SearchInputField";
 import { Button } from "@/components/ui/button";
 import { cn, handleSetSearchParams } from "@/lib/utils";
 import { ListFilter } from "lucide-react";
@@ -7,14 +8,53 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { IconType } from "react-icons/lib";
 import { useTranslations } from "next-intl";
 import useIsArabic from "@/hooks/useIsArabic";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+const DEBOUNCE_MS = 300;
 
 export default function SpreadFilter() {
-  const t = useTranslations("Spread"); // namespace for translations
+  const t = useTranslations("Spread");
+  const tSearch = useTranslations("Search");
   const searchParams = useSearchParams();
   const router = useRouter();
   const category = searchParams.get("category") || "";
   const filterOpen = searchParams.get("filterOpen") === "true" ? true : false;
   const isArabic = useIsArabic();
+  const urlSearch = searchParams.get("search") || "";
+  const [searchInput, setSearchInput] = useState(urlSearch);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setSearchInput(urlSearch);
+  }, [urlSearch]);
+
+  const applySearch = useCallback(
+    (value: string) => {
+      handleSetSearchParams({ search: value, page: "1" }, searchParams, router);
+    },
+    [searchParams, router]
+  );
+
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      setSearchInput(value);
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => {
+        applySearch(value);
+        debounceRef.current = null;
+      }, DEBOUNCE_MS);
+    },
+    [applySearch]
+  );
+
+  const handleSearchSubmit = useCallback(() => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+      debounceRef.current = null;
+    }
+    applySearch(searchInput);
+  }, [applySearch, searchInput]);
+
   const handleSetUrl = (value: Record<string, string>) => {
     handleSetSearchParams(value, searchParams, router);
   };
@@ -62,7 +102,13 @@ export default function SpreadFilter() {
           );
         })}
       </div>
-      <SearchForm className="w-full max-w-none" />
+      <SearchInputField
+        value={searchInput}
+        onChange={handleSearchChange}
+        onSubmit={handleSearchSubmit}
+        placeholder={tSearch("searchPlaceholder")}
+        className="w-full max-w-none"
+      />
     </div>
   );
 }

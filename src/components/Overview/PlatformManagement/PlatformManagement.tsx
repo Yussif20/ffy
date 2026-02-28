@@ -1,5 +1,7 @@
 "use client";
-import SearchForm from "@/components/Forms/SearchForm";
+
+import SearchInputField from "@/components/Forms/SearchInputField";
+import { handleSetSearchParams } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import {
   Table,
@@ -11,7 +13,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import TableSkeleton from "@/components/Global/TableSkeleton";
 import Image from "next/image";
 import { useGetAllPlatformQuery } from "@/redux/api/platformApi";
@@ -19,10 +21,49 @@ import { Platform } from "@/types";
 import CreatePlatform from "./CreatePlatform";
 import UpdatePlatform from "./UpdatePlatform";
 import DeletePlatform from "./DeletePlatform";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+const DEBOUNCE_MS = 300;
 
 export default function PlatformManagement() {
   const t = useTranslations("Overview.platformManagement");
+  const tSearch = useTranslations("Search");
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const urlSearch = searchParams.get("search") || "";
+  const [searchInput, setSearchInput] = useState(urlSearch);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setSearchInput(urlSearch);
+  }, [urlSearch]);
+
+  const applySearch = useCallback(
+    (value: string) => {
+      handleSetSearchParams({ search: value, page: "1" }, searchParams, router);
+    },
+    [searchParams, router]
+  );
+
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      setSearchInput(value);
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => {
+        applySearch(value);
+        debounceRef.current = null;
+      }, DEBOUNCE_MS);
+    },
+    [applySearch]
+  );
+
+  const handleSearchSubmit = useCallback(() => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+      debounceRef.current = null;
+    }
+    applySearch(searchInput);
+  }, [applySearch, searchInput]);
 
   const search = searchParams.get("search") || "";
   const query = [];
@@ -40,7 +81,12 @@ export default function PlatformManagement() {
 
       <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
         <div className="w-full sm:max-w-xs">
-          <SearchForm />
+          <SearchInputField
+            value={searchInput}
+            onChange={handleSearchChange}
+            onSubmit={handleSearchSubmit}
+            placeholder={tSearch("searchPlaceholder")}
+          />
         </div>
         <CreatePlatform />
       </div>

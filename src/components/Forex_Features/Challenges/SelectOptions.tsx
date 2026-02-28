@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { formatCurrencyShort } from "@/lib/formatCurrencyShort ";
 import { cn, handleSetSearchParams } from "@/lib/utils";
-import { ChevronDown } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
@@ -93,6 +93,8 @@ export default function SelectOptions({
     : categories.length === 1
     ? options.find((item) => item.value === categories[0])?.name
     : text("multiple");
+
+  const hasSelection = categories.length >= 1 || isCustom;
   const usableCols = cols
     ? cols
     : options.length < 6
@@ -107,27 +109,33 @@ export default function SelectOptions({
         <div>
           <Button
             className={cn(
-              "h-8 px-2 text-[11px] sm:h-9 sm:px-3 sm:text-xs md:text-sm",
+              "h-8 px-2 text-[11px] sm:h-9 sm:px-3 sm:text-xs md:text-sm transition-all",
               isArabic && "font-semibold",
+              hasSelection &&
+                "ring-2 ring-primary/25 bg-primary/5 border-primary/40 hover:bg-primary/10 hover:ring-primary/35",
               triggerClassName
             )}
             variant={"outline"}
           >
-            {title}: <span>{showingText}</span> <ChevronDown />
+            {title}:{" "}
+            <span className={cn(hasSelection && "font-semibold text-primary")}>
+              {showingText}
+            </span>{" "}
+            <ChevronDown className={cn("size-3.5 opacity-70", hasSelection && "opacity-90")} />
           </Button>
         </div>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="p-2">
+      <DropdownMenuContent className="p-2 min-w-[12rem]">
         <div className="p-2 space-y-4">
-          <h2 className="text-sm font-semibold">
+          <h2 className="text-sm font-semibold text-muted-foreground">
             {text("selectOneOrMultiple")}
           </h2>
           <div
             className="grid gap-2"
-            style={{ 
+            style={{
               gridTemplateColumns: `repeat(${usableCols}, 1fr)`,
-              ...(isArabic && { direction: 'rtl' })
+              ...(isArabic && { direction: "rtl" }),
             }}
           >
             {options.map((item) => {
@@ -136,15 +144,21 @@ export default function SelectOptions({
                 <Button
                   onClick={() => handleSetCategory(item.value)}
                   className={cn(
-                    "w-full",
+                    "w-full relative gap-2 transition-all",
                     isArabic && "font-semibold",
-                    isExist &&
-                      "bg-primary/15 border-2 border-primary text-primary font-semibold hover:bg-primary/25 hover:border-primary"
+                    isExist
+                      ? "bg-primary/10 border border-primary/60 text-primary font-semibold shadow-sm ring-1 ring-primary/20 hover:bg-primary/15 hover:border-primary/80 hover:ring-primary/30"
+                      : "border border-transparent hover:bg-muted/50"
                   )}
-                  variant={isExist ? "outline2" : "outline2"}
+                  variant="outline2"
                   key={item.value}
                 >
-                  {item.name}
+                  {isExist && (
+                    <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/20">
+                      <Check className="size-3 text-primary" strokeWidth={2.5} />
+                    </span>
+                  )}
+                  <span className="flex-1 text-start">{item.name}</span>
                 </Button>
               );
             })}
@@ -159,14 +173,20 @@ export default function SelectOptions({
                 }
                 size={"lg"}
                 className={cn(
-                  "w-full",
+                  "w-full relative gap-2 transition-all",
                   isArabic && "font-semibold",
-                  isCustom &&
-                    "bg-primary/15 border-2 border-primary text-primary font-semibold hover:bg-primary/25 hover:border-primary"
+                  isCustom
+                    ? "bg-primary/10 border border-primary/60 text-primary font-semibold shadow-sm ring-1 ring-primary/20 hover:bg-primary/15 hover:border-primary/80 hover:ring-primary/30"
+                    : "border border-transparent hover:bg-muted/50"
                 )}
                 variant="outline2"
               >
-                {text("custom")}
+                {isCustom && (
+                  <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/20">
+                    <Check className="size-3 text-primary" strokeWidth={2.5} />
+                  </span>
+                )}
+                <span className="flex-1 text-start">{text("custom")}</span>
               </Button>
               {isCustom && (
                 <CustomSlider

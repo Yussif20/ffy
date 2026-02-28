@@ -131,7 +131,7 @@ export default function ChallengeFilter({
           </Button>
         )}
       </div>
-      <div className={cn("w-full min-w-0 flex order-1 lg:order-2 lg:min-w-0 lg:w-3/4", isArabic ? "justify-end" : "justify-start")}>
+      <div className={cn("w-full min-w-0 flex order-1 lg:order-2 lg:min-w-0 lg:w-3/4", isArabic ? "ml-0 mr-auto" : "mr-0 ml-auto")}>
         <form
           onSubmit={(e) => {
             e.preventDefault();

@@ -19,7 +19,9 @@ import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { Pagination } from "@/components/Global/Pagination";
 import TableSkeleton from "@/components/Global/TableSkeleton";
-import SearchForm from "@/components/Forms/SearchForm";
+import SearchInputField from "@/components/Forms/SearchInputField";
+import { handleSetSearchParams } from "@/lib/utils";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export type TUser = {
   id: string;
@@ -34,11 +36,49 @@ export type TUser = {
   createdAt?: string;
 };
 
+const DEBOUNCE_MS = 300;
+
 export default function UserManagement() {
   const t = useTranslations("Overview.userManagement");
+  const tSearch = useTranslations("Search");
   const params = useSearchParams();
   const router = useRouter();
   const page = Number(params.get("page")) || 1;
+  const urlSearch = params.get("search") || "";
+  const [searchInput, setSearchInput] = useState(urlSearch);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setSearchInput(urlSearch);
+  }, [urlSearch]);
+
+  const applySearch = useCallback(
+    (value: string) => {
+      handleSetSearchParams({ search: value, page: "1" }, params, router);
+    },
+    [params, router]
+  );
+
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      setSearchInput(value);
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => {
+        applySearch(value);
+        debounceRef.current = null;
+      }, DEBOUNCE_MS);
+    },
+    [applySearch]
+  );
+
+  const handleSearchSubmit = useCallback(() => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+      debounceRef.current = null;
+    }
+    applySearch(searchInput);
+  }, [applySearch, searchInput]);
+
   const searchTerm = params.get("search") || "";
   // Get all users
   const { data, isLoading, isFetching } = useGetAllUserAdminQuery([
@@ -93,7 +133,12 @@ export default function UserManagement() {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
-        <SearchForm />
+        <SearchInputField
+          value={searchInput}
+          onChange={handleSearchChange}
+          onSubmit={handleSearchSubmit}
+          placeholder={tSearch("searchPlaceholder")}
+        />
       </div>
 
       {isLoading || isFetching ? (
