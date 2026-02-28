@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import Hero from "@/components/Global/hero";
+import HeroConditional from "@/components/Global/HeroConditional";
 import Container from "@/components/Global/Container";
 import HomeNavItems from "@/components/Forex_Features/HomeNavItems";
 import Subscribe from "@/components/Forex_Features/Subscribe";
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <div>
-      <Hero />
+      <HeroConditional />
       <PrefetchTabData />
       <div className="py-6 md:py-10">
         <ScrollReveal delay={0.05}>

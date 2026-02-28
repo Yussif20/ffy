@@ -40,8 +40,7 @@ function scrollToTabsSection() {
 const SECTION_IDS: Record<string, string> = {
   "best-sellers": "best-sellers-section",
   "high-impact-news": "high-impact-news-section",
-  "about": "about-section",
-  "contact": "contact-section",
+  // about and contact intentionally omitted — scroll to top of page
 };
 
 export default function FooterLink({

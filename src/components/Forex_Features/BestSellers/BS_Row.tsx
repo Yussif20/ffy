@@ -209,7 +209,7 @@ export default function BS_Row({
                   open={openDeleteDialog}
                   onOpenChange={setOpenDeleteDialog}
                 >
-                  <DialogTrigger>
+                  <DialogTrigger asChild>
                     <Button size="icon" variant="destructive">
                       <Trash2 className="w-4 h-4" />
                     </Button>

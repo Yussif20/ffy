@@ -34,7 +34,7 @@ export default async function RootLayout({
             </Button>
           </Link>
         </div>
-        <div className="absolute top-5 right-5">
+        <div className="absolute top-5 right-5 z-20">
           <NavLanguageChange triggerClassName="px-3 py-2 text-base gap-2" />
         </div>
         <div className="flex justify-center items-center flex-col gap-5  min-h-full w-full">

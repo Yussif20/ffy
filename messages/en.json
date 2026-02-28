@@ -930,7 +930,7 @@
     },
     "CheckMail": {
       "title": "Check your email",
-      "subtitle": "We’ve sent a password reset link to \"{email}\"",
+      "subtitle": "We’ve sent a password reset link to {email}",
       "openGmail": "Open Gmail",
       "didntReceive": "Didn’t receive the email?",
       "resendLink": "Click to resend",

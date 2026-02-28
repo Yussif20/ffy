@@ -28,7 +28,7 @@ export default function NavItems() {
     },
     {
       name: t("offers"),
-      href: "/offers",
+      href: "/forex/offers",
       icon: <Gift size={13} />,
       part: 1,
       scrollToTabs: true,
@@ -36,7 +36,7 @@ export default function NavItems() {
     },
     {
       name: t("challenges"),
-      href: "/challenges",
+      href: "/forex/challenges",
       icon: <Trophy size={13} />,
       part: 2,
       scrollToTabs: true,

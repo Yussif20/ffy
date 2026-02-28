@@ -16,9 +16,10 @@ type SearchFormProps = {
   /** Controlled mode: value and onChange only, no URL read/write */
   value?: string;
   onSearchChange?: (value: string) => void;
+  className?: string;
 };
 
-export default function SearchForm({ value: controlledValue, onSearchChange }: SearchFormProps = {}) {
+export default function SearchForm({ value: controlledValue, onSearchChange, className }: SearchFormProps = {}) {
   const t = useTranslations("Search");
   const isArabic = useIsArabic();
   const searchParams = useSearchParams();
@@ -74,7 +75,7 @@ export default function SearchForm({ value: controlledValue, onSearchChange }: S
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-sm w-full">
+    <form onSubmit={handleSubmit} className={cn("max-w-sm w-full", className)}>
       <LinearBorder className="w-full">
         <div className={cn("relative flex items-center w-full", isArabic && "flex-row-reverse")}>
           <div

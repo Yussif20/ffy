@@ -80,8 +80,8 @@ export default function ChallengeFilter({
       : undefined;
 
   return (
-    <div className="w-full flex flex-wrap justify-between md:items-center flex-col lg:flex-row gap-5 overflow-x-hidden">
-      <div className="flex flex-wrap justify-center md:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center">
+    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-center overflow-x-hidden">
+      <div className="flex flex-wrap justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
         {!hideAllFilter && (
           <Button
             className={cn(
@@ -128,16 +128,15 @@ export default function ChallengeFilter({
           ]}
           cols={2}
         />
-      </div>
-      <SearchForm {...searchFormProps} />
-
-      {role === "SUPER_ADMIN" && (
-        <div>
+        {role === "SUPER_ADMIN" && (
           <Button variant="default" onClick={() => setOpenModal(true)}>
             <Plus />
           </Button>
-        </div>
-      )}
+        )}
+      </div>
+      <div className="w-full min-w-0 flex justify-end order-1 lg:order-2">
+        <SearchForm {...searchFormProps} className="w-full max-w-none" />
+      </div>
 
       <CreateChallengeModal
         open={openModal}

@@ -16,7 +16,7 @@ export default function CheckMail() {
 
   const handleRedirect = () => {
     const gmailSearchUrl =
-      "https://mail.google.com/mail/u/0/#search/from%3Amuhammadjunayetmaruf%40gmail.com";
+      `https://mail.google.com/mail/u/0/#inbox`;
     window.open(gmailSearchUrl, "_blank");
   };
 
@@ -35,7 +35,10 @@ export default function CheckMail() {
   };
 
   return (
-    <AuthContainer title={t("title")} subtitle={`${t("subtitle")} ${email}`}>
+    <AuthContainer
+      title={t("title")}
+      subtitle={t("subtitle", { email: email ?? "" })}
+    >
       <div className="mt-6 w-full">
         <Button
           onClick={handleRedirect}

@@ -97,10 +97,14 @@ export default function Firms({
 
   return (
     <div className="space-y-8 pb-10 md:pb-14">
-      <div className="w-full flex justify-between md:items-center flex-col lg:flex-row gap-5 overflow-x-hidden">
-        <FirmsFilter />
-        <SearchForm value={searchInput} onSearchChange={handleSearchChange} />
-        {user?.role === "SUPER_ADMIN" && <AddFirmDialog />}
+      <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-center overflow-x-hidden">
+        <div className="flex flex-wrap justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
+          <FirmsFilter />
+          {user?.role === "SUPER_ADMIN" && <AddFirmDialog />}
+        </div>
+        <div className="w-full min-w-0 flex justify-end order-1 lg:order-2">
+          <SearchForm value={searchInput} onSearchChange={handleSearchChange} className="w-full max-w-none" />
+        </div>
       </div>
 
       <div className="flex items-start gap-0 lg:gap-6 w-full">

@@ -62,7 +62,7 @@ export default function SpreadFilter() {
           );
         })}
       </div>
-      <SearchForm />
+      <SearchForm className="w-full max-w-none" />
     </div>
   );
 }

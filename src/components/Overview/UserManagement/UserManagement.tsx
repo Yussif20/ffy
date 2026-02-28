@@ -43,6 +43,7 @@ export default function UserManagement() {
   // Get all users
   const { data, isLoading, isFetching } = useGetAllUserAdminQuery([
     { name: "page", value: page },
+    { name: "limit", value: 10 },
     { name: "searchTerm", value: searchTerm },
   ]);
 

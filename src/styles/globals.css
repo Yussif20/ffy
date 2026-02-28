@@ -568,3 +568,9 @@ button {
   background-size: 200% 100%;
   animation: shimmer 1.6s infinite;
 }
+
+/* Sticky table header stepping entrance */
+@keyframes header-step-in {
+  from { transform: translateY(-44px); }
+  to   { transform: translateY(0); }
+}
