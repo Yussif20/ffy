@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -64,7 +64,7 @@ export const AddEditAnnouncementDialog = ({
     useUpdateAnnouncementMutation();
 
   const form = useForm<AnnouncementFormValues>({
-    resolver: zodResolver(announcementSchema),
+    resolver: zodResolver(announcementSchema) as Resolver<AnnouncementFormValues>,
     defaultValues: {
       id: announcement?.id,
       title: announcement?.title || "",
