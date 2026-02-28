@@ -48,6 +48,9 @@ export default function ChallengeFilter({
   const user = useAppSelector(useCurrentUser);
   const role = user?.role;
 
+  // Firm challenges page: never apply default filters (no 100k / STEP1)
+  const isFirmChallengesPage = pathname.includes("/firms/") && pathname.includes("/challenges");
+
   // When switching Forex <-> Futures, reset so we re-apply defaults on the new tab
   if (pathname !== prevPathnameRef.current) {
     prevPathnameRef.current = pathname;
@@ -55,8 +58,9 @@ export default function ChallengeFilter({
   }
 
   // Set default size (100K) and steps (STEP1) together so URL ends up as ?in_steps=STEP1&size=100000
+  // Skip defaults on firm info challenges tab so all challenges show without pre-selected filters
   useEffect(() => {
-    if (hasAppliedChallengeDefaults.current) return;
+    if (isFirmChallengesPage || hasAppliedChallengeDefaults.current) return;
     const hasSize = searchParams.get("size") || searchParams.get("size_range");
     const hasSteps = searchParams.get("in_steps");
     if (hasSize && hasSteps) {
@@ -70,7 +74,7 @@ export default function ChallengeFilter({
       hasAppliedChallengeDefaults.current = true;
       handleSetSearchParams(next, searchParams, router);
     }
-  }, [pathname, searchParams, router]);
+  }, [pathname, searchParams, router, isFirmChallengesPage]);
 
   const handleSetCategory = (value: Record<string, string>) => {
     handleSetSearchParams(value, searchParams, router);

@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "../ui/button";
 import useIsActive from "@/hooks/useIsActive";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import useIsFutures from "@/hooks/useIsFutures";
 
@@ -14,6 +14,7 @@ export default function FDTabs({
 }) {
   const t = useTranslations("FDTabs");
   const isActive = useIsActive();
+  const pathname = usePathname();
   const isFutures = useIsFutures();
   const tabs = [
     {
@@ -36,7 +37,7 @@ export default function FDTabs({
           {t("tabs.offers")} {count.offers > 0 && <>({count.offers})</>}
         </div>
       ),
-      value: "exclusive-offers",
+      value: "offers",
     },
 
     // {
@@ -60,21 +61,29 @@ export default function FDTabs({
     };
   });
 
+  const isOffersTabActive =
+    pathname.includes(`firms/${slug}/`) &&
+    (pathname.includes("exclusive-offers") || pathname.endsWith("/offers"));
+
   return (
     <div className="flex flex-wrap sm:justify-center items-center gap-3 sm:gap-5 w-full overflow-auto">
-      {tabs.map((item, index) => (
-        <Link key={index} href={item.value}>
-          <Button
-            size="2xl"
-            variant={
-              isActive(item.value, [tabs[0].value]) ? "defaultBH" : "outline2"
-            }
-            className="rounded font-semibold"
-          >
-            {item.name}
-          </Button>
-        </Link>
-      ))}
+      {tabs.map((item, index) => {
+        const isOffersTab = item.value.endsWith("/offers");
+        const active = isOffersTab
+          ? isOffersTabActive
+          : isActive(item.value, [tabs[0].value]);
+        return (
+          <Link key={index} href={item.value}>
+            <Button
+              size="2xl"
+              variant={active ? "defaultBH" : "outline2"}
+              className="rounded font-semibold"
+            >
+              {item.name}
+            </Button>
+          </Link>
+        );
+      })}
     </div>
   );
 }
