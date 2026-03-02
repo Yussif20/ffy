@@ -64,11 +64,11 @@ export default function SortTableHeader({
 
                 {!header.hideSort && !skipSort && !skipIcons && (
                   <>
-                    {sortBy === header.field && <ChevronUp size={16} />}
-                    {sortBy === `-${header.field}` && <ChevronDown size={16} />}
+                    {sortBy === header.field && <ChevronUp className="size-3.5 md:size-4" />}
+                    {sortBy === `-${header.field}` && <ChevronDown className="size-3.5 md:size-4" />}
                     {sortBy !== header.field &&
                       sortBy !== `-${header.field}` && (
-                        <ChevronsUpDown size={16} />
+                        <ChevronsUpDown className="size-3.5 md:size-4" />
                       )}
                   </>
                 )}

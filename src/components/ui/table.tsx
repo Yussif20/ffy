@@ -16,7 +16,8 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
       <table
         data-slot="table"
         className={cn(
-          "w-full caption-bottom text-xs border-collapse",
+          "w-full caption-bottom border-collapse",
+          "text-[11px] md:text-xs",
           "[&_th:first-child]:border-s [&_td:first-child]:border-s",
           "[&_th:first-child]:border-border/50 [&_td:first-child]:border-border/50",
           "[&_th:last-child]:border-r [&_td:last-child]:border-r",
@@ -63,7 +64,7 @@ function TableBody({
         <tr data-slot="table-row" className="border-b border-border/40">
           <td
             data-slot="table-cell"
-            className="py-12 px-4 align-middle text-center text-muted-foreground text-xs italic"
+            className="py-8 px-3 md:py-12 md:px-4 align-middle text-center text-muted-foreground text-[11px] md:text-xs italic"
             colSpan={colSpan}
           >
             {emptyMessage}
@@ -113,7 +114,7 @@ function TableHead({
       className={cn(
         "text-foreground text-left align-middle font-semibold whitespace-nowrap",
         "[&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-0.5",
-        "py-3.5 px-3 text-xs tracking-tight border-r border-border/50",
+        "py-2 px-2 md:py-3.5 md:px-3 tracking-tight border-r border-border/50",
         className,
       )}
       {...props}
@@ -139,7 +140,7 @@ function TableCell({
       className={cn(
         "align-middle whitespace-nowrap text-foreground/90",
         "[&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-0.5",
-        "py-3 px-3 text-xs border-r border-border/40",
+        "py-2 px-2 md:py-3 md:px-3 border-r border-border/40",
         className,
       )}
       {...props}

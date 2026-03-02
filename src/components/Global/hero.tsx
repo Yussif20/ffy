@@ -71,9 +71,6 @@ export default function Hero() {
             backgroundSize: "60px 60px",
           }}
         />
-        {/* Diagonal geometric accent line */}
-        <div className="absolute top-0 right-0 w-px h-[60%] bg-gradient-to-b from-transparent via-primary/20 to-transparent translate-x-[-120px] sm:translate-x-[-200px]" />
-        <div className="absolute top-0 right-0 w-px h-[40%] bg-gradient-to-b from-transparent via-primary/10 to-transparent translate-x-[-80px] sm:translate-x-[-140px]" />
       </div>
 
       {/* Top vignette */}
@@ -127,7 +124,7 @@ export default function Hero() {
               )}
             >
               {t("heroTitle.title1")}
-              <span className="text-primary block mt-3 sm:mt-1 leading-[1.4]"> {t("heroTitle.title2")}</span>
+              <span className="text-primary block mt-1 sm:mt-2 leading-[1.4]"> {t("heroTitle.title2")}</span>
             </motion.h1>
 
             {/* Subtitle */}
@@ -135,7 +132,7 @@ export default function Hero() {
               variants={itemVariants}
               className={cn(
                 "text-muted-foreground/90 leading-relaxed",
-                "text-sm sm:text-base lg:text-lg 2xl:text-base",
+                "text-[12px] sm:text-base lg:text-lg 2xl:text-base",
                 "max-w-xs sm:max-w-sm lg:max-w-none",
                 "text-center",
                 !isArabic && "lg:text-left",

@@ -59,16 +59,16 @@ function FirmRow({
       />
       <TableCell>
         <div className="flex items-center gap-1 justify-center">
-          <div className="w-6  h-4 relative">
+          <div className="w-5 h-3.5 md:w-6 md:h-4 relative">
             <Image
               src={country?.flag || ""}
               alt="image"
               fill
               unoptimized
-              className="object-cover "
+              className="object-cover"
             />
           </div>
-          <p className="text-base  font-semibold"> {country?.code}</p>
+          <p className="text-xs md:text-base font-semibold"> {country?.code}</p>
         </div>
       </TableCell>
       <TableCell>
@@ -89,7 +89,7 @@ function FirmRow({
           </TableCell> */}
           <PlatformCell platforms={company.platforms} />
           <TableCell>
-            <p className="text-center font-bold text-base">
+            <p className="text-center font-bold text-xs md:text-base">
               {(() => {
                 const n = Number(company.maxAllocation);
                 return !Number.isNaN(n)
@@ -108,7 +108,7 @@ function FirmRow({
                 }}
               />
             ) : (
-              <p className="text-center text-foreground/30 text-base font-medium">—</p>
+              <p className="text-center text-foreground/30 text-xs md:text-base font-medium">—</p>
             )}
           </TableCell>
         </>
