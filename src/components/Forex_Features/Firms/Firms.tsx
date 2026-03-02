@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import FirmAllFilters from "./FirmAllFilters";
 import FirmsFilter from "./FirmsFilter";
