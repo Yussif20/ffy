@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 import FirmAllFilters from "./FirmAllFilters";
 import FirmsFilter from "./FirmsFilter";
@@ -29,10 +29,20 @@ export default function Firms({
   const user = useAppSelector((state) => state.auth.user);
   const pathname = usePathname();
   const isFuturesPage = pathname.includes("futures");
+  const marketType = pathname.includes("futures") ? "futures" : "forex";
   const isArabic = useIsArabic();
   const t = useTranslations("Search");
   const router = useRouter();
   const page = getParamsWithKey("page", 1);
+
+  useEffect(() => {
+    const storageKey = "ffy_marketType_firms";
+    const prev = typeof window !== "undefined" ? sessionStorage.getItem(storageKey) : null;
+    if (prev !== null && prev !== marketType) {
+      handleSetSearchParams({ page: "1" }, searchParams, router);
+    }
+    if (typeof window !== "undefined") sessionStorage.setItem(storageKey, marketType);
+  }, [marketType, pathname, searchParams, router]);
 
   const limit = getParamsWithKey("limit", 10);
   const [searchInput, setSearchInput] = useState("");

@@ -17,7 +17,10 @@ export default function FFT_Buttons({ compact }: { compact?: boolean }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const isArabic = useIsArabic();
-  const queryString = searchParams.toString();
+  // When switching forex <-> futures, drop `page` so we always land on page 1
+  const params = new URLSearchParams(searchParams.toString());
+  params.delete("page");
+  const queryString = params.toString();
   const suffix = queryString ? "?" + queryString : "";
 
   const routerIsFutures = pathname.startsWith("/futures");

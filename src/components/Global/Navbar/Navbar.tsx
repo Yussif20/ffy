@@ -28,6 +28,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const isScrolledRef = useRef(false);
   const [isMobile, setIsMobile] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(typeof window !== "undefined" && window.innerWidth < MOBILE_BREAKPOINT);
@@ -35,6 +36,18 @@ const Navbar = () => {
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
+
+  useEffect(() => {
+    const el = navRef.current;
+    if (!el) return;
+    const setHeight = () => {
+      document.documentElement.style.setProperty("--navbar-height", `${el.offsetHeight}px`);
+    };
+    setHeight();
+    const ro = new ResizeObserver(setHeight);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [isScrolled, isMobile]);
 
   useEffect(() => {
     let ticking = false;
@@ -61,6 +74,7 @@ const Navbar = () => {
 
   return (
     <nav
+      ref={navRef}
       className={`sticky z-50 w-full top-0 shadow-sm transition-all duration-150 ${isScrolled ? "py-2 bg-background/80 backdrop-blur-sm" : "py-6"
         }`}
     >

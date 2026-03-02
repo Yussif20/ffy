@@ -23,9 +23,19 @@ export default function Offers({
   const searchParams = useSearchParams();
   const router = useRouter();
   const t = useTranslations("Search");
+  const marketType = pathname.includes("futures") ? "futures" : "forex";
   const urlSearch = searchParams.get("search") || "";
   const [searchInput, setSearchInput] = useState(urlSearch);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const storageKey = "ffy_marketType_offers";
+    const prev = typeof window !== "undefined" ? sessionStorage.getItem(storageKey) : null;
+    if (prev !== null && prev !== marketType) {
+      handleSetSearchParams({ page: "1" }, searchParams, router);
+    }
+    if (typeof window !== "undefined") sessionStorage.setItem(storageKey, marketType);
+  }, [marketType, pathname, searchParams, router]);
 
   useEffect(() => {
     setSearchInput(urlSearch);

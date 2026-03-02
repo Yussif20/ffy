@@ -255,7 +255,7 @@ export default async function FirmOverview({
                 return (
                   <div key={idx} className="space-y-1">
                     <div
-                      className="danger-html text-sm md:text-base"
+                      className="danger-html text-[12px]!  md:text-base!"
                       dangerouslySetInnerHTML={{
                         __html: visibleText(
                           isArabic,

@@ -45,7 +45,7 @@ export default function FirmOfferStickyBar({ firm }: { firm: SinglePropFirm }) {
   const firmHref = isFutures ? `/futures/firms/${firm.slug}` : `/forex/firms/${firm.slug}`;
 
   return (
-    <div className="sticky top-14 z-40 w-full border-b border-border bg-background/95 backdrop-blur-sm shadow-sm">
+    <div className="sticky top-(--navbar-height,3.5rem) z-40 w-full border-b border-border bg-background/95 backdrop-blur-sm shadow-sm">
       <div className="flex items-center justify-between gap-2 sm:gap-5 px-2 py-2 sm:px-4 sm:py-2.5 min-h-11 sm:min-h-12">
         {/* Firm logo + name (shrink more on very small screens) */}
         <Link
