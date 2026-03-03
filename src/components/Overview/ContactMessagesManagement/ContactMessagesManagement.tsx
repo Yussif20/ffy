@@ -167,18 +167,8 @@ export default function ContactMessagesManagement() {
                     <TableHead className="text-right">{t("actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody>
-                  {list.length === 0 ? (
-                    <TableRow>
-                      <TableCell
-                        colSpan={8}
-                        className="text-center text-muted-foreground py-10"
-                      >
-                        {t("noMessages")}
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    list.map((item) => (
+                <TableBody colSpan={8} emptyMessage={t("noMessages")}>
+                  {list.map((item) => (
                       <TableRow
                         key={item.id}
                         className="hover:bg-muted/50"
@@ -231,8 +221,7 @@ export default function ContactMessagesManagement() {
                           </Button>
                         </TableCell>
                       </TableRow>
-                    ))
-                  )}
+                    ))}
                 </TableBody>
               </Table>
             </div>
