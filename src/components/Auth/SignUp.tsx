@@ -39,16 +39,22 @@ export default function SignUp() {
     if (!credentialResponse.credential) return;
     const toastId = toast.loading(t("toast.loading"));
     try {
-      const result = await googleLoginMutation(credentialResponse.credential).unwrap();
+      const result = await googleLoginMutation(
+        credentialResponse.credential,
+      ).unwrap();
       if (result?.data) {
         cookie.set("accessToken", result.data.accessToken);
         cookie.set("refreshToken", result.data.refreshToken);
-        dispatch(setUser({ user: result.data.user, token: result.data.accessToken }));
+        dispatch(
+          setUser({ user: result.data.user, token: result.data.accessToken }),
+        );
         router.push("/forex");
         toast.success(t("toast.success"), { id: toastId });
       }
     } catch (error: any) {
-      toast.error(error?.data?.message || t("toast.googleError"), { id: toastId });
+      toast.error(error?.data?.message || t("toast.googleError"), {
+        id: toastId,
+      });
     }
   };
 
@@ -149,7 +155,7 @@ export default function SignUp() {
               disabled={isLoading}
               className="mt-0.5 h-4 w-4 rounded border-border accent-primary focus:ring-2 focus:ring-primary/20 focus:ring-offset-0"
             />
-            <span className="text-sm font-medium text-foreground/90 group-hover:text-foreground">
+            <span className="text-xs font-medium text-foreground/90 group-hover:text-foreground">
               {t("checkboxes.agreeTerms1")}{" "}
               <Link
                 href="/terms-and-conditions"
@@ -177,7 +183,7 @@ export default function SignUp() {
               disabled={isLoading}
               className="mt-0.5 h-4 w-4 rounded border-border accent-primary focus:ring-2 focus:ring-primary/20 focus:ring-offset-0"
             />
-            <span className="text-sm font-medium text-foreground/90 group-hover:text-foreground">
+            <span className="text-xs font-medium text-foreground/90 group-hover:text-foreground">
               {t("checkboxes.marketing")}
             </span>
           </label>
@@ -198,11 +204,13 @@ export default function SignUp() {
             <div className="w-full border-t border-border" />
           </div>
           <div className="relative flex justify-center text-xs uppercase tracking-wider">
-            <span className="bg-card px-3 text-muted-foreground font-medium">{t("orContinueWith")}</span>
+            <span className="bg-card px-3 text-muted-foreground font-medium">
+              {t("orContinueWith")}
+            </span>
           </div>
         </div>
-        <div className="flex justify-center w-full [&>div]:w-full [&>div]:flex [&>div]:justify-center [&_iframe]:rounded-xl [&_iframe]:h-11 [&_iframe]:min-h-11">
-          <div className="w-full max-w-[320px] overflow-hidden rounded-xl border border-border bg-card shadow-sm ring-offset-background transition-all duration-200 hover:shadow-md hover:border-primary/30 hover:scale-[1.01] active:scale-[0.99] focus-within:ring-2 focus-within:ring-primary/20 focus-within:ring-offset-2">
+        <div className="flex justify-center w-full [&>div]:w-full [&>div]:flex [&>div]:justify-center">
+          <div className="w-full overflow-hidden rounded-xl transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]">
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
               onError={() => toast.error(t("toast.googleError"))}
@@ -210,7 +218,6 @@ export default function SignUp() {
               shape="rectangular"
               size="large"
               text="signup_with"
-              width="320"
             />
           </div>
         </div>

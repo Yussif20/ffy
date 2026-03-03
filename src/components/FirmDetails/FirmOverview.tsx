@@ -32,7 +32,7 @@ export default async function FirmOverview({
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-8">
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 sm:mb-8">
         {company?.title} Prop Firm Details
       </h1>
 
@@ -47,9 +47,7 @@ export default async function FirmOverview({
         <div className={cn("flex-1 space-y-6 pr-4", isArabic && "pr-6")}>
           {/* Firm Overview */}
           <section id="firm-overview" className="space-y-6 scroll-mt-[270px]">
-            <SecTitle>
-              {tSidebar("items.firmOverview")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.firmOverview")}</SecTitle>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <h3
@@ -120,13 +118,17 @@ export default async function FirmOverview({
             id="leverages"
             className="overflow-x-auto space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle>
-              {tSidebar("items.leverage")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.leverage")}</SecTitle>
             <div className="text-base md:text-lg">
               <div
                 className="danger-html mfs-content"
-                style={company?.leverageMobileFontSize ? ({ "--mobile-fs": `${company.leverageMobileFontSize}px` } as React.CSSProperties) : undefined}
+                style={
+                  company?.leverageMobileFontSize
+                    ? ({
+                        "--mobile-fs": `${company.leverageMobileFontSize}px`,
+                      } as React.CSSProperties)
+                    : undefined
+                }
                 dangerouslySetInnerHTML={{
                   __html: visibleText(
                     isArabic,
@@ -145,13 +147,17 @@ export default async function FirmOverview({
             id="commissions"
             className="overflow-x-auto space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle>
-              {tSidebar("items.commissions")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.commissions")}</SecTitle>
             <div className="text-sm md:text-base">
               <div
                 className="danger-html mfs-content"
-                style={company?.commissionMobileFontSize ? ({ "--mobile-fs": `${company.commissionMobileFontSize}px` } as React.CSSProperties) : undefined}
+                style={
+                  company?.commissionMobileFontSize
+                    ? ({
+                        "--mobile-fs": `${company.commissionMobileFontSize}px`,
+                      } as React.CSSProperties)
+                    : undefined
+                }
                 dangerouslySetInnerHTML={{
                   __html: visibleText(
                     isArabic,
@@ -170,13 +176,17 @@ export default async function FirmOverview({
             id="account-sizes"
             className="overflow-x-auto space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle>
-              {tSidebar("items.accountSizes")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.accountSizes")}</SecTitle>
             <div className="text-sm md:text-base">
               <div
                 className="danger-html mfs-content"
-                style={company?.accountSizesMobileFontSize ? ({ "--mobile-fs": `${company.accountSizesMobileFontSize}px` } as React.CSSProperties) : undefined}
+                style={
+                  company?.accountSizesMobileFontSize
+                    ? ({
+                        "--mobile-fs": `${company.accountSizesMobileFontSize}px`,
+                      } as React.CSSProperties)
+                    : undefined
+                }
                 dangerouslySetInnerHTML={{
                   __html: visibleText(
                     isArabic,
@@ -195,14 +205,18 @@ export default async function FirmOverview({
             id="max-allocation"
             className="overflow-x-auto space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle>
-              {tSidebar("items.maxAllocation")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.maxAllocation")}</SecTitle>
             {company?.allocationRules && (
               <div className="text-sm md:text-base">
                 <div
                   className="danger-html mfs-content"
-                  style={company?.allocationRulesMobileFontSize ? ({ "--mobile-fs": `${company.allocationRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
+                  style={
+                    company?.allocationRulesMobileFontSize
+                      ? ({
+                          "--mobile-fs": `${company.allocationRulesMobileFontSize}px`,
+                        } as React.CSSProperties)
+                      : undefined
+                  }
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -221,13 +235,17 @@ export default async function FirmOverview({
             id="daily-maximum-loss"
             className="overflow-x-auto space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle>
-              {tSidebar("items.dailyMaximumLoss")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.dailyMaximumLoss")}</SecTitle>
             <div className="text-sm md:text-base">
               <div
                 className="danger-html mfs-content"
-                style={company?.dailyMaxLossMobileFontSize ? ({ "--mobile-fs": `${company.dailyMaxLossMobileFontSize}px` } as React.CSSProperties) : undefined}
+                style={
+                  company?.dailyMaxLossMobileFontSize
+                    ? ({
+                        "--mobile-fs": `${company.dailyMaxLossMobileFontSize}px`,
+                      } as React.CSSProperties)
+                    : undefined
+                }
                 dangerouslySetInnerHTML={{
                   __html: visibleText(
                     isArabic,
@@ -246,9 +264,7 @@ export default async function FirmOverview({
             id="drawdown"
             className="overflow-x-auto space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle>
-              {tSidebar("items.drawdown")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.drawdown")}</SecTitle>
 
             <div className="space-y-4">
               {company?.drawDownTexts.map((item, idx) => {
@@ -283,14 +299,18 @@ export default async function FirmOverview({
             id="consistency-rules"
             className="space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle>
-              {tSidebar("items.consistencyRules")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.consistencyRules")}</SecTitle>
             {company?.consistencyRules && (
               <div className="text-sm md:text-base">
                 <div
                   className="danger-html mfs-content"
-                  style={company?.consistencyRulesMobileFontSize ? ({ "--mobile-fs": `${company.consistencyRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
+                  style={
+                    company?.consistencyRulesMobileFontSize
+                      ? ({
+                          "--mobile-fs": `${company.consistencyRulesMobileFontSize}px`,
+                        } as React.CSSProperties)
+                      : undefined
+                  }
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -311,13 +331,17 @@ export default async function FirmOverview({
                 id="minimum-trading-days"
                 className="overflow-x-auto space-y-6 scroll-mt-[270px]"
               >
-                <SecTitle>
-                  {tSidebar("items.minimumTradingDays")}
-                </SecTitle>
+                <SecTitle>{tSidebar("items.minimumTradingDays")}</SecTitle>
                 <div className="text-sm md:text-base">
                   <div
                     className="danger-html mfs-content"
-                    style={company?.minimumTradingDaysMobileFontSize ? ({ "--mobile-fs": `${company.minimumTradingDaysMobileFontSize}px` } as React.CSSProperties) : undefined}
+                    style={
+                      company?.minimumTradingDaysMobileFontSize
+                        ? ({
+                            "--mobile-fs": `${company.minimumTradingDaysMobileFontSize}px`,
+                          } as React.CSSProperties)
+                        : undefined
+                    }
                     dangerouslySetInnerHTML={{
                       __html: visibleText(
                         isArabic,
@@ -334,9 +358,7 @@ export default async function FirmOverview({
 
           {/* news Trading */}
           <section id="news-trading" className="space-y-6 scroll-mt-[270px]">
-            <SecTitle>
-              {tSidebar("items.newsTrading")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.newsTrading")}</SecTitle>
             <div>
               <h2 className="text-lg font-semibold text-green-500 drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]">
                 {t("sections.allowed")}
@@ -344,7 +366,13 @@ export default async function FirmOverview({
               <div className="text-sm md:text-base">
                 <div
                   className="danger-html mfs-content"
-                  style={company?.newsTradingAllowedRulesMobileFontSize ? ({ "--mobile-fs": `${company.newsTradingAllowedRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
+                  style={
+                    company?.newsTradingAllowedRulesMobileFontSize
+                      ? ({
+                          "--mobile-fs": `${company.newsTradingAllowedRulesMobileFontSize}px`,
+                        } as React.CSSProperties)
+                      : undefined
+                  }
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -362,7 +390,13 @@ export default async function FirmOverview({
               <div className="text-sm md:text-base">
                 <div
                   className="danger-html mfs-content"
-                  style={company?.newsTradingNotAllowedRulesMobileFontSize ? ({ "--mobile-fs": `${company.newsTradingNotAllowedRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
+                  style={
+                    company?.newsTradingNotAllowedRulesMobileFontSize
+                      ? ({
+                          "--mobile-fs": `${company.newsTradingNotAllowedRulesMobileFontSize}px`,
+                        } as React.CSSProperties)
+                      : undefined
+                  }
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -382,12 +416,16 @@ export default async function FirmOverview({
             id="overnight-weekends-holding"
             className="space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle>
-              {tSidebar("items.overnightWeekendsHolding")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.overnightWeekendsHolding")}</SecTitle>
             <div
               className="danger-html mfs-content"
-              style={company?.overnightAndWeekendsHoldingMobileFontSize ? ({ "--mobile-fs": `${company.overnightAndWeekendsHoldingMobileFontSize}px` } as React.CSSProperties) : undefined}
+              style={
+                company?.overnightAndWeekendsHoldingMobileFontSize
+                  ? ({
+                      "--mobile-fs": `${company.overnightAndWeekendsHoldingMobileFontSize}px`,
+                    } as React.CSSProperties)
+                  : undefined
+              }
               dangerouslySetInnerHTML={{
                 __html: visibleText(
                   isArabic,
@@ -402,9 +440,7 @@ export default async function FirmOverview({
 
           {/* Copy Trading */}
           <section id="copy-trading" className="space-y-6 scroll-mt-[270px]">
-            <SecTitle>
-              {tSidebar("items.copyTrading")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.copyTrading")}</SecTitle>
             <div>
               <h2 className="text-lg font-semibold text-green-500 drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]">
                 {t("sections.allowed")}
@@ -412,7 +448,13 @@ export default async function FirmOverview({
               <div className="text-sm md:text-base">
                 <div
                   className="danger-html mfs-content"
-                  style={company?.copyTradingAllowedRulesMobileFontSize ? ({ "--mobile-fs": `${company.copyTradingAllowedRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
+                  style={
+                    company?.copyTradingAllowedRulesMobileFontSize
+                      ? ({
+                          "--mobile-fs": `${company.copyTradingAllowedRulesMobileFontSize}px`,
+                        } as React.CSSProperties)
+                      : undefined
+                  }
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -430,7 +472,13 @@ export default async function FirmOverview({
               <div className="text-sm md:text-base">
                 <div
                   className="danger-html mfs-content"
-                  style={company?.copyTradingNotAllowedRulesMobileFontSize ? ({ "--mobile-fs": `${company.copyTradingNotAllowedRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
+                  style={
+                    company?.copyTradingNotAllowedRulesMobileFontSize
+                      ? ({
+                          "--mobile-fs": `${company.copyTradingNotAllowedRulesMobileFontSize}px`,
+                        } as React.CSSProperties)
+                      : undefined
+                  }
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -447,9 +495,7 @@ export default async function FirmOverview({
 
           {/* Experts */}
           <section id="experts" className="space-y-6 scroll-mt-[270px]">
-            <SecTitle>
-              {tSidebar("items.experts")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.experts")}</SecTitle>
             <div>
               <h2 className="text-lg font-semibold text-green-500 drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]">
                 {t("sections.allowed")}
@@ -457,7 +503,13 @@ export default async function FirmOverview({
               <div className="text-sm md:text-base">
                 <div
                   className="danger-html mfs-content"
-                  style={company?.expertsAllowedRulesMobileFontSize ? ({ "--mobile-fs": `${company.expertsAllowedRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
+                  style={
+                    company?.expertsAllowedRulesMobileFontSize
+                      ? ({
+                          "--mobile-fs": `${company.expertsAllowedRulesMobileFontSize}px`,
+                        } as React.CSSProperties)
+                      : undefined
+                  }
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -475,7 +527,13 @@ export default async function FirmOverview({
               <div className="text-sm md:text-base">
                 <div
                   className="danger-html mfs-content"
-                  style={company?.expertsNotAllowedRulesMobileFontSize ? ({ "--mobile-fs": `${company.expertsNotAllowedRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
+                  style={
+                    company?.expertsNotAllowedRulesMobileFontSize
+                      ? ({
+                          "--mobile-fs": `${company.expertsNotAllowedRulesMobileFontSize}px`,
+                        } as React.CSSProperties)
+                      : undefined
+                  }
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -495,7 +553,13 @@ export default async function FirmOverview({
             <SecTitle>{tSidebar("items.vpnVps")}</SecTitle>
             <div
               className="danger-html mfs-content"
-              style={company?.vpnVpsMobileFontSize ? ({ "--mobile-fs": `${company.vpnVpsMobileFontSize}px` } as React.CSSProperties) : undefined}
+              style={
+                company?.vpnVpsMobileFontSize
+                  ? ({
+                      "--mobile-fs": `${company.vpnVpsMobileFontSize}px`,
+                    } as React.CSSProperties)
+                  : undefined
+              }
               dangerouslySetInnerHTML={{
                 __html: visibleText(
                   isArabic,
@@ -516,14 +580,18 @@ export default async function FirmOverview({
 
           {/* Payout Policy */}
           <section id="payout-policy" className="space-y-6 scroll-mt-[270px]">
-            <SecTitle>
-              {tSidebar("items.payoutPolicy")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.payoutPolicy")}</SecTitle>
             {company?.payoutPolicy && (
               <div className="text-sm md:text-base">
                 <div
                   className="danger-html mfs-content"
-                  style={company?.payoutPolicyMobileFontSize ? ({ "--mobile-fs": `${company.payoutPolicyMobileFontSize}px` } as React.CSSProperties) : undefined}
+                  style={
+                    company?.payoutPolicyMobileFontSize
+                      ? ({
+                          "--mobile-fs": `${company.payoutPolicyMobileFontSize}px`,
+                        } as React.CSSProperties)
+                      : undefined
+                  }
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -544,13 +612,17 @@ export default async function FirmOverview({
                 id="scale-up-plan"
                 className="overflow-x-auto space-y-6 scroll-mt-[270px]"
               >
-                <SecTitle>
-                  {tSidebar("items.scaleUpPlan")}
-                </SecTitle>
+                <SecTitle>{tSidebar("items.scaleUpPlan")}</SecTitle>
                 <div className="text-sm md:text-base">
                   <div
                     className="danger-html mfs-content"
-                    style={company?.scaleupPlansMobileFontSize ? ({ "--mobile-fs": `${company.scaleupPlansMobileFontSize}px` } as React.CSSProperties) : undefined}
+                    style={
+                      company?.scaleupPlansMobileFontSize
+                        ? ({
+                            "--mobile-fs": `${company.scaleupPlansMobileFontSize}px`,
+                          } as React.CSSProperties)
+                        : undefined
+                    }
                     dangerouslySetInnerHTML={{
                       __html: visibleText(
                         isArabic,
@@ -570,14 +642,18 @@ export default async function FirmOverview({
             id="inactivity-rules"
             className="space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle>
-              {tSidebar("items.inactivityRules")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.inactivityRules")}</SecTitle>
             {company?.inactivityRules && (
               <div className="text-sm md:text-base">
                 <div
                   className="danger-html mfs-content"
-                  style={company?.inactivityRulesMobileFontSize ? ({ "--mobile-fs": `${company.inactivityRulesMobileFontSize}px` } as React.CSSProperties) : undefined}
+                  style={
+                    company?.inactivityRulesMobileFontSize
+                      ? ({
+                          "--mobile-fs": `${company.inactivityRulesMobileFontSize}px`,
+                        } as React.CSSProperties)
+                      : undefined
+                  }
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -596,14 +672,18 @@ export default async function FirmOverview({
             id="prohibited-strategies"
             className="space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle>
-              {tSidebar("items.prohibitedStrategies")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.prohibitedStrategies")}</SecTitle>
             {company?.prohibitedStrategies && (
               <div className="text-sm md:text-base">
                 <div
                   className="danger-html mfs-content"
-                  style={company?.prohibitedStrategiesMobileFontSize ? ({ "--mobile-fs": `${company.prohibitedStrategiesMobileFontSize}px` } as React.CSSProperties) : undefined}
+                  style={
+                    company?.prohibitedStrategiesMobileFontSize
+                      ? ({
+                          "--mobile-fs": `${company.prohibitedStrategiesMobileFontSize}px`,
+                        } as React.CSSProperties)
+                      : undefined
+                  }
                   dangerouslySetInnerHTML={{
                     __html: visibleText(
                       isArabic,
@@ -622,9 +702,7 @@ export default async function FirmOverview({
             id="restricted-countries"
             className="space-y-6 scroll-mt-[270px]"
           >
-            <SecTitle>
-              {tSidebar("items.restrictedCountries")}
-            </SecTitle>
+            <SecTitle>{tSidebar("items.restrictedCountries")}</SecTitle>
             <div className="flex flex-wrap gap-1 z-10">
               {(company?.restrictedCountries || [])
                 .map((item) =>

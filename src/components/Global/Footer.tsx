@@ -18,7 +18,6 @@ const Footer = async () => {
       links: [
         { label: t("allPropFirms"), href: "/forex" },
         { label: t("compareChallenges"), href: "/forex/challenges" },
-        { label: t("bestSellers"), href: "best-sellers" },
       ],
     },
     {

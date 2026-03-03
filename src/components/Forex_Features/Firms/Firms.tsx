@@ -37,11 +37,13 @@ export default function Firms({
 
   useEffect(() => {
     const storageKey = "ffy_marketType_firms";
-    const prev = typeof window !== "undefined" ? sessionStorage.getItem(storageKey) : null;
+    const prev =
+      typeof window !== "undefined" ? sessionStorage.getItem(storageKey) : null;
     if (prev !== null && prev !== marketType) {
       handleSetSearchParams({ page: "1" }, searchParams, router);
     }
-    if (typeof window !== "undefined") sessionStorage.setItem(storageKey, marketType);
+    if (typeof window !== "undefined")
+      sessionStorage.setItem(storageKey, marketType);
   }, [marketType, pathname, searchParams, router]);
 
   const limit = getParamsWithKey("limit", 10);
@@ -52,7 +54,7 @@ export default function Firms({
       setSearchInput(value);
       handleSetSearchParams({ page: "1" }, searchParams, router);
     },
-    [searchParams, router]
+    [searchParams, router],
   );
   const assets = searchParams.get("assets") || "";
   const countries = searchParams.get("countries") || "";
@@ -119,7 +121,12 @@ export default function Firms({
           <FirmsFilter />
           {user?.role === "SUPER_ADMIN" && <AddFirmDialog />}
         </div>
-        <div className={cn("w-full min-w-0 flex order-1 lg:order-2 lg:min-w-0 lg:w-3/4", isArabic ? "ml-0 mr-auto" : "mr-0 ml-auto")}>
+        <div
+          className={cn(
+            "w-full min-w-0 flex order-1 lg:order-2 lg:min-w-0 lg:w-3/4",
+            isArabic ? "ml-0 mr-auto" : "mr-0 ml-auto",
+          )}
+        >
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -128,11 +135,16 @@ export default function Firms({
             className="w-full max-w-none min-w-0 flex-1"
           >
             <LinearBorder className="w-full max-w-full">
-              <div className={cn("relative flex items-center w-full", isArabic && "flex-row-reverse")}>
+              <div
+                className={cn(
+                  "relative flex items-center w-full",
+                  isArabic && "flex-row-reverse",
+                )}
+              >
                 <div
                   className={cn(
                     "absolute top-1/2 -translate-y-1/2 z-10 text-muted-foreground pointer-events-none",
-                    isArabic ? "right-3" : "left-3"
+                    isArabic ? "right-3" : "left-3",
                   )}
                 >
                   <Search className="h-4 w-4" />
@@ -146,14 +158,16 @@ export default function Firms({
                   dir={isArabic ? "rtl" : "ltr"}
                   className={cn(
                     "h-11 w-full flex-1 min-w-0 pl-9 pr-11 rounded-full border-0 bg-transparent text-sm",
-                    isArabic ? "pr-9 pl-11 text-base font-semibold text-right" : ""
+                    isArabic
+                      ? "pr-9 pl-11 text-base font-semibold text-right"
+                      : "",
                   )}
                   aria-label={t("searchPlaceholder")}
                 />
                 <div
                   className={cn(
                     "absolute top-0 bottom-0 flex items-center shrink-0",
-                    isArabic ? "left-0 pl-1" : "right-0 pr-1"
+                    isArabic ? "left-0 pl-1" : "right-0 pr-1",
                   )}
                 >
                   <Button type="submit" size="sm" className="h-9 w-9">

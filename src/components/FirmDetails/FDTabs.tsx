@@ -66,7 +66,7 @@ export default function FDTabs({
     (pathname.includes("exclusive-offers") || pathname.endsWith("/offers"));
 
   return (
-    <div className="flex flex-wrap sm:justify-center items-center gap-3 sm:gap-5 w-full overflow-auto">
+    <div className="flex flex-wrap sm:justify-center items-center gap-2 sm:gap-5 w-full overflow-auto">
       {tabs.map((item, index) => {
         const isOffersTab = item.value.endsWith("/offers");
         const active = isOffersTab
@@ -77,7 +77,7 @@ export default function FDTabs({
             <Button
               size="2xl"
               variant={active ? "defaultBH" : "outline2"}
-              className="rounded font-semibold"
+              className="rounded font-semibold h-9 px-3 text-xs sm:h-12 sm:px-6 sm:text-base"
             >
               {item.name}
             </Button>

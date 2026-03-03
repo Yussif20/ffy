@@ -34,16 +34,22 @@ export default function SignIn() {
     if (!credentialResponse.credential) return;
     const toastId = toast.loading(t("toast.loading"));
     try {
-      const result = await googleLoginMutation(credentialResponse.credential).unwrap();
+      const result = await googleLoginMutation(
+        credentialResponse.credential,
+      ).unwrap();
       if (result?.data) {
         cookie.set("accessToken", result.data.accessToken);
         cookie.set("refreshToken", result.data.refreshToken);
-        dispatch(setUser({ user: result.data.user, token: result.data.accessToken }));
+        dispatch(
+          setUser({ user: result.data.user, token: result.data.accessToken }),
+        );
         router.push("/forex");
         toast.success(t("toast.success"), { id: toastId });
       }
     } catch (error: any) {
-      toast.error(error?.data?.message || t("toast.googleError"), { id: toastId });
+      toast.error(error?.data?.message || t("toast.googleError"), {
+        id: toastId,
+      });
     }
   };
 
@@ -58,7 +64,7 @@ export default function SignIn() {
         cookie.set("accessToken", result.data.accessToken);
         cookie.set("refreshToken", result.data.refreshToken);
         dispatch(
-          setUser({ user: result.data.user, token: result.data.accessToken })
+          setUser({ user: result.data.user, token: result.data.accessToken }),
         );
         router.push("/forex");
         toast.success(t("toast.success"), { id: toastId });
@@ -102,7 +108,10 @@ export default function SignIn() {
         />
         {/* Forgot Password */}
         <div className="flex items-center justify-end -mt-1">
-          <Link href="/auth/forget-password" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+          <Link
+            href="/auth/forget-password"
+            className="text-sm text-muted-foreground hover:text-primary transition-colors"
+          >
             {t("forgotPassword")}
           </Link>
         </div>
@@ -122,11 +131,13 @@ export default function SignIn() {
           <div className="w-full border-t border-border" />
         </div>
         <div className="relative flex justify-center text-xs uppercase tracking-wider">
-          <span className="bg-card px-3 text-muted-foreground font-medium">{t("orContinueWith")}</span>
+          <span className="bg-card px-3 text-muted-foreground font-medium">
+            {t("orContinueWith")}
+          </span>
         </div>
       </div>
-      <div className="flex justify-center w-full [&>div]:w-full [&>div]:flex [&>div]:justify-center [&_iframe]:rounded-xl [&_iframe]:h-11 [&_iframe]:min-h-11">
-        <div className="w-full max-w-[320px] overflow-hidden rounded-xl border border-border bg-card shadow-sm ring-offset-background transition-all duration-200 hover:shadow-md hover:border-primary/30 hover:scale-[1.01] active:scale-[0.99] focus-within:ring-2 focus-within:ring-primary/20 focus-within:ring-offset-2">
+      <div className="flex justify-center w-full [&>div]:w-full [&>div]:flex [&>div]:justify-center">
+        <div className="w-full overflow-hidden rounded-xl transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]">
           <GoogleLogin
             onSuccess={handleGoogleSuccess}
             onError={() => toast.error(t("toast.googleError"))}
@@ -134,7 +145,6 @@ export default function SignIn() {
             shape="rectangular"
             size="large"
             text="signin_with"
-            width="320"
           />
         </div>
       </div>
@@ -142,7 +152,10 @@ export default function SignIn() {
       <div className="text-center pt-6">
         <p className="text-sm font-medium text-muted-foreground">
           {t("noAccount")}{" "}
-          <Link href="/auth/sign-up" className="text-primary font-semibold hover:underline">
+          <Link
+            href="/auth/sign-up"
+            className="text-primary font-semibold hover:underline"
+          >
             {t("signUpLink")}
           </Link>
         </p>
