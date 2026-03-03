@@ -70,6 +70,9 @@ export default async function Terms() {
                                 ))}
                             </ul>
                         </div>
+                        {t("scope.closing") && (
+                            <p className="text-base md:text-lg leading-relaxed whitespace-pre-line">{t("scope.closing")}</p>
+                        )}
                     </div>
                 </div>
             </LinearBorder>
@@ -91,6 +94,9 @@ export default async function Terms() {
                                 </li>
                             ))}
                         </ul>
+                        {t("userAccounts.closing") && (
+                            <p className="text-base md:text-lg leading-relaxed whitespace-pre-line">{t("userAccounts.closing")}</p>
+                        )}
                     </div>
                 </div>
             </LinearBorder>
@@ -109,7 +115,21 @@ export default async function Terms() {
                         </div>
                         <div className="space-y-4">
                             <h5 className="text-lg md:text-xl font-semibold text-primary">{t("contentGuidelines.platformContent")}</h5>
-                            <p className="text-base md:text-lg leading-relaxed">{t("contentGuidelines.platformContentText")}</p>
+                            <div className="space-y-2 text-base md:text-lg leading-relaxed">
+                                {t("contentGuidelines.platformContentText").split("\n").map((line, i) => {
+                                    const trimmed = line.trimStart();
+                                    if (trimmed.startsWith("•")) {
+                                        const rest = trimmed.slice(1).trimStart();
+                                        return (
+                                            <div key={i} className="flex gap-3 items-start">
+                                                <span className="text-primary font-bold mt-1 shrink-0">•</span>
+                                                <span className="leading-relaxed">{rest}</span>
+                                            </div>
+                                        );
+                                    }
+                                    return line ? <p key={i} className="whitespace-pre-line">{line}</p> : <br key={i} />;
+                                })}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -123,10 +143,8 @@ export default async function Terms() {
                 { key: "contentChar", hasSubsections: false },
                 { key: "prohibited", hasSubsections: false },
                 { key: "disclaimer", hasSubsections: false },
-                { key: "limitation", hasSubsections: false },
                 { key: "indemnification", hasSubsections: false },
                 { key: "privacy", hasSubsections: false },
-                { key: "termination", hasSubsections: true },
                 { key: "governing", hasSubsections: false },
                 { key: "contact", hasSubsections: false }
             ].map((section, idx) => (
@@ -137,9 +155,35 @@ export default async function Terms() {
                             <h4 className="text-xl md:text-2xl lg:text-3xl font-bold text-transparent bg-clip-text bg-linear-to-t from-primary1 to-primary2">
                                 {t(`${section.key}.title`)}
                             </h4>
-                            <p className="text-base md:text-lg leading-relaxed whitespace-pre-line">
-                                {t(`${section.key}.content`)}
-                            </p>
+                            <div className="space-y-2 text-base md:text-lg leading-relaxed">
+                                {t(`${section.key}.content`).split("\n").map((line, lineIdx) => {
+                                    const trimmed = line.trimStart();
+                                    if (trimmed.startsWith("•")) {
+                                        const rest = trimmed.slice(1).trimStart();
+                                        return (
+                                            <div key={lineIdx} className="flex gap-3 items-start">
+                                                <span className="text-primary font-bold mt-1 shrink-0">•</span>
+                                                <span className="leading-relaxed">{rest}</span>
+                                            </div>
+                                        );
+                                    }
+                                    if (section.key === "contact" && t("contact.email")) {
+                                        const email = t("contact.email");
+                                        if (line.includes(email)) {
+                                            const [before, ...afterParts] = line.split(email);
+                                            const after = afterParts.join(email);
+                                            return (
+                                                <p key={lineIdx} className="whitespace-pre-line">
+                                                    {before}
+                                                    <a href={`mailto:${email}`} className="text-primary font-medium underline underline-offset-2 hover:opacity-90">{email}</a>
+                                                    {after}
+                                                </p>
+                                            );
+                                        }
+                                    }
+                                    return line ? <p key={lineIdx} className="whitespace-pre-line">{line}</p> : <br key={lineIdx} />;
+                                })}
+                            </div>
                             {section.hasSubsections && (
                                 <ul className="space-y-3">
                                     {t.raw(`${section.key}.reasons`).map((reason: string, reasonIdx: number) => (

@@ -60,15 +60,15 @@ export default function Hero() {
       </div>
 
       {/* Bottom vignette */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-32 bg-gradient-to-t from-background to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-32 bg-linear-to-t from-background to-transparent" />
 
       {/* Text-side readability fade — desktop only */}
       <div
         className={cn(
           "pointer-events-none absolute inset-y-0 z-10 hidden lg:block",
           isArabic
-            ? "right-0 w-[40%] bg-gradient-to-l from-background/50 to-transparent"
-            : "left-0 w-[40%] bg-gradient-to-r from-background/50 to-transparent",
+            ? "right-0 w-[40%] bg-linear-to-l from-background/50 to-transparent"
+            : "left-0 w-[40%] bg-linear-to-r from-background/50 to-transparent",
         )}
       />
 

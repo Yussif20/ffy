@@ -1,7 +1,6 @@
 "use client";
 
 import { useGetMeQuery } from "@/redux/api/userApi";
-import Container from "../Global/Container";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
@@ -22,20 +21,20 @@ const Topbar = ({ isOpen }: { isOpen: boolean }) => {
   if (isLoading) {
     return (
       <header className={headerClassName}>
-        <Container className="flex items-center justify-between h-full">
+        <div className="flex items-center justify-between h-full px-4 md:px-6">
           <Skeleton className="h-8 w-32 rounded-lg" />
           <div className="flex items-center gap-3">
             <Skeleton className="h-9 w-9 rounded-lg" />
             <Skeleton className="h-9 w-9 rounded-full" />
           </div>
-        </Container>
+        </div>
       </header>
     );
   }
 
   return (
     <header className={headerClassName}>
-      <Container className="flex items-center justify-between h-full">
+      <div className="flex items-center justify-between h-full px-4 md:px-6">
         <Link href="/" className="flex items-center shrink-0" aria-label="Home">
           <div className="relative h-8 w-8 sm:h-9 sm:w-9 aspect-square overflow-hidden rounded-md" dir="ltr">
             <Logo />
@@ -45,7 +44,7 @@ const Topbar = ({ isOpen }: { isOpen: boolean }) => {
           <NavLanguageChange triggerClassName="h-9 w-9 shrink-0" />
           <NavProfile />
         </div>
-      </Container>
+      </div>
     </header>
   );
 };

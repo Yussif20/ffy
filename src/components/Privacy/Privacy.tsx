@@ -93,37 +93,6 @@ export default async function Privacy() {
       ],
       closing: t("purpose.closing"),
     },
-    ...(!isArabic
-      ? [
-          {
-            title: t("legalBasis.title"),
-            content: t("legalBasis.intro"),
-            subsections: [
-              {
-                subtitle: t("legalBasis.consent.title"),
-                content: t("legalBasis.consent.content"),
-              },
-              {
-                subtitle: t("legalBasis.contractual.title"),
-                content: t("legalBasis.contractual.content"),
-              },
-              {
-                subtitle: t("legalBasis.legal.title"),
-                content: t("legalBasis.legal.content"),
-              },
-              {
-                subtitle: t("legalBasis.legitimate.title"),
-                content: t("legalBasis.legitimate.content"),
-              },
-              {
-                subtitle: t("legalBasis.vital.title"),
-                content: t("legalBasis.vital.content"),
-              },
-            ],
-            closing: t("legalBasis.closing"),
-          },
-        ]
-      : []),
     {
       title: t("dataSharing.title"),
       content: t("dataSharing.intro"),
@@ -246,14 +215,6 @@ export default async function Privacy() {
           subtitle: t("security.practices.title"),
           content: t("security.practices.content"),
         },
-        ...(!isArabic
-          ? [
-              {
-                subtitle: t("security.accessControls.title"),
-                content: t("security.accessControls.content"),
-              },
-            ]
-          : []),
         {
           subtitle: t("security.responsibilities.title"),
           content: t("security.responsibilities.content"),
