@@ -1575,7 +1575,17 @@
       "statusClosed": "Closed",
       "noMessages": "No contact messages yet.",
       "statusUpdated": "Status updated successfully",
-      "viewMessage": "View message"
+      "viewMessage": "View message",
+      "replyByEmail": "Reply by email",
+      "mailtoSubjectRe": "Re",
+      "typeQuestion": "Question",
+      "typeSuggestion": "Suggestion",
+      "inquiryGeneral": "General",
+      "inquiryTechnical": "Technical",
+      "inquiryOther": "Other",
+      "inquiryBilling": "Billing",
+      "inquiryFeature": "Feature",
+      "mailtoReplyIntro": "Your reply above.\n\n----------\nOriginal message:\n----------"
     },
     "common": {
       "logo": "Logo",

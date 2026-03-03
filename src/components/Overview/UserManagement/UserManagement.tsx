@@ -87,10 +87,7 @@ export default function UserManagement() {
     { name: "searchTerm", value: searchTerm },
   ]);
 
-  const users: TUser[] =
-    (data?.data?.users as TUser[] | undefined)?.filter(
-      (user) => user.status !== "DELETED",
-    ) || [];
+  const users: TUser[] = (data?.data?.users as TUser[] | undefined) ?? [];
 
   // Mutation for updating user status
   const [updateUserStatus, { isLoading: isStatusUpdating }] =

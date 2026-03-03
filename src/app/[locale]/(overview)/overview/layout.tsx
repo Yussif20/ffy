@@ -1,5 +1,4 @@
 import Sidebar from "@/components/Overview/Sidebar";
-import Container from "@/components/Global/Container";
 import "@/styles/globals.css";
 import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
@@ -24,16 +23,14 @@ export default async function OverviewLayout({ children, params }: Props) {
   }
 
   return (
-    <div className="flex relative min-h-screen bg-gradient-to-br from-muted/20 via-background to-primary/5">
+    <div className="flex relative min-h-screen bg-card/80">
       <div className="h-max sticky top-0 z-50">
         <Sidebar />
       </div>
-      <main className="flex-1 min-h-screen transition-[padding] duration-300">
-        <Container className="w-full pt-16 ps-0 bg-card/80 ">
-          <div className="border border-border/60 border-s-0 bg-card/80 backdrop-blur-sm shadow-xl shadow-black/5 dark:shadow-black/20 min-h-[calc(100vh-4rem)]">
-            {children}
-          </div>
-        </Container>
+      <main className="flex-1 min-h-screen w-full min-w-0 transition-[padding] duration-300">
+        <div className="w-full pt-16 px-4 md:px-6 lg:px-8 min-h-[calc(100vh-4rem)]">
+          {children}
+        </div>
       </main>
     </div>
   );

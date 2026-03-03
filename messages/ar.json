@@ -1512,7 +1512,17 @@
       "statusClosed": "مغلق",
       "noMessages": "لا توجد رسائل تواصل بعد.",
       "statusUpdated": "تم تحديث الحالة بنجاح",
-      "viewMessage": "عرض الرسالة"
+      "viewMessage": "عرض الرسالة",
+      "replyByEmail": "الرد بالبريد",
+      "mailtoSubjectRe": "رد",
+      "typeQuestion": "سؤال",
+      "typeSuggestion": "اقتراح",
+      "inquiryGeneral": "عام",
+      "inquiryTechnical": "دعم فني",
+      "inquiryOther": "أخرى",
+      "inquiryBilling": "فواتير",
+      "inquiryFeature": "ميزة",
+      "mailtoReplyIntro": "ردك أعلاه.\n\n----------\nالرسالة الأصلية:\n----------"
     },
     "common": {
       "logo": "الشعار",
