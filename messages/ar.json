@@ -230,7 +230,9 @@
     "stayConnected": "ابق على تواصل",
     "title": "اشترك للحصول على آخر الأخبار والعروض",
     "emailPlaceholder": "بريدك الإلكتروني",
-    "subscribeButton": "اشترك"
+    "subscribeButton": "اشترك",
+    "subscribedSuccessfully": "تم الاشتراك بنجاح!",
+    "error": "حدث خطأ! حاول مرة أخرى."
   },
   "BestSellers": {
     "seeAllOffers": "شاهد جميع العروض",

@@ -32,11 +32,11 @@ export default function SubscribeForm() {
       const result = await createSubscribe(payload).unwrap();
 
       if (result) {
-        toast.success(t("Subscribed Successfully"));
+        toast.success(t("subscribedSuccessfully"));
       }
     } catch (error: any) {
       toast.error(
-        error?.data?.message || t("Something went wrong! Try again.")
+        error?.data?.message || t("error")
       );
     }
   };

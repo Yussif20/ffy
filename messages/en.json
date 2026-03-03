@@ -230,7 +230,9 @@
     "stayConnected": "STAY CONNECTED",
     "title": "Subscribe For The Latest News And Deals",
     "emailPlaceholder": "Your Email",
-    "subscribeButton": "Subscribe"
+    "subscribeButton": "Subscribe",
+    "subscribedSuccessfully": "Subscribed successfully!",
+    "error": "Something went wrong! Try again."
   },
   "BestSellers": {
     "seeAllOffers": "See all offers",
