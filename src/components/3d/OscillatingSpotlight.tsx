@@ -47,11 +47,11 @@ export default function OscillatingSpotlight({
           position={spotlightPosition}
           target={target}
           color={color}
-          distance={12}
+          distance={10}
           angle={0.25}
           attenuation={10}
-          anglePower={5}
-          opacity={0.6}
+          anglePower={3}
+          opacity={0.99}
         />
       )}
     </>

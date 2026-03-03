@@ -22,8 +22,8 @@ const itemVariants = {
 };
 
 const COLOR_SCHEMES = {
-  forex:   { spotlight: "#4ae79e", candlestick: "#4ae79e" },
-  futures: { spotlight: "#c9a227", candlestick: "#c9a227" },
+  forex:   { spotlight: "#00e05c", candlestick: "#00e05c" },
+  futures: { spotlight: "#ffe000", candlestick: "#ffe000" },
 } as const;
 
 export default function Hero() {
@@ -38,22 +38,8 @@ export default function Hero() {
   return (
     <div
       id="top"
-      className="relative overflow-hidden bg-background min-h-[55vh] lg:min-h-[60vh] lg:px-4"
+      className="relative overflow-x-clip bg-background min-h-[55vh] lg:min-h-[60vh] lg:px-4"
     >
-      {/* 3D Scene — desktop only (lg+), aligned to container end */}
-      <div
-        className={cn(
-          "absolute inset-y-0 z-0 hidden lg:block w-2/3",
-          isArabic ? "left-0" : "right-0",
-        )}
-      >
-        <HeroScene
-          spotlightColor={currentColors.spotlight}
-          candlestickColor={currentColors.candlestick}
-          mirror={isArabic}
-        />
-      </div>
-
       {/* Mobile / tablet decorative background (hidden on lg+) */}
       <div className="lg:hidden absolute inset-0 z-0 pointer-events-none">
         {/* Large central glow */}
@@ -73,9 +59,6 @@ export default function Hero() {
         />
       </div>
 
-      {/* Top vignette */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-28 bg-gradient-to-b from-background/70 to-transparent" />
-
       {/* Bottom vignette */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-32 bg-gradient-to-t from-background to-transparent" />
 
@@ -89,60 +72,74 @@ export default function Hero() {
         )}
       />
 
-      {/* Ambient primary glow — always present */}
-      <div className="pointer-events-none absolute bottom-0 left-1/2 z-10 h-40 w-[600px] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
-
       {/* ── Layout ──
           Mobile/tablet : centered content, proper padding.
-          Desktop (lg+) : strict 1/3 text | 2/3 3D side-by-side. */}
-      <div className="relative z-20 flex min-h-[55vh] items-center justify-between py-16 md:py-24 lg:min-h-[60vh] lg:py-28 lg:justify-start">
-        <Container className="w-full px-6 sm:px-8 lg:px-5">
+          Desktop (lg+) : strict 1/3 text | 2/3 3D side-by-side, both inside Container. */}
+      <div className="relative z-20 flex min-h-[55vh] lg:min-h-[60vh] items-stretch">
+        <Container className="w-full px-6 sm:px-8 lg:px-5 flex">
+          <div className="flex w-full items-center py-16 md:py-24 lg:py-28">
 
-          {/* Text column */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className={cn(
-              "pointer-events-auto",
-              "flex flex-col gap-5 sm:gap-7 lg:gap-7",
-              // Mobile/tablet: constrained width, centered; desktop: left 1/3
-              "w-full max-w-xl max-lg:mx-auto lg:max-w-none lg:w-1/3",
-              !isArabic && "items-center lg:items-start",
-              isArabic && "items-center lg:items-end lg:ml-auto",
-            )}
-          >
-            {/* Heading */}
-            <motion.h1
-              variants={itemVariants}
+            {/* Text column */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
               className={cn(
-                "font-extrabold tracking-tight",
-                "text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-5xl",
-                "text-center",
-                !isArabic && "lg:text-left leading-[1.4]",
-                isArabic && "lg:text-right leading-[1.4]",
+                "pointer-events-auto",
+                "flex flex-col gap-5 sm:gap-7 lg:gap-7",
+                // Mobile/tablet: constrained width, centered; desktop: full width so title spans both lines
+                "w-full max-w-xl max-lg:mx-auto lg:max-w-none",
+                !isArabic && "items-center lg:items-start",
+                isArabic && "items-center lg:items-end",
               )}
             >
-              {t("heroTitle.title1")}
-              <span className="text-primary block mt-1 sm:mt-2 leading-[1.4]"> {t("heroTitle.title2")}</span>
-            </motion.h1>
+              {/* Heading */}
+              <motion.h1
+                variants={itemVariants}
+                className={cn(
+                  "font-extrabold tracking-tight",
+                  "text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-5xl",
+                  "w-full text-center leading-[1.4]",
+                  !isArabic && "lg:text-left",
+                  isArabic && "lg:text-right",
+                )}
+              >
+                {t("heroTitle.title1")}
+                <span className="block mt-1 sm:mt-2"> {t("heroTitle.title2")}</span>
+                <span className="text-primary block mt-1 sm:mt-2"> {t("heroTitle.title3")}</span>
+              </motion.h1>
 
-            {/* Subtitle */}
-            <motion.p
-              variants={itemVariants}
+              {/* Subtitle */}
+              <motion.p
+                variants={itemVariants}
+                className={cn(
+                  "text-muted-foreground/90 leading-relaxed",
+                  "text-[12px] sm:text-base lg:text-lg 2xl:text-base",
+                  "w-full max-w-xs sm:max-w-sm lg:max-w-none",
+                  "text-center",
+                  !isArabic && "lg:text-left",
+                  isArabic && "lg:text-right",
+                )}
+              >
+                {t("heroTitle.subtitle")}
+              </motion.p>
+            </motion.div>
+
+            {/* 3D — desktop only, absolutely overlays right (LTR) or left (RTL) portion of container */}
+            <div
               className={cn(
-                "text-muted-foreground/90 leading-relaxed",
-                "text-[12px] sm:text-base lg:text-lg 2xl:text-base",
-                "max-w-xs sm:max-w-sm lg:max-w-none",
-                "text-center",
-                !isArabic && "lg:text-left",
-                isArabic && "lg:text-right",
+                "hidden lg:absolute lg:inset-y-0 lg:block lg:w-[85%]",
+                isArabic ? "left-0" : "right-0",
               )}
             >
-              {t("heroTitle.subtitle")}
-            </motion.p>
-          </motion.div>
+              <HeroScene
+                spotlightColor={currentColors.spotlight}
+                candlestickColor={currentColors.candlestick}
+                mirror={isArabic}
+              />
+            </div>
 
+          </div>
         </Container>
       </div>
     </div>

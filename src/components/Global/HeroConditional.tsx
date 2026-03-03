@@ -3,7 +3,7 @@
 import { usePathname } from "@/i18n/navigation";
 import Hero from "@/components/Global/hero";
 
-const PAGES_WITHOUT_HERO = ["about", "contact", "high-impact-news"];
+const PAGES_WITHOUT_HERO = ["about", "contact", "high-impact-news", "terms-and-conditions", "privacy-policy"];
 
 export default function HeroConditional() {
   const pathname = usePathname();

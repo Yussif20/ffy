@@ -152,14 +152,14 @@ export default function SignUp() {
             <span className="text-sm font-medium text-foreground/90 group-hover:text-foreground">
               {t("checkboxes.agreeTerms1")}{" "}
               <Link
-                href="/terms"
+                href="/terms-and-conditions"
                 className="text-primary hover:underline font-semibold"
               >
                 {t("checkboxes.terms")}
               </Link>{" "}
               {t("checkboxes.and")}{" "}
               <Link
-                href="/privacy"
+                href="/privacy-policy"
                 className="text-primary hover:underline font-semibold"
               >
                 {t("checkboxes.privacy")}

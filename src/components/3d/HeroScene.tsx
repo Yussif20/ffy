@@ -96,7 +96,7 @@ export default function HeroScene({
 
           <pointLight
             position={mirror ? [2, 5, -2] : [-2, 5, -2]}
-            intensity={80}
+            intensity={50}
             color="#fff"
           />
 
