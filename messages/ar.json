@@ -25,6 +25,7 @@
     "challenges": "التحديات",
     "bestSellers": "الأكثر مبيعًا",
     "spreads": "السبريد",
+    "comingSoon": "قريباً",
     "signIn": "تسجيل الدخول",
     "signUp": "إنشاء حساب",
     "searchPlaceholder": "بحث",
@@ -39,8 +40,7 @@
     "switchToDarkTheme": "تفعيل الوضع الداكن",
     "lightTheme": "فاتح",
     "darkTheme": "داكن",
-    "systemTheme": "النظام",
-    "comingSoon": "قريبًا"
+    "systemTheme": "النظام"
   },
   "Features": {
     "title": "عروض الفوركس الحصرية",
@@ -248,6 +248,8 @@
   "Spread": {
     "title": "سبريد الشركات الممولة",
     "subtitle": "قارن السبريد والأسعار بين الشركات الممولة, سيتم إضافة المزيد من الشركات والمنصات قريبا",
+    "comingSoon": "قريباً",
+    "comingSoonMessage": "نعمل على تحسين هذه الميزة\nستكون متاحة قريباً!",
     "firm": "الشركة",
     "firmLogo": "شعار الشركة",
     "platform": "المنصة",

@@ -7,9 +7,9 @@
   },
   "HomePage": {
     "heroTitle": {
-      "title1": "Find the best Prop Firms get the best new",
-      "title2": "and exclusive offers, and join the traders who",
-      "title3": "trust our platform",
+      "title1": "Find the best Prop Firms",
+      "title2": "Get the best new and exclusive offers",
+      "title3": "And join the traders who TRUST our platform",
       "subtitle": "The #1 platform for comparing Prop Firms, challenges, and exclusive offers — Everything in one place",
       "cta": "Compare Firms"
     }
@@ -25,6 +25,7 @@
     "challenges": "Challenges",
     "bestSellers": "Best Sellers",
     "spreads": "Spreads",
+    "comingSoon": "Coming Soon",
     "signIn": "Sign In",
     "signUp": "Sign Up",
     "searchPlaceholder": "Search",
@@ -39,8 +40,7 @@
     "switchToDarkTheme": "Switch to dark theme",
     "lightTheme": "Light",
     "darkTheme": "Dark",
-    "systemTheme": "System",
-    "comingSoon": "Coming Soon"
+    "systemTheme": "System"
   },
   "Features": {
     "title": "Exclusive Forex Offers",
@@ -248,6 +248,10 @@
   "Spread": {
     "title": "Best Prop Firm Spreads",
     "subtitle": "Compare Prop Firm spreads and commissions across top funded for you to optimize your trading performance. Currently covering MT5/Platform5, more firms platforms will be added soon.",
+    "comingSoon": "Coming Soon",
+    "comingSoonMessage": "We're working on improving this feature.\nIt will be available soon!",
+    "comingSoonMessageLine1": "We're working on improving this feature.",
+    "comingSoonMessageLine2": "It will be available soon!",
     "firm": "Firm",
     "firmLogo": "Firm Logo",
     "platform": "Platform",

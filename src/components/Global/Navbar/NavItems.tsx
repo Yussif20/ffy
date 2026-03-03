@@ -126,7 +126,7 @@ export default function NavItems() {
         <div className="pointer-events-none absolute left-0 top-0 h-full w-10 bg-linear-to-r from-background to-transparent z-10 md:hidden" />
         <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-linear-to-l from-background to-transparent z-10 md:hidden" />
         <div
-          className={cn("w-full flex md:grid", !isFutures && "overflow-x-auto overflow-y-hidden")}
+          className={cn("w-full flex md:grid", !isFutures && "overflow-x-auto")}
           style={{ gridTemplateColumns: `repeat(${navItems.length}, minmax(0, 1fr))` }}
         >
           {navItems.map((item) => {
@@ -149,7 +149,7 @@ export default function NavItems() {
                     />
                   )}
                 </span>
-                {"badge" in item && item.badge && (
+                {item.badge && (
                   <span
                     title={"badgeTooltip" in item ? item.badgeTooltip : undefined}
                     className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium cursor-help"
