@@ -139,7 +139,7 @@ export default function SignIn() {
         </div>
       </div>
       {/* Sign Up Link */}
-      <div className="text-center pt-6 border-t border-border">
+      <div className="text-center pt-6">
         <p className="text-sm font-medium text-muted-foreground">
           {t("noAccount")}{" "}
           <Link href="/auth/sign-up" className="text-primary font-semibold hover:underline">

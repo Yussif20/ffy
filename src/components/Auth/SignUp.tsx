@@ -215,7 +215,7 @@ export default function SignUp() {
           </div>
         </div>
 
-        <div className="text-center pt-6 border-t border-border">
+        <div className="text-center pt-6">
           <p className="text-sm font-medium text-muted-foreground">
             {t("alreadyHaveAccount")}{" "}
             <Link
