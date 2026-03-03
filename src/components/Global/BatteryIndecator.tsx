@@ -3,10 +3,12 @@ import { useTranslations } from "next-intl";
 interface BatteryIndicatorProps {
   percentage?: number;
   tooltip?: string;
+  showNumber?: boolean;
 }
 
 const BatteryIndicator: React.FC<BatteryIndicatorProps> = ({
   percentage = 80,
+  showNumber = true,
 }) => {
   useTranslations("BatteryIndicator");
   const level: number = Math.min(Math.max(percentage, 0), 100);
@@ -22,8 +24,8 @@ const BatteryIndicator: React.FC<BatteryIndicatorProps> = ({
 
   return (
     <div className="flex items-center gap-2">
-      {/* Percentage Display */}
-      <div className="text-sm font-bold">{level}</div>
+      {/* Percentage Display - optional */}
+      {showNumber && <div className="text-sm font-bold">{level}</div>}
 
       {/* Battery Bars */}
       <div className="flex gap-1">

@@ -1,5 +1,4 @@
-import ChallengeFilter from "@/components/Forex_Features/Challenges/ChallengeFilter";
-import ChallengeTable from "@/components/Forex_Features/Challenges/ChallengeTable";
+import ChallengesWithSearchState from "@/components/Forex_Features/Challenges/ChallengesWithSearchState";
 
 export default async function page({
   params,
@@ -8,11 +7,6 @@ export default async function page({
 }) {
   const { slug, locale } = await params;
   return (
-    <div className="space-y-8 pb-20 md:pb-30">
-      <ChallengeFilter hideAllFilter />
-      <div className="flex">
-        <ChallengeTable companySlug={slug} locale={locale} />
-      </div>
-    </div>
+    <ChallengesWithSearchState locale={locale} companySlug={slug} />
   );
 }

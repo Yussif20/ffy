@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { FieldValues } from "react-hook-form";
 import { Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import CustomForm from "@/components/Forms/CustomForm";
 import CustomInput from "@/components/Forms/CustomInput";
 import { useCreatePlatformMutation } from "@/redux/api/platformApi";
@@ -20,6 +21,7 @@ import { toast } from "sonner";
 import ImageUpload from "./PMImageUpload";
 
 export default function CreatePlatform() {
+  const t = useTranslations("Overview.platformManagement");
   const [create, { isLoading: createLoading }] = useCreatePlatformMutation();
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -30,33 +32,33 @@ export default function CreatePlatform() {
 
   const handleSubmit = async (data: FieldValues) => {
     if (!data.title || !data.logoUrl) {
-      toast.error("Please fill all the fields");
+      toast.error(t("pleaseFillAll"));
       return;
     }
-    const toastId = toast.loading("Creating Plaform...");
+    const toastId = toast.loading(t("creatingPlatform"));
     try {
       const formData = new FormData();
       formData.append("data", JSON.stringify({ title: data.title }));
       formData.append("logo", data.logoUrl);
       await create(formData).unwrap();
-      toast.success("Plaform created successfully", { id: toastId });
+      toast.success(t("createSuccess"), { id: toastId });
       setOpenDialog(false);
     } catch (error) {
-      toast.error("Failed to create Plaform", { id: toastId });
+      toast.error(t("createError"), { id: toastId });
     }
   };
 
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button>
-          <Plus /> Add Plaform
+          <Plus /> {t("addPlatform")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
-            Add Plaform
+            {t("addPlatformTitle")}
           </DialogTitle>
         </DialogHeader>
 
@@ -67,13 +69,13 @@ export default function CreatePlatform() {
         >
           <div className="space-y-2">
             <Label htmlFor="title" className="text-sm font-medium">
-              Title
+              {t("titleLabel")}
             </Label>
             <CustomInput
               type="text"
               name="title"
               fieldClassName="h-11"
-              placeholder="Enter Plaform title"
+              placeholder={t("titlePlaceholder")}
               required
             />
           </div>
@@ -86,10 +88,10 @@ export default function CreatePlatform() {
               variant="outline"
               onClick={() => setOpenDialog(false)}
             >
-              Cancel
+              {t("cancel")}
             </Button>
             <Button disabled={createLoading} type="submit">
-              {createLoading ? "Creating..." : "Add Plaform"}
+              {createLoading ? t("creating") : t("addPlatform")}
             </Button>
           </DialogFooter>
         </CustomForm>

@@ -65,7 +65,7 @@ function Button({
     return (
       <LinearBorder
         className2={cn("", linearClassName2)}
-        className={cn("max-w-full", linearClassName)}
+        className={cn("max-w-full rounded-full", linearClassName)}
       >
         <Comp
           {...props}

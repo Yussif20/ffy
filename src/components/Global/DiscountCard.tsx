@@ -1,6 +1,9 @@
+"use client";
+
 import { Copy, Check } from "lucide-react";
 import { useState } from "react";
-import DiscountText from "./DiscountText";
+import { useLocale } from "next-intl";
+import { cn } from "@/lib/utils";
 
 export default function DiscountCard({
   discount,
@@ -12,14 +15,16 @@ export default function DiscountCard({
   };
 }) {
   const [copied, setCopied] = useState(false);
+  const locale = useLocale();
+  const isArabic = locale === "ar";
 
-  const handleCopy = async () => {
+  const handleCopy = async (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (!discount.code) return;
     try {
       if (navigator.clipboard && window.isSecureContext) {
-        // Modern API (works on HTTPS)
         await navigator.clipboard.writeText(discount.code);
       } else {
-        // Fallback for HTTP / older browsers
         const textArea = document.createElement("textarea");
         textArea.value = discount.code;
         textArea.style.position = "fixed";
@@ -30,29 +35,44 @@ export default function DiscountCard({
         document.execCommand("copy");
         document.body.removeChild(textArea);
       }
-
       setCopied(true);
-      setTimeout(() => setCopied(false), 3000);
+      setTimeout(() => setCopied(false), 2200);
     } catch (error) {
       console.error("Copy failed:", error);
     }
   };
 
   return (
-    <div
-      onClick={handleCopy}
-      className="px-2 py-0.5 md:py-1 rounded-xl bg-linear-to-t from-primary1 to-primary2  cursor-pointer select-none"
-    >
-      <h1 className="font-semibold text-sm sm:text-base md:text-lg text-center leading-none">
-        <DiscountText percentage={discount.offerPercentage} />
-      </h1>
-
-      {discount.code && (
-        <div className="w-full rounded-lg md:rounded-xl bg-background/70 py-1.5 flex justify-center items-center gap-2 text-xs sm:text-sm md:text-base font-medium px-4 md:px-8 ">
-          {discount?.code}
-          {copied ? <Check size={16} /> : <Copy size={16} />}
-        </div>
-      )}
+    <div className="flex justify-center items-center">
+      <div
+        onClick={handleCopy}
+        className="inline-flex flex-col items-center gap-1.5 px-3.5 py-2 rounded-xl
+          bg-gradient-to-b from-primary/90 to-primary/60
+          border border-primary/40 shadow-sm shadow-primary/20
+          cursor-pointer select-none
+          hover:shadow-md hover:shadow-primary/30 hover:scale-105
+          transition-all duration-200"
+      >
+        <span
+          className={cn(
+            "inline-flex items-baseline gap-0.5 text-primary-foreground tracking-wider leading-none uppercase",
+            isArabic && "flex-row-reverse"
+          )}
+        >
+          <span className="text-base font-bold tabular-nums">{discount.offerPercentage}%</span>
+          <span className="text-sm font-bold">{isArabic ? "خصم" : "OFF"}</span>
+        </span>
+        {discount.code && (
+          <div className="flex items-center gap-1.5 bg-background/85 rounded-md px-2.5 py-1">
+            <span className="text-[11px] font-semibold tracking-wide">{discount.code}</span>
+            {copied ? (
+              <Check size={10} className="text-primary shrink-0" />
+            ) : (
+              <Copy size={10} className="text-foreground/50 shrink-0" />
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

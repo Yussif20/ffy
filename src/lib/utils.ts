@@ -26,8 +26,8 @@ export const handleSetSearchParams = (
     }
   }
   if (endpoints) {
-    router.push(`${endpoints}/?${params.toString()}`, { scroll: false });
+    router.replace(`${endpoints}/?${params.toString()}`, { scroll: false });
   } else {
-    router.push(`?${params.toString()}`, { scroll: false });
+    router.replace(`?${params.toString()}`, { scroll: false });
   }
 };

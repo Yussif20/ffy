@@ -100,6 +100,28 @@ export type SinglePropFirm = {
   inactivityRulesArabic?: string;
   prohibitedStrategiesArabic?: string;
   index: number;
+
+  leverageMobileFontSize?: number | null;
+  commissionMobileFontSize?: number | null;
+  accountSizesMobileFontSize?: number | null;
+  allocationRulesMobileFontSize?: number | null;
+  dailyMaxLossMobileFontSize?: number | null;
+  riskManagementMobileFontSize?: number | null;
+  consistencyRulesMobileFontSize?: number | null;
+  minimumTradingDaysMobileFontSize?: number | null;
+  newsTradingAllowedRulesMobileFontSize?: number | null;
+  newsTradingNotAllowedRulesMobileFontSize?: number | null;
+  overnightAndWeekendsHoldingMobileFontSize?: number | null;
+  copyTradingAllowedRulesMobileFontSize?: number | null;
+  copyTradingNotAllowedRulesMobileFontSize?: number | null;
+  expertsAllowedRulesMobileFontSize?: number | null;
+  expertsNotAllowedRulesMobileFontSize?: number | null;
+  vpnVpsMobileFontSize?: number | null;
+  profitShareMobileFontSize?: number | null;
+  payoutPolicyMobileFontSize?: number | null;
+  scaleupPlansMobileFontSize?: number | null;
+  inactivityRulesMobileFontSize?: number | null;
+  prohibitedStrategiesMobileFontSize?: number | null;
 };
 
 export type AccountSize = {

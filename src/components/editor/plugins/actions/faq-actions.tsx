@@ -8,6 +8,7 @@ export async function createFaqAction(formData: {
   questionArabic: string;
   answer: string;
   answerArabic: string;
+  mobileFontSize?: number;
 }) {
   try {
     const cookieStore = await cookies();
@@ -42,6 +43,7 @@ export async function updateFaqAction(
     questionArabic: string;
     answer: string;
     answerArabic: string;
+    mobileFontSize?: number;
   }
 ) {
   try {

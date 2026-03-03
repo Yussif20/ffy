@@ -29,7 +29,7 @@ export default async function RootLayout({
           </Link>
 
         </div>
-        <div className="absolute top-5 right-5">
+        <div className="absolute top-5 right-5 z-20 pointer-events-auto">
           <NavLanguageChange />
         </div>
         <div className="flex justify-center items-center flex-col gap-5  min-h-full w-full">

@@ -1,56 +1,38 @@
-import LinearBorder from "../Global/LinearBorder";
 import SectionTitle from "../Global/SectionTitle";
-import BatIcon from "../Global/Icons/BatIcon";
+import Container from "../Global/Container";
 import { getTranslations } from "next-intl/server";
-import HowItWorksLine from "./HowItWorksLine";
+import HowItWorksStepsClient from "./HowItWorksStepsClient";
 
 export default async function HowItWorks() {
   const t = await getTranslations("HowItWorks");
   const steps = [
-    {
-      number: "01",
-      text: t("steps.step1"),
-    },
-    {
-      number: "02",
-      text: t("steps.step2"),
-    },
-    {
-      number: "03",
-      text: t("steps.step3"),
-    },
+    { number: "01", text: t("steps.step1") },
+    { number: "02", text: t("steps.step2") },
+    { number: "03", text: t("steps.step3") },
   ];
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8 pb-20 md:pb-30">
-      <SectionTitle title={t("title")} subtitle={t("subtitle")} />
-
-      <div className="relative">
-        {steps.map((step, index) => (
-          <div
-            key={step.number}
-            className="relative flex gap-3 pb-5 items-center"
-          >
-            <HowItWorksLine isShow={index < steps.length - 1} />
-
-            <LinearBorder className="max-h-max">
-              <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-background">
-                <p className="text-sm font-semibold">{step.number}</p>
-              </div>
-            </LinearBorder>
-            <div className="flex gap-2 items-center">
-              <BatIcon />
-              <div className="flex-1 ">
-                <div className="flex items-center gap-1 ">
-                  <p className="text-sm md:text-base leading-relaxed font-semibold">
-                    {step.text}
-                  </p>
-                </div>
-              </div>
-            </div>
+    <section className="py-12 md:py-20">
+      <Container>
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12 md:mb-16">
+            <SectionTitle
+              title={t("title")}
+              subtitle={t("subtitle")}
+              className="gap-4 md:gap-5"
+              titleClass="font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight text-foreground"
+              subtitleClass="text-base sm:text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto leading-relaxed font-medium"
+            />
           </div>
-        ))}
-      </div>
-    </div>
+          <div className="relative rounded-2xl border border-primary/30 bg-linear-to-b from-primary/3 to-primary/8 p-4 sm:p-6 md:p-10 shadow-[0_0_0_1px_rgba(5,150,102,0.04),0_4px_24px_rgba(5,150,102,0.06)]">
+            <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+              <div className="absolute -top-20 left-1/4 w-64 h-64 bg-primary/10 blur-[80px] rounded-full" />
+              <div className="absolute -bottom-20 right-1/4 w-48 h-48 bg-primary/10 blur-[60px] rounded-full" />
+            </div>
+            <HowItWorksStepsClient steps={steps} />
+          </div>
+        </div>
+      </Container>
+    </section>
   );
 }

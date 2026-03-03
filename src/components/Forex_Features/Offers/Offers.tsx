@@ -1,29 +1,90 @@
 "use client";
+
+import SearchInputField from "@/components/Forms/SearchInputField";
+import { handleSetSearchParams } from "@/lib/utils";
 import { useAppSelector } from "@/redux/store";
 import { UserRole } from "@/types";
 import AddNewOffer from "./AddNewOffer";
 import OfferFilter from "./OfferFilter";
 import OfferList from "./OfferList";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
-export default function Offers() {
+const DEBOUNCE_MS = 300;
+
+export default function Offers({
+  initialSearchParams: _initialSearchParams,
+}: {
+  initialSearchParams?: Record<string, string>;
+} = {}) {
   const currUser = useAppSelector((state) => state.auth.user);
+  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const isExclusive = searchParams.get("isExclusive") || "";
+  const router = useRouter();
+  const t = useTranslations("Search");
+  const marketType = pathname.includes("futures") ? "futures" : "forex";
+  const urlSearch = searchParams.get("search") || "";
+  const [searchInput, setSearchInput] = useState(urlSearch);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const storageKey = "ffy_marketType_offers";
+    const prev = typeof window !== "undefined" ? sessionStorage.getItem(storageKey) : null;
+    if (prev !== null && prev !== marketType) {
+      handleSetSearchParams({ page: "1" }, searchParams, router);
+    }
+    if (typeof window !== "undefined") sessionStorage.setItem(storageKey, marketType);
+  }, [marketType, pathname, searchParams, router]);
+
+  useEffect(() => {
+    setSearchInput(urlSearch);
+  }, [urlSearch]);
+
+  const applySearch = useCallback(
+    (value: string) => {
+      handleSetSearchParams({ search: value, page: "1" }, searchParams, router);
+    },
+    [searchParams, router]
+  );
+
+  const handleChange = useCallback(
+    (value: string) => {
+      setSearchInput(value);
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => {
+        applySearch(value);
+        debounceRef.current = null;
+      }, DEBOUNCE_MS);
+    },
+    [applySearch]
+  );
+
+  const handleSubmit = useCallback(() => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+      debounceRef.current = null;
+    }
+    applySearch(searchInput);
+  }, [applySearch, searchInput]);
+
   const isCurrentMonth = searchParams.get("isCurrentMonth") || "";
+  const isExclusive = pathname.includes("exclusive-offers");
   const filterKey = `${isExclusive}-${isCurrentMonth}`;
-  
+
   return (
-    <div>
-      {currUser && currUser.role !== UserRole.USER && (
-        <div className="flex items-center justify-end  mb-2 md:mb-5">
-          <AddNewOffer />
-        </div>
-      )}
-      <div className="space-y-8 pb-20 md:pb-30">
+    <div className="space-y-8 pb-10 md:pb-14">
+      <div className="w-full flex justify-between md:items-center flex-col lg:flex-row gap-5 overflow-x-hidden">
         <OfferFilter />
-        <OfferList key={filterKey} />
+        <SearchInputField
+          value={searchInput}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          placeholder={t("searchPlaceholder")}
+        />
+        {currUser && currUser.role !== UserRole.USER && <AddNewOffer />}
       </div>
+      <OfferList key={filterKey} />
     </div>
   );
 }

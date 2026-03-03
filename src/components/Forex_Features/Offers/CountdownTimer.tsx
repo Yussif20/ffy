@@ -7,6 +7,7 @@ import useIsArabic from "@/hooks/useIsArabic";
 
 type Props = {
   endDate: string;
+  startDate?: string;
 };
 
 interface TimeLeft {
@@ -17,7 +18,7 @@ interface TimeLeft {
   isExpired: boolean;
 }
 
-export default function CountdownTimer({ endDate }: Props) {
+export default function CountdownTimer({ endDate, startDate }: Props) {
   const isArabic = useIsArabic();
 
   const calculateTimeLeft = (): TimeLeft => {
@@ -53,31 +54,53 @@ export default function CountdownTimer({ endDate }: Props) {
 
   const formatNumber = (num: number) => num.toString().padStart(2, "0");
 
+  // Calculate progress bar percentage (time elapsed / total duration)
+  const progressPercent = (() => {
+    if (!startDate) return null;
+    const start = new Date(startDate).getTime();
+    const end = new Date(endDate).getTime();
+    const now = Date.now();
+    const total = end - start;
+    if (total <= 0) return null;
+    const elapsed = now - start;
+    return Math.min(100, Math.max(0, (elapsed / total) * 100));
+  })();
+
   return (
-    <Badge
-      className="
-        bg-primary/10
-        border border-primary/20
-        text-white
-        text-xs
-        font-mono
-        tabular-nums
-      "
-    >
-      <Clock size={14} />
-      <span className="flex gap-1">
-        {timeLeft.days > 0 && (
-          <>
-            <span>{formatNumber(timeLeft.days)}{isArabic ? "ي" : "d"}</span>
-            <span>:</span>
-          </>
-        )}
-        <span>{formatNumber(timeLeft.hours)}{isArabic ? "س" : "h"}</span>
-        <span>:</span>
-        <span>{formatNumber(timeLeft.minutes)}{isArabic ? "د" : "m"}</span>
-        <span>:</span>
-        <span>{formatNumber(timeLeft.seconds)}{isArabic ? "ث" : "s"}</span>
-      </span>
-    </Badge>
+    <div className="flex flex-col items-center gap-1 w-full">
+      <Badge
+        className="
+          bg-primary/10
+          border border-primary/20
+          text-white
+          text-xs
+          font-mono
+          tabular-nums
+        "
+      >
+        <Clock size={14} />
+        <span className="flex gap-1">
+          {timeLeft.days > 0 && (
+            <>
+              <span>{formatNumber(timeLeft.days)}{isArabic ? "ي" : "d"}</span>
+              <span>:</span>
+            </>
+          )}
+          <span>{formatNumber(timeLeft.hours)}{isArabic ? "س" : "h"}</span>
+          <span>:</span>
+          <span>{formatNumber(timeLeft.minutes)}{isArabic ? "د" : "m"}</span>
+          <span>:</span>
+          <span>{formatNumber(timeLeft.seconds)}{isArabic ? "ث" : "s"}</span>
+        </span>
+      </Badge>
+      {progressPercent !== null && (
+        <div className="w-full max-w-[120px] h-1 rounded-full bg-foreground/10 overflow-hidden">
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-primary/70 to-primary transition-all duration-1000"
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
+      )}
+    </div>
   );
 }

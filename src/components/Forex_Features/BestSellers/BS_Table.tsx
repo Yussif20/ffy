@@ -2,6 +2,7 @@
 import { Pagination } from "@/components/Global/Pagination";
 import BS_Row from "./BS_Row";
 import { useGetAllBestSellersQuery } from "@/redux/api/bestSellerApi";
+import { motion } from "framer-motion";
 import { OfferCardSkeleton } from "../Offers/Skeleton";
 import { useSearchParams } from "next/navigation";
 import { TQueryParam } from "@/types";
@@ -37,12 +38,20 @@ export default function BS_Table() {
   return (
     <div className="space-y-8">
       {bestSellers?.map((item, idx) => (
-        <BS_Row
-          company={item}
-          prevCompany={bestSellers[idx - 1] || null}
-          nextCompany={bestSellers[idx + 1] || null}
+        <motion.div
           key={idx}
-        />
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.4, delay: idx * 0.07, ease: "easeOut" }}
+        >
+          <BS_Row
+            company={item}
+            prevCompany={bestSellers[idx - 1] || null}
+            nextCompany={bestSellers[idx + 1] || null}
+            rank={idx + 1}
+          />
+        </motion.div>
       ))}
       <Pagination totalPages={data?.meta?.totalPage || 0} />
     </div>

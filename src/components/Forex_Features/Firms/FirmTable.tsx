@@ -53,11 +53,11 @@ export default function FirmTable({
     ...(shortVersion
       ? []
       : [
-        {
-          label: t("instruments"),
-          field: "typeOfInstruments",
-          hideSort: !!shortVersion,
-        },
+        // {
+        //   label: t("instruments"),
+        //   field: "typeOfInstruments",
+        //   hideSort: !!shortVersion,
+        // },
         {
           label: t("platforms"),
           field: "platforms",
@@ -75,15 +75,7 @@ export default function FirmTable({
       : []),
   ];
 
-  if (isLoading)
-    return (
-      <TableSkeleton
-        className="w-full"
-        showHeader={false}
-        showViewAll={true}
-        headers={headers.map((header) => header.label)}
-      />
-    );
+  if (isLoading) return <TableSkeleton />;
   return (
     <div className="max-w-full w-full space-y-8 overflow-hidden">
       <Table>
@@ -96,6 +88,7 @@ export default function FirmTable({
               company={item}
               prevCompany={firms[index - 1]}
               nextCompany={firms[index + 1]}
+              userRole={user?.role}
             />
           ))}
         </TableBody>

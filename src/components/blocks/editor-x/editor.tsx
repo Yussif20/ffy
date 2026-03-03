@@ -27,11 +27,15 @@ export function Editor({
   editorSerializedState,
   onChange,
   onSerializedChange,
+  mobileFontSize,
+  onMobileFontSizeChange,
 }: {
   editorState?: EditorState;
   editorSerializedState?: SerializedEditorState;
   onChange?: (editorState: EditorState) => void;
   onSerializedChange?: (editorSerializedState: SerializedEditorState) => void;
+  mobileFontSize?: number;
+  onMobileFontSizeChange?: (size: number) => void;
 }) {
   return (
     <div className="bg-background overflow-hidden rounded-lg border shadow">
@@ -45,7 +49,10 @@ export function Editor({
         }}
       >
         <TooltipProvider>
-          <Plugins />
+          <Plugins
+            mobileFontSize={mobileFontSize}
+            onMobileFontSizeChange={onMobileFontSizeChange}
+          />
 
           <OnChangePlugin
             ignoreSelectionChange={true}

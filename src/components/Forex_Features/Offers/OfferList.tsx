@@ -4,7 +4,7 @@ import { Pagination } from "@/components/Global/Pagination";
 import { PaginationSkeleton } from "@/components/Global/Skeleton";
 import { useGetAllOffersQuery } from "@/redux/api/offerApi";
 import { Package } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import SingleOffer from "./SingleOffer";
 import { OfferListSkeleton } from "./Skeleton";
 import useIsFutures from "@/hooks/useIsFutures";
@@ -12,11 +12,23 @@ import { useMemo, useEffect } from "react";
 
 export default function OfferList({ companySlug }: { companySlug?: string }) {
   const isFutures = useIsFutures();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const currentPage = Number(searchParams.get("page") || 1);
   const searchTerm = searchParams.get("search") || "";
-  const isExclusive = searchParams.get("isExclusive") === "true";
+  const isExclusive = pathname.includes("exclusive-offers");
   const isCurrentMonth = searchParams.get("isCurrentMonth") === "true";
+
+  // When on exclusive offers, reset page to 1 so pagination doesn't stick from "all offers"
+  useEffect(() => {
+    if (isExclusive && currentPage > 1) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("page");
+      const query = params.toString();
+      router.replace(pathname + (query ? `?${query}` : ""), { scroll: false });
+    }
+  }, [isExclusive, currentPage, pathname, router, searchParams.toString()]);
 
   // Build filter parameters from URL query params with useMemo to ensure recalculation
   const filterParams = useMemo(() => {
@@ -99,13 +111,28 @@ export default function OfferList({ companySlug }: { companySlug?: string }) {
     );
   }
 
-  // Success state with data
+  // Pagination: only show when we have more than one page for the current view.
+  // For exclusive offers, treat as 1 page when this page's results don't fill the limit (so we never show "all offers" page count).
+  // Hide while fetching so we never show stale pagination from the other tab.
+  const limit = filterParams.limit;
+  const totalPage =
+    isExclusive && data.firms.length <= limit
+      ? 1
+      : (data.meta?.totalPage ?? 1);
+  const showPagination =
+    !isFetching && totalPage > 1 && data.meta != null;
+
   return (
     <div className="space-y-8">
       {/* Offers List */}
       <div className="space-y-4">
-        {data.firms.map((firm) => (
-          <SingleOffer key={firm.id} data={firm} />
+        {data.firms.map((firm, idx) => (
+          <SingleOffer
+            key={firm.id}
+            data={firm}
+            prevFirm={data.firms[idx - 1]}
+            nextFirm={data.firms[idx + 1]}
+          />
         ))}
       </div>
 
@@ -116,9 +143,9 @@ export default function OfferList({ companySlug }: { companySlug?: string }) {
         </div>
       )}
 
-      {/* Pagination */}
-      {data.meta && data.meta.totalPage > 1 && (
-        <Pagination totalPages={data.meta.totalPage} />
+      {/* Pagination: only for current view, hidden when 1 page or when data is stale */}
+      {showPagination && (
+        <Pagination totalPages={totalPage} />
       )}
     </div>
   );

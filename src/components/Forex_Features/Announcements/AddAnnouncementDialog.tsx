@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -38,6 +38,7 @@ const announcementSchema = z.object({
   date: z.string().optional(),
   redirectUrl: z.string().optional(),
   firmId: z.string().optional(),
+  mobileFontSize: z.coerce.number().int().min(10).max(24).optional(),
 });
 
 type AnnouncementFormValues = z.infer<typeof announcementSchema>;
@@ -63,7 +64,7 @@ export const AddEditAnnouncementDialog = ({
     useUpdateAnnouncementMutation();
 
   const form = useForm<AnnouncementFormValues>({
-    resolver: zodResolver(announcementSchema),
+    resolver: zodResolver(announcementSchema) as Resolver<AnnouncementFormValues>,
     defaultValues: {
       id: announcement?.id,
       title: announcement?.title || "",
@@ -73,6 +74,7 @@ export const AddEditAnnouncementDialog = ({
         : "",
       redirectUrl: announcement?.redirectUrl || "",
       firmId: firmId,
+      mobileFontSize: announcement?.mobileFontSize ?? undefined,
     },
   });
 
@@ -96,6 +98,7 @@ export const AddEditAnnouncementDialog = ({
       date, // ISO string
       redirectUrl: data.redirectUrl,
       firmId: firmId,
+      ...(data.mobileFontSize ? { mobileFontSize: data.mobileFontSize } : {}),
     };
 
     formData.append("data", JSON.stringify(dataToBackend));
@@ -188,6 +191,22 @@ export const AddEditAnnouncementDialog = ({
             id="redirectUrl"
             type="url"
             placeholder="Enter redirect URL"
+          />
+        </Field>
+
+        {/* Mobile Font Size */}
+        <Field>
+          <FieldLabel htmlFor="mobileFontSize">
+            Mobile Font Size (px)
+          </FieldLabel>
+          <Input
+            {...form.register("mobileFontSize")}
+            id="mobileFontSize"
+            type="number"
+            min={10}
+            max={24}
+            placeholder="e.g. 14 (10–24)"
+            className="w-40"
           />
         </Field>
 

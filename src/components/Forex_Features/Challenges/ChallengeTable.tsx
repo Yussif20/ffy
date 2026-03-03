@@ -14,13 +14,18 @@ import useGetParams from "@/hooks/useGetParams";
 import { TQueryParam } from "@/types";
 import useIsFutures from "@/hooks/useIsFutures";
 
+type ChallengeTableProps = {
+  companySlug?: string;
+  locale: string;
+  /** When provided, search is controlled (no URL); overrides params */
+  searchTermFromState?: string;
+};
+
 export default function ChallengeTable({
   companySlug,
   locale,
-}: {
-  companySlug?: string;
-  locale: string;
-}) {
+  searchTermFromState,
+}: ChallengeTableProps) {
   const t = useTranslations("Challenges");
   const params = useSearchParams();
   const isArabic = locale === "ar";
@@ -43,7 +48,11 @@ export default function ChallengeTable({
   const accounsSize = params.get("size") || "";
   const accountSizeRange = params.get("size_range") || "";
   const in_steps = params.get("in_steps") || "";
-  const searchTerm = params.get("search") || "";
+  const in_firmId = params.get("in_firmId") || "";
+  const searchTerm =
+    searchTermFromState !== undefined
+      ? searchTermFromState
+      : params.get("search") || "";
 
   const sort = params.get("sort") || "";
   const queries: TQueryParam[] = [
@@ -80,6 +89,10 @@ export default function ChallengeTable({
 
   if (companySlug) {
     queries.push({ name: "firm.slug", value: companySlug });
+  }
+
+  if (in_firmId) {
+    queries.push({ name: "in_firmId", value: in_firmId });
   }
 
   if (payoutMethods) {
@@ -158,45 +171,37 @@ export default function ChallengeTable({
     },
     {
       label: t("firmLogo"),
+      id: "titleLogo",
       field: "title",
       hideSort: true,
       className: "table-cell md:hidden",
     },
     {
       label: t("firmName"),
+      id: "titleName",
       field: "title",
       className: "table-cell md:hidden",
     },
-    { label: t("accountSize"), field: "accountSize" },
-    { label: t("steps"), field: "steps" },
-    { label: t("profitTarget"), field: "profitTarget" },
-    { label: t("dailyLoss"), field: "dailyLoss" },
-    { label: t("maxLoss"), field: "maxLoss" },
-    { label: t("profitSplit"), field: "profitSplit" },
-    { label: t("payoutFrequency"), field: "payoutFrequency" },
-    { label: t("price"), field: "price" },
+    { label: t("accountSize"), field: "accountSize", tooltip: "The funded trading capital provided by the firm" },
+    { label: t("steps"), field: "steps", tooltip: "Number of evaluation phases required before getting funded" },
+    { label: t("profitTarget"), field: "profitTarget", tooltip: "% gain required to pass each evaluation phase" },
+    { label: t("dailyLoss"), field: "dailyLoss", tooltip: "Maximum % loss allowed in a single trading day" },
+    { label: t("maxLoss"), field: "maxLoss", tooltip: "Maximum total % drawdown allowed across the account" },
+    { label: t("profitSplit"), field: "profitSplit", tooltip: "% of profits you keep after passing evaluation" },
+    { label: t("payoutFrequency"), field: "payoutFrequency", tooltip: "How often you can request profit withdrawals" },
+    { label: t("price"), field: "price", tooltip: "Cost to enter the challenge" },
     role === "SUPER_ADMIN"
       ? { label: t("action"), field: "action", hideSort: true }
       : null,
   ];
 
-  const headers = _headers.filter(
-    (h): h is { label: string; field: string } => h !== null,
-  );
+  const headers = _headers.filter(Boolean) as NonNullable<typeof _headers[number]>[];
 
-  if (isLoading || isFetching)
-    return (
-      <TableSkeleton
-        className="w-full"
-        showHeader={false}
-        showViewAll={true}
-        headers={headers.map((header) => header.label)}
-      />
-    );
+  if (isLoading || isFetching) return <TableSkeleton />;
 
   return (
-    <div className="max-w-full w-full space-y-8 overflow-hidden">
-      <Table>
+    <div className="max-w-full w-full space-y-8">
+      <Table className="min-w-[1100px]">
         <SortTableHeader headers={headers} />
         <TableBody colSpan={7}>
           {challenges.map((item: TChallenge, index: number) => (

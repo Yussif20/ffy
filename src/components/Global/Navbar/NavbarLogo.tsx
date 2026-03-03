@@ -1,3 +1,5 @@
+"use client";
+import useIsFutures from "@/hooks/useIsFutures";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import Logo from "@/utils/Logo";
@@ -13,8 +15,19 @@ export default function NavbarLogo({
   logoClassName,
   textClassName,
 }: NavbarLogoProps) {
+  const isFutures = useIsFutures();
+  const homeHref = isFutures ? "/futures" : "/forex";
+
+  const handleClick = (e: React.MouseEvent) => {
+    const hero = document.getElementById("top");
+    if (hero) {
+      e.preventDefault();
+      hero.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <Link href="/#top">
+    <Link href={homeHref} onClick={handleClick}>
       <div className="w-max flex items-center" dir="ltr">
         <div
           className={cn(

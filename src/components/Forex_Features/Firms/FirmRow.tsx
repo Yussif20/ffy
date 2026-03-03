@@ -1,47 +1,55 @@
 import DiscountCard from "@/components/Global/DiscountCard";
 import GaugeMeter from "@/components/Global/Icons/GaugeMeter";
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 import { TableCell, TableRow } from "@/components/ui/table";
 import {
   countryData,
   countryDataByCountry,
-  propFirmInstrumentTypes,
+  // propFirmInstrumentTypes,
 } from "@/data";
-import { formatCurrencyShort } from "@/lib/formatCurrencyShort ";
+import { formatCurrencyShort, formatMaxAllocationToK } from "@/lib/formatCurrencyShort ";
 import { SinglePropFirm } from "@/types/firm.types";
 import Image from "next/image";
+import React from "react";
 import FirmCell from "./FirmCell";
 import PlatformCell from "./PlatformCell";
 import { EditFirmDialog } from "@/components/FirmDetails/EditFirmDialog";
-import { useAppSelector } from "@/redux/store";
-import { useCurrentUser } from "@/redux/authSlice";
 import DeleteFirmDialog from "@/components/FirmDetails/DeleteFirmDialog";
 import FirmIndexChange from "./FirmIndexChange";
 import { calculateYearsInOperation } from "@/utils/calculateYearsInOperation";
 
-export default function FirmRow({
+function FirmRow({
   company,
   prevCompany,
   nextCompany,
   shortVersion,
+  userRole,
 }: {
   company: SinglePropFirm;
   prevCompany: SinglePropFirm;
   nextCompany: SinglePropFirm;
   shortVersion?: boolean;
+  userRole?: string;
 }) {
-  const user = useAppSelector(useCurrentUser);
-  const instrumentSet = new Set(company.typeOfInstruments);
+  // const instrumentSet = useMemo(
+  //   () => new Set(company.typeOfInstruments),
+  //   [company.typeOfInstruments],
+  // );
   const country =
     countryDataByCountry(company.country) || countryData(company.country);
-  const instruments = propFirmInstrumentTypes.reduce<string[]>((a, b) => {
-    if (instrumentSet.has(b.value)) {
-      a.push(b.name);
-    }
-    return a;
-  }, []);
+  // const instruments = useMemo(
+  //   () =>
+  //     propFirmInstrumentTypes.reduce<string[]>((a, b) => {
+  //       if (instrumentSet.has(b.value)) {
+  //         a.push(b.name);
+  //       }
+  //       return a;
+  //     }, []),
+  //   [instrumentSet],
+  // );
+
   return (
-    <TableRow className="relative">
+    <TableRow className="relative border-l-2 border-l-transparent hover:border-l-primary hover:bg-foreground/5 transition-all duration-150">
       <FirmCell
         company={{
           image: company.logoUrl,
@@ -51,16 +59,16 @@ export default function FirmRow({
       />
       <TableCell>
         <div className="flex items-center gap-1 justify-center">
-          <div className="w-6  h-4 relative">
+          <div className="w-5 h-3.5 md:w-6 md:h-4 relative">
             <Image
               src={country?.flag || ""}
               alt="image"
               fill
               unoptimized
-              className="object-cover "
+              className="object-cover"
             />
           </div>
-          <p className="text-base  font-semibold"> {country?.code}</p>
+          <p className="text-xs md:text-base font-semibold"> {country?.code}</p>
         </div>
       </TableCell>
       <TableCell>
@@ -70,19 +78,24 @@ export default function FirmRow({
       </TableCell>
       {!shortVersion && (
         <>
-          <TableCell>
-            <div className="flex flex-wrap gap-2 w-[200px]">
+          {/* <TableCell>
+            <div className="flex flex-wrap gap-2 max-w-[180px]">
               {instruments?.map((item) => (
                 <Badge variant={"secondary"} key={item}>
                   {item}
                 </Badge>
               ))}
             </div>
-          </TableCell>
+          </TableCell> */}
           <PlatformCell platforms={company.platforms} />
           <TableCell>
-            <p className="text-center font-bold text-base">
-              {formatCurrencyShort(company.maxAllocation)}
+            <p className="text-center font-bold text-xs md:text-base">
+              {(() => {
+                const n = Number(company.maxAllocation);
+                return !Number.isNaN(n)
+                  ? `$${formatMaxAllocationToK(company.maxAllocation)}`
+                  : formatCurrencyShort(company.maxAllocation);
+              })()}
             </p>
           </TableCell>
           <TableCell>
@@ -95,12 +108,12 @@ export default function FirmRow({
                 }}
               />
             ) : (
-              <p className="text-center font-bold text-base">N/A</p>
+              <p className="text-center text-foreground/30 text-xs md:text-base font-medium">—</p>
             )}
           </TableCell>
         </>
       )}
-      {user?.role === "SUPER_ADMIN" && (
+      {userRole === "SUPER_ADMIN" && (
         <TableCell>
           <div className="flex gap-2">
             <EditFirmDialog firmId={company.id} />
@@ -117,3 +130,5 @@ export default function FirmRow({
     </TableRow>
   );
 }
+
+export default React.memo(FirmRow);

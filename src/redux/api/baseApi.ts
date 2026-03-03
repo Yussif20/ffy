@@ -87,6 +87,7 @@ export const baseQueryWithReauth: BaseQueryFn = async (
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithReauth,
+  keepUnusedDataFor: 300,
   tagTypes: [
     "User",
     "Category",
@@ -104,7 +105,6 @@ export const baseApi = createApi({
     "Symbol",
     "Subscribe",
     "Challenge",
-    "Firms",
     "PaymentMethod",
     "Broker",
     "Offer",

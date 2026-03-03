@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export default function ChallengeForm({ methods }: { methods: any }) {
-  const { data: getAllFirms, isLoading } = useGetFirmsQuery();
+  const { data: getAllFirms, isLoading } = useGetFirmsQuery({ limit: 500 });
   const t = useTranslations("CHALLENGEMANAGEMENT");
   const [profitInput, setProfitInput] = useState<string>("");
   const { watch, setValue, getValues } = methods;

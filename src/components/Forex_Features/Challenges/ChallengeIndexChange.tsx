@@ -16,48 +16,48 @@ export default function ChallengeIndexChange({
   const [changeIndex, { isLoading }] = useChangeIndexChallengeMutation();
 
   const handleMoveTop = async () => {
-    if (!prevChallenge || prevChallenge.order === undefined) {
-      console.log("Cannot move up - no previous challenge or order missing", { prevChallenge });
-      return;
-    }
-    console.log("Moving up from", challenge.order, "to", prevChallenge.order);
+    // Use prev challenge's order, but if it's the same (duplicates) or missing, use order - 1
+    const target = prevChallenge?.order;
+    const newOrder = target !== undefined && target < challenge.order
+      ? target
+      : challenge.order - 1;
+    if (newOrder < 0) return;
     const toastId = toast.loading("Moving...");
     try {
-      await changeIndex({ id: challenge.id, order: prevChallenge.order }).unwrap();
+      await changeIndex({ id: challenge.id, order: newOrder }).unwrap();
       toast.dismiss(toastId);
       toast.success("Moved successfully");
     } catch (error) {
       toast.dismiss(toastId);
       toast.error("Failed to move");
-      console.error("Move error:", error);
     }
   };
 
   const handleMoveBottom = async () => {
-    if (!nextChallenge || nextChallenge.order === undefined) {
-      console.log("Cannot move down - no next challenge or order missing", { nextChallenge });
-      return;
-    }
-    console.log("Moving down from", challenge.order, "to", nextChallenge.order);
+    // Use next challenge's order, but if it's the same (duplicates) or missing, use order + 1
+    const target = nextChallenge?.order;
+    const newOrder = target !== undefined && target > challenge.order
+      ? target
+      : challenge.order + 1;
     const toastId = toast.loading("Moving...");
     try {
-      await changeIndex({ id: challenge.id, order: nextChallenge.order }).unwrap();
+      await changeIndex({ id: challenge.id, order: newOrder }).unwrap();
       toast.dismiss(toastId);
       toast.success("Moved successfully");
     } catch (error) {
       toast.dismiss(toastId);
       toast.error("Failed to move");
-      console.error("Move error:", error);
     }
   };
 
-  const canMoveUp = prevChallenge && prevChallenge.order !== undefined;
-  const canMoveDown = nextChallenge && nextChallenge.order !== undefined;
+  // Only disable up when there's nothing above (no prev and already at 0)
+  const canMoveUp = !isLoading && (!!prevChallenge || challenge.order > 0);
+  const canMoveDown = !isLoading;
 
   return (
     <>
       <Button
-        disabled={isLoading || !canMoveUp}
+        disabled={!canMoveUp}
         size="icon"
         variant="outline"
         onClick={handleMoveTop}
@@ -72,7 +72,7 @@ export default function ChallengeIndexChange({
 
       {/* Move Bottom */}
       <Button
-        disabled={isLoading || !canMoveDown}
+        disabled={!canMoveDown}
         size="icon"
         variant="outline"
         onClick={handleMoveBottom}

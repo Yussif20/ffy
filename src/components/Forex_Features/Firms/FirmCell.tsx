@@ -26,10 +26,10 @@ export default function FirmCell({
       >
         <Link
           href={`${isFutures ? "/futures/" : "/"}firms/${company.slug}`}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 max-md:outline-none max-md:focus:outline-none max-md:active:outline-none max-md:[-webkit-tap-highlight-color:transparent]"
         >
           <div className="bg-primary3 max-w-max rounded-lg overflow-hidden border border-border flex-shrink-0">
-            <div className="w-8 xl:w-12 aspect-square relative">
+            <div className="w-9 md:w-10 xl:w-14 aspect-square relative">
               <Image
                 src={company.image}
                 alt="image"
@@ -39,7 +39,7 @@ export default function FirmCell({
             </div>
           </div>
           <div className="overflow-hidden transition-all duration-200 md:!max-w-none">
-            <h2 className="text-base md:text-lg xl:text-xl font-semibold whitespace-nowrap">
+            <h2 className="text-sm md:text-base xl:text-lg font-semibold whitespace-nowrap">
               {company.name}
             </h2>
           </div>
@@ -48,12 +48,16 @@ export default function FirmCell({
 
       <TableCell
         className={cn(
-          "bg-background z-10 table-cell md:hidden sticky left-0 shadow-[2px_0_4px_rgba(0,0,0,0.1)]",
-          isArabic && "right-0 shadow-[-2px_0_4px_rgba(0,0,0,0.1)]"
+          "bg-background z-10 table-cell md:hidden sticky left-0 shadow-[2px_0_4px_rgba(0,0,0,0.1)] border-r-0 overflow-visible",
+          !isArabic &&
+            "shadow-[2px_0_4px_rgba(0,0,0,0.1),8px_0_0_0_var(--background)]",
+          isArabic && "right-0 left-auto shadow-[-2px_0_4px_rgba(0,0,0,0.1)]"
         )}
       >
-        <Link href={linkHref} className="flex justify-center md:justify-start">
-          <div className="bg-primary3 rounded-lg overflow-hidden border border-border flex-shrink-0 w-8 xl:w-12 aspect-square relative">
+        {/* Full-cell background layer for horizontal padding only (left/right of logo), so we don't overlay the header */}
+        <span className="absolute inset-y-0 -left-3 -right-3 bg-background -z-[1]" aria-hidden />
+        <Link href={linkHref} className="relative z-0 flex justify-center md:justify-start w-full min-w-0 max-md:outline-none max-md:focus:outline-none max-md:active:outline-none max-md:[-webkit-tap-highlight-color:transparent]">
+          <div className="bg-primary3 rounded-lg overflow-hidden border border-border flex-shrink-0 w-9 md:w-10 xl:w-14 aspect-square relative">
             <Image
               src={company.image}
               alt={company.name}
@@ -64,10 +68,10 @@ export default function FirmCell({
         </Link>
       </TableCell>
 
-      <TableCell className={cn("bg-background z-10 table-cell md:hidden")}>
-        <Link href={linkHref} className="flex justify-center md:justify-start">
-          <div className="overflow-hidden transition-all duration-200 md:!max-w-none text-center md:text-left">
-            <h2 className="text-base md:text-lg xl:text-xl font-semibold whitespace-nowrap">
+      <TableCell className={cn("bg-background z-10 table-cell md:hidden w-max min-w-max")}>
+        <Link href={linkHref} className="flex justify-center md:justify-start max-md:outline-none max-md:focus:outline-none max-md:active:outline-none max-md:[-webkit-tap-highlight-color:transparent]">
+          <div className="overflow-visible transition-all duration-200 md:max-w-none text-center md:text-left">
+            <h2 className="text-sm md:text-base xl:text-lg font-semibold whitespace-nowrap px-1">
               {company.name}
             </h2>
           </div>

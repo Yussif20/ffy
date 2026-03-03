@@ -158,10 +158,10 @@ export default function CustomComboBoxMultiple({
                 >
                   {selectedValues.length ? (
                     <div className="flex flex-wrap gap-1 z-10">
-                      {selectedOptions.map((item) => (
+                      {selectedOptions.map((item, index) => (
                         <div
-                          key={item.value}
-                          className="flex items-center gap-1 bg-muted px-2 py-1.5 rounded text-xs"
+                          key={`${item.value}-${index}`}
+                          className="flex items-center gap-1 bg-muted px-2 py-1.5 rounded text-sm font-normal"
                         >
                           {item.image && (
                             <div className="w-6 h-4 relative overflow-hidden">
@@ -189,7 +189,7 @@ export default function CustomComboBoxMultiple({
                       ))}
                     </div>
                   ) : (
-                    <span>{placeholder}</span>
+                    <span className="text-sm font-normal">{placeholder}</span>
                   )}
 
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

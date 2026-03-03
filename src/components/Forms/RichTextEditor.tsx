@@ -1,11 +1,23 @@
 "use client";
 
-import { useFormContext, Controller } from "react-hook-form";
-import { Editor } from "../blocks/editor-x/editor";
+import { useFormContext, Controller, useWatch } from "react-hook-form";
+import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
+import { useCallback } from "react";
+
+const Editor = dynamic(
+  () => import("../blocks/editor-x/editor").then((m) => m.Editor),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="border rounded p-2 min-h-[100px] animate-pulse bg-muted" />
+    ),
+  },
+);
 
 type TEditorFieldProps = {
   name: string;
+  mobileFontSizeName?: string;
   label?: string;
   required?: boolean;
   className?: string; // container class
@@ -37,6 +49,7 @@ const EMPTY_EDITOR_STATE = {
 
 const RichTextEditor = ({
   name,
+  mobileFontSizeName,
   label,
   required,
   className,
@@ -45,8 +58,28 @@ const RichTextEditor = ({
 }: TEditorFieldProps) => {
   const {
     control,
+    setValue,
     formState: { errors },
   } = useFormContext();
+
+  const watchedMfs = useWatch({
+    control,
+    name: (mobileFontSizeName ?? "__mfs_unused__") as string,
+    defaultValue: undefined,
+  });
+
+  const mobileFontSize: number | undefined = mobileFontSizeName
+    ? (watchedMfs as number | undefined)
+    : undefined;
+
+  const handleMobileFontSizeChange = useCallback(
+    (size: number) => {
+      if (mobileFontSizeName) {
+        setValue(mobileFontSizeName, size, { shouldDirty: true });
+      }
+    },
+    [mobileFontSizeName, setValue]
+  );
 
   return (
     <Controller
@@ -89,6 +122,12 @@ const RichTextEditor = ({
                 editorSerializedState={value}
                 onSerializedChange={(val) =>
                   field.onChange(JSON.stringify(val))
+                }
+                mobileFontSize={mobileFontSize}
+                onMobileFontSizeChange={
+                  mobileFontSizeName
+                    ? handleMobileFontSizeChange
+                    : undefined
                 }
               />
             </div>

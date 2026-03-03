@@ -28,7 +28,8 @@ export function RiskManagement({
         {company?.riskManagement && (
           <div className="text-sm md:text-base">
             <div
-              className="danger-html"
+              className="danger-html mfs-content"
+              style={company?.riskManagementMobileFontSize ? ({ "--mobile-fs": `${company.riskManagementMobileFontSize}px` } as React.CSSProperties) : undefined}
               dangerouslySetInnerHTML={{
                 __html: visibleText(
                   isArabic,
@@ -65,7 +66,8 @@ export function ProfitShare({
           {tSidebar("items.profitShare")}
         </SecTitle>
         <div
-          className="danger-html"
+          className="danger-html mfs-content"
+          style={company?.profitShareMobileFontSize ? ({ "--mobile-fs": `${company.profitShareMobileFontSize}px` } as React.CSSProperties) : undefined}
           dangerouslySetInnerHTML={{
             __html: visibleText(
               isArabic,

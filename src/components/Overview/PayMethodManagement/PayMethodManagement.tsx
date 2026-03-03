@@ -1,7 +1,8 @@
 "use client";
-import SearchForm from "@/components/Forms/SearchForm";
-import Title from "@/components/Global/Title";
 
+import SearchInputField from "@/components/Forms/SearchInputField";
+import { handleSetSearchParams } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import {
   Table,
   TableBody,
@@ -14,15 +15,55 @@ import { Button } from "@/components/ui/button";
 
 import { PaymentMethod } from "@/types/firm.types";
 import { useGetAllPaymentMethodQuery } from "@/redux/api/paymentMethodApi";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import TableSkeleton from "@/components/Global/TableSkeleton";
 import Image from "next/image";
 import CreatePayMethod from "./CreatePayMethod";
 import UpdatePayMethod from "./UpatePayMethod";
 import DeletePayMethod from "./DeletePayMethod";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+const DEBOUNCE_MS = 300;
 
 export default function PayMethodManagement() {
+  const t = useTranslations("Overview.payMethodManagement");
+  const tSearch = useTranslations("Search");
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const urlSearch = searchParams.get("search") || "";
+  const [searchInput, setSearchInput] = useState(urlSearch);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setSearchInput(urlSearch);
+  }, [urlSearch]);
+
+  const applySearch = useCallback(
+    (value: string) => {
+      handleSetSearchParams({ search: value, page: "1" }, searchParams, router);
+    },
+    [searchParams, router]
+  );
+
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      setSearchInput(value);
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => {
+        applySearch(value);
+        debounceRef.current = null;
+      }, DEBOUNCE_MS);
+    },
+    [applySearch]
+  );
+
+  const handleSearchSubmit = useCallback(() => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+      debounceRef.current = null;
+    }
+    applySearch(searchInput);
+  }, [applySearch, searchInput]);
 
   const search = searchParams.get("search") || "";
   const query = [];
@@ -32,31 +73,35 @@ export default function PayMethodManagement() {
   const paymentMethods: PaymentMethod[] = data?.data || [];
 
   return (
-    <div>
-      <div className="mb-8">
-        <Title>Pay Method Management</Title>
+    <div className="space-y-6">
+      <div className="pb-4 border-b border-border/60">
+        <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+          {t("title")}
+        </h1>
       </div>
 
-      <div className="flex justify-between items-center mb-6 flex-col md:flex-row gap-4">
-        <div className="w-full">
-          <SearchForm />
+      <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+        <div className="w-full sm:max-w-xs">
+          <SearchInputField
+            value={searchInput}
+            onChange={handleSearchChange}
+            onSubmit={handleSearchSubmit}
+            placeholder={tSearch("searchPlaceholder")}
+          />
         </div>
-
-        <div className="w-full md:w-auto">
-          <CreatePayMethod />
-        </div>
+        <CreatePayMethod />
       </div>
 
       {isLoading ? (
-        <TableSkeleton headers={["Logo", "Title", "Actions"]} />
+        <TableSkeleton />
       ) : (
-        <div className="overflow-x-auto">
+        <div className="rounded-xl border border-border/60 bg-card overflow-hidden shadow-sm">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Logo</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t("logo")}</TableHead>
+                <TableHead>{t("titleLabel")}</TableHead>
+                <TableHead>{t("actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody colSpan={3}>
@@ -78,12 +123,12 @@ export default function PayMethodManagement() {
                       {" "}
                       <UpdatePayMethod paymentMethod={method}>
                         <Button size="sm" variant="outline">
-                          Edit
+                          {t("edit")}
                         </Button>
                       </UpdatePayMethod>
                       <DeletePayMethod paymentMethod={method}>
                         <Button size="sm" variant="destructive">
-                          Delete
+                          {t("delete")}
                         </Button>
                       </DeletePayMethod>
                     </div>
@@ -93,7 +138,7 @@ export default function PayMethodManagement() {
               {paymentMethods.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={3} className="text-center py-4">
-                    No payment methods found.
+                    {t("noPaymentMethods")}
                   </TableCell>
                 </TableRow>
               )}

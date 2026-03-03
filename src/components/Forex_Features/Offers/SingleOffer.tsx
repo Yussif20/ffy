@@ -9,6 +9,12 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import useIsArabic from "@/hooks/useIsArabic";
@@ -22,24 +28,181 @@ import { useState, useEffect } from "react";
 import DeleteOfferModal from "./DeleteOfferModal";
 import EditOfferModal from "./EditOfferModal";
 import { FirmWithOffers, Offer } from "@/redux/api/offerApi";
+import OfferIndexChange from "./OfferIndexChange";
 import { Link } from "@/i18n/navigation";
 import useIsFutures from "@/hooks/useIsFutures";
 import DiscountText from "@/components/Global/DiscountText";
 import { visibleText } from "@/utils/visibleText";
 import { Separator } from "@/components/ui/separator";
 import CountdownTimer from "./CountdownTimer";
+import dynamic from "next/dynamic";
 
-export default function SingleOffer({
-  onlyShowMatch,
-  hideBlackHoles,
-  isTopOffer,
-  data,
+const OfferCoinClient = dynamic(() => import("./OfferCoinClient"), { ssr: false });
+
+/** Styled offer description with line-clamp and full-text tooltip */
+function OfferDescription({
+  text,
+  className,
 }: {
+  text: string;
+  className?: string;
+}) {
+  return (
+    <TooltipProvider delayDuration={300}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div
+            className={cn(
+              "flex items-start px-3 py-2 rounded-lg border-l-2 border-primary/60 bg-primary/5 cursor-default",
+              className
+            )}
+          >
+            <p className="text-sm md:text-base font-semibold text-foreground line-clamp-2 leading-relaxed">
+              {text}
+            </p>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent
+          side="top"
+          className="max-w-72 text-sm leading-relaxed whitespace-normal"
+        >
+          {text}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+
+/** Prominent percentage badge — two variants:
+ *  "default" → large solid primary badge (used for the main total-sale in the left half)
+ *  "subtle"  → smaller outlined badge (used for sub-offer badges in the right half)
+ */
+function OfferPercentageBadge({
+  percentage,
+  showGift,
+  giftText,
+  giftTextArabic,
+  isArabic,
+  variant = "default",
+  className,
+}: {
+  percentage: number;
+  showGift?: boolean;
+  giftText?: string | null;
+  giftTextArabic?: string | null;
+  isArabic: boolean;
+  variant?: "default" | "subtle";
+  className?: string;
+}) {
+  const gift = visibleText(isArabic, giftText ?? undefined, giftTextArabic ?? undefined);
+
+  if (variant === "subtle") {
+    return (
+      <div
+        className={cn(
+          "flex flex-col items-center justify-center rounded-lg w-[72px] min-w-[72px] py-2.5",
+          "bg-primary/10 text-primary border border-primary/30",
+          className
+        )}
+      >
+        <span className="text-base font-bold tabular-nums leading-tight">{percentage}%</span>
+        <span className="text-[10px] font-semibold uppercase tracking-wider opacity-80">OFF</span>
+        {showGift && gift && (
+          <div className="mt-1 px-1.5 py-0.5 rounded bg-primary/10 text-[9px] font-medium text-center leading-tight">
+            <GiftBox size={8} className="inline-block align-middle text-success" /> {gift}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={cn(
+        "relative flex flex-col items-center justify-center rounded-xl w-full min-w-0 py-4 sm:py-5 lg:min-w-[100px] lg:w-[100px]",
+        "bg-primary text-primary-foreground shadow-lg",
+        "border border-primary-dark/50",
+        className
+      )}
+    >
+      <span className="text-2xl sm:text-3xl font-bold tabular-nums">{percentage}%</span>
+      <span className="text-xs font-semibold uppercase tracking-wider opacity-95">OFF</span>
+      {showGift && gift && (
+        <div className="mt-2 px-2 py-0.5 rounded bg-primary-foreground/15 text-[10px] font-medium text-center">
+          <GiftBox size={10} className="inline-block align-middle text-success" /> {gift}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CompanyHeader({
+  companyData,
+  isTopOffer,
+  offer,
+  badge,
+}: {
+  companyData: { title: string; logoUrl: string; slug: string };
+  isTopOffer?: boolean;
+  offer: Offer;
+  badge?: React.ReactNode;
+}) {
+  const isFutures = useIsFutures();
+  return (
+    <div className="shrink-0 lg:w-1/2 lg:pr-6 lg:border-r lg:border-border flex flex-col lg:flex-row lg:self-stretch">
+      {/* Company logo + name — centered on small screens, left-aligned on desktop */}
+      <div className="w-full lg:w-[17.25rem] shrink-0 flex items-center justify-center lg:justify-start">
+        <Link
+          href={`${isFutures ? "/futures/" : "/"}firms/${companyData.slug}`}
+          className="flex items-center gap-3 w-fit rounded-lg p-2 -m-2 hover:bg-muted/50 transition-colors"
+        >
+          <div className="rounded-lg overflow-hidden border border-border bg-card shrink-0">
+            <div className="w-10 sm:w-12 xl:w-14 aspect-square relative">
+              <Image
+                src={companyData.logoUrl}
+                alt=""
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+          <div>
+            <h2 className="text-sm md:text-base xl:text-lg font-semibold text-foreground flex flex-wrap items-center gap-1">
+              {companyData.title}
+              {isTopOffer && (
+                <span className="items-center gap-1 md:flex hidden text-primary">
+                  (
+                  <DiscountText
+                    className="text-primary"
+                    mainClassName="px-0! py-0"
+                    percentage={offer.offerPercentage}
+                  />
+                  )
+                </span>
+              )}
+            </h2>
+          </div>
+        </Link>
+      </div>
+      {/* Total sale badge — half width centered on small screens, right of divider on desktop */}
+      {badge && (
+        <div className="flex w-1/2 lg:w-auto mx-auto lg:mx-0 flex-1 items-center justify-center mt-4 lg:mt-0">
+          {badge}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function SingleOffer(props: {
   onlyShowMatch?: boolean;
   hideBlackHoles?: boolean;
   isTopOffer?: boolean;
   data: FirmWithOffers;
+  prevFirm?: FirmWithOffers;
+  nextFirm?: FirmWithOffers;
 }) {
+  const { onlyShowMatch, hideBlackHoles, isTopOffer, data } = props;
   const offer = data?.offers ?? [];
   const companyData = {
     id: data.id,
@@ -78,10 +241,19 @@ export default function SingleOffer({
   return (
     <Card
       className={cn(
-        "border-foreground/30 p-2 lg:p-6 bg-foreground/10 flex flex-col gap-4 lg:gap-8 relative",
+        "border border-border rounded-xl p-4 sm:p-5 lg:p-6 bg-card flex flex-col gap-4 lg:gap-6 relative overflow-hidden",
         onlyShowMatch && "border-none rounded-none bg-background px-0!"
       )}
     >
+      {/* EXCLUSIVE ribbon for top offers */}
+      {isTopOffer && !onlyShowMatch && (
+        <>
+          <div className="absolute top-4 right-[-28px] rotate-45 bg-primary text-white text-[10px] font-bold px-8 py-0.5 uppercase tracking-widest z-20 shadow-sm">
+            Exclusive
+          </div>
+          <OfferCoinClient />
+        </>
+      )}
       {!hideBlackHoles && (
         <div
           className={cn(
@@ -93,34 +265,97 @@ export default function SingleOffer({
           <div className="absolute -bottom-6 w-9 h-12 rounded-full bg-background -left-4"></div>
         </div>
       )}
-      <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="item-1" className="">
-          <OfferCard
-            companyData={companyData}
-            offer={offerFirstData}
-            showTag
-            showingNumber={offersOtherData?.length}
-            t={t}
-            onlyShowMatch={onlyShowMatch}
-            isAdmin={isAdmin}
-            isTopOffer={isTopOffer}
+      {/* Admin reorder controls */}
+      {isAdmin && (
+        <div className="flex gap-2 items-center">
+          <OfferIndexChange
+            firm={data}
+            prevFirm={props.prevFirm}
+            nextFirm={props.nextFirm}
           />
-          <AccordionContent>
-            <div className="flex flex-col gap-4 lg:gap-8 mt-4 lg:mt-8 ">
-              {offersOtherData?.map((item, idx) => (
+        </div>
+      )}
+      {/* Left: company once. Right: all offers (no repeated company) */}
+      {!onlyShowMatch ? (
+        <div className="flex flex-col lg:flex-row lg:gap-6 w-full">
+          <CompanyHeader
+            companyData={companyData}
+            isTopOffer={isTopOffer}
+            offer={offerFirstData}
+            badge={
+              <OfferPercentageBadge
+                percentage={offerFirstData.offerPercentage}
+                showGift={offerFirstData.showGift}
+                giftText={offerFirstData.giftText}
+                giftTextArabic={offerFirstData.giftTextArabic}
+                isArabic={isArabic}
+              />
+            }
+          />
+          <div className="flex-1 min-w-0 mt-4 lg:mt-0">
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1" className="border-none">
                 <OfferCard
-                  key={idx}
-                  offer={item}
                   companyData={companyData}
+                  offer={offerFirstData}
+                  showTag
+                  showingNumber={offersOtherData?.length}
                   t={t}
+                  onlyShowMatch={onlyShowMatch}
                   isAdmin={isAdmin}
                   isTopOffer={isTopOffer}
+                  hideCompany
+                  hideBadge
                 />
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+                <AccordionContent>
+                  <div className="flex flex-col gap-4 lg:gap-6 pt-2">
+                    {offersOtherData?.map((item, idx) => (
+                      <OfferCard
+                        key={idx}
+                        offer={item}
+                        companyData={companyData}
+                        t={t}
+                        isAdmin={isAdmin}
+                        isTopOffer={isTopOffer}
+                        hideCompany
+                      />
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </div>
+      ) : (
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="item-1" className="">
+            <OfferCard
+              companyData={companyData}
+              offer={offerFirstData}
+              showTag
+              showingNumber={offersOtherData?.length}
+              t={t}
+              onlyShowMatch={onlyShowMatch}
+              isAdmin={isAdmin}
+              isTopOffer={isTopOffer}
+            />
+            <AccordionContent>
+              <div className="flex flex-col gap-4 lg:gap-6 mt-4 lg:mt-6">
+                {offersOtherData?.map((item, idx) => (
+                  <OfferCard
+                    key={idx}
+                    offer={item}
+                    companyData={companyData}
+                    t={t}
+                    isAdmin={isAdmin}
+                    isTopOffer={isTopOffer}
+                  />
+                ))}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      )}
     </Card>
   );
 }
@@ -134,6 +369,8 @@ const OfferCard = ({
   t,
   onlyShowMatch,
   isAdmin,
+  hideCompany = false,
+  hideBadge = false,
 }: {
   isTopOffer?: boolean;
   offer: Offer;
@@ -149,9 +386,14 @@ const OfferCard = ({
   t: any;
   onlyShowMatch?: boolean;
   isAdmin?: boolean;
+  hideCompany?: boolean;
+  hideBadge?: boolean;
 }) => {
   const isArabic = useIsArabic();
   const isFutures = useIsFutures();
+  const codeBorderCls = isFutures ? "border-yellow-400 hover:bg-yellow-400/10" : "border-green-400 hover:bg-green-400/10";
+  const codeLabelCls = isFutures ? "text-yellow-500" : "text-green-500";
+  const copyIconHoverCls = isFutures ? "hover:text-yellow-500" : "hover:text-green-500";
   const { isCopied, copyToClipboard } = useCopyToClipboard({
     successMessage: t("codeCopied") || "Code copied to clipboard!",
     errorMessage: t("copyFailed") || "Failed to copy code",
@@ -160,10 +402,22 @@ const OfferCard = ({
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
 
-  const endTime = offer.endDate && <CountdownTimer endDate={offer.endDate} />;
+  const endTime = offer.endDate && (
+    <CountdownTimer endDate={offer.endDate} startDate={offer.createdAt} />
+  );
+  const percentageBadge = (
+    <OfferPercentageBadge
+      percentage={offer.offerPercentage}
+      showGift={offer.showGift}
+      giftText={offer.giftText}
+      giftTextArabic={offer.giftTextArabic}
+      isArabic={isArabic}
+      variant={hideCompany ? "subtle" : "default"}
+    />
+  );
   const percantCard = (
-    <Card className="py-6 lg:py-10 lg:h-25 w-full lg:w-auto lg:aspect-5/2 flex flex-col justify-center items-center gap-y-2 lg:gap-y-4 bg-transparent relative rounded-2xl">
-      <h1 className="text-2xl md:text-2xl font-bold uppercase py-0 leading-1">
+    <Card className="py-6 lg:py-10 lg:h-25 w-full lg:w-auto lg:aspect-5/2 flex flex-col justify-center items-center gap-y-2 lg:gap-y-4 bg-transparent relative rounded-2xl group hover:bg-primary/5 transition-colors duration-200">
+      <h1 className="text-4xl md:text-5xl font-bold uppercase py-0 leading-1">
         <DiscountText
           className="text-primary"
           percentage={offer.offerPercentage}
@@ -180,9 +434,9 @@ const OfferCard = ({
 
   const moreBtn = showTag && showingNumber > 0 && (
     <AccordionTrigger hideArrow className="p-0">
-      <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-25">
+      <div className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg text-xs font-semibold border border-border bg-muted hover:bg-accent hover:text-accent-foreground h-9 px-3 transition-colors">
         {showingNumber} {t("more")}
-        <ChevronDown className="text-sm" />
+        <ChevronDown className="size-3.5" />
       </div>
     </AccordionTrigger>
   );
@@ -193,7 +447,7 @@ const OfferCard = ({
         <Link
           href={`${isFutures ? "/futures/" : "/"}firms/${
             companyData.slug
-          }/exclusive-offers`}
+          }`}
           className="flex items-center gap-2"
         >
           <div className="bg-primary3 max-w-max rounded-lg overflow-hidden border border-border">
@@ -206,7 +460,7 @@ const OfferCard = ({
               />
             </div>
           </div>
-          <h2 className="text-base md:text-lg xl:text-xl font-semibold flex gap-1">
+          <h2 className="text-sm md:text-base xl:text-lg font-semibold flex gap-1">
             {companyData.title}{" "}
             {isTopOffer && (
               <span className=" items-center gap-1 md:flex hidden">
@@ -228,10 +482,10 @@ const OfferCard = ({
           offer.code ? (
             <button
               onClick={() => copyToClipboard(offer?.code)}
-              className="flex justify-center items-center gap-2 border-2 border-primary px-2 md:px-2.5 py-1 md:py-1.5 rounded-full border-dashed text-[11px] sm:text-sm"
+              className={cn("flex justify-center items-center gap-2 border-2 border-dashed px-2 md:px-2.5 py-1 md:py-1.5 rounded-full text-[11px] sm:text-sm transition-colors", codeBorderCls)}
             >
-              <span className="text-primary font-normal">{t("code")}</span>
-              {/* <span className="text-primary font-normal">{t("code")}</span> */}
+              <span className={cn("font-normal", codeLabelCls)}>{t("code")}</span>
+              {/* <span className={cn("font-normal", codeLabelCls)}>{t("code")}</span> */}
               <p className="h-6 border-r border-foreground/20"></p>
               <span className="font-semibold uppercase">{offer?.code}</span>
               {isCopied ? (
@@ -239,7 +493,7 @@ const OfferCard = ({
               ) : (
                 <Copy
                   size={14}
-                  className="cursor-pointer hover:text-primary transition-colors"
+                  className={cn("cursor-pointer transition-colors", copyIconHoverCls)}
                 />
               )}
             </button>
@@ -256,13 +510,101 @@ const OfferCard = ({
           <Separator
             className={cn("my-2 w-full ", !onlyShowMatch && "lg:block hidden")}
           />
-          <p className="font-medium text-sm">
-            {visibleText(isArabic, offer.text, offer.textArabic)}
-          </p>
+          <OfferDescription
+            text={visibleText(isArabic, offer.text, offer.textArabic)}
+          />
         </>
       ) : null}
     </div>
   );
+
+  const offerOnlyContent = (
+    <div className="space-y-2 lg:space-y-3">
+      <div className="flex justify-between items-center w-full gap-2">
+        <div className="min-w-0 flex-1">{percantCard}</div>
+        <div className="lg:hidden shrink-0">{moreBtn}</div>
+      </div>
+      {endTime && <div className="flex justify-center items-center">{endTime}</div>}
+      {offer.text || offer.textArabic ? (
+        <OfferDescription
+          text={visibleText(isArabic, offer.text, offer.textArabic)}
+        />
+      ) : null}
+    </div>
+  );
+
+  const leftContent = hideCompany ? offerOnlyContent : companyDataUi;
+
+  // Right-half-only layout: one offer row like the reference image — [Badge] [Description] [Code + Apply + More]
+  if (hideCompany) {
+    return (
+      <CardContent
+        className={cn(
+          "px-0 flex flex-col sm:flex-row sm:items-center gap-4 py-4",
+          !showTag && "border-t border-border pt-6"
+        )}
+      >
+        {/* Badge: only shown when not moved to the company column */}
+        {!hideBadge && <div className="shrink-0">{percentageBadge}</div>}
+
+        {/* Middle: offer description + countdown */}
+        <div className="min-w-0 flex-1 space-y-2">
+          {offer.text || offer.textArabic ? (
+            <OfferDescription
+              text={visibleText(isArabic, offer.text, offer.textArabic)}
+            />
+          ) : null}
+          {endTime && <div className="flex items-center">{endTime}</div>}
+        </div>
+
+        {/* Right: Code + Buy 50-50 on small screens, then More */}
+        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3 shrink-0 w-full sm:w-auto">
+          <div className="grid grid-cols-2 gap-2 sm:contents min-w-0">
+            {offer.code && (
+              <button
+                onClick={() => copyToClipboard(offer?.code)}
+                className={cn("flex justify-center items-center gap-2 border-2 border-dashed px-2.5 md:px-3 h-11 min-h-11 sm:h-auto sm:min-h-0 py-1.5 md:py-2 rounded-full text-sm w-full min-w-0 sm:w-auto transition-colors", codeBorderCls)}
+              >
+                <span className={cn("font-normal", codeLabelCls)}>{t("code")}</span>
+                <p className="h-5 border-r border-foreground/20"></p>
+                <span className="font-semibold uppercase truncate">{offer?.code}</span>
+                {isCopied ? (
+                  <Check size={14} className="text-green-500 transition-colors shrink-0" />
+                ) : (
+                  <Copy size={14} className={cn("cursor-pointer transition-colors shrink-0", copyIconHoverCls)} />
+                )}
+              </button>
+            )}
+            <Link href={companyData.affiliateLink} target="_blank" className="block w-full min-w-0 sm:w-auto">
+              <Button
+                size="lg"
+                className="w-full !h-12 !min-h-12 sm:h-auto sm:min-h-0 rounded-full text-sm sm:text-base font-semibold px-5 bg-gradient-to-r from-primary to-primary-dark text-primary-foreground shadow-lg hover:shadow-xl hover:brightness-110 transition-all duration-200"
+              >
+                {t("buy")}
+              </Button>
+            </Link>
+          </div>
+          {moreBtn && <div className="w-full sm:w-auto">{moreBtn}</div>}
+        </div>
+
+        {isAdmin && (
+          <div className="flex gap-2 justify-end items-center sm:col-span-full border-t border-border pt-3">
+            <Button variant="outline" size="sm" onClick={() => setEditModalOpen(true)} className="gap-1.5">
+              <Pencil size={14} />
+              <span className="hidden sm:inline">{t("edit")}</span>
+            </Button>
+            <Button variant="destructive" size="sm" onClick={() => setDeleteModalOpen(true)} className="gap-1.5">
+              <Trash2 size={14} />
+              <span className="hidden sm:inline">{t("delete")}</span>
+            </Button>
+          </div>
+        )}
+        <EditOfferModal open={editModalOpen} onOpenChange={setEditModalOpen} offer={offer} />
+        <DeleteOfferModal open={deleteModalOpen} onOpenChange={setDeleteModalOpen} offerId={offer.id} offerCode={offer.code} />
+      </CardContent>
+    );
+  }
+
   return (
     <CardContent
       className={cn(
@@ -279,17 +621,16 @@ const OfferCard = ({
         <div
           className={cn("block lg:hidden w-full", isTopOffer && "lg:block!")}
         >
-          {companyDataUi}
+          {leftContent}
         </div>
         <div>
           {onlyShowMatch ? (
             offer.code ? (
               <button
                 onClick={() => copyToClipboard(offer?.code)}
-                className="flex justify-center items-center gap-2 border-2 border-primary px-2 md:px-2.5 py-1 md:py-1.5 rounded-full border-dashed text-[11px] sm:text-sm"
+                className={cn("flex justify-center items-center gap-2 border-2 border-dashed px-2 md:px-2.5 py-1 md:py-1.5 rounded-full text-[11px] sm:text-sm transition-colors", codeBorderCls)}
               >
-                <span className="text-primary font-normal">{t("code")}</span>
-                {/* <span className="text-primary font-normal">{t("code")}</span> */}
+                <span className={cn("font-normal", codeLabelCls)}>{t("code")}</span>
                 <p className="h-6 border-r border-foreground/20"></p>
                 <span className="font-semibold uppercase">{offer?.code}</span>
                 {isCopied ? (
@@ -319,33 +660,32 @@ const OfferCard = ({
             )}
           ></div>
           <div className="flex justify-between items-center w-full h-max  gap-x-3  my-auto">
-            <div className="hidden lg:block w-full">{companyDataUi}</div>
+            <div className="hidden lg:block w-full">{leftContent}</div>
             <div className="flex items-center gap-2.5 justify-end ml-auto lg:ml-0 w-full lg:w-auto">
               <div className="flex flex-col gap-4 lg:gap-5 ml-0 lg:ml-4 justify-center items-center w-full">
-                <div className="grid grid-cols-2 lg:flex items-center gap-3 lg:gap-4 w-full">
-                  <div className="space-y-2.5 lg:space-y-3 h-full lg:h-auto">
+                <div className="grid grid-cols-2 lg:flex items-center gap-3 lg:gap-4 w-full min-w-0">
+                  <div className="space-y-2.5 lg:space-y-3 h-full lg:h-auto min-w-0">
                     {offer.code && (
                       <button
                         onClick={() => copyToClipboard(offer?.code)}
-                        className="flex justify-center items-center gap-2 border-2 border-primary px-2.5 md:px-3 py-1.5 md:py-2 rounded-full border-dashed text-[11px] sm:text-sm w-full lg:w-auto"
+                        className={cn("flex justify-center items-center gap-2 border-2 border-dashed px-2.5 md:px-3 h-11 min-h-11 lg:h-auto lg:min-h-0 py-1.5 md:py-2 rounded-full text-sm w-full min-w-0 lg:w-auto transition-colors", codeBorderCls)}
                       >
                         <span className="text-primary font-normal">
                           {t("code")}
                         </span>
-                        {/* <span className="text-primary font-normal">{t("code")}</span> */}
-                        <p className="h-6 border-r border-foreground/20"></p>
-                        <span className="font-semibold uppercase">
+                        <p className="h-5 border-r border-foreground/20"></p>
+                        <span className="font-semibold uppercase truncate">
                           {offer?.code}
                         </span>
                         {isCopied ? (
                           <Check
                             size={14}
-                            className="text-green-500 transition-colors"
+                            className="text-green-500 transition-colors shrink-0"
                           />
                         ) : (
                           <Copy
                             size={14}
-                            className="cursor-pointer hover:text-primary transition-colors"
+                            className="cursor-pointer hover:text-primary transition-colors shrink-0"
                           />
                         )}
                       </button>
@@ -355,13 +695,11 @@ const OfferCard = ({
                     </div>
                   </div>
                   <div className="border-border border-r-3 h-6 hidden lg:block" />
-                  <div className="space-y-2.5 lg:space-y-3">
-                    <Link
-                      href={companyData.affiliateLink}
-                      target="_blank"
-                      className="block"
-                    >
-                      <Button className="w-full lg:w-25 text-xs sm:text-sm px-3 sm:px-4">{t("buy")}</Button>
+                  <div className="space-y-2.5 lg:space-y-3 min-w-0">
+                    <Link href={companyData.affiliateLink} target="_blank" className="block w-full min-w-0">
+                      <Button className="w-full h-12 min-h-12 lg:h-auto lg:min-h-0 lg:w-28 rounded-full text-sm sm:text-base px-4 sm:px-5 font-semibold bg-gradient-to-r from-primary to-primary-dark text-primary-foreground shadow-lg hover:shadow-xl hover:brightness-110 transition-all duration-200">
+                        {t("buy")}
+                      </Button>
                     </Link>
                     <div className="hidden lg:block"> {moreBtn}</div>
                   </div>

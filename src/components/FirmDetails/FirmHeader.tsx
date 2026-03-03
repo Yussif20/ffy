@@ -5,7 +5,6 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getTranslations } from "next-intl/server";
-import { headers } from "next/headers";
 import NextLink from "next/link";
 import { Link } from "@/i18n/navigation";
 import { calculateYearsInOperation } from "@/utils/calculateYearsInOperation";
@@ -14,19 +13,18 @@ export default async function FirmHeader({
 }: {
   company: SinglePropFirm;
 }) {
-  const headersList = await headers();
-  const referer = headersList.get("referer") || "/";
   const t = await getTranslations("FirmHeader");
+  const backHref = company.firmType === "FUTURES" ? "/futures" : "/forex";
 
   const country =
     countryDataByCountry(company.country) || countryData(company.country);
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 md:py-8">
       {/* Top Row */}
       <div className="flex items-center gap-2">
-        <Link href={referer}>
+        <Link href={backHref}>
           <Button variant="outline2" size="icon" className="rounded-full">
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeft className="h-5 w-5 rtl:rotate-180" />
           </Button>
         </Link>
 
@@ -62,7 +60,7 @@ export default async function FirmHeader({
                 className="object-cover"
               />
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold block sm:hidden">
+            <h1 className="text-2xl sm:text-3xl font-bold block sm:hidden leading-snug pb-0.5">
               {company?.title}
             </h1>
           </div>
@@ -75,20 +73,20 @@ export default async function FirmHeader({
               </h1>
             </NextLink>
 
-            {/* Details */}
-            <div className="flex flex-wrap items-center gap-6 text-sm">
+            {/* Details: 2x2 grid on small/medium (CEO+Country, Date+Years), one line on large */}
+            <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:gap-x-8 sm:gap-y-6 lg:flex lg:flex-wrap lg:items-center lg:gap-6 text-sm">
               {/* CEO */}
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-0.5">
                 <span className="text-muted-foreground font-semibold">
                   {t("labels.ceo")}
                 </span>
                 <span className="font-medium">{company?.ceo}</span>
               </div>
 
-              <div className="hidden sm:block h-8 w-px bg-border" />
+              <div className="hidden lg:block h-8 w-px bg-border" />
 
               {/* Country */}
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-0.5">
                 <span className="text-muted-foreground font-semibold">
                   {t("labels.country")}
                 </span>
@@ -107,10 +105,10 @@ export default async function FirmHeader({
                 </div>
               </div>
 
-              <div className="hidden sm:block h-8 w-px bg-border" />
+              <div className="hidden lg:block h-8 w-px bg-border" />
 
               {/* Date Created */}
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-0.5">
                 <span className="text-muted-foreground font-semibold">
                   {t("labels.dateCreated")}
                 </span>
@@ -119,10 +117,10 @@ export default async function FirmHeader({
                 </span>
               </div>
 
-              <div className="hidden sm:block h-8 w-px bg-border" />
+              <div className="hidden lg:block h-8 w-px bg-border" />
 
               {/* Years in Operation */}
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-0.5">
                 <span className="text-muted-foreground font-semibold">
                   {t("labels.yearsInOperation")}
                 </span>
@@ -169,14 +167,14 @@ export function FirmHeaderSkeleton() {
           <div className="flex flex-col gap-3">
             <Skeleton className="h-8 w-48 hidden sm:block" />
 
-            <div className="flex flex-wrap items-center gap-6 text-sm">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:gap-x-8 sm:gap-y-6 lg:flex lg:flex-wrap lg:items-center lg:gap-6 text-sm">
               {/* CEO */}
               <div className="flex flex-col gap-1">
                 <Skeleton className="h-4 w-20" />
                 <Skeleton className="h-4 w-28" />
               </div>
 
-              <div className="hidden sm:block h-8 w-px bg-border" />
+              <div className="hidden lg:block h-8 w-px bg-border" />
 
               {/* Country */}
               <div className="flex flex-col gap-1">
@@ -187,7 +185,7 @@ export function FirmHeaderSkeleton() {
                 </div>
               </div>
 
-              <div className="hidden sm:block h-8 w-px bg-border" />
+              <div className="hidden lg:block h-8 w-px bg-border" />
 
               {/* Date Created */}
               <div className="flex flex-col gap-1">
@@ -195,7 +193,7 @@ export function FirmHeaderSkeleton() {
                 <Skeleton className="h-4 w-28" />
               </div>
 
-              <div className="hidden sm:block h-8 w-px bg-border" />
+              <div className="hidden lg:block h-8 w-px bg-border" />
 
               {/* Years in Operation */}
               <div className="flex flex-col gap-1">

@@ -13,14 +13,12 @@ export default function LinearBorder({
   return (
     <div
       className={cn(
-        `p-px pb-px max-w-max rounded-full bg-linear-to-t from-primary1 to-primary2 relative`,
+        "max-w-max rounded-2xl bg-card shadow-lg shadow-primary/10 overflow-hidden",
         className
       )}
     >
-      <div
-        className={cn("bg-background rounded-full overflow-hidden", className2)}
-      >
-        <div className="bg-primary/10 rounded-xl w-full">{children}</div>
+      <div className={cn("w-full", className2)}>
+        {children}
       </div>
     </div>
   );

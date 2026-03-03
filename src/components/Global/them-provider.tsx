@@ -9,9 +9,10 @@ export function ThemeProvider({
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme="dark" // <-- sets default theme
-      enableSystem={false} // <-- respect system preference
-      disableTransitionOnChange={true} // <-- optional
+      defaultTheme="dark"
+      storageKey="ffy-theme"
+      enableSystem={true}
+      disableTransitionOnChange={false}
     >
       {children}
     </NextThemesProvider>

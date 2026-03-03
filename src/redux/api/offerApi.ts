@@ -27,6 +27,7 @@ export type FirmWithOffers = {
   slug: string;
   logoUrl: string;
   affiliateLink: string;
+  index?: number;
   offers: Offer[];
 };
 
@@ -131,6 +132,19 @@ const offerApi = baseApi.injectEndpoints({
         { type: "Offers", id: firmId },
       ],
     }),
+    // Change index (order) of a firm on the offers page
+    changeIndexOffer: builder.mutation<
+      TResponse<void>,
+      { id: string; index: number }
+    >({
+      query: ({ id, index }) => ({
+        url: `/firms/change-index/${id}`,
+        method: "PATCH",
+        body: { index },
+      }),
+      invalidatesTags: ["Offer", "Offers"],
+    }),
+
     getAllOfferdata: builder.query({
       query: (params: TQueryParam[]) => ({
         url: "/offers/all",
@@ -152,4 +166,5 @@ export const {
   useLazyGetAllOffersQuery,
   useLazyGetOffersByFirmQuery,
   useGetAllOfferdataQuery,
+  useChangeIndexOfferMutation,
 } = offerApi;

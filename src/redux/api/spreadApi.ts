@@ -4,8 +4,12 @@ import { baseApi } from "./baseApi";
 
 const spreadApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getFirms: builder.query<any, void>({
-      query: () => ({ url: "/firms", method: "GET" }),
+    getFirms: builder.query<any, { limit?: number } | void>({
+      query: (params) => ({
+        url: "/firms",
+        method: "GET",
+        params: params?.limit != null ? { limit: params.limit } : undefined,
+      }),
 
       providesTags: ["Firm"],
     }),

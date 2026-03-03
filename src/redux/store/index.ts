@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
@@ -60,6 +61,8 @@ export const store = configureStore({
       },
     }).concat(baseApi.middleware),
 });
+
+setupListeners(store.dispatch);
 
 // Export states and hooks
 export const getCurrentState = () => store.getState();

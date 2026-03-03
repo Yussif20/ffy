@@ -2,7 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
-import { useLoginMutation } from "@/redux/api/userApi";
+import { useGoogleLoginMutation, useLoginMutation } from "@/redux/api/userApi";
+import { GoogleLogin } from "@react-oauth/google";
 import { setUser } from "@/redux/authSlice";
 import { useAppDispatch } from "@/redux/store";
 import cookie from "js-cookie";
@@ -24,9 +25,33 @@ const defaultValues = {
 export default function SignIn() {
   const t = useTranslations("Auth.SignIn");
   const [login, { isLoading }] = useLoginMutation();
+  const [googleLoginMutation] = useGoogleLoginMutation();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    if (!credentialResponse.credential) return;
+    const toastId = toast.loading(t("toast.loading"));
+    try {
+      const result = await googleLoginMutation(
+        credentialResponse.credential,
+      ).unwrap();
+      if (result?.data) {
+        cookie.set("accessToken", result.data.accessToken);
+        cookie.set("refreshToken", result.data.refreshToken);
+        dispatch(
+          setUser({ user: result.data.user, token: result.data.accessToken }),
+        );
+        router.push("/forex");
+        toast.success(t("toast.success"), { id: toastId });
+      }
+    } catch (error: any) {
+      toast.error(error?.data?.message || t("toast.googleError"), {
+        id: toastId,
+      });
+    }
+  };
 
   const handleSubmit = async (data: FieldValues) => {
     const { email, password } = data;
@@ -39,9 +64,9 @@ export default function SignIn() {
         cookie.set("accessToken", result.data.accessToken);
         cookie.set("refreshToken", result.data.refreshToken);
         dispatch(
-          setUser({ user: result.data.user, token: result.data.accessToken })
+          setUser({ user: result.data.user, token: result.data.accessToken }),
         );
-        router.push("/");
+        router.push("/forex");
         toast.success(t("toast.success"), { id: toastId });
       } else {
         router.push(`/auth/check-email?email=${email}`);
@@ -57,7 +82,7 @@ export default function SignIn() {
       <CustomForm
         onSubmit={handleSubmit}
         defaultValues={defaultValues}
-        className="space-y-4"
+        className="space-y-5"
       >
         {/* Email Field */}
         <CustomInput
@@ -82,36 +107,56 @@ export default function SignIn() {
           disabled={isLoading}
         />
         {/* Forgot Password */}
-        <div className="flex items-center justify-end">
-          <Link href={"/auth/forget-password"}>
-            <Button
-              type="button"
-              variant="link"
-              className="px-0 text-sm"
-              disabled={isLoading}
-            >
-              {t("forgotPassword")}
-            </Button>
+        <div className="flex items-center justify-end -mt-1">
+          <Link
+            href="/auth/forget-password"
+            className="text-sm text-muted-foreground hover:text-primary transition-colors"
+          >
+            {t("forgotPassword")}
           </Link>
         </div>
         {/* Submit Button */}
-        <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
+        <Button
+          type="submit"
+          className="w-full rounded-xl h-11 font-semibold bg-primary hover:bg-primary-dark transition-all duration-200 hover:scale-[1.01] hover:shadow-lg hover:shadow-primary/30 active:scale-[0.99]"
+          size="lg"
+          disabled={isLoading}
+        >
           {isLoading ? t("submit.loading") : t("submit.default")}
         </Button>
       </CustomForm>
+      {/* Google Sign In */}
+      <div className="relative my-6">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-border" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase tracking-wider">
+          <span className="bg-card px-3 text-muted-foreground font-medium">
+            {t("orContinueWith")}
+          </span>
+        </div>
+      </div>
+      <div className="flex justify-center w-full [&>div]:w-full [&>div]:flex [&>div]:justify-center">
+        <div className="w-full overflow-hidden rounded-xl transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => toast.error(t("toast.googleError"))}
+            theme="outline"
+            shape="rectangular"
+            size="large"
+            text="signin_with"
+          />
+        </div>
+      </div>
       {/* Sign Up Link */}
-      <div className="text-center mt-6">
-        <p className="text-sm text-foreground/80">
+      <div className="text-center pt-6">
+        <p className="text-sm font-medium text-muted-foreground">
           {t("noAccount")}{" "}
-          <Link href="/auth/sign-up">
-            <Button
-              type="button"
-              variant="link"
-              className="px-0 text-sm"
-              disabled={isLoading}
-            >
-              {t("signUpLink")}
-            </Button>
+          <Link
+            href="/auth/sign-up"
+            className="text-primary font-semibold hover:underline"
+          >
+            {t("signUpLink")}
           </Link>
         </p>
       </div>

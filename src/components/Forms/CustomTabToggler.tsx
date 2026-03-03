@@ -57,20 +57,30 @@ export default function CustomTabToggler({
 
           {/* Buttons */}
           <div className={cn("grid grid-cols-2 gap-4", optionClass)}>
-            {options.map((opt) => (
-              <Button
-                key={opt.value as any}
-                type="button"
-                disabled={disabled || isSubmitting}
-                className={cn("w-full", buttonClassName)}
-                variant={field.value === opt.value ? "outline" : "outline2"}
-                onClick={() =>
-                  setValue(name, opt.value, { shouldValidate: true })
-                }
-              >
-                {opt.label}
-              </Button>
-            ))}
+            {options.map((opt) => {
+              const isActive = field.value === opt.value;
+
+              return (
+                <Button
+                  key={opt.value as any}
+                  type="button"
+                  disabled={disabled || isSubmitting}
+                  variant="outline2"
+                  className={cn(
+                    "w-full transition-all duration-150 border",
+                    isActive
+                      ? "bg-primary text-primary-foreground border-primary shadow-md ring-2 ring-primary/40 scale-[1.01]"
+                      : "bg-background text-foreground/80 border-border hover:bg-muted/70",
+                    buttonClassName
+                  )}
+                  onClick={() =>
+                    setValue(name, opt.value, { shouldValidate: true })
+                  }
+                >
+                  {opt.label}
+                </Button>
+              );
+            })}
           </div>
 
           {/* Error */}

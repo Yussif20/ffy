@@ -48,6 +48,7 @@ export function AddFaq() {
     questionArabic: "",
     answer: "",
     answerArabic: "",
+    mobileFontSize: undefined as number | undefined,
   };
 
   const handleSubmit = async (data: FieldValues) => {
@@ -58,6 +59,9 @@ export function AddFaq() {
         questionArabic: data.questionArabic,
         answer: data.answer,
         answerArabic: data.answerArabic,
+        mobileFontSize: data.mobileFontSize
+          ? parseInt(String(data.mobileFontSize))
+          : undefined,
       };
 
       const result = await createFaqAction(payload);
@@ -127,6 +131,7 @@ export function EditFaq({
     questionArabic: faq.questionArabic,
     answer: faq.answer,
     answerArabic: faq.answerArabic,
+    mobileFontSize: faq.mobileFontSize ?? undefined,
   };
 
   const handleSubmit = async (data: FieldValues) => {
@@ -138,6 +143,9 @@ export function EditFaq({
         questionArabic: data.questionArabic,
         answer: data.answer,
         answerArabic: data.answerArabic,
+        mobileFontSize: data.mobileFontSize
+          ? parseInt(String(data.mobileFontSize))
+          : undefined,
       };
 
       const result = await updateFaqAction(faq.id!, payload);
@@ -278,6 +286,7 @@ const Form = () => {
           name="answer"
           label={t("answer")}
           placeholder={t("answerPlaceholder")}
+          mobileFontSizeName="mobileFontSize"
           required
         />
         <RichTextEditor2

@@ -7,5 +7,7 @@ export type FAQ = {
   answer: string;
   answerArabic: string;
 
+  mobileFontSize?: number | null;
+
   createdAt: string;
 };

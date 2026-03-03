@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import AuthContainer from "../Auth/AuthContainer";
 import SelectCountry from "../Global/SelectCountry";
-import { countriesByCode } from "@/data";
+import { countries, countriesByCode } from "@/data";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { ChevronLeft, CircleQuestionMark } from "lucide-react";
@@ -174,9 +174,15 @@ export default function Onboarding() {
   const handleComplete = async () => {
     if (formData.tookChallenge && formData.tradingExperience) {
       const toastId = toast.loading(t("loading"));
+      const countryForApi = (() => {
+        const c = countries.find(
+          (x) => x.code === formData.country || x.country === formData.country
+        );
+        return c ? c.country : formData.country;
+      })();
       try {
         await completeSurveyMutation({
-          data: formData,
+          data: { ...formData, country: countryForApi },
         }).unwrap();
         toast.success(t("success"), { id: toastId });
         router.push("/#top");
@@ -214,17 +220,20 @@ export default function Onboarding() {
                   }}
                 />
                 <div className="grid grid-cols-2 gap-5">
-                  {defaultCountries?.map((item) => (
+                  {defaultCountries?.map((item) => {
+                    const isSelected =
+                      formData.country === item.code ||
+                      formData.country === item.country;
+                    return (
                     <Button
-                      key={item.country}
+                      key={item.code}
                       size={"lg"}
-                      variant={
-                        formData.country === item.country
-                          ? "outline"
-                          : "outline2"
-                      }
-                      className="overflow-hidden w-full"
-                      onClick={() => setCountryValue(item.country)}
+                      variant={isSelected ? "outline" : "outline2"}
+                      className={cn(
+                        "overflow-hidden w-full transition-colors",
+                        isSelected && "bg-primary/15 text-primary font-semibold ring-2 ring-primary ring-offset-2 hover:bg-primary/20 hover:text-primary dark:bg-primary/20 dark:text-primary-foreground dark:ring-primary"
+                      )}
+                      onClick={() => setCountryValue(item.code)}
                     >
                       <div className="flex gap-2 items-center w-full">
                         <div className="w-5 min-w- h-3.5 relative">
@@ -238,7 +247,8 @@ export default function Onboarding() {
                         <p className="truncate">{item.country}</p>
                       </div>
                     </Button>
-                  ))}
+                    );
+                  })}
                 </div>
                 <Button
                   variant={"outline2"}
@@ -374,7 +384,11 @@ const OptionButtons = ({
                 onClick={() => action(item.value)}
                 size={"lg"}
                 linearClassName="max-w-full!"
-                className="w-full"
+                className={cn(
+                  "w-full transition-colors",
+                  isSelected &&
+                    "bg-primary/15 text-primary font-semibold ring-2 ring-primary ring-offset-2 hover:bg-primary/20 hover:text-primary dark:bg-primary/20 dark:text-primary-foreground dark:ring-primary",
+                )}
               >
                 {t(`${translationKey}.${item.name}`)}
               </Button>

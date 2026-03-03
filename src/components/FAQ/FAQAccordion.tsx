@@ -18,7 +18,7 @@ export default function FAQAccordion({
       type="single"
       collapsible
       defaultValue={slug}
-      className="w-full space-y-3"
+      className="w-full space-y-4"
     >
       {faqData.map((item, index) => (
         <SingleQuestion

@@ -16,8 +16,11 @@ export default function FirmIndexChange({
   const [changeIndex, { isLoading }] = useChangeIndexMutation();
 
   const handleMoveTop = async () => {
-    let newIndex = prevCompany?.index || firm.index;
-    if (newIndex < 1) return;
+    const target = prevCompany?.index;
+    const newIndex = target !== undefined && target < firm.index
+      ? target
+      : firm.index - 1;
+    if (newIndex < 0) return;
     const toastId = toast.loading("Moving...");
     try {
       await changeIndex({ id: firm.id, index: newIndex }).unwrap();
@@ -30,7 +33,10 @@ export default function FirmIndexChange({
   };
 
   const handleMoveBottom = async () => {
-    let newIndex = nextCompany?.index || firm.index;
+    const target = nextCompany?.index;
+    const newIndex = target !== undefined && target > firm.index
+      ? target
+      : firm.index + 1;
     const toastId = toast.loading("Moving...");
     try {
       await changeIndex({ id: firm.id, index: newIndex }).unwrap();

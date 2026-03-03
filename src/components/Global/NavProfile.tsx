@@ -81,7 +81,7 @@ export default function NavProfile() {
         {data?.data?.user?.role === "SUPER_ADMIN" && (
           <DropdownMenuItem dir={isArabic ? "rtl" : "ltr"} asChild>
             <Link href="/overview" className="flex items-center gap-2">
-              <LayoutDashboard size={16} /> {"Overview"}
+              <LayoutDashboard size={16} /> {t("overview")}
             </Link>
           </DropdownMenuItem>
         )}

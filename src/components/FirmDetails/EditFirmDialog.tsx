@@ -131,6 +131,28 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
         profitShareArabic: firm.profitShareArabic || "",
         inactivityRulesArabic: firm.inactivityRulesArabic || "",
         prohibitedStrategiesArabic: firm.prohibitedStrategiesArabic || "",
+
+        leverageMobileFontSize: firm.leverageMobileFontSize ?? undefined,
+        commissionMobileFontSize: firm.commissionMobileFontSize ?? undefined,
+        accountSizesMobileFontSize: firm.accountSizesMobileFontSize ?? undefined,
+        allocationRulesMobileFontSize: firm.allocationRulesMobileFontSize ?? undefined,
+        dailyMaxLossMobileFontSize: firm.dailyMaxLossMobileFontSize ?? undefined,
+        riskManagementMobileFontSize: firm.riskManagementMobileFontSize ?? undefined,
+        consistencyRulesMobileFontSize: firm.consistencyRulesMobileFontSize ?? undefined,
+        minimumTradingDaysMobileFontSize: firm.minimumTradingDaysMobileFontSize ?? undefined,
+        newsTradingAllowedRulesMobileFontSize: firm.newsTradingAllowedRulesMobileFontSize ?? undefined,
+        newsTradingNotAllowedRulesMobileFontSize: firm.newsTradingNotAllowedRulesMobileFontSize ?? undefined,
+        overnightAndWeekendsHoldingMobileFontSize: firm.overnightAndWeekendsHoldingMobileFontSize ?? undefined,
+        copyTradingAllowedRulesMobileFontSize: firm.copyTradingAllowedRulesMobileFontSize ?? undefined,
+        copyTradingNotAllowedRulesMobileFontSize: firm.copyTradingNotAllowedRulesMobileFontSize ?? undefined,
+        expertsAllowedRulesMobileFontSize: firm.expertsAllowedRulesMobileFontSize ?? undefined,
+        expertsNotAllowedRulesMobileFontSize: firm.expertsNotAllowedRulesMobileFontSize ?? undefined,
+        vpnVpsMobileFontSize: firm.vpnVpsMobileFontSize ?? undefined,
+        profitShareMobileFontSize: firm.profitShareMobileFontSize ?? undefined,
+        payoutPolicyMobileFontSize: firm.payoutPolicyMobileFontSize ?? undefined,
+        scaleupPlansMobileFontSize: firm.scaleupPlansMobileFontSize ?? undefined,
+        inactivityRulesMobileFontSize: firm.inactivityRulesMobileFontSize ?? undefined,
+        prohibitedStrategiesMobileFontSize: firm.prohibitedStrategiesMobileFontSize ?? undefined,
       });
     }
   }, [firmData]);
@@ -206,6 +228,27 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
       profitShareArabic: data.profitShareArabic,
       inactivityRulesArabic: data.inactivityRulesArabic,
       prohibitedStrategiesArabic: data.prohibitedStrategiesArabic,
+      ...(data.leverageMobileFontSize && { leverageMobileFontSize: Number(data.leverageMobileFontSize) }),
+      ...(data.commissionMobileFontSize && { commissionMobileFontSize: Number(data.commissionMobileFontSize) }),
+      ...(data.accountSizesMobileFontSize && { accountSizesMobileFontSize: Number(data.accountSizesMobileFontSize) }),
+      ...(data.allocationRulesMobileFontSize && { allocationRulesMobileFontSize: Number(data.allocationRulesMobileFontSize) }),
+      ...(data.dailyMaxLossMobileFontSize && { dailyMaxLossMobileFontSize: Number(data.dailyMaxLossMobileFontSize) }),
+      ...(data.riskManagementMobileFontSize && { riskManagementMobileFontSize: Number(data.riskManagementMobileFontSize) }),
+      ...(data.consistencyRulesMobileFontSize && { consistencyRulesMobileFontSize: Number(data.consistencyRulesMobileFontSize) }),
+      ...(data.minimumTradingDaysMobileFontSize && { minimumTradingDaysMobileFontSize: Number(data.minimumTradingDaysMobileFontSize) }),
+      ...(data.newsTradingAllowedRulesMobileFontSize && { newsTradingAllowedRulesMobileFontSize: Number(data.newsTradingAllowedRulesMobileFontSize) }),
+      ...(data.newsTradingNotAllowedRulesMobileFontSize && { newsTradingNotAllowedRulesMobileFontSize: Number(data.newsTradingNotAllowedRulesMobileFontSize) }),
+      ...(data.overnightAndWeekendsHoldingMobileFontSize && { overnightAndWeekendsHoldingMobileFontSize: Number(data.overnightAndWeekendsHoldingMobileFontSize) }),
+      ...(data.copyTradingAllowedRulesMobileFontSize && { copyTradingAllowedRulesMobileFontSize: Number(data.copyTradingAllowedRulesMobileFontSize) }),
+      ...(data.copyTradingNotAllowedRulesMobileFontSize && { copyTradingNotAllowedRulesMobileFontSize: Number(data.copyTradingNotAllowedRulesMobileFontSize) }),
+      ...(data.expertsAllowedRulesMobileFontSize && { expertsAllowedRulesMobileFontSize: Number(data.expertsAllowedRulesMobileFontSize) }),
+      ...(data.expertsNotAllowedRulesMobileFontSize && { expertsNotAllowedRulesMobileFontSize: Number(data.expertsNotAllowedRulesMobileFontSize) }),
+      ...(data.vpnVpsMobileFontSize && { vpnVpsMobileFontSize: Number(data.vpnVpsMobileFontSize) }),
+      ...(data.profitShareMobileFontSize && { profitShareMobileFontSize: Number(data.profitShareMobileFontSize) }),
+      ...(data.payoutPolicyMobileFontSize && { payoutPolicyMobileFontSize: Number(data.payoutPolicyMobileFontSize) }),
+      ...(data.scaleupPlansMobileFontSize && { scaleupPlansMobileFontSize: Number(data.scaleupPlansMobileFontSize) }),
+      ...(data.inactivityRulesMobileFontSize && { inactivityRulesMobileFontSize: Number(data.inactivityRulesMobileFontSize) }),
+      ...(data.prohibitedStrategiesMobileFontSize && { prohibitedStrategiesMobileFontSize: Number(data.prohibitedStrategiesMobileFontSize) }),
     };
 
     const sendingData = new FormData();
@@ -249,32 +292,34 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
           </Button>
         </div>
 
-        <AlertDialogDescription>
-          {isFetchingFirm ? (
-            <div className="flex items-center justify-center py-8">
-              <p>Loading firm data...</p>
-            </div>
-          ) : defaultValues ? (
-            <CustomForm
-              onSubmit={handleSubmit}
-              defaultValues={defaultValues}
-              className="space-y-6 py-4"
-            >
-              <FirmForm
-                open={open}
-                logoUrl={firmData.data.logoUrl}
-                showOffer={showOffer}
-                setShowOffer={setShowOffer}
-              />
-              <Button
-                disabled={isUpdating}
-                type="submit"
-                className="w-full h-11"
+        <AlertDialogDescription asChild>
+          <div className="text-muted-foreground text-sm">
+            {isFetchingFirm ? (
+              <div className="flex items-center justify-center py-8">
+                Loading firm data...
+              </div>
+            ) : defaultValues ? (
+              <CustomForm
+                onSubmit={handleSubmit}
+                defaultValues={defaultValues}
+                className="space-y-6 py-4"
               >
-                {isUpdating ? t("updatingFirm") : t("updateFirm")}
-              </Button>
-            </CustomForm>
-          ) : null}
+                <FirmForm
+                  open={open}
+                  logoUrl={firmData.data.logoUrl}
+                  showOffer={showOffer}
+                  setShowOffer={setShowOffer}
+                />
+                <Button
+                  disabled={isUpdating}
+                  type="submit"
+                  className="w-full h-11"
+                >
+                  {isUpdating ? t("updatingFirm") : t("updateFirm")}
+                </Button>
+              </CustomForm>
+            ) : null}
+          </div>
         </AlertDialogDescription>
       </AlertDialogContent>
     </AlertDialog>
