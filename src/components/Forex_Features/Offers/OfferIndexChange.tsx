@@ -1,60 +1,67 @@
 import { Button } from "@/components/ui/button";
-import { useChangeIndexMutation } from "@/redux/api/firms.api";
-import { SinglePropFirm } from "@/types/firm.types";
+import { useChangeIndexOfferMutation, FirmWithOffers } from "@/redux/api/offerApi";
 import { ArrowDown, ArrowUp, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
-export default function FirmIndexChange({
+export default function OfferIndexChange({
   firm,
-  nextCompany,
-  prevCompany,
+  prevFirm,
+  nextFirm,
 }: {
-  firm: SinglePropFirm;
-  nextCompany: SinglePropFirm;
-  prevCompany: SinglePropFirm;
+  firm: FirmWithOffers;
+  prevFirm?: FirmWithOffers;
+  nextFirm?: FirmWithOffers;
 }) {
-  const [changeIndex, { isLoading }] = useChangeIndexMutation();
+  const [changeIndex, { isLoading }] = useChangeIndexOfferMutation();
 
-  const handleMoveTop = async () => {
-    const target = prevCompany?.index;
-    const newIndex = target !== undefined && target < firm.index
-      ? target
-      : firm.index - 1;
+  const handleMoveUp = async () => {
+    const currentIndex = firm.index ?? 0;
+    const target = prevFirm?.index;
+    const newIndex =
+      target !== undefined && target < currentIndex
+        ? target
+        : currentIndex - 1;
     if (newIndex < 0) return;
     const toastId = toast.loading("Moving...");
     try {
       await changeIndex({ id: firm.id, index: newIndex }).unwrap();
       toast.dismiss(toastId);
       toast.success("Moved successfully");
-    } catch (error) {
+    } catch {
       toast.dismiss(toastId);
       toast.error("Failed to move");
     }
   };
 
-  const handleMoveBottom = async () => {
-    const target = nextCompany?.index;
-    const newIndex = target !== undefined && target > firm.index
-      ? target
-      : firm.index + 1;
+  const handleMoveDown = async () => {
+    const currentIndex = firm.index ?? 0;
+    const target = nextFirm?.index;
+    const newIndex =
+      target !== undefined && target > currentIndex
+        ? target
+        : currentIndex + 1;
     const toastId = toast.loading("Moving...");
     try {
       await changeIndex({ id: firm.id, index: newIndex }).unwrap();
       toast.dismiss(toastId);
       toast.success("Moved successfully");
-    } catch (error) {
+    } catch {
       toast.dismiss(toastId);
       toast.error("Failed to move");
     }
   };
 
+  const canMoveUp = !isLoading && (!!prevFirm || (firm.index ?? 0) > 0);
+  const canMoveDown = !isLoading;
+
   return (
     <>
       <Button
-        disabled={isLoading}
+        disabled={!canMoveUp}
         size="icon"
         variant="outline"
-        onClick={handleMoveTop}
+        onClick={handleMoveUp}
+        title={canMoveUp ? "Move up" : "Cannot move up"}
       >
         {isLoading ? (
           <Loader2 className="w-4 h-4 animate-spin" />
@@ -62,13 +69,12 @@ export default function FirmIndexChange({
           <ArrowUp className="w-4 h-4" />
         )}
       </Button>
-
-      {/* Move Bottom */}
       <Button
-        disabled={isLoading}
+        disabled={!canMoveDown}
         size="icon"
         variant="outline"
-        onClick={handleMoveBottom}
+        onClick={handleMoveDown}
+        title={canMoveDown ? "Move down" : "Cannot move down"}
       >
         {isLoading ? (
           <Loader2 className="w-4 h-4 animate-spin" />

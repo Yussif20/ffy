@@ -126,8 +126,13 @@ export default function OfferList({ companySlug }: { companySlug?: string }) {
     <div className="space-y-8">
       {/* Offers List */}
       <div className="space-y-4">
-        {data.firms.map((firm) => (
-          <SingleOffer key={firm.id} data={firm} />
+        {data.firms.map((firm, idx) => (
+          <SingleOffer
+            key={firm.id}
+            data={firm}
+            prevFirm={data.firms[idx - 1]}
+            nextFirm={data.firms[idx + 1]}
+          />
         ))}
       </div>
 

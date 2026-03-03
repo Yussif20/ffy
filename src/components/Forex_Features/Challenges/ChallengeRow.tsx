@@ -113,30 +113,32 @@ export default function ChallengeRow({
           </div>
         </TableCell>
         {role === "SUPER_ADMIN" && (
-          <TableCell className="flex gap-2">
-            <Button
-              onClick={handleOpenEditModal}
-              variant="outline"
-              className=" w-9 h-9"
-              size={"icon"}
-              linearClassName="w-max"
-            >
-              <Edit className="w-4 h-4" />
-            </Button>
-            <Button
-              onClick={handleOpenDeleteModal}
-              variant="outline"
-              className=" w-9 h-9"
-              size={"icon"}
-              linearClassName="w-max"
-            >
-              <Trash className="w-4 h-4" />
-            </Button>
-            <ChallengeIndexChange
-              challenge={challenge}
-              prevChallenge={prevChallenge}
-              nextChallenge={nextChallenge}
-            />
+          <TableCell>
+            <div className="flex gap-2 flex-nowrap">
+              <Button
+                onClick={handleOpenEditModal}
+                variant="outline"
+                className=" w-9 h-9"
+                size={"icon"}
+                linearClassName="w-max"
+              >
+                <Edit className="w-4 h-4" />
+              </Button>
+              <Button
+                onClick={handleOpenDeleteModal}
+                variant="outline"
+                className=" w-9 h-9"
+                size={"icon"}
+                linearClassName="w-max"
+              >
+                <Trash className="w-4 h-4" />
+              </Button>
+              {/* <ChallengeIndexChange
+                challenge={challenge}
+                prevChallenge={prevChallenge}
+                nextChallenge={nextChallenge}
+              /> */}
+            </div>
           </TableCell>
         )}
       </TableRow>

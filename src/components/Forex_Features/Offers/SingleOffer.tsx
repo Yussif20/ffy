@@ -28,6 +28,7 @@ import { useState, useEffect } from "react";
 import DeleteOfferModal from "./DeleteOfferModal";
 import EditOfferModal from "./EditOfferModal";
 import { FirmWithOffers, Offer } from "@/redux/api/offerApi";
+import OfferIndexChange from "./OfferIndexChange";
 import { Link } from "@/i18n/navigation";
 import useIsFutures from "@/hooks/useIsFutures";
 import DiscountText from "@/components/Global/DiscountText";
@@ -198,11 +199,15 @@ export default function SingleOffer({
   hideBlackHoles,
   isTopOffer,
   data,
+  prevFirm,
+  nextFirm,
 }: {
   onlyShowMatch?: boolean;
   hideBlackHoles?: boolean;
   isTopOffer?: boolean;
   data: FirmWithOffers;
+  prevFirm?: FirmWithOffers;
+  nextFirm?: FirmWithOffers;
 }) {
   const offer = data?.offers ?? [];
   const companyData = {
@@ -698,6 +703,11 @@ const OfferCard = ({
 
                 {isAdmin && (
                   <div className="flex gap-2 justify-end  items-center">
+                    <OfferIndexChange
+                      firm={data}
+                      prevFirm={prevFirm}
+                      nextFirm={nextFirm}
+                    />
                     <Button
                       variant={"outline"}
                       size={"sm"}

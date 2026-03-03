@@ -200,8 +200,8 @@ export default function ChallengeTable({
   if (isLoading || isFetching) return <TableSkeleton />;
 
   return (
-    <div className="max-w-full w-full space-y-8 overflow-hidden">
-      <Table>
+    <div className="max-w-full w-full space-y-8">
+      <Table className="min-w-[1100px]">
         <SortTableHeader headers={headers} />
         <TableBody colSpan={7}>
           {challenges.map((item: TChallenge, index: number) => (
