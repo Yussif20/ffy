@@ -14,7 +14,6 @@ import { useCurrentUser } from "@/redux/authSlice";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { visibleText } from "@/utils/visibleText";
-import ChallengeIndexChange from "./ChallengeIndexChange";
 import { cn } from "@/lib/utils";
 
 const stepStyles: Record<string, string> = {
@@ -28,13 +27,11 @@ const stepStyles: Record<string, string> = {
 export default function ChallengeRow({
   challenge,
   isArabic,
-  nextChallenge,
-  prevChallenge,
 }: {
   challenge: TChallenge;
   isArabic: boolean;
-  nextChallenge: TChallenge;
-  prevChallenge: TChallenge;
+  nextChallenge?: TChallenge;
+  prevChallenge?: TChallenge;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();

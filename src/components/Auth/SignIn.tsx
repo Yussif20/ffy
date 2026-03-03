@@ -125,7 +125,7 @@ export default function SignIn() {
           <span className="bg-card px-3 text-muted-foreground font-medium">{t("orContinueWith")}</span>
         </div>
       </div>
-      <div className="flex justify-center w-full [&>div]:!w-full [&>div]:!flex [&>div]:!justify-center [&_iframe]:!rounded-xl [&_iframe]:!h-11 [&_iframe]:!min-h-11">
+      <div className="flex justify-center w-full [&>div]:w-full [&>div]:flex [&>div]:justify-center [&_iframe]:rounded-xl [&_iframe]:h-11 [&_iframe]:min-h-11">
         <div className="w-full max-w-[320px] overflow-hidden rounded-xl border border-border bg-card shadow-sm ring-offset-background transition-all duration-200 hover:shadow-md hover:border-primary/30 hover:scale-[1.01] active:scale-[0.99] focus-within:ring-2 focus-within:ring-primary/20 focus-within:ring-offset-2">
           <GoogleLogin
             onSuccess={handleGoogleSuccess}

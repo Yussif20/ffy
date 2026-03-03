@@ -194,14 +194,7 @@ function CompanyHeader({
   );
 }
 
-export default function SingleOffer({
-  onlyShowMatch,
-  hideBlackHoles,
-  isTopOffer,
-  data,
-  prevFirm,
-  nextFirm,
-}: {
+export default function SingleOffer(props: {
   onlyShowMatch?: boolean;
   hideBlackHoles?: boolean;
   isTopOffer?: boolean;
@@ -209,6 +202,7 @@ export default function SingleOffer({
   prevFirm?: FirmWithOffers;
   nextFirm?: FirmWithOffers;
 }) {
+  const { onlyShowMatch, hideBlackHoles, isTopOffer, data } = props;
   const offer = data?.offers ?? [];
   const companyData = {
     id: data.id,
@@ -269,6 +263,16 @@ export default function SingleOffer({
         >
           <div className="absolute -top-6 w-9 h-12 rounded-full bg-background -left-4"></div>
           <div className="absolute -bottom-6 w-9 h-12 rounded-full bg-background -left-4"></div>
+        </div>
+      )}
+      {/* Admin reorder controls */}
+      {isAdmin && (
+        <div className="flex gap-2 items-center">
+          <OfferIndexChange
+            firm={data}
+            prevFirm={props.prevFirm}
+            nextFirm={props.nextFirm}
+          />
         </div>
       )}
       {/* Left: company once. Right: all offers (no repeated company) */}
@@ -703,11 +707,6 @@ const OfferCard = ({
 
                 {isAdmin && (
                   <div className="flex gap-2 justify-end  items-center">
-                    <OfferIndexChange
-                      firm={data}
-                      prevFirm={prevFirm}
-                      nextFirm={nextFirm}
-                    />
                     <Button
                       variant={"outline"}
                       size={"sm"}
