@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Title from "../Global/Title";
 import Subtitle from "../Global/Subtitle";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useForgetPasswordMutation } from "@/redux/api/userApi";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
