@@ -69,7 +69,7 @@ export function Pagination({ totalPages }: PaginationWithParamsProps) {
   );
 
   return (
-    <div className="flex items-center justify-center gap-0.5 sm:gap-1 max-w-full overflow-x-auto px-1">
+    <div className="flex items-center justify-center gap-0.5 sm:gap-1 max-w-full overflow-x-auto overflow-y-hidden px-1">
       <button
         className={`
           h-9 sm:h-11 px-2 sm:px-5 flex items-center justify-center shrink-0
