@@ -114,7 +114,7 @@ export default function Hero() {
                 variants={itemVariants}
                 className={cn(
                   "text-muted-foreground/90 leading-relaxed",
-                  "text-[12px] sm:text-base lg:text-lg 2xl:text-base",
+                  "text-[12px] sm:text-base lg:text-lg",
                   "w-full max-w-xs sm:max-w-sm lg:max-w-none",
                   "text-center",
                   !isArabic && "lg:text-left",
@@ -128,7 +128,7 @@ export default function Hero() {
             {/* 3D — desktop only, absolutely overlays right (LTR) or left (RTL) portion of container */}
             <div
               className={cn(
-                "hidden lg:absolute lg:inset-y-0 lg:block lg:w-[85%]",
+                "hidden lg:absolute lg:inset-y-0 lg:block lg:w-[80%]",
                 isArabic ? "left-0" : "right-0",
               )}
             >
