@@ -7,9 +7,9 @@
   },
   "HomePage": {
     "heroTitle": {
-      "title1": "Find the best Prop Firms",
-      "title2": "Get the best new and exclusive offers",
-      "title3": "And join the traders who TRUST our platform",
+      "title1": "Find the best Prop Firms get the best new",
+      "title2": "and exclusive offers, and join the traders who",
+      "title3": "trust our platform",
       "subtitle": "The #1 platform for comparing Prop Firms, challenges, and exclusive offers — Everything in one place",
       "cta": "Compare Firms"
     }
@@ -230,7 +230,9 @@
     "stayConnected": "STAY CONNECTED",
     "title": "Subscribe For The Latest News And Deals",
     "emailPlaceholder": "Your Email",
-    "subscribeButton": "Subscribe"
+    "subscribeButton": "Subscribe",
+    "subscribedSuccessfully": "Subscribed successfully!",
+    "error": "Something went wrong! Try again."
   },
   "BestSellers": {
     "seeAllOffers": "See all offers",
@@ -893,7 +895,7 @@
     },
     "CheckMail": {
       "title": "Check your email",
-      "subtitle": "We’ve sent a password reset link to {email}",
+      "subtitle": "We’ve sent a verification link to {email}",
       "openGmail": "Open Gmail",
       "didntReceive": "Didn’t receive the email?",
       "resendLink": "Click to resend",

@@ -98,7 +98,7 @@ export default function Hero() {
                 variants={itemVariants}
                 className={cn(
                   "font-extrabold tracking-tight",
-                  "text-3xl sm:text-4xl lg:text-[34px] xl:text-[34px] 2xl:text-[34px]",
+                  "text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-5xl",
                   "w-full text-center leading-[1.4]",
                   !isArabic && "lg:text-left",
                   isArabic && "lg:text-right",
@@ -128,7 +128,7 @@ export default function Hero() {
             {/* 3D — desktop only, absolutely overlays right (LTR) or left (RTL) portion of container */}
             <div
               className={cn(
-                "hidden lg:absolute lg:inset-y-0 lg:block lg:w-[77%]",
+                "hidden lg:absolute lg:inset-y-0 lg:block lg:w-[80%]",
                 isArabic ? "left-0" : "right-0",
               )}
             >

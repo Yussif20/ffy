@@ -124,7 +124,7 @@ export default function NavItems() {
         <div className="pointer-events-none absolute left-0 top-0 h-full w-10 bg-linear-to-r from-background to-transparent z-10 md:hidden" />
         <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-linear-to-l from-background to-transparent z-10 md:hidden" />
         <div
-          className={cn("w-full flex md:grid", !isFutures && "overflow-x-auto")}
+          className={cn("w-full flex md:grid", !isFutures && "overflow-x-auto overflow-y-hidden")}
           style={{ gridTemplateColumns: `repeat(${navItems.length}, minmax(0, 1fr))` }}
         >
           {navItems.map((item) => {

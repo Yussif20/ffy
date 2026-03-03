@@ -9,7 +9,7 @@ import { useAppDispatch } from "@/redux/store";
 import cookie from "js-cookie";
 import { Eye, EyeClosed, LockKeyhole, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
