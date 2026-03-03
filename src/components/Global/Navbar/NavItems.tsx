@@ -50,8 +50,6 @@ export default function NavItems() {
             href: "/spreads",
             icon: <GitCompareArrows size={13} />,
             part: 3,
-            badge: t("comingSoon"),
-            badgeTooltip: "Spread data across all firms — launching soon",
             scrollToTabs: false,
             scrollToTop: false,
           },
@@ -149,14 +147,6 @@ export default function NavItems() {
                     />
                   )}
                 </span>
-                {item.badge && (
-                  <span
-                    title={"badgeTooltip" in item ? item.badgeTooltip : undefined}
-                    className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium cursor-help"
-                  >
-                    {item.badge}
-                  </span>
-                )}
               </Link>
             );
           })}
