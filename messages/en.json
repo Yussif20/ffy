@@ -853,7 +853,9 @@
     "submit": {
       "default": "Submit",
       "submitting": "Submitting..."
-    }
+    },
+    "messageSentSuccessfully": "Message sent successfully.",
+    "somethingWentWrong": "Something went wrong! Try again."
   },
   "Auth": {
     "SignIn": {
@@ -1445,6 +1447,7 @@
       "managePayMethod": "Manage Pay Method",
       "managePlatform": "Manage Platform",
       "manageBroker": "Manage Broker",
+      "manageContactMessages": "Contact Messages",
       "home": "Home",
       "logOut": "Log Out",
       "logOutTooltip": "Log Out",
@@ -1555,6 +1558,24 @@
       "deletingBroker": "Deleting broker...",
       "deleteSuccess": "Broker deleted successfully",
       "deleteError": "Failed to delete broker"
+    },
+    "contactMessages": {
+      "title": "Contact Messages",
+      "name": "Name",
+      "email": "Email",
+      "type": "Type",
+      "inquiry": "Inquiry",
+      "message": "Message",
+      "status": "Status",
+      "date": "Date",
+      "actions": "Actions",
+      "statusPending": "Pending",
+      "statusInProgress": "In Progress",
+      "statusResolved": "Resolved",
+      "statusClosed": "Closed",
+      "noMessages": "No contact messages yet.",
+      "statusUpdated": "Status updated successfully",
+      "viewMessage": "View message"
     },
     "common": {
       "logo": "Logo",

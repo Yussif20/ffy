@@ -7,6 +7,7 @@ import {
   CreditCard,
   Layers,
   Handshake,
+  MessageSquare,
 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -41,6 +42,12 @@ const navigation = [
     labelKey: "manageBroker",
     route: "/overview/broker-management",
     icon: Handshake,
+    roles: ["SUPER_ADMIN"],
+  },
+  {
+    labelKey: "manageContactMessages",
+    route: "/overview/contact-messages",
+    icon: MessageSquare,
     roles: ["SUPER_ADMIN"],
   },
   {

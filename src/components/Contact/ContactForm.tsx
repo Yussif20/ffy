@@ -41,12 +41,12 @@ export default function ContactForm() {
 
       await createContact(payload).unwrap();
 
-      toast.success( t("Message Sent Successfully"));
+      toast.success(t("messageSentSuccessfully"));
     } catch (error: any) {
       toast.error(
         error?.data?.message ||
           error?.message ||
-          t("Something went wrong! Try again.")
+          t("somethingWentWrong")
       );
     } finally {
       setIsSubmitting(false);
@@ -121,14 +121,14 @@ export default function ContactForm() {
         <p>
           {t("recaptcha.text")}{" "}
           <Link
-            href="#"
+            href="/privacy-policy"
             className="underline text-success hover:text-foreground"
           >
             {t("recaptcha.privacy")}
           </Link>{" "}
           {t("recaptcha.and")}{" "}
           <Link
-            href="#"
+            href="/terms-and-conditions"
             className="underline text-success hover:text-foreground"
           >
             {t("recaptcha.terms")}

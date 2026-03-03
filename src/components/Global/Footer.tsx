@@ -3,7 +3,6 @@ import Container from "./Container";
 import NavbarLogo from "./Navbar/NavbarLogo";
 import { PiTiktokLogo } from "react-icons/pi";
 import { FaXTwitter } from "react-icons/fa6";
-import { SlSocialFacebook } from "react-icons/sl";
 import { FiYoutube } from "react-icons/fi";
 import { AiOutlineDiscord } from "react-icons/ai";
 import { getTranslations } from "next-intl/server";
@@ -47,12 +46,11 @@ const Footer = async () => {
 
   const iconSize = 26;
   const socialLinks = [
-    { icon: <Instagram size={iconSize} />, href: "https://instagram.com" },
-    { icon: <PiTiktokLogo size={iconSize} />, href: "https://tiktok.com" },
-    { icon: <FaXTwitter size={iconSize} />, href: "https://twitter.com" },
-    { icon: <SlSocialFacebook size={iconSize} />, href: "https://facebook.com" },
-    { icon: <FiYoutube size={iconSize} />, href: "https://youtube.com" },
-    { icon: <AiOutlineDiscord size={iconSize} />, href: "https://discord.com" },
+    { icon: <AiOutlineDiscord size={iconSize} />, href: "https://discord.com/invite/FundedForYou" },
+    { icon: <FiYoutube size={iconSize} />, href: "https://www.youtube.com/@hassan.chami.funded?sub_confirmation=1" },
+    { icon: <Instagram size={iconSize} />, href: "https://www.instagram.com/fundedforyou?igsh=NHByYjFuNGJ5b2Rx" },
+    { icon: <PiTiktokLogo size={iconSize} />, href: "https://www.tiktok.com/@fundedforyou?_r=1&_t=ZS-94Ktsspx8gZ" },
+    { icon: <FaXTwitter size={iconSize} />, href: "https://x.com/Fundedforyou" },
   ];
 
   return (

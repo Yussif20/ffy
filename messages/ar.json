@@ -790,7 +790,9 @@
     "submit": {
       "default": "إرسال",
       "submitting": "جارٍ الإرسال..."
-    }
+    },
+    "messageSentSuccessfully": "تم إرسال رسالتك بنجاح.",
+    "somethingWentWrong": "حدث خطأ! يرجى المحاولة مرة أخرى."
   },
   "Auth": {
     "SignIn": {
@@ -1382,6 +1384,7 @@
       "managePayMethod": "إدارة طرق الدفع",
       "managePlatform": "إدارة المنصات",
       "manageBroker": "إدارة الوسطاء",
+      "manageContactMessages": "رسائل التواصل",
       "home": "الرئيسية",
       "logOut": "تسجيل الخروج",
       "logOutTooltip": "تسجيل الخروج",
@@ -1492,6 +1495,24 @@
       "deletingBroker": "جاري حذف الوسيط...",
       "deleteSuccess": "تم حذف الوسيط بنجاح",
       "deleteError": "فشل حذف الوسيط"
+    },
+    "contactMessages": {
+      "title": "رسائل التواصل",
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "type": "النوع",
+      "inquiry": "نوع الاستفسار",
+      "message": "الرسالة",
+      "status": "الحالة",
+      "date": "التاريخ",
+      "actions": "إجراءات",
+      "statusPending": "قيد الانتظار",
+      "statusInProgress": "قيد المعالجة",
+      "statusResolved": "تم الحل",
+      "statusClosed": "مغلق",
+      "noMessages": "لا توجد رسائل تواصل بعد.",
+      "statusUpdated": "تم تحديث الحالة بنجاح",
+      "viewMessage": "عرض الرسالة"
     },
     "common": {
       "logo": "الشعار",
