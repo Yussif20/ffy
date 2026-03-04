@@ -77,7 +77,7 @@ export default function Firms({
     limit,
     { name: "searchTerm", value: searchTerm },
     { name: "leverages.array_assets", value: assets },
-    { name: "array_countries", value: countries },
+    { name: "arraySome_countries", value: countries },
     { name: "range_maxAllocation", value: range_maxAllocation },
     { name: "paymentMethods.array_id", value: paymentMethodsArray_id },
     { name: "payoutMethods.array_id", value: payoutMethodsArray_id },
