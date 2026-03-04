@@ -26,13 +26,13 @@ export default async function RootLayout({
     `/firms/${slug}?header=true`
   );
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-clip">
       <ScrollToTopOnOpen />
       <FirmNavigate firmType={data.data.firmType} />
       <div className="space-y-12 relative">
         <FirmDetails data={data.data} />
 
-        <div className="md:sticky md:top-28 bg-background z-30">
+        <div className="md:sticky md:top-(--navbar-height,5.5rem) bg-background z-30">
           <SingleOffer hideBlackHoles data={data.data} />
         </div>
         <FDTabs slug={slug} count={data?.data?.count} />
