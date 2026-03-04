@@ -433,49 +433,51 @@ const OfferCard = ({
   );
 
   const moreBtn = showTag && showingNumber > 0 && (
-    <AccordionTrigger hideArrow className="p-0">
+    <AccordionTrigger hideArrow className="p-0 [&[data-state=open]_svg]:rotate-180">
       <div className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg text-xs font-semibold border border-border bg-muted hover:bg-accent hover:text-accent-foreground h-9 px-3 transition-colors">
         {showingNumber} {t("more")}
-        <ChevronDown className="size-3.5" />
+        <ChevronDown className="size-3.5 transition-transform duration-200" />
       </div>
     </AccordionTrigger>
   );
 
   const companyDataUi = (
     <div className="space-y-2 lg:space-y-4">
-      <div className="flex justify-between items-center w-full">
-        <Link
-          href={`${isFutures ? "/futures/" : "/"}firms/${
-            companyData.slug
-          }`}
-          className="flex items-center gap-2"
-        >
-          <div className="bg-primary3 max-w-max rounded-lg overflow-hidden border border-border">
-            <div className="w-8 xl:w-12 aspect-square relative">
-              <Image
-                src={companyData.logoUrl}
-                alt="image"
-                fill
-                className="object-cover"
-              />
-            </div>
-          </div>
-          <h2 className="text-sm md:text-base xl:text-lg font-semibold flex gap-1">
-            {companyData.title}{" "}
-            {isTopOffer && (
-              <span className=" items-center gap-1 md:flex hidden">
-                (
-                <DiscountText
-                  className="text-primary"
-                  mainClassName="px-0! py-0"
-                  percentage={offer.offerPercentage}
+      <div className="flex flex-col gap-2 w-full">
+        <div className="flex justify-between items-center w-full">
+          <Link
+            href={`${isFutures ? "/futures/" : "/"}firms/${
+              companyData.slug
+            }`}
+            className="flex items-center gap-2"
+          >
+            <div className="bg-primary3 max-w-max rounded-lg overflow-hidden border border-border">
+              <div className="w-8 xl:w-12 aspect-square relative">
+                <Image
+                  src={companyData.logoUrl}
+                  alt="image"
+                  fill
+                  className="object-cover"
                 />
-                )
-              </span>
-            )}
-          </h2>
-        </Link>
-        <div className="lg:hidden"> {moreBtn}</div>
+              </div>
+            </div>
+            <h2 className="text-sm md:text-base xl:text-lg font-semibold flex gap-1">
+              {companyData.title}{" "}
+              {isTopOffer && (
+                <span className=" items-center gap-1 md:flex hidden">
+                  (
+                  <DiscountText
+                    className="text-primary"
+                    mainClassName="px-0! py-0"
+                    percentage={offer.offerPercentage}
+                  />
+                  )
+                </span>
+              )}
+            </h2>
+          </Link>
+        </div>
+        <div className="lg:hidden w-full flex justify-center">{moreBtn}</div>
       </div>
       <div className={cn("lg:hidden", onlyShowMatch && "hidden")}>
         {onlyShowMatch ? (
@@ -520,9 +522,9 @@ const OfferCard = ({
 
   const offerOnlyContent = (
     <div className="space-y-2 lg:space-y-3">
-      <div className="flex justify-between items-center w-full gap-2">
-        <div className="min-w-0 flex-1">{percantCard}</div>
-        <div className="lg:hidden shrink-0">{moreBtn}</div>
+      <div className="flex flex-col sm:flex-row justify-between items-center w-full gap-2">
+        <div className="min-w-0 flex-1 w-full sm:w-auto">{percantCard}</div>
+        <div className="lg:hidden w-full flex justify-center sm:justify-end sm:w-auto">{moreBtn}</div>
       </div>
       {endTime && <div className="flex justify-center items-center">{endTime}</div>}
       {offer.text || offer.textArabic ? (
@@ -544,8 +546,8 @@ const OfferCard = ({
           !showTag && "border-t border-border pt-6"
         )}
       >
-        {/* Badge: only shown when not moved to the company column */}
-        {!hideBadge && <div className="shrink-0">{percentageBadge}</div>}
+        {/* Badge: only shown when not moved to the company column — centered */}
+        {!hideBadge && <div className="shrink-0 flex justify-center">{percentageBadge}</div>}
 
         {/* Middle: offer description + countdown */}
         <div className="min-w-0 flex-1 space-y-2">

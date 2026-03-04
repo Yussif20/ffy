@@ -27,6 +27,7 @@ export default function FirmCell({
       >
         <Link
           href={`${isFutures ? "/futures/" : "/"}firms/${company.slug}`}
+
           className="flex items-center gap-2 max-md:outline-none max-md:focus:outline-none max-md:active:outline-none max-md:[-webkit-tap-highlight-color:transparent]"
         >
           <div className="bg-primary3 max-w-max rounded-lg overflow-hidden border border-border flex-shrink-0">
@@ -67,6 +68,7 @@ export default function FirmCell({
         <span className="absolute inset-y-0 -left-3 -right-3 bg-background -z-[1]" aria-hidden />
         <Link
           href={linkHref}
+
           className="relative z-0 flex justify-center md:justify-start w-full min-w-0 max-md:outline-none max-md:focus:outline-none max-md:active:outline-none max-md:[-webkit-tap-highlight-color:transparent]"
         >
           <div className="bg-primary3 rounded-lg overflow-hidden border border-border flex-shrink-0 w-9 md:w-10 xl:w-14 aspect-square relative">
@@ -81,7 +83,7 @@ export default function FirmCell({
       </TableCell>
 
       <TableCell className={cn("bg-background z-10 table-cell md:hidden w-max min-w-max")}>
-        <Link href={linkHref} className="flex justify-center md:justify-start max-md:outline-none max-md:focus:outline-none max-md:active:outline-none max-md:[-webkit-tap-highlight-color:transparent]">
+        <Link href={linkHref} scroll={false} className="flex justify-center md:justify-start max-md:outline-none max-md:focus:outline-none max-md:active:outline-none max-md:[-webkit-tap-highlight-color:transparent]">
           <div className="overflow-visible transition-all duration-200 md:max-w-none text-center md:text-left">
             <h2 className="text-sm md:text-base xl:text-lg font-semibold whitespace-nowrap px-1">
               {company.name}

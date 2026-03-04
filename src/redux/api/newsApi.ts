@@ -63,12 +63,12 @@ const newsApi = baseApi.injectEndpoints({
       invalidatesTags: ["News"],
     }),
     
-    // Change Index News (for Up/Down buttons)
+    // Swap two news items' positions
     changeIndexNews: builder.mutation({
-      query: ({ id, order }: { id: string; order: number }) => ({
+      query: ({ id, targetId }: { id: string; targetId: string }) => ({
         url: `/news/change-index/${id}`,
         method: "PATCH",
-        body: { order },
+        body: { targetId },
       }),
       invalidatesTags: ["News"],
     }),

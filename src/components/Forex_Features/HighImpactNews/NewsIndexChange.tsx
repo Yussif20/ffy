@@ -16,10 +16,10 @@ export default function NewsIndexChange({
   const [changeIndex, { isLoading }] = useChangeIndexNewsMutation();
 
   const handleMoveTop = async () => {
-    if (!prevNews || prevNews.order === undefined) return;
+    if (!prevNews) return;
     const toastId = toast.loading("Moving...");
     try {
-      await changeIndex({ id: news.id, order: prevNews.order }).unwrap();
+      await changeIndex({ id: news.id, targetId: prevNews.id }).unwrap();
       toast.dismiss(toastId);
       toast.success("Moved successfully");
     } catch (error) {
@@ -30,10 +30,10 @@ export default function NewsIndexChange({
   };
 
   const handleMoveBottom = async () => {
-    if (!nextNews || nextNews.order === undefined) return;
+    if (!nextNews) return;
     const toastId = toast.loading("Moving...");
     try {
-      await changeIndex({ id: news.id, order: nextNews.order }).unwrap();
+      await changeIndex({ id: news.id, targetId: nextNews.id }).unwrap();
       toast.dismiss(toastId);
       toast.success("Moved successfully");
     } catch (error) {

@@ -84,7 +84,7 @@ export default function HomeNavItems() {
             );
           const count = counts[item.baseValue];
           return (
-            <Link key={item.value} href={item.value} className="shrink-0">
+            <Link key={item.value} href={item.value} scroll={false} className="shrink-0">
               <Button
                 size={"default"}
                 variant={isActive ? "default" : "outline"}
