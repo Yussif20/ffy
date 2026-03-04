@@ -1,6 +1,6 @@
 "use client";
 import useIsFutures from "@/hooks/useIsFutures";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import Logo from "@/utils/Logo";
 
@@ -17,12 +17,16 @@ export default function NavbarLogo({
 }: NavbarLogoProps) {
   const isFutures = useIsFutures();
   const homeHref = isFutures ? "/futures" : "/forex";
+  const pathname = usePathname();
+  const isOnHome = pathname?.endsWith(homeHref);
 
   const handleClick = (e: React.MouseEvent) => {
-    const hero = document.getElementById("top");
-    if (hero) {
-      e.preventDefault();
-      hero.scrollIntoView({ behavior: "smooth" });
+    if (!isOnHome) return;
+
+    e.preventDefault();
+
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
