@@ -98,7 +98,9 @@ export default function Hero() {
                 variants={itemVariants}
                 className={cn(
                   "font-extrabold tracking-tight",
-                  "text-3xl sm:text-4xl lg:text-[34px] xl:text-[34px] 2xl:text-[34px]",
+                  isArabic
+                    ? "text-2xl sm:text-3xl lg:text-[34px] xl:text-[34px] 2xl:text-[34px]"
+                    : "text-3xl sm:text-4xl lg:text-[34px] xl:text-[34px] 2xl:text-[34px]",
                   "w-full text-center leading-[1.4]",
                   !isArabic && "lg:text-left",
                   isArabic && "lg:text-right",

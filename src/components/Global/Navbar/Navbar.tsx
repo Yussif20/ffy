@@ -164,10 +164,6 @@ const Navbar = () => {
                               { label: t("home"), href: "/" },
                               { label: t("offers"), href: "/offers" },
                               { label: t("challenges"), href: "/challenges" },
-                              {
-                                label: t("bestSellers"),
-                                href: "/best-sellers",
-                              },
                               { label: t("spreads"), href: "/spreads" },
                               { label: t("faq"), href: "/faq" },
                             ].map((item) => (
@@ -223,10 +219,6 @@ const Navbar = () => {
                               { label: t("home"), href: "/" },
                               { label: t("offers"), href: "/offers" },
                               { label: t("challenges"), href: "/challenges" },
-                              {
-                                label: t("bestSellers"),
-                                href: "/best-sellers",
-                              },
                               { label: t("spreads"), href: "/spreads" },
                               { label: t("faq"), href: "/faq" },
                             ].map((item) => (

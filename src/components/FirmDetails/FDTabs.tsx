@@ -4,6 +4,7 @@ import useIsActive from "@/hooks/useIsActive";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import useIsFutures from "@/hooks/useIsFutures";
+import { useEffect, useRef } from "react";
 
 export default function FDTabs({
   slug,
@@ -16,10 +17,17 @@ export default function FDTabs({
   const isActive = useIsActive();
   const pathname = usePathname();
   const isFutures = useIsFutures();
+  const prevPathRef = useRef<string | null>(null);
+
+  const basePath =
+    (isFutures ? "/futures/" : "/") +
+    "firms/" +
+    slug;
+
   const tabs = [
     {
       name: <div>{t("tabs.overview")}</div>,
-      value: "overview",
+      slugPath: basePath,
     },
     {
       name: (
@@ -28,7 +36,7 @@ export default function FDTabs({
           {count.challenges > 0 && <>({count.challenges})</>}
         </div>
       ),
-      value: "challenges",
+      slugPath: `${basePath}/challenges`,
     },
 
     {
@@ -37,7 +45,7 @@ export default function FDTabs({
           {t("tabs.offers")} {count.offers > 0 && <>({count.offers})</>}
         </div>
       ),
-      value: "offers",
+      slugPath: `${basePath}/exclusive-offers`,
     },
 
     // {
@@ -47,33 +55,73 @@ export default function FDTabs({
     //       {count.announcements > 0 && <>({count.announcements})</>}
     //     </div>
     //   ),
-    //   value: "announcements",
+    //   slugPath: `${basePath}/announcements`,
     // },
-  ].map((item) => {
-    const newLink =
-      (isFutures ? "/futures/" : "/forex/") +
-      "firms/" +
-      slug +
-      (item.value !== "overview" ? "/" + item.value : "");
-    return {
-      ...item,
-      value: newLink,
-    };
-  });
+  ];
+
+  const overviewPath = tabs[0].slugPath;
 
   const isOffersTabActive =
     pathname.includes(`firms/${slug}/`) &&
     (pathname.includes("exclusive-offers") || pathname.endsWith("/offers"));
 
+  const scrollToTabs = () => {
+    if (typeof window === "undefined") return;
+    const el = document.getElementById("firm-tabs");
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+    const styles = getComputedStyle(document.documentElement);
+    const navVar = styles.getPropertyValue("--navbar-height").trim();
+    const navHeight = parseInt(navVar || "0", 10) || 72;
+    // Scroll a bit further up so more content shows below the tabs
+    const offset = rect.top + window.scrollY - navHeight - 8 - 160;
+
+    window.scrollTo({
+      top: Math.max(offset, 0),
+      behavior: "smooth",
+    });
+  };
+
+  // Scroll to tabs only when pathname actually changes (tab click), not on first load
+  useEffect(() => {
+    // Skip scroll on first render — only scroll when user navigates between tabs
+    if (prevPathRef.current === null) {
+      prevPathRef.current = pathname;
+      return;
+    }
+    if (prevPathRef.current === pathname) return;
+    prevPathRef.current = pathname;
+
+    const isFirmTabPath =
+      pathname === basePath ||
+      pathname === `${basePath}/` ||
+      pathname.startsWith(`${basePath}/challenges`) ||
+      pathname.includes("exclusive-offers");
+
+    if (!isFirmTabPath) return;
+
+    const id = setTimeout(scrollToTabs, 120);
+    return () => clearTimeout(id);
+  }, [pathname, basePath]);
+
   return (
-    <div className="flex flex-wrap sm:justify-center items-center gap-2 sm:gap-5 w-full overflow-auto">
+    <div
+      id="firm-tabs"
+      className="flex flex-wrap sm:justify-center items-center gap-2 sm:gap-5 w-full overflow-auto"
+    >
       {tabs.map((item, index) => {
-        const isOffersTab = item.value.endsWith("/offers");
+        const isOffersTab = item.slugPath.endsWith("/offers");
         const active = isOffersTab
           ? isOffersTabActive
-          : isActive(item.value, [tabs[0].value]);
+          : item.slugPath === overviewPath
+          ? pathname === overviewPath || pathname === `${overviewPath}/`
+          : isActive(item.slugPath);
+
+        const href = item.slugPath;
+
         return (
-          <Link key={index} href={item.value}>
+          <Link key={index} href={href} scroll={false}>
             <Button
               size="2xl"
               variant={active ? "defaultBH" : "outline2"}

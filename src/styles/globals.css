@@ -375,6 +375,8 @@ button {
   font-family: inherit;
   font-size: 16px;
   line-height: 1.5;
+  overflow-x: auto;
+  max-width: 100%;
 }
 
 /* Headings */
@@ -478,6 +480,24 @@ button {
 
 .danger-html th {
   font-weight: bold;
+}
+
+/* Scale-up plan: force long URLs/text to wrap */
+.scale-up-table {
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+.scale-up-table table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.scale-up-table table th,
+.scale-up-table table td {
+  overflow-wrap: break-word;
+  word-break: break-all;
+  white-space: normal !important;
 }
 
 /* Hide last column in leverage tables */

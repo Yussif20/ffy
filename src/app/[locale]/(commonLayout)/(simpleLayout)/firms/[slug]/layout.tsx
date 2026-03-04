@@ -26,7 +26,7 @@ export default async function RootLayout({
     `/firms/${slug}?header=true`
   );
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <ScrollToTopOnOpen />
       <FirmNavigate firmType={data.data.firmType} />
       <div className="space-y-12 relative">

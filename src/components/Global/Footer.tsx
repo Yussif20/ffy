@@ -1,3 +1,5 @@
+"use client";
+
 import { Instagram } from "lucide-react";
 import Container from "./Container";
 import NavbarLogo from "./Navbar/NavbarLogo";
@@ -5,42 +7,45 @@ import { PiTiktokLogo } from "react-icons/pi";
 import { FaXTwitter } from "react-icons/fa6";
 import { FiYoutube } from "react-icons/fi";
 import { AiOutlineDiscord } from "react-icons/ai";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import BackToTop from "./BackToTop";
 import FooterLink from "./FooterLink";
+import { usePathname } from "@/i18n/navigation";
 
-const Footer = async () => {
-  const t = await getTranslations("Footer");
+export default function Footer() {
+  const t = useTranslations("Footer");
+  const pathname = usePathname();
+  const basePath = pathname?.startsWith("/futures") ? "/futures" : "/forex";
 
   const footerLinks = [
     {
       title: t("propFirms"),
       links: [
-        { label: t("allPropFirms"), href: "/forex" },
-        { label: t("compareChallenges"), href: "/forex/challenges" },
+        { label: t("allPropFirms"), href: basePath },
+        { label: t("compareChallenges"), href: `${basePath}/challenges` },
       ],
     },
     {
       title: t("offers"),
       links: [
-        { label: t("exclusiveOffers"), href: "/forex/exclusive-offers" },
-        { label: t("allCurrentOffers"), href: "/forex/offers" },
-        { label: t("highImpactNews"), href: "high-impact-news" },
+        { label: t("exclusiveOffers"), href: `${basePath}/exclusive-offers` },
+        { label: t("allCurrentOffers"), href: `${basePath}/offers` },
+        { label: t("highImpactNews"), href: `${basePath}/high-impact-news` },
       ],
     },
     {
       title: t("company"),
       links: [
-        { label: t("aboutUs"), href: "about" },
-        { label: t("faq"), href: "faq" },
-        { label: t("contactUs"), href: "contact" },
+        { label: t("aboutUs"), href: `${basePath}/about` },
+        { label: t("faq"), href: `${basePath}/faq` },
+        { label: t("contactUs"), href: `${basePath}/contact` },
       ],
     },
   ];
 
   const legalLinks = [
-    { label: t("privacyPolicy"), href: "privacy-policy" },
-    { label: t("termsConditions"), href: "terms-and-conditions" },
+    { label: t("privacyPolicy"), href: `${basePath}/privacy-policy` },
+    { label: t("termsConditions"), href: `${basePath}/terms-and-conditions` },
   ];
 
   const iconSize = 26;
@@ -144,6 +149,4 @@ const Footer = async () => {
       </div>
     </div>
   );
-};
-
-export default Footer;
+}

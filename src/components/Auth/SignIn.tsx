@@ -137,12 +137,12 @@ export default function SignIn() {
         </div>
       </div>
       <div className="flex justify-center w-full [&>div]:w-full [&>div]:flex [&>div]:justify-center">
-        <div className="w-full overflow-hidden rounded-xl transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]">
+        <div className="w-full overflow-hidden rounded-full transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]">
           <GoogleLogin
             onSuccess={handleGoogleSuccess}
             onError={() => toast.error(t("toast.googleError"))}
             theme="outline"
-            shape="rectangular"
+            shape="pill"
             size="large"
             text="signin_with"
           />

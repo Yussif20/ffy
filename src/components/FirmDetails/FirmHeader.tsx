@@ -27,27 +27,28 @@ export default async function FirmHeader({
             <ArrowLeft className="h-5 w-5 rtl:rotate-180" />
           </Button>
         </Link>
-
-        <Button
-          variant="outline"
-          size="default"
-          className="rounded-full flex items-center gap-2"
-          linearClassName="w-max"
-        >
-          <div className="w-5 h-5 aspect-square cursor-pointer border border-primary/60 bg-primary relative overflow-hidden rounded-full">
-            <Image
-              src={company?.logoUrl || "/placeholder.png"}
-              alt="Profile"
-              fill
-              className="object-cover"
-            />
-          </div>
-          {company?.title}
-        </Button>
+        <NextLink href={company?.affiliateLink || "#"} target="_blank">
+          <Button
+            variant="outline"
+            size="default"
+            className="rounded-full flex items-center gap-2"
+            linearClassName="w-max"
+          >
+            <div className="w-5 h-5 aspect-square cursor-pointer border border-primary/60 bg-primary relative overflow-hidden rounded-full">
+              <Image
+                src={company?.logoUrl || "/placeholder.png"}
+                alt="Profile"
+                fill
+                className="object-cover"
+              />
+            </div>
+            {company?.title}
+          </Button>
+        </NextLink>
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+      <div className="flex flex-row flex-wrap items-start lg:items-center justify-between gap-4 sm:gap-6 lg:gap-8">
         {/* Left Section */}
         <div className="flex items-start flex-col sm:flex-row gap-4 sm:gap-6">
           {/* Company Avatar */}
@@ -60,85 +61,97 @@ export default async function FirmHeader({
                 className="object-cover"
               />
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold block sm:hidden leading-snug pb-0.5">
-              {company?.title}
-            </h1>
+            <NextLink
+              href={company?.affiliateLink || "#"}
+              target="_blank"
+              className="block sm:hidden"
+            >
+              <h1 className="text-2xl sm:text-3xl font-bold leading-snug pb-0.5 hover:underline">
+                {company?.title}
+              </h1>
+            </NextLink>
           </div>
 
           {/* Company Info */}
           <div className="flex flex-col gap-3">
             <NextLink href={company?.affiliateLink || "#"} target="_blank">
-              <h1 className="text-2xl sm:text-3xl font-bold hidden sm:flex  items-center gap-2 hover:underline">
+              <h1 className="text-2xl sm:text-3xl font-bold hidden sm:flex items-center gap-2 hover:underline">
                 {company?.title} <ArrowUpRight size={24} />
               </h1>
             </NextLink>
 
-            {/* Details: 2x2 grid on small/medium (CEO+Country, Date+Years), one line on large */}
-            <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:gap-x-8 sm:gap-y-6 lg:flex lg:flex-wrap lg:items-center lg:gap-6 text-sm">
-              {/* CEO */}
-              <div className="flex flex-col gap-0.5">
-                <span className="text-muted-foreground font-semibold">
-                  {t("labels.ceo")}
-                </span>
-                <span className="font-medium">{company?.ceo}</span>
-              </div>
+            {/* Details + Visit Website button in one horizontal row on mobile */}
+            <div className="flex flex-row flex-nowrap items-center justify-between gap-3 sm:gap-4 lg:gap-6 w-full">
+              {/* Details: 2x2 grid on small/medium (CEO+Country, Date+Years), one line on large */}
+              <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:gap-x-8 sm:gap-y-6 lg:flex lg:flex-wrap lg:items-center lg:gap-6 text-sm flex-1 min-w-0">
+                {/* CEO */}
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-muted-foreground font-semibold">
+                    {t("labels.ceo")}
+                  </span>
+                  <span className="font-medium">{company?.ceo}</span>
+                </div>
 
-              <div className="hidden lg:block h-8 w-px bg-border" />
+                <div className="hidden lg:block h-8 w-px bg-border" />
 
-              {/* Country */}
-              <div className="flex flex-col gap-0.5">
-                <span className="text-muted-foreground font-semibold">
-                  {t("labels.country")}
-                </span>
-                <div className="flex items-center gap-1">
-                  <div className="w-5 h-3.5 relative">
-                    {country?.flag && (
-                      <Image
-                        src={country?.flag || ""}
-                        alt="flag"
-                        fill
-                        className="object-cover rounded-sm"
-                      />
-                    )}
+                {/* Country */}
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-muted-foreground font-semibold">
+                    {t("labels.country")}
+                  </span>
+                  <div className="flex items-center gap-1">
+                    <div className="w-5 h-3.5 relative">
+                      {country?.flag && (
+                        <Image
+                          src={country?.flag || ""}
+                          alt="flag"
+                          fill
+                          className="object-cover rounded-sm"
+                        />
+                      )}
+                    </div>
+                    <span className="font-medium">{country?.code}</span>
                   </div>
-                  <span className="font-medium">{country?.code}</span>
+                </div>
+
+                <div className="hidden lg:block h-8 w-px bg-border" />
+
+                {/* Date Created */}
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-muted-foreground font-semibold">
+                    {t("labels.dateCreated")}
+                  </span>
+                  <span className="font-medium">
+                    {new Date(company?.dateEstablished).toLocaleDateString()}
+                  </span>
+                </div>
+
+                <div className="hidden lg:block h-8 w-px bg-border" />
+
+                {/* Years in Operation */}
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-muted-foreground font-semibold">
+                    {t("labels.yearsInOperation")}
+                  </span>
+                  <span className="font-medium">
+                    {calculateYearsInOperation(company?.dateEstablished)}
+                  </span>
                 </div>
               </div>
 
-              <div className="hidden lg:block h-8 w-px bg-border" />
-
-              {/* Date Created */}
-              <div className="flex flex-col gap-0.5">
-                <span className="text-muted-foreground font-semibold">
-                  {t("labels.dateCreated")}
-                </span>
-                <span className="font-medium">
-                  {new Date(company?.dateEstablished).toLocaleDateString()}
-                </span>
-              </div>
-
-              <div className="hidden lg:block h-8 w-px bg-border" />
-
-              {/* Years in Operation */}
-              <div className="flex flex-col gap-0.5">
-                <span className="text-muted-foreground font-semibold">
-                  {t("labels.yearsInOperation")}
-                </span>
-                <span className="font-medium">
-                  {calculateYearsInOperation(company?.dateEstablished)}
-                </span>
-              </div>
+              {/* Visit Website button: sits to the right of details on mobile */}
+              <NextLink href={company?.affiliateLink || "#"} target="_blank">
+                <Button
+                  size="default"
+                  className="px-3 sm:px-4 lg:px-8 gap-2 text-xs sm:text-sm lg:text-base whitespace-nowrap"
+                >
+                  {t("buyButton")}
+                  <ArrowUpRight size={18} />
+                </Button>
+              </NextLink>
             </div>
           </div>
         </div>
-
-        {/* Right Button */}
-        <NextLink href={company?.affiliateLink || "#"} target="_blank">
-          <Button size="xl" className="px-8 gap-2">
-            {t("buyButton")}
-            <ArrowUpRight size={20} />
-          </Button>
-        </NextLink>
       </div>
     </div>
   );

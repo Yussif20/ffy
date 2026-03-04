@@ -42,7 +42,7 @@ export default function FirmOfferStickyBar({ firm }: { firm: SinglePropFirm }) {
     ? "border-yellow-400/70 hover:bg-yellow-400/10"
     : "border-primary/70 hover:bg-primary/10";
 
-  const firmHref = isFutures ? `/futures/firms/${firm.slug}` : `/forex/firms/${firm.slug}`;
+  const firmHref = isFutures ? `/futures/firms/${firm.slug}` : `/firms/${firm.slug}`;
 
   return (
     <div className="sticky top-(--navbar-height,3.5rem) z-40 w-full border-b border-border bg-background/95 backdrop-blur-sm shadow-sm">

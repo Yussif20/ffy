@@ -247,8 +247,8 @@
     "monthly": "Monthly"
   },
   "Spread": {
-    "title": "Best Prop Firm Spreads",
-    "subtitle": "Compare Prop Firm spreads and commissions across top funded for you to optimize your trading performance. Currently covering MT5/Platform5, more firms platforms will be added soon.",
+  "title": "Best Prop Firm Spreads",
+  "subtitle": "",
     "comingSoon": "Coming Soon",
     "comingSoonMessage": "We're working on improving this feature.\nIt will be available soon!",
     "comingSoonMessageLine1": "We're working on improving this feature.",

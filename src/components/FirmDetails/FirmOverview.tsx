@@ -44,7 +44,7 @@ export default async function FirmOverview({
         </div>
 
         {/* Main Content - right padding for breathing room, extra in Arabic */}
-        <div className={cn("flex-1 space-y-6 pr-4", isArabic && "pr-6")}>
+        <div className={cn("flex-1 min-w-0 space-y-6 pr-4", isArabic && "pr-6")}>
           {/* Firm Overview */}
           <section id="firm-overview" className="space-y-6 scroll-mt-[270px]">
             <SecTitle>{tSidebar("items.firmOverview")}</SecTitle>
@@ -610,27 +610,29 @@ export default async function FirmOverview({
               {/* Scale up plan — Forex only */}
               <section
                 id="scale-up-plan"
-                className="overflow-x-auto space-y-6 scroll-mt-[270px]"
+                className="space-y-6 scroll-mt-[270px]"
               >
                 <SecTitle>{tSidebar("items.scaleUpPlan")}</SecTitle>
-                <div className="text-sm md:text-base">
-                  <div
-                    className="danger-html mfs-content"
-                    style={
-                      company?.scaleupPlansMobileFontSize
-                        ? ({
-                            "--mobile-fs": `${company.scaleupPlansMobileFontSize}px`,
-                          } as React.CSSProperties)
-                        : undefined
-                    }
-                    dangerouslySetInnerHTML={{
-                      __html: visibleText(
-                        isArabic,
-                        company?.scaleupPlans,
-                        company?.scaleupPlansArabic,
-                      ),
-                    }}
-                  ></div>
+                <div className="w-full">
+                  <div className="text-sm md:text-base">
+                    <div
+                      className="danger-html mfs-content scale-up-table"
+                      style={
+                        company?.scaleupPlansMobileFontSize
+                          ? ({
+                              "--mobile-fs": `${company.scaleupPlansMobileFontSize}px`,
+                            } as React.CSSProperties)
+                          : undefined
+                      }
+                      dangerouslySetInnerHTML={{
+                        __html: visibleText(
+                          isArabic,
+                          company?.scaleupPlans,
+                          company?.scaleupPlansArabic,
+                        ),
+                      }}
+                    ></div>
+                  </div>
                 </div>
               </section>
               <Separator />

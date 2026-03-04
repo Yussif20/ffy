@@ -51,6 +51,7 @@ export default function FO_Sidebar() {
 
   const [activeId, setActiveId] = useState(sidebarItems[0].value);
   const itemRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -76,7 +77,12 @@ export default function FO_Sidebar() {
   }, [sidebarItems]);
 
   // On small screens (horizontal sidebar): scroll so the active section link is in view
+  // Skip on initial mount to avoid scrolling the page on first load
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
     if (typeof window === "undefined") return;
     const isHorizontal = window.innerWidth < 1024; // lg breakpoint
     if (!isHorizontal) return;
