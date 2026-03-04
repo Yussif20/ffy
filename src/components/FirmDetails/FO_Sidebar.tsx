@@ -51,6 +51,7 @@ export default function FO_Sidebar() {
 
   const [activeId, setActiveId] = useState(sidebarItems[0].value);
   const itemRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const containerRef = useRef<HTMLElement | null>(null);
   const isInitialMount = useRef(true);
 
   useEffect(() => {
@@ -76,8 +77,8 @@ export default function FO_Sidebar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [sidebarItems]);
 
-  // On small screens (horizontal sidebar): scroll so the active section link is in view
-  // Skip on initial mount to avoid scrolling the page on first load
+  // On small screens (horizontal sidebar): scroll the container so the active link is centered.
+  // Uses container.scrollLeft instead of scrollIntoView to avoid pushing the page up.
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
@@ -87,16 +88,15 @@ export default function FO_Sidebar() {
     const isHorizontal = window.innerWidth < 1024; // lg breakpoint
     if (!isHorizontal) return;
     const activeEl = activeId ? itemRefs.current[activeId] : null;
-    if (!activeEl) return;
-    activeEl.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "center",
-    });
+    const container = containerRef.current;
+    if (!activeEl || !container) return;
+    const scrollLeft =
+      activeEl.offsetLeft - container.offsetWidth / 2 + activeEl.offsetWidth / 2;
+    container.scrollTo({ left: scrollLeft, behavior: "smooth" });
   }, [activeId]);
 
   return (
-    <aside className="w-full lg:w-64 space-y-1 flex flex-row lg:flex-col overflow-auto border-b-0 scrollbar-hide">
+    <aside ref={containerRef} className="w-full lg:w-64 space-y-1 flex flex-row lg:flex-col overflow-auto border-b-0 scrollbar-hide">
       {sidebarItems.map((item, index) => (
         <a
           key={index}
