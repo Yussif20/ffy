@@ -43,7 +43,7 @@ export default async function FAQComponent({ locale }: { locale?: string }) {
           </h2>
 
           {allFaqData.length === 0 ? (
-            <div className="text-center py-10 text-muted-foreground text-base md:text-lg">
+            <div className="text-center py-10 text-muted-foreground text-sm md:text-lg">
               No FAQs available
             </div>
           ) : (

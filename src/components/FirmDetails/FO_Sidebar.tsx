@@ -105,7 +105,7 @@ export default function FO_Sidebar() {
           }}
           href={`#${item.value}`}
           className={cn(
-            "w-full block font-medium text-[13px] text-start px-4 py-2 lg:py-1 lg:rounded-sm transition-all duration-200 hover:bg-accent text-muted-foreground min-w-max",
+            "w-full block font-medium text-[11px] lg:text-[13px] text-start px-3 lg:px-4 py-2 lg:py-1 lg:rounded-sm transition-all duration-200 hover:bg-accent text-muted-foreground min-w-max",
             activeId === item.value &&
               "border-b-2 lg:border-b-0 lg:bg-primary/20 lg:border-l-4 border-primary hover:bg-primary/20 text-foreground py-2! font-bold",
             isArabic && "font-semibold",

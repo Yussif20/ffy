@@ -27,7 +27,7 @@ export default async function About() {
             <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-[1.3] text-transparent bg-clip-text bg-linear-to-t from-primary1 to-primary2 text-center">
               {t("aboutUs")}
             </h4>
-            <p className="text-base md:text-lg text-center max-w-4xl whitespace-pre-line leading-relaxed">
+            <p className="text-sm md:text-lg text-center max-w-4xl whitespace-pre-line leading-relaxed">
               {t("intro")}
             </p>
           </div>
@@ -46,7 +46,7 @@ export default async function About() {
             <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-[1.3] text-transparent bg-clip-text bg-linear-to-t from-primary1 to-primary2 text-center">
               {t("visionTitle")}
             </h4>
-            <p className="text-base md:text-lg text-center max-w-4xl leading-relaxed">
+            <p className="text-sm md:text-lg text-center max-w-4xl leading-relaxed">
               {t("visionText")}
             </p>
           </div>
@@ -69,7 +69,7 @@ export default async function About() {
               {t.raw("missionPoints").map((point: string, idx: number) => (
                 <li
                   key={idx}
-                  className="flex gap-3 items-start text-base md:text-lg"
+                  className="flex gap-3 items-start text-sm md:text-lg"
                 >
                   <span className="text-primary font-bold mt-1">•</span>
                   <span className="leading-relaxed">{point}</span>
@@ -96,7 +96,7 @@ export default async function About() {
               {t.raw("whatWeOfferPoints").map((point: string, idx: number) => (
                 <li
                   key={idx}
-                  className="flex gap-3 items-start text-base md:text-lg"
+                  className="flex gap-3 items-start text-sm md:text-lg"
                 >
                   <span className="text-primary font-bold mt-1">•</span>
                   <span className="leading-relaxed">{point}</span>
@@ -119,7 +119,7 @@ export default async function About() {
             <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-linear-to-t from-primary1 to-primary2 text-center">
               {t("commitmentTitle")}
             </h4>
-            <p className="text-base md:text-lg text-center max-w-4xl whitespace-pre-line leading-relaxed">
+            <p className="text-sm md:text-lg text-center max-w-4xl whitespace-pre-line leading-relaxed">
               {t("commitmentText")}
             </p>
           </div>
