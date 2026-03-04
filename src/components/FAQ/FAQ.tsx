@@ -4,12 +4,13 @@ import SectionTitle from "../Global/SectionTitle";
 import LinearBorder from "../Global/LinearBorder";
 import { FAQ } from "@/types";
 import { AddFaq } from "./FAQForms";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { serverApi } from "@/lib/serverAxios";
 import FAQAccordion from "./FAQAccordion";
 
 export default async function FAQComponent({ locale }: { locale?: string }) {
-  const isArabic = locale === "ar";
+  const currentLocale = locale ?? (await getLocale());
+  const isArabic = currentLocale === "ar";
   const t = await getTranslations("FAQ");
   const { data } = await serverApi.get<{ data: FAQ[] }>(`/faqs`);
   const allFaqData = data?.data || [];
