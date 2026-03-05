@@ -485,7 +485,7 @@ button {
 /* Scale-up plan: force long URLs/text to wrap */
 .scale-up-table {
   overflow-wrap: break-word;
-  word-break: break-all;
+  word-break: normal;
 }
 
 .scale-up-table table {
@@ -496,7 +496,7 @@ button {
 .scale-up-table table th,
 .scale-up-table table td {
   overflow-wrap: break-word;
-  word-break: break-all;
+  word-break: normal;
   white-space: normal !important;
 }
 

@@ -114,6 +114,7 @@ export default function FirmAllFilters({
     { name: t("netherlands"), value: "Netherlands" },
     { name: t("nigeria"), value: "Nigeria" },
     { name: t("pakistan"), value: "Pakistan" },
+    { name: t("palestine"), value: "Palestine" },
     { name: t("philippines"), value: "Philippines" },
     { name: t("poland"), value: "Poland" },
     { name: t("russia"), value: "Russia" },

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { handleSetSearchParams } from "@/lib/utils";
@@ -21,15 +21,18 @@ export default function Challenges({
   const marketType = pathname.includes("futures") ? "futures" : "forex";
   const [searchInput, setSearchInput] = useState("");
   const [searchTerm] = useDebounce(searchInput, 300);
+  const searchParamsRef = useRef(searchParams);
+  searchParamsRef.current = searchParams;
 
   useEffect(() => {
     const storageKey = "ffy_marketType_challenges";
     const prev = typeof window !== "undefined" ? sessionStorage.getItem(storageKey) : null;
     if (prev !== null && prev !== marketType) {
-      handleSetSearchParams({ page: "1" }, searchParams, router);
+      handleSetSearchParams({ page: "1" }, searchParamsRef.current, router);
     }
     if (typeof window !== "undefined") sessionStorage.setItem(storageKey, marketType);
-  }, [marketType, pathname, searchParams, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [marketType, router]);
 
   const handleSearchChange = useCallback(
     (value: string) => {

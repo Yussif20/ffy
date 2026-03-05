@@ -1,6 +1,7 @@
 "use client";
 import useIsFutures from "@/hooks/useIsFutures";
 import { Link, usePathname } from "@/i18n/navigation";
+import { useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Logo from "@/utils/Logo";
 
@@ -18,10 +19,14 @@ export default function NavbarLogo({
   const isFutures = useIsFutures();
   const homeHref = isFutures ? "/futures" : "/forex";
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const isOnHome = pathname?.endsWith(homeHref);
+  const hasSearchParams = searchParams.toString().length > 0;
 
   const handleClick = (e: React.MouseEvent) => {
-    if (!isOnHome) return;
+    // Only scroll-to-top if on the clean home page (no query params)
+    // Otherwise, let the Link navigate normally to clear params like ?page=2
+    if (!isOnHome || hasSearchParams) return;
 
     e.preventDefault();
 

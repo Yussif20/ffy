@@ -733,8 +733,8 @@ export default async function FirmOverview({
             </div>
           </section>
 
-          {/* Subscribe */}
-          <div className="mt-16 pt-8 border-t border-border">
+          {/* Subscribe — centered on mobile */}
+          <div className="mt-16 pt-8 border-t border-border flex flex-col items-center md:block">
             <Subscribe />
           </div>
         </div>

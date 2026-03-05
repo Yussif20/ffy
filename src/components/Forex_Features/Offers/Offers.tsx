@@ -27,15 +27,18 @@ export default function Offers({
   const urlSearch = searchParams.get("search") || "";
   const [searchInput, setSearchInput] = useState(urlSearch);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const searchParamsRef = useRef(searchParams);
+  searchParamsRef.current = searchParams;
 
   useEffect(() => {
     const storageKey = "ffy_marketType_offers";
     const prev = typeof window !== "undefined" ? sessionStorage.getItem(storageKey) : null;
     if (prev !== null && prev !== marketType) {
-      handleSetSearchParams({ page: "1" }, searchParams, router);
+      handleSetSearchParams({ page: "1" }, searchParamsRef.current, router);
     }
     if (typeof window !== "undefined") sessionStorage.setItem(storageKey, marketType);
-  }, [marketType, pathname, searchParams, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [marketType, router]);
 
   useEffect(() => {
     setSearchInput(urlSearch);
