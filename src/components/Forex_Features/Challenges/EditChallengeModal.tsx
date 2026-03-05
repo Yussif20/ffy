@@ -33,6 +33,7 @@ export default function EditChallengeModal({
 
   const methods = useForm({
     defaultValues: {
+      hidden: false,
       firmId: "",
       title: "",
       resetType: "",

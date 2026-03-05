@@ -1,3 +1,4 @@
+import CustomYesNoToggle from "../Forms/CustomYesNoToggle";
 import CustomInput from "../Forms/CustomInput";
 import {
   countries,
@@ -72,6 +73,9 @@ export default function FirmForm({
 
   return (
     <>
+      {/* Hidden Toggle */}
+      <CustomYesNoToggle name="hidden" label="Hidden" />
+
       {/* Basic Information Section */}
       <div className="space-y-4">
         <h3 className="text-sm font-semibold border-b pb-2">

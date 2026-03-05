@@ -112,6 +112,9 @@ export default function OfferForm() {
         label={t("offerType")}
         //   required
       />
+
+      {/* Hidden Toggle */}
+      <CustomYesNoToggle name="hidden" label="Hidden" />
     </>
   );
 }

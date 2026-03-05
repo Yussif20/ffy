@@ -2,6 +2,7 @@
 import CustomComboBoxMultiple from "@/components/Forms/CustomComboBoxMultiple";
 import CustomInput from "@/components/Forms/CustomInput";
 import CustomSelect from "@/components/Forms/CustomSelect";
+import CustomYesNoToggle from "@/components/Forms/CustomYesNoToggle";
 import { useGetFirmsQuery } from "@/redux/api/spreadApi";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -24,6 +25,9 @@ export default function ChallengeForm({ methods }: { methods: any }) {
   };
   return (
     <>
+      <div className="col-span-full">
+        <CustomYesNoToggle name="hidden" label="Hidden" />
+      </div>
       <CustomComboBoxMultiple
         name="firmId"
         mode="single"

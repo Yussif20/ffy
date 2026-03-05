@@ -29,6 +29,7 @@ export default function CreateChallengeModal({
 
   const methods = useForm({
     defaultValues: {
+      hidden: false,
       firmId: "",
       title: "",
       resetType: "",

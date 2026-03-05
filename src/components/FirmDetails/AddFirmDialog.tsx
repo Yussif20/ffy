@@ -22,6 +22,7 @@ import FirmForm from "./FirmForm";
 import { X } from "lucide-react";
 
 export const defaultValues = {
+  hidden: false,
   logoUrl: "",
   firmType: FirmTypeEnum.FOREX,
   title: "",
@@ -124,7 +125,7 @@ export const AddFirmDialog = () => {
       title: data.title,
       dateEstablished: new Date(data.dateEstablished),
       ceo: data.ceo,
-      hidden: false,
+      hidden: data.hidden === true || data.hidden === "true",
       brokers: data.brokers,
       platforms: data.platforms,
       paymentMethods: data.paymentMethods,

@@ -51,6 +51,7 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
       // Set default values
       console.log(firm.leverages);
       setDefaultValues({
+        hidden: firm.hidden ?? false,
         logoUrl: firm.logoUrl || "",
         title: firm.title || "",
         dateEstablished: firm.dateEstablished
@@ -162,7 +163,7 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
       title: data.title,
       dateEstablished: new Date(data.dateEstablished),
       ceo: data.ceo,
-      hidden: false,
+      hidden: data.hidden === true || data.hidden === "true",
       brokers: data.brokers,
       platforms: data.platforms,
       paymentMethods: data.paymentMethods,
