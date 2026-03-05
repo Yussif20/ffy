@@ -568,6 +568,20 @@ button {
   clear: both;
 }
 
+/* Drawdown (and similar) sections: override inline font-size from rich text (e.g. span style="font-size: 14px") */
+@media (max-width: 767px) {
+  .danger-html-mobile-12,
+  .danger-html-mobile-12 * {
+    font-size: 12px !important;
+  }
+}
+@media (min-width: 768px) {
+  .danger-html-mobile-12,
+  .danger-html-mobile-12 * {
+    font-size: 1rem !important; /* md:text-base */
+  }
+}
+
 /* ── Animation & Style Utilities ───────────────────────────── */
 
 /* Primary gradient text */
