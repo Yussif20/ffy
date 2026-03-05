@@ -37,7 +37,7 @@ jobs:
           script: |
             cd ${{ secrets.VPS_APP_PATH }}
 
-            npm i
+            npm install
             npm run build
 
-            pm2 reload frontend --update-env
+            pm2 reload frontend
