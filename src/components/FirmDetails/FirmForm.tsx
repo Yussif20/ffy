@@ -11,7 +11,7 @@ import CustomComboBoxMultiple from "../Forms/CustomComboBoxMultiple";
 import { Toggle } from "../ui/toggle";
 import CustomSelect from "../Forms/CustomSelect";
 import BMImageUpload from "../Overview/BrokerManagement/BMImageUpload";
-import { DrawDownTexts, MonthAndYear } from "./ExtraField";
+import { DrawDownProgramTypes, DrawDownTexts, MonthAndYear } from "./ExtraField";
 import { useTranslations } from "next-intl";
 import useIsFutures from "@/hooks/useIsFutures";
 import { useGetAllPaymentMethodQuery } from "@/redux/api/paymentMethodApi";
@@ -56,18 +56,28 @@ export default function FirmForm({
     setValue: any,
     getValues: any,
   ) => {
+    const currentMap = getValues("drawDownProgramTypeMap") || {};
     if (values.find((item) => item.drawdown === value)) {
+      // Removing drawdown
       setValue(
         "drawDownTexts",
         getValues("drawDownTexts").filter(
           (drawDown: any) => drawDown.drawdown !== value,
         ),
       );
+      const { [value]: _, ...rest } = currentMap;
+      setValue("drawDownProgramTypeMap", rest);
     } else {
+      // Adding drawdown - default to all selected program types
       setValue("drawDownTexts", [
         ...getValues("drawDownTexts"),
         { drawdown: value, englishText: "", arabicText: "" },
       ]);
+      const currentProgramTypes = getValues("programTypes") || [];
+      setValue("drawDownProgramTypeMap", {
+        ...currentMap,
+        [value]: [...currentProgramTypes],
+      });
     }
   };
 
@@ -351,6 +361,7 @@ export default function FirmForm({
           required
           extraFunction={extraFunction}
         />
+        <DrawDownProgramTypes />
         <DrawDownTexts />
       </div>
 

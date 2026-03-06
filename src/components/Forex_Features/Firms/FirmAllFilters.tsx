@@ -555,7 +555,16 @@ export default function FirmAllFilters({
                       ? "defaultBH"
                       : "outline"
                   }
-                  onClick={() => toggleMultiSelect("programType", type.value)}
+                  onClick={() => {
+                    // Single-select: clicking the same value deselects, otherwise set to just that value
+                    const current = filters.programType;
+                    const newValue = current.includes(type.value) ? "" : type.value;
+                    handleSetSearchParams(
+                      { programType: newValue, page: "1" },
+                      searchParams,
+                      router,
+                    );
+                  }}
                 >
                   {type.name}
                 </Badge>

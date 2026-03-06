@@ -63,6 +63,7 @@ export type SinglePropFirm = {
   assets: string[];
   paymentMethods: PaymentMethod[];
   drawDowns: string[];
+  drawDownProgramTypeMap?: Record<string, string[]>;
   offers: Offer[];
   drawDownTexts: DrawDownText[];
   count: {

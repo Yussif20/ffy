@@ -2,6 +2,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { Label } from "../ui/label";
 import TTTextEditor from "../Forms/TTTextEditor";
 import { DrawDownText } from "@/types/firm.types";
+import { Badge } from "../ui/badge";
 const drawDowns = {
   balanceBased: "Balance Based",
   equityBased: "Equity Based",
@@ -19,6 +20,14 @@ import {
   SelectValue,
 } from "../ui/select";
 import { updateDate } from "@/utils/updateDate";
+
+const programTypeLabels: Record<string, string> = {
+  STEP1: "1 Step",
+  STEP2: "2 Step",
+  STEP3: "3 Step",
+  STEP4: "4 Step",
+  INSTANT: "Instant",
+};
 
 export function MonthAndYear() {
   const t = useTranslations("FirmManagement");
@@ -120,6 +129,66 @@ export function MonthAndYear() {
         }}
       />
     </>
+  );
+}
+
+export function DrawDownProgramTypes() {
+  const { control, watch } = useFormContext();
+  const selectedDrawDowns: string[] = watch("drawDowns") || [];
+  const selectedProgramTypes: string[] = watch("programTypes") || [];
+
+  if (selectedDrawDowns.length === 0 || selectedProgramTypes.length === 0) {
+    return null;
+  }
+
+  return (
+    <Controller
+      name="drawDownProgramTypeMap"
+      control={control}
+      render={({ field }) => {
+        const map = (field.value || {}) as Record<string, string[]>;
+        const toggleProgramType = (dd: string, pt: string) => {
+          const current = map[dd] || [];
+          const updated = current.includes(pt)
+            ? current.filter((v) => v !== pt)
+            : [...current, pt];
+          field.onChange({ ...map, [dd]: updated });
+        };
+        return (
+          <div className="space-y-3">
+            <Label className="text-sm font-semibold">
+              Drawdown Program Types
+            </Label>
+            <div className="space-y-2">
+              {selectedDrawDowns.map((dd) => (
+                <div
+                  key={dd}
+                  className="flex flex-wrap items-center gap-2 p-2 rounded-md border bg-foreground/5"
+                >
+                  <span className="text-sm font-medium min-w-[140px]">
+                    {drawDowns[dd as DrawDownKey] || dd}:
+                  </span>
+                  {selectedProgramTypes.map((pt) => (
+                    <Badge
+                      key={pt}
+                      className="cursor-pointer"
+                      variant={
+                        (map[dd] || []).includes(pt)
+                          ? "defaultBH"
+                          : "outline"
+                      }
+                      onClick={() => toggleProgramType(dd, pt)}
+                    >
+                      {programTypeLabels[pt] || pt}
+                    </Badge>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }}
+    />
   );
 }
 

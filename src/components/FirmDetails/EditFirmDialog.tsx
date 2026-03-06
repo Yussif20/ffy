@@ -84,6 +84,16 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
                 arabicText: "",
               })),
         otherFeatures: firm.otherFeatures || [],
+        drawDownProgramTypeMap:
+          firm.drawDownProgramTypeMap && Object.keys(firm.drawDownProgramTypeMap).length > 0
+            ? firm.drawDownProgramTypeMap
+            : (firm.drawDowns || []).reduce(
+                (acc: Record<string, string[]>, dd: string) => {
+                  acc[dd] = firm.programTypes || [];
+                  return acc;
+                },
+                {},
+              ),
         leverage: firm.leverage,
         leverageArabic: firm.leverageArabic,
         commission: firm.commission,
@@ -175,6 +185,7 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
       typeOfInstruments: data.typeOfInstruments,
       drawDowns: data.drawDowns,
       drawDownTexts: data.drawDownTexts,
+      drawDownProgramTypeMap: data.drawDownProgramTypeMap || {},
       otherFeatures: data.otherFeatures,
       programTypes: data.programTypes,
       affiliateLink: data.affiliateLink,

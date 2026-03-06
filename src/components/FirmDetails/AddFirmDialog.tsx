@@ -55,6 +55,7 @@ export const defaultValues = {
   typeOfInstruments: [],
   drawDowns: [],
   drawDownTexts: [],
+  drawDownProgramTypeMap: {} as Record<string, string[]>,
   otherFeatures: [],
   programTypes: [StepsEnum.STEP1],
 
@@ -137,6 +138,7 @@ export const AddFirmDialog = () => {
       typeOfInstruments: data.typeOfInstruments,
       drawDowns: data.drawDowns,
       drawDownTexts: data.drawDownTexts,
+      drawDownProgramTypeMap: data.drawDownProgramTypeMap || {},
       otherFeatures: data.otherFeatures,
       programTypes: data.programTypes,
       affiliateLink: data.affiliateLink,
