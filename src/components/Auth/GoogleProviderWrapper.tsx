@@ -7,7 +7,9 @@ export default function GoogleProviderWrapper({ children }: { children: React.Re
   const locale = useLocale();
   // Google Identity Services uses BCP 47 / ISO 639 locale (e.g. "en", "ar") so the button text matches site language
   const googleLocale = locale === "ar" ? "ar" : "en";
-
+console.log(
+  "Gooooooooooooooooooogle", process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+)
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!} locale={googleLocale}>
       {children}
