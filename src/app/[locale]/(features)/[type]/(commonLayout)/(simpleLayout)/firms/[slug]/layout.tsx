@@ -8,6 +8,7 @@ import { serverApi } from "@/lib/serverAxios";
 import "@/styles/globals.css";
 import { SinglePropFirm } from "@/types/firm.types";
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Funded For You",
@@ -22,8 +23,18 @@ export default async function RootLayout({
   params: Promise<{ slug: string }>;
 }>) {
   const { slug } = await params;
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
   const { data } = await serverApi.get<{ data: SinglePropFirm }>(
-    `/firms/${slug}`
+    `/firms/${slug}`,
+    {
+      headers: {
+        ...(accessToken && {
+          Authorization: `${accessToken}`,
+          "x-client-type": "MOBILE",
+        }),
+      },
+    }
   );
 
   return (

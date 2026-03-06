@@ -6,6 +6,7 @@ import { Separator } from "../ui/separator";
 import FO_Sidebar from "./FO_Sidebar";
 import { serverApi } from "@/lib/serverAxios";
 import { getTranslations } from "next-intl/server";
+import { cookies } from "next/headers";
 import { ProfitShare, RiskManagement } from "./FuturesHiddenParts";
 import { visibleText } from "@/utils/visibleText";
 import SecTitle from "./FO_SecTitle";
@@ -23,8 +24,18 @@ export default async function FirmOverview({
 }) {
   const t = await getTranslations("FirmOverview");
   const tSidebar = await getTranslations("FOSidebar");
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
   const { data } = await serverApi.get<{ data: SinglePropFirm }>(
     `/firms/${slug}?formData=true`,
+    {
+      headers: {
+        ...(accessToken && {
+          Authorization: `${accessToken}`,
+          "x-client-type": "MOBILE",
+        }),
+      },
+    },
   );
   const company = data?.data as SinglePropFirm;
   const isArabic = locale === "ar";
