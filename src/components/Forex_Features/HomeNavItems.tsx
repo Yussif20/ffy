@@ -35,8 +35,9 @@ export default function HomeNavItems() {
   ]);
   const { data: challengesData } = useGetAllChallengesQuery([
     { name: "limit", value: 1 },
+    { name: "firmType", value: firmType },
   ]);
-  const { data: offersData } = useGetAllOffersQuery({ limit: 1 });
+  const { data: offersData } = useGetAllOffersQuery({ limit: 1, firmType });
 
   const counts: Record<string, number | undefined> = {
     "/": firmsData?.meta?.total,

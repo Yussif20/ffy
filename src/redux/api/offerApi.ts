@@ -45,6 +45,7 @@ export type UpdateOfferInput = Partial<CreateOfferInput>;
 export type GetAllOffersParams = {
   isExclusive?: boolean;
   isCurrentMonth?: boolean;
+  firmType?: string;
   searchTerm?: string;
   page?: number;
   limit?: number;

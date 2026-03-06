@@ -59,7 +59,7 @@ export default function ChallengeTable({
     { name: "page", value: page },
     { name: "limit", value: 10 },
     {
-      name: "firm.firmType",
+      name: "firmType",
       value: isFutures ? "FUTURES" : "FOREX",
     },
   ];
