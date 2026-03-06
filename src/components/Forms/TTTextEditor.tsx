@@ -145,7 +145,7 @@ export default function TTTextEditor({
           setFontSize(size);
         }
       } else {
-        setFontSize(16);
+        setFontSize(14);
       }
     };
 

@@ -12,7 +12,7 @@ import { Input } from "../ui/input";
 
 const MFS_MIN = 10;
 const MFS_MAX = 24;
-const MFS_DEFAULT = 14;
+const MFS_DEFAULT = 12;
 
 type TEditorFieldProps = {
   name: string;

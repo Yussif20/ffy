@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 
 const MIN = 10;
 const MAX = 24;
-const DEFAULT = 14;
+const DEFAULT = 12;
 
 export function MobileFontSizeToolbarPlugin({
   value,

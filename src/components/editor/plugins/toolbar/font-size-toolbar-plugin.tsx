@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Input } from "@/components/ui/input";
 
-const DEFAULT_FONT_SIZE = 16;
+const DEFAULT_FONT_SIZE = 14;
 const MIN_FONT_SIZE = 1;
 const MAX_FONT_SIZE = 72;
 
