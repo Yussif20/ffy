@@ -37,7 +37,8 @@ jobs:
           script: |
             cd ${{ secrets.VPS_APP_PATH }}
 
-            npm i
-            npm run build
+            npm install
+            NODE_ENV=production npm run build
 
-            pm2 reload frontend --update-env
+            pm2 delete frontend
+            pm2 start /var/www/app/ecosystem.config.js
