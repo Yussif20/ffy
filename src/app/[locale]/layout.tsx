@@ -8,6 +8,7 @@ import { getMessages } from "next-intl/server";
 import { Cairo, Space_Grotesk } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Providers } from "./providers";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import NextTopLoader from "nextjs-toploader";
 
 const cairo = Cairo({
@@ -63,6 +64,7 @@ export default async function RootLayout({ children, params }: Props) {
           </Providers>
         </ThemeProvider>
       </body>
+      <GoogleAnalytics gaId="G-K2HX57Q0WY" />
     </html>
   );
 }
