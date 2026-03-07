@@ -3,7 +3,6 @@
 import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
 import SwitchIcon from "./Icons/SwitchIcon";
-import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import useIsArabic from "@/hooks/useIsArabic";
@@ -14,14 +13,8 @@ export default function FFT_Buttons({ compact }: { compact?: boolean }) {
   const id = useId();
   const t = useTranslations("Navbar");
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const router = useRouter();
   const isArabic = useIsArabic();
-  // When switching forex <-> futures, drop `page` so we always land on page 1
-  const params = new URLSearchParams(searchParams.toString());
-  params.delete("page");
-  const queryString = params.toString();
-  const suffix = queryString ? "?" + queryString : "";
 
   const routerIsFutures = pathname.startsWith("/futures");
 
@@ -49,6 +42,10 @@ export default function FFT_Buttons({ compact }: { compact?: boolean }) {
     const strippedPath = pathname.startsWith(currentBase)
       ? pathname.slice(currentBase.length)
       : "";
+
+    // Apply default filters on challenges page, reset everything else
+    const isChallengePage = strippedPath.startsWith("/challenges");
+    const suffix = isChallengePage ? "?size=100000&in_steps=STEP1" : "";
     router.push(value + strippedPath + suffix, { scroll: false });
   };
 
