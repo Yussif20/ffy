@@ -1,10 +1,4 @@
-import type { Metadata } from "next";
 import "@/styles/globals.css";
-
-export const metadata: Metadata = {
-  title: "Funded For You",
-  description: "Explore You Want",
-};
 import Container from "@/components/Global/Container";
 import NavLanguageChange from "@/components/Global/Navbar/NavLanguageChange";
 import { Button } from "@/components/ui/button";

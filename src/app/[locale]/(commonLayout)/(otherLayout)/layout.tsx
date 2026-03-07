@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import "@/styles/globals.css";
 import HeroConditional from "@/components/Global/HeroConditional";
 import Container from "@/components/Global/Container";
@@ -7,11 +6,6 @@ import Subscribe from "@/components/Forex_Features/Subscribe";
 import SectionDivider from "@/components/Global/SectionDivider";
 import ScrollReveal from "@/components/Global/ScrollReveal";
 import PrefetchTabData from "@/components/Global/PrefetchTabData";
-
-export const metadata: Metadata = {
-  title: "Funded For You",
-  description: "Explore You Want",
-};
 
 export default function RootLayout({
   children,

@@ -1,18 +1,12 @@
 import Sidebar from "@/components/Overview/Sidebar";
 import "@/styles/globals.css";
 import { routing } from "@/i18n/routing";
-import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 
 type Props = {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
-};
-
-export const metadata: Metadata = {
-  title: "Funded",
-  description: "Template",
 };
 
 export default async function OverviewLayout({ children, params }: Props) {

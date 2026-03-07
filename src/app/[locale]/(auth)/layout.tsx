@@ -6,14 +6,8 @@ import { Link } from "@/i18n/navigation";
 import "@/styles/globals.css";
 import { getCurrentSession } from "@/utils/user";
 import { ArrowLeft } from "lucide-react";
-import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
-
-export const metadata: Metadata = {
-  title: "Funded For You",
-  description: "Explore You Want",
-};
 
 export default async function RootLayout({
   children,

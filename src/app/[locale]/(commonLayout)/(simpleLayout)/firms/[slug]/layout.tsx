@@ -10,18 +10,46 @@ import { SinglePropFirm } from "@/types/firm.types";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 
-export const metadata: Metadata = {
-  title: "Funded For You",
-  description: "Explore You Want",
-};
+type LayoutProps = Readonly<{
+  children: React.ReactNode;
+  params: Promise<{ slug: string; locale: string }>;
+}>;
+
+export async function generateMetadata({
+  params,
+}: LayoutProps): Promise<Metadata> {
+  const { slug, locale } = await params;
+  const isArabic = locale === "ar";
+
+  try {
+    const { data } = await serverApi.get<{ data: SinglePropFirm }>(
+      `/firms/${slug}?header=true`
+    );
+    const firm = data.data;
+    const title = firm.title;
+    const description = isArabic
+      ? `قارن تحديات وعروض ${title} — حسابات ممولة، فروقات الأسعار والمزيد على Funded For You`
+      : `Compare ${title} challenges, offers, spreads & rules — Funded For You`;
+
+    return {
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        images: firm.logoUrl ? [{ url: firm.logoUrl }] : ["/og.png"],
+      },
+    };
+  } catch {
+    return { title: "Firm Details" };
+  }
+}
+
 export const revalidate = 5;
 export default async function RootLayout({
   children,
   params,
-}: Readonly<{
-  children: React.ReactNode;
-  params: Promise<{ slug: string }>;
-}>) {
+}: LayoutProps) {
   const { slug } = await params;
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
