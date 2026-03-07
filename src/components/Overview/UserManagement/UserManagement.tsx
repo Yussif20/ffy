@@ -281,8 +281,7 @@ export default function UserManagement() {
         </h1>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
-        <div className="flex gap-2 items-center flex-1">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 items-center">
           <SearchInputField
             value={searchInput}
             onChange={handleSearchChange}
@@ -293,7 +292,7 @@ export default function UserManagement() {
               setRoleFilter(value);
               handleSetSearchParams({ page: "1" }, params, router);
             }}>
-            <SelectTrigger className="w-[140px]">
+            <SelectTrigger className="w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -302,11 +301,9 @@ export default function UserManagement() {
               <SelectItem value="USER">{t("userRole")}</SelectItem>
             </SelectContent>
           </Select>
-        </div>
-        <div className="flex gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" className="w-full">
                 <SlidersHorizontal className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
                 {t("columns")}
               </Button>
@@ -326,11 +323,10 @@ export default function UserManagement() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant="outline" size="sm" onClick={handleExportExcel}>
+          <Button variant="outline" className="w-full" onClick={handleExportExcel}>
             <Download className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
             {t("exportExcel")}
           </Button>
-        </div>
       </div>
 
       {isLoading || isFetching ? (

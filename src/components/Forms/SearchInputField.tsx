@@ -32,7 +32,7 @@ export default function SearchInputField({
         e.preventDefault();
         onSubmit?.();
       }}
-      className={cn("max-w-sm w-full", className)}
+      className={cn("w-full", className)}
     >
       <LinearBorder className="w-full max-w-full">
         <div className={cn("relative flex items-center w-full", isArabic && "flex-row-reverse")}>
