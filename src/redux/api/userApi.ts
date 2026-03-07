@@ -227,4 +227,5 @@ export const {
   useCompleteSurveyMutation,
   useGetSurveyUserQuery,
   useUpdateUserRoleMutation,
+  useLazyGetAllUserAdminQuery,
 } = userApi;

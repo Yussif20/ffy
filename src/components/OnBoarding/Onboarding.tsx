@@ -11,7 +11,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Label } from "../ui/label";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import {
   useCompleteSurveyMutation,
   useGetSurveyUserQuery,
@@ -193,7 +193,7 @@ export default function Onboarding() {
           dispatch(setUser({ user: { ...currentUser, hasTakenSurvey: true }, token: currentToken }));
         }
         toast.success(t("success"), { id: toastId });
-        router.push("/#top");
+        router.push("/");
       } catch (error) {
         toast.error(t("error"), { id: toastId });
       }

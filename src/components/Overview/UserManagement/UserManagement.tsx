@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   useGetAllUserAdminQuery,
+  useLazyGetAllUserAdminQuery,
   useUpdateUserAdminMutation,
   useUpdateUserRoleMutation,
 } from "@/redux/api/userApi";
@@ -119,6 +120,7 @@ export default function UserManagement() {
   const [searchInput, setSearchInput] = useState(urlSearch);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const [triggerGetAllUsers] = useLazyGetAllUserAdminQuery();
   const [roleFilter, setRoleFilter] = useState<string>("ALL");
   const [visibleColumns, setVisibleColumns] = useState<Record<ColumnKey, boolean>>(loadVisibility);
 
@@ -223,11 +225,24 @@ export default function UserManagement() {
     router.refresh();
   };
 
-  const handleExportExcel = () => {
+  const handleExportExcel = async () => {
     const exportColumns = COLUMNS.filter((col) => col.key !== "actions" && visibleColumns[col.key]);
     const headers = exportColumns.map((col) => t(col.labelKey));
 
-    const rows = users.map((user) => {
+    let exportUsers = users;
+    try {
+      const result = await triggerGetAllUsers([
+        { name: "page", value: 1 },
+        { name: "limit", value: 10000 },
+        { name: "searchTerm", value: searchTerm },
+      ]).unwrap();
+      const allExportUsers: TUser[] = (result?.data?.users as TUser[] | undefined) ?? [];
+      exportUsers = roleFilter === "ALL" ? allExportUsers : allExportUsers.filter((u) => u.role === roleFilter);
+    } catch {
+      toast.error("Failed to fetch all users for export, exporting current page only.");
+    }
+
+    const rows = exportUsers.map((user) => {
       return exportColumns.map((col) => {
         switch (col.key) {
           case "name": return user.fullName;
@@ -268,7 +283,10 @@ export default function UserManagement() {
             onSubmit={handleSearchSubmit}
             placeholder={tSearch("searchPlaceholder")}
           />
-          <Select value={roleFilter} onValueChange={setRoleFilter}>
+          <Select value={roleFilter} onValueChange={(value) => {
+              setRoleFilter(value);
+              handleSetSearchParams({ page: "1" }, params, router);
+            }}>
             <SelectTrigger className="w-[140px]">
               <SelectValue />
             </SelectTrigger>
@@ -295,6 +313,7 @@ export default function UserManagement() {
                   key={col.key}
                   checked={visibleColumns[col.key]}
                   onCheckedChange={() => toggleColumn(col.key)}
+                  onSelect={(e) => e.preventDefault()}
                 >
                   {t(col.labelKey)}
                 </DropdownMenuCheckboxItem>
