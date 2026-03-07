@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import {
   useGetAllUserAdminQuery,
   useUpdateUserAdminMutation,
+  useUpdateUserRoleMutation,
 } from "@/redux/api/userApi";
 import { useSearchParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -22,6 +23,8 @@ import TableSkeleton from "@/components/Global/TableSkeleton";
 import SearchInputField from "@/components/Forms/SearchInputField";
 import { handleSetSearchParams } from "@/lib/utils";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useAppSelector } from "@/redux/store";
+import { useCurrentUser } from "@/redux/authSlice";
 
 export type TUser = {
   id: string;
@@ -83,15 +86,20 @@ export default function UserManagement() {
   // Get all users
   const { data, isLoading, isFetching } = useGetAllUserAdminQuery([
     { name: "page", value: page },
-    { name: "limit", value: 10 },
+    { name: "limit", value: 100 },
     { name: "searchTerm", value: searchTerm },
   ]);
 
   const users: TUser[] = (data?.data?.users as TUser[] | undefined) ?? [];
 
+  const currentUser = useAppSelector(useCurrentUser);
+
   // Mutation for updating user status
   const [updateUserStatus, { isLoading: isStatusUpdating }] =
     useUpdateUserAdminMutation();
+
+  const [updateUserRole, { isLoading: isRoleUpdating }] =
+    useUpdateUserRoleMutation();
 
   const totalPages = data?.meta?.totalPage || 1;
 
@@ -104,6 +112,18 @@ export default function UserManagement() {
     });
     toast.success(t("userStatusUpdated"));
     // Refresh page after update
+    router.refresh();
+  };
+
+  const handleRoleUpdate = async (user: TUser) => {
+    const newRole = user.role === "USER" ? "SUPER_ADMIN" : "USER";
+    const confirmed = window.confirm(
+      `Are you sure you want to change ${user.fullName}'s role to ${newRole}?`
+    );
+    if (!confirmed) return;
+
+    await updateUserRole({ id: user.id, data: { role: newRole } });
+    toast.success("User role updated successfully");
     router.refresh();
   };
 
@@ -204,7 +224,20 @@ export default function UserManagement() {
                             {user.status === "BLOCKED" ? t("unban") : t("ban")}
                           </Button>
 
-                          {user.role !== "SUPER_ADMIN" && (
+                          {currentUser?.id !== user.id && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              disabled={isRoleUpdating}
+                              onClick={() => handleRoleUpdate(user)}
+                            >
+                              {user.role === "USER"
+                                ? "Make Admin"
+                                : "Make User"}
+                            </Button>
+                          )}
+
+                          {user.role !== "SUPER_ADMIN" && user.status !== "BLOCKED" && (
                             <Button
                               size="sm"
                               variant="outline"

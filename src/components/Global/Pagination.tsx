@@ -68,6 +68,10 @@ export function Pagination({ totalPages }: PaginationWithParamsProps) {
     (_, i) => windowStart + i,
   );
 
+  // Always include page 1; add ellipsis if window doesn't start at 1
+  const showLeadingEllipsis = windowStart > 2;
+  const showPage1Separately = windowStart > 1;
+
   return (
     <div className="flex items-center justify-center gap-0.5 sm:gap-1 max-w-full px-1">
       <button
@@ -87,6 +91,27 @@ export function Pagination({ totalPages }: PaginationWithParamsProps) {
       </button>
 
       <div className="flex items-center gap-0.5 sm:gap-1">
+        {showPage1Separately && (
+          <button
+            className={`
+              relative h-9 sm:h-11 min-w-9 sm:min-w-11 px-2 sm:px-3 flex items-center justify-center rounded-lg sm:rounded-xl shrink-0
+              border font-bold text-xs sm:text-base transition-all duration-200 ease-out
+              ${
+                currentPage === 1
+                  ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/30 scale-105"
+                  : "border-primary/30 hover:bg-primary/10 hover:text-primary hover:border-primary/50 hover:-translate-y-0.5 active:translate-y-0"
+              }
+            `}
+            onClick={() => goToPage(1)}
+          >
+            <span className="relative z-10">1</span>
+          </button>
+        )}
+        {showLeadingEllipsis && (
+          <span className="h-9 sm:h-11 min-w-6 sm:min-w-8 flex items-center justify-center text-xs sm:text-base font-bold text-muted-foreground">
+            ...
+          </span>
+        )}
         {visiblePages.map((page) => (
           <button
             className={`

@@ -180,6 +180,14 @@ const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    UpdateUserRole: builder.mutation({
+      query: ({ id, data }: { id: string; data: { role: string } }) => ({
+        url: `/users/${id}/role`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["User"],
+    }),
     completeSurvey: builder.mutation({
       query: ({ data }) => ({
         url: `/users/survey`,
@@ -218,4 +226,5 @@ export const {
   useUpdateUserAdminMutation,
   useCompleteSurveyMutation,
   useGetSurveyUserQuery,
+  useUpdateUserRoleMutation,
 } = userApi;
