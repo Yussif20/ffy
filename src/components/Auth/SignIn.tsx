@@ -43,7 +43,7 @@ export default function SignIn() {
         dispatch(
           setUser({ user: result.data.user, token: result.data.accessToken }),
         );
-        router.push("/forex");
+        router.push(result.data.user.hasTakenSurvey ? "/forex" : "/onboarding");
         toast.success(t("toast.success"), { id: toastId });
       }
     } catch (error: any) {
@@ -66,7 +66,7 @@ export default function SignIn() {
         dispatch(
           setUser({ user: result.data.user, token: result.data.accessToken }),
         );
-        router.push("/forex");
+        router.push(result.data.user.hasTakenSurvey ? "/forex" : "/onboarding");
         toast.success(t("toast.success"), { id: toastId });
       } else {
         router.push(`/auth/check-email?email=${email}`);

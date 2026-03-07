@@ -7,6 +7,7 @@ type User = {
   id: string;
   name: string;
   role: "USER" | "SUPER_ADMIN"; // Add other roles if needed
+  hasTakenSurvey: boolean;
 };
 
 type TAuthState = {

@@ -1089,6 +1089,7 @@
     "success": "Onboarding completed",
     "error": "Onboarding failed",
     "loading": "Onboarding in progress",
+    "skip": "Skip",
     "country": {
       "title": "Your Country",
       "subtitle": "Let us know your country and we will customize the tables based on the country that you selected",
@@ -1432,7 +1433,18 @@
       "actions": "Actions",
       "unban": "Unban",
       "ban": "Ban",
-      "userStatusUpdated": "User status updated successfully"
+      "userStatusUpdated": "User status updated successfully",
+      "survey": "Survey",
+      "country": "Country",
+      "experience": "Experience",
+      "assets": "Assets Traded",
+      "challenges": "Challenges Taken",
+      "columns": "Columns",
+      "toggleColumns": "Toggle Columns",
+      "exportExcel": "Export Excel",
+      "allRoles": "All Roles",
+      "adminRole": "Admin",
+      "userRole": "User"
     },
     "payMethodManagement": {
       "title": "Pay Method Management",

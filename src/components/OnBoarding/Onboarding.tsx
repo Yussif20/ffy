@@ -19,6 +19,8 @@ import {
 import { Skeleton } from "../ui/skeleton";
 import LinearBorder from "../Global/LinearBorder";
 import { Card, CardContent } from "../ui/card";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { setUser, useCurrentUser, useCurrentToken } from "@/redux/authSlice";
 
 const tradingExperienceTimes = [
   { value: "0-3 months", name: "0-3months" },
@@ -100,6 +102,9 @@ export default function Onboarding() {
   const { data, isLoading: surveyLoading } = useGetSurveyUserQuery(undefined);
   const router = useRouter();
   const t = useTranslations("Onboarding");
+  const dispatch = useAppDispatch();
+  const currentUser = useAppSelector(useCurrentUser);
+  const currentToken = useAppSelector(useCurrentToken);
 
   const [formData, setFormData] = useState<{
     country: string;
@@ -184,6 +189,9 @@ export default function Onboarding() {
         await completeSurveyMutation({
           data: { ...formData, country: countryForApi },
         }).unwrap();
+        if (currentUser) {
+          dispatch(setUser({ user: { ...currentUser, hasTakenSurvey: true }, token: currentToken }));
+        }
         toast.success(t("success"), { id: toastId });
         router.push("/#top");
       } catch (error) {
@@ -261,6 +269,14 @@ export default function Onboarding() {
                 <Button size={"lg"} onClick={handleNext} className="w-full">
                   {t("country.next")}
                 </Button>
+                <Button
+                  variant={"ghost"}
+                  size={"lg"}
+                  onClick={() => router.push("/forex")}
+                  className="w-full text-muted-foreground"
+                >
+                  {t("skip")}
+                </Button>
               </div>
             </AuthContainer>
           </motion.div>
@@ -309,20 +325,30 @@ export default function Onboarding() {
                   <CircleQuestionMark />
                   {t("about.info")}
                 </Button>
-                <div className="flex gap-3 ">
+                <div className="space-y-2">
+                  <div className="flex gap-3">
+                    <Button
+                      size={"icon"}
+                      variant={"outline2"}
+                      onClick={handlePrev}
+                    >
+                      <ChevronLeft />
+                    </Button>
+                    <Button
+                      size={"lg"}
+                      className="flex-1"
+                      onClick={handleComplete}
+                    >
+                      {t("about.complete")}
+                    </Button>
+                  </div>
                   <Button
-                    size={"icon"}
-                    variant={"outline2"}
-                    onClick={handlePrev}
-                  >
-                    <ChevronLeft />
-                  </Button>
-                  <Button
+                    variant={"ghost"}
                     size={"lg"}
-                    className="flex-1"
-                    onClick={handleComplete}
+                    onClick={() => router.push("/forex")}
+                    className="w-full text-muted-foreground"
                   >
-                    {t("about.complete")}
+                    {t("skip")}
                   </Button>
                 </div>
               </div>

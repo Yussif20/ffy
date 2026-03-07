@@ -1055,6 +1055,7 @@
     "success": "تم إكمال التسجيل",
     "error": "فشل التسجيل",
     "loading": "جاري إكمال التسجيل",
+    "skip": "تخطي",
     "country": {
       "title": "بلدك",
       "subtitle": "أخبرنا عن بلدك وسنقوم بتخصيص الجداول بناءً على البلد الذي اخترته",
@@ -1398,7 +1399,18 @@
       "actions": "الإجراءات",
       "unban": "إلغاء الحظر",
       "ban": "حظر",
-      "userStatusUpdated": "تم تحديث حالة المستخدم بنجاح"
+      "userStatusUpdated": "تم تحديث حالة المستخدم بنجاح",
+      "survey": "الاستبيان",
+      "country": "الدولة",
+      "experience": "الخبرة",
+      "assets": "الأصول المتداولة",
+      "challenges": "التحديات المتخذة",
+      "columns": "الأعمدة",
+      "toggleColumns": "تبديل الأعمدة",
+      "exportExcel": "تصدير إكسل",
+      "allRoles": "جميع الأدوار",
+      "adminRole": "مدير",
+      "userRole": "مستخدم"
     },
     "payMethodManagement": {
       "title": "إدارة طرق الدفع",
