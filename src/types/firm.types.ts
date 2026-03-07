@@ -58,6 +58,8 @@ export type SinglePropFirm = {
   consistencyRules: string;
   firmType: string;
   restrictedCountries: string[];
+  restrictedCountriesNote?: string;
+  restrictedCountriesNoteArabic?: string;
   spreads: any[];
   programTypes: string[];
   assets: string[];
@@ -123,6 +125,7 @@ export type SinglePropFirm = {
   scaleupPlansMobileFontSize?: number | null;
   inactivityRulesMobileFontSize?: number | null;
   prohibitedStrategiesMobileFontSize?: number | null;
+  restrictedCountriesNoteMobileFontSize?: number | null;
 };
 
 export type AccountSize = {

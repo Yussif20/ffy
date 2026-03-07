@@ -716,6 +716,23 @@ export default async function FirmOverview({
             className="space-y-6 scroll-mt-[270px]"
           >
             <SecTitle>{tSidebar("items.restrictedCountries")}</SecTitle>
+            {(company?.restrictedCountriesNote || company?.restrictedCountriesNoteArabic) && (
+              <div className="text-sm md:text-base">
+                <div
+                  className="danger-html mfs-content"
+                  style={
+                    company?.restrictedCountriesNoteMobileFontSize
+                      ? ({
+                          "--mobile-fs": `${company.restrictedCountriesNoteMobileFontSize}px`,
+                        } as React.CSSProperties)
+                      : undefined
+                  }
+                  dangerouslySetInnerHTML={{
+                    __html: visibleText(isArabic, company?.restrictedCountriesNote, company?.restrictedCountriesNoteArabic),
+                  }}
+                />
+              </div>
+            )}
             <div className="flex flex-wrap gap-1 z-10">
               {(company?.restrictedCountries || [])
                 .map((item) =>

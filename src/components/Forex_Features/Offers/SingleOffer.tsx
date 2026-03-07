@@ -85,6 +85,9 @@ function OfferPercentageBadge({
   isArabic,
   variant = "default",
   className,
+  discountType,
+  discountText,
+  discountTextArabic,
 }: {
   percentage: number;
   showGift?: boolean;
@@ -93,43 +96,122 @@ function OfferPercentageBadge({
   isArabic: boolean;
   variant?: "default" | "subtle";
   className?: string;
+  discountType?: "PERCENTAGE" | "TEXT" | string;
+  discountText?: string;
+  discountTextArabic?: string;
 }) {
   const gift = visibleText(isArabic, giftText ?? undefined, giftTextArabic ?? undefined);
+  const isText = discountType === "TEXT";
+  const customText = isText ? visibleText(isArabic, discountText, discountTextArabic) : "";
 
-  if (variant === "subtle") {
-    return (
-      <div
-        className={cn(
-          "flex flex-col items-center justify-center rounded-lg w-[72px] min-w-[72px] py-2.5",
-          "bg-primary/10 text-primary border border-primary/30",
-          className
-        )}
-      >
-        <span className="text-base font-bold tabular-nums leading-tight">{percentage}%</span>
-        <span className="text-[10px] font-semibold uppercase tracking-wider opacity-80">OFF</span>
-        {showGift && gift && (
-          <div className="mt-1 px-1.5 py-0.5 rounded bg-primary/10 text-[9px] font-medium text-center leading-tight">
-            <GiftBox size={8} className="inline-block align-middle text-success" /> {gift}
-          </div>
-        )}
-      </div>
-    );
-  }
+  // Hide if empty
+  if (isText && !customText) return null;
+  if (!isText && percentage === 0) return null;
+
+  const isSubtle = variant === "subtle";
 
   return (
     <div
       className={cn(
-        "relative flex flex-col items-center justify-center rounded-xl w-full min-w-0 py-4 sm:py-5 lg:min-w-[100px] lg:w-[100px]",
-        "bg-primary text-primary-foreground shadow-lg",
-        "border border-primary-dark/50",
+        // Shape & layout
+        "group/badge relative flex flex-col items-center justify-center overflow-hidden",
+        isSubtle
+          ? "rounded-xl w-[76px] min-w-[76px] py-3"
+          : "rounded-2xl w-full min-w-0 py-5 sm:py-6 lg:min-w-[110px] lg:w-[110px]",
+        // Glassmorphism: frosted background + backdrop blur
+        "bg-gradient-to-br from-primary/[0.08] via-primary/[0.04] to-transparent",
+        "backdrop-blur-2xl",
+        // Border: subtle luminous edge
+        "border border-primary/20",
+        // Outer glow + inset glass shine
+        isSubtle
+          ? "shadow-[0_0_14px_rgba(var(--primary-rgb,99,102,241),0.12),inset_0_1px_0_rgba(255,255,255,0.08)]"
+          : "shadow-[0_0_24px_rgba(var(--primary-rgb,99,102,241),0.18),0_0_48px_rgba(var(--primary-rgb,99,102,241),0.06),inset_0_1px_0_rgba(255,255,255,0.1)]",
+        // Hover lift
+        "transition-all duration-300",
+        "hover:shadow-[0_0_32px_rgba(var(--primary-rgb,99,102,241),0.28),0_0_60px_rgba(var(--primary-rgb,99,102,241),0.1),inset_0_1px_0_rgba(255,255,255,0.15)]",
+        "hover:border-primary/30",
         className
       )}
     >
-      <span className="text-2xl sm:text-3xl font-bold tabular-nums">{percentage}%</span>
-      <span className="text-xs font-semibold uppercase tracking-wider opacity-95">OFF</span>
+      {/* Top-right accent orb */}
+      <div
+        className={cn(
+          "absolute rounded-full bg-primary/15 blur-2xl pointer-events-none",
+          isSubtle ? "-top-3 -right-3 w-8 h-8" : "-top-5 -right-5 w-14 h-14"
+        )}
+      />
+      {/* Bottom-left accent orb */}
+      <div
+        className={cn(
+          "absolute rounded-full bg-primary/10 blur-2xl pointer-events-none",
+          isSubtle ? "-bottom-3 -left-3 w-8 h-8" : "-bottom-5 -left-5 w-14 h-14"
+        )}
+      />
+      {/* Inner ring — double stroke glass effect */}
+      <div
+        className={cn(
+          "absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/[0.07]",
+          isSubtle ? "rounded-xl" : "rounded-2xl"
+        )}
+      />
+      <div
+        className={cn(
+          "absolute pointer-events-none ring-1 ring-inset ring-primary/10",
+          isSubtle ? "inset-[2px] rounded-[10px]" : "inset-[3px] rounded-[13px]"
+        )}
+      />
+      {/* Top highlight strip (glass reflection) */}
+      <div
+        className={cn(
+          "absolute top-0 inset-x-0 pointer-events-none bg-gradient-to-b from-white/[0.07] to-transparent",
+          isSubtle ? "h-6 rounded-t-xl" : "h-10 rounded-t-2xl"
+        )}
+      />
+
+      {/* Content */}
+      {isText ? (
+        <span
+          className={cn(
+            "relative font-bold text-primary text-center leading-tight px-2",
+            isSubtle ? "text-xs" : "text-base sm:text-lg"
+          )}
+        >
+          {customText}
+        </span>
+      ) : (
+        <>
+          <span
+            className={cn(
+              "relative font-extrabold tabular-nums text-primary drop-shadow-[0_0_6px_rgba(var(--primary-rgb,99,102,241),0.35)]",
+              isSubtle ? "text-lg leading-tight" : "text-3xl sm:text-4xl"
+            )}
+          >
+            {percentage}%
+          </span>
+          <span
+            className={cn(
+              "relative font-semibold uppercase tracking-widest text-primary/80",
+              isSubtle ? "text-[9px]" : "text-[11px] mt-0.5"
+            )}
+          >
+            OFF
+          </span>
+        </>
+      )}
+
+      {/* Gift line */}
       {showGift && gift && (
-        <div className="mt-2 px-2 py-0.5 rounded bg-primary-foreground/15 text-[10px] font-medium text-center">
-          <GiftBox size={10} className="inline-block align-middle text-success" /> {gift}
+        <div
+          className={cn(
+            "relative font-medium text-center text-primary/90 backdrop-blur-sm rounded-md",
+            isSubtle
+              ? "mt-1.5 px-1.5 py-0.5 bg-primary/[0.06] text-[9px] leading-tight"
+              : "mt-2.5 px-2.5 py-1 bg-primary/[0.08] text-[10px]"
+          )}
+        >
+          <GiftBox size={isSubtle ? 8 : 11} className="inline-block align-middle text-success" />{" "}
+          {gift}
         </div>
       )}
     </div>
@@ -176,6 +258,9 @@ function CompanyHeader({
                     className="text-primary"
                     mainClassName="px-0! py-0"
                     percentage={offer.offerPercentage}
+                    discountType={offer.discountType}
+                    discountText={offer.discountText}
+                    discountTextArabic={offer.discountTextArabic}
                   />
                   )
                 </span>
@@ -289,6 +374,9 @@ export default function SingleOffer(props: {
                 giftText={offerFirstData.giftText}
                 giftTextArabic={offerFirstData.giftTextArabic}
                 isArabic={isArabic}
+                discountType={offerFirstData.discountType}
+                discountText={offerFirstData.discountText}
+                discountTextArabic={offerFirstData.discountTextArabic}
               />
             }
           />
@@ -413,24 +501,37 @@ const OfferCard = ({
       giftTextArabic={offer.giftTextArabic}
       isArabic={isArabic}
       variant={hideCompany ? "subtle" : "default"}
+      discountType={offer.discountType}
+      discountText={offer.discountText}
+      discountTextArabic={offer.discountTextArabic}
     />
   );
-  const percantCard = (
-    <Card className="py-6 lg:py-10 lg:h-25 w-full lg:w-auto lg:aspect-5/2 flex flex-col justify-center items-center gap-y-2 lg:gap-y-4 bg-transparent relative rounded-2xl group hover:bg-primary/5 transition-colors duration-200">
-      <h1 className="text-4xl md:text-5xl font-bold uppercase py-0 leading-1">
+  const showPercantCard = offer.discountType === "TEXT"
+    ? !!visibleText(isArabic, offer.discountText, offer.discountTextArabic)
+    : offer.offerPercentage !== 0;
+  const percantCard = showPercantCard ? (
+    <Card className="relative py-6 lg:py-10 lg:h-25 w-full lg:w-auto lg:aspect-5/2 flex flex-col justify-center items-center gap-y-2 lg:gap-y-4 rounded-2xl overflow-hidden bg-gradient-to-br from-primary/[0.07] via-primary/[0.03] to-transparent backdrop-blur-2xl border border-primary/20 shadow-[0_0_20px_rgba(var(--primary-rgb,99,102,241),0.12),inset_0_1px_0_rgba(255,255,255,0.08)] hover:shadow-[0_0_28px_rgba(var(--primary-rgb,99,102,241),0.22),inset_0_1px_0_rgba(255,255,255,0.12)] hover:border-primary/30 transition-all duration-300 group">
+      {/* Glass reflection */}
+      <div className="absolute top-0 inset-x-0 h-10 bg-gradient-to-b from-white/[0.06] to-transparent rounded-t-2xl pointer-events-none" />
+      <div className="absolute -top-4 -right-4 w-12 h-12 rounded-full bg-primary/15 blur-2xl pointer-events-none" />
+      <div className="absolute -bottom-4 -left-4 w-12 h-12 rounded-full bg-primary/10 blur-2xl pointer-events-none" />
+      <h1 className="relative text-4xl md:text-5xl font-bold uppercase py-0 leading-1">
         <DiscountText
           className="text-primary"
           percentage={offer.offerPercentage}
+          discountType={offer.discountType}
+          discountText={offer.discountText}
+          discountTextArabic={offer.discountTextArabic}
         />
       </h1>
       {offer.showGift && (
-        <div className="px-3 py-1 bg-foreground/10 max-w-max rounded-full  gap-1 md:gap-1.5 text-xs text-center">
+        <div className="relative px-3 py-1 bg-primary/[0.08] backdrop-blur-sm max-w-max rounded-full gap-1 md:gap-1.5 text-xs text-center">
           <GiftBox size={14} className="text-yellow-500 inline-block" /> +{" "}
           {visibleText(isArabic, offer.giftText, offer.giftTextArabic)}
         </div>
       )}
     </Card>
-  );
+  ) : null;
 
   const moreBtn = showTag && showingNumber > 0 && (
     <AccordionTrigger hideArrow className="p-0 [&[data-state=open]_svg]:rotate-180">
@@ -470,6 +571,9 @@ const OfferCard = ({
                     className="text-primary"
                     mainClassName="px-0! py-0"
                     percentage={offer.offerPercentage}
+                    discountType={offer.discountType}
+                    discountText={offer.discountText}
+                    discountTextArabic={offer.discountTextArabic}
                   />
                   )
                 </span>

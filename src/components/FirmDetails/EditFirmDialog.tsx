@@ -70,6 +70,8 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
           firm.paymentMethods?.map((pm: any) => pm.id || pm) || [],
         payoutMethods: firm.payoutMethods?.map((pm: any) => pm.id || pm) || [],
         restrictedCountries: firm.restrictedCountries || [],
+        restrictedCountriesNote: firm.restrictedCountriesNote || "",
+        restrictedCountriesNoteArabic: firm.restrictedCountriesNoteArabic || "",
         countries: firm.countries || [],
         typeOfInstruments: firm.typeOfInstruments || [],
         drawDowns: firm.drawDowns || [],
@@ -164,6 +166,7 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
         scaleupPlansMobileFontSize: firm.scaleupPlansMobileFontSize ?? undefined,
         inactivityRulesMobileFontSize: firm.inactivityRulesMobileFontSize ?? undefined,
         prohibitedStrategiesMobileFontSize: firm.prohibitedStrategiesMobileFontSize ?? undefined,
+        restrictedCountriesNoteMobileFontSize: firm.restrictedCountriesNoteMobileFontSize ?? undefined,
       });
     }
   }, [firmData]);
@@ -179,6 +182,8 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
       paymentMethods: data.paymentMethods,
       payoutMethods: data.payoutMethods,
       restrictedCountries: data.restrictedCountries,
+      restrictedCountriesNote: data.restrictedCountriesNote || "",
+      restrictedCountriesNoteArabic: data.restrictedCountriesNoteArabic || "",
       countries: countries
         .filter((c) => !data.restrictedCountries.includes(c.country))
         .map((item) => item.country),
@@ -261,6 +266,7 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
       ...(data.scaleupPlansMobileFontSize && { scaleupPlansMobileFontSize: Number(data.scaleupPlansMobileFontSize) }),
       ...(data.inactivityRulesMobileFontSize && { inactivityRulesMobileFontSize: Number(data.inactivityRulesMobileFontSize) }),
       ...(data.prohibitedStrategiesMobileFontSize && { prohibitedStrategiesMobileFontSize: Number(data.prohibitedStrategiesMobileFontSize) }),
+      ...(data.restrictedCountriesNoteMobileFontSize && { restrictedCountriesNoteMobileFontSize: Number(data.restrictedCountriesNoteMobileFontSize) }),
     };
 
     const sendingData = new FormData();

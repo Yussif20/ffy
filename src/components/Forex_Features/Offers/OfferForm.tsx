@@ -21,6 +21,7 @@ export default function OfferForm() {
     })) || [];
   const { watch } = useFormContext();
   const showGift = watch("showGift");
+  const discountType = watch("discountType");
   return (
     <>
       {/* Firm Selection */}
@@ -48,7 +49,17 @@ export default function OfferForm() {
           fieldClassName="h-11"
         />
 
-        {/* Offer Percentage */}
+        <CustomYesNoToggle
+          name="discountType"
+          label={t("discountType")}
+          yesValue="PERCENTAGE"
+          noValue="TEXT"
+          yesLabel={t("percentage")}
+          noLabel={t("discountTextLabel")}
+        />
+      </div>
+
+      {discountType !== "TEXT" ? (
         <CustomInput
           type="number"
           name="offerPercentage"
@@ -57,7 +68,25 @@ export default function OfferForm() {
           required
           fieldClassName="h-11"
         />
-      </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <CustomInput
+            type="text"
+            name="discountText"
+            label={t("discountTextEnglish")}
+            placeholder="e.g., Buy 1 Get 1"
+            fieldClassName="h-11"
+          />
+          <CustomInput
+            type="text"
+            name="discountTextArabic"
+            label={t("discountTextArabicLabel")}
+            placeholder="e.g., اشتر 1 واحصل على 1"
+            inputDir="rtl"
+            fieldClassName="h-11"
+          />
+        </div>
+      )}
       <CustomInput
         type="text"
         name="text"

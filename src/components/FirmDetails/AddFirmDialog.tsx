@@ -52,6 +52,8 @@ export const defaultValues = {
   paymentMethods: [],
   payoutMethods: [],
   restrictedCountries: [],
+  restrictedCountriesNote: "",
+  restrictedCountriesNoteArabic: "",
   typeOfInstruments: [],
   drawDowns: [],
   drawDownTexts: [],
@@ -111,6 +113,7 @@ export const defaultValues = {
   scaleupPlansMobileFontSize: undefined as number | undefined,
   inactivityRulesMobileFontSize: undefined as number | undefined,
   prohibitedStrategiesMobileFontSize: undefined as number | undefined,
+  restrictedCountriesNoteMobileFontSize: undefined as number | undefined,
 };
 
 export const AddFirmDialog = () => {
@@ -132,6 +135,8 @@ export const AddFirmDialog = () => {
       paymentMethods: data.paymentMethods,
       payoutMethods: data.payoutMethods,
       restrictedCountries: data.restrictedCountries,
+      restrictedCountriesNote: data.restrictedCountriesNote || "",
+      restrictedCountriesNoteArabic: data.restrictedCountriesNoteArabic || "",
       countries: countries
         .filter((c) => !data.restrictedCountries.includes(c.country))
         .map((item) => item.country),
@@ -213,6 +218,7 @@ export const AddFirmDialog = () => {
       ...(data.scaleupPlansMobileFontSize && { scaleupPlansMobileFontSize: Number(data.scaleupPlansMobileFontSize) }),
       ...(data.inactivityRulesMobileFontSize && { inactivityRulesMobileFontSize: Number(data.inactivityRulesMobileFontSize) }),
       ...(data.prohibitedStrategiesMobileFontSize && { prohibitedStrategiesMobileFontSize: Number(data.prohibitedStrategiesMobileFontSize) }),
+      ...(data.restrictedCountriesNoteMobileFontSize && { restrictedCountriesNoteMobileFontSize: Number(data.restrictedCountriesNoteMobileFontSize) }),
     };
 
     const sendingData = new FormData();

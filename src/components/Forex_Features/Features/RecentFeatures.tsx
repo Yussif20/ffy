@@ -241,7 +241,12 @@ const CompanyCard = ({ offer }: { offer: Offer }) => {
       </div>
 
       <LinearBorder className="rounded-lg" className2="rounded-lg">
-        <DiscountText percentage={offer.offerPercentage} />
+        <DiscountText
+          percentage={offer.offerPercentage}
+          discountType={offer.discountType}
+          discountText={offer.discountText}
+          discountTextArabic={offer.discountTextArabic}
+        />
       </LinearBorder>
     </div>
   );

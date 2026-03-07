@@ -343,7 +343,12 @@
     "textArabic": "نص عربي",
     "showGift": "عرض الهدايا",
     "textPlaceholder": "اكتب النص",
-    "textArabicPlaceholder": "اكتب النص بالعربية"
+    "textArabicPlaceholder": "اكتب النص بالعربية",
+    "discountType": "نوع الخصم",
+    "percentage": "نسبة مئوية",
+    "discountTextLabel": "نص",
+    "discountTextEnglish": "نص الخصم (إنجليزي)",
+    "discountTextArabicLabel": "نص الخصم (عربي)"
   },
   "Challenges": {
     "filter": "الفلاتر",

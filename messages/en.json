@@ -346,7 +346,12 @@
     "textArabic": "Text Arabic",
     "showGift": "Show Gift",
     "textPlaceholder": "Write text",
-    "textArabicPlaceholder": "Write text in arabic"
+    "textArabicPlaceholder": "Write text in arabic",
+    "discountType": "Discount Type",
+    "percentage": "Percentage",
+    "discountTextLabel": "Text",
+    "discountTextEnglish": "Discount Text (English)",
+    "discountTextArabicLabel": "Discount Text (Arabic)"
   },
   "Challenges": {
     "filter": "Filter",

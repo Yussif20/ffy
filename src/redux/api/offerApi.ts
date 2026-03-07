@@ -6,6 +6,9 @@ import { generateParams } from "@/hooks/usePagination";
 // Single offer type
 export type Offer = {
   offerPercentage: number;
+  discountType?: "PERCENTAGE" | "TEXT";
+  discountText?: string;
+  discountTextArabic?: string;
   id: string;
   code: string;
   isExclusive?: boolean;
@@ -33,6 +36,9 @@ export type FirmWithOffers = {
 
 export type CreateOfferInput = {
   offerPercentage: number;
+  discountType?: "PERCENTAGE" | "TEXT";
+  discountText?: string;
+  discountTextArabic?: string;
   code: string;
   firmId: string;
   isExclusive?: boolean;

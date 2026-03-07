@@ -11,6 +11,10 @@ type TYesNoToggleProps = {
   disabled?: boolean;
   className?: string;
   labelClassName?: string;
+  yesValue?: any;
+  noValue?: any;
+  yesLabel?: string;
+  noLabel?: string;
 };
 
 export default function CustomYesNoToggle({
@@ -19,6 +23,10 @@ export default function CustomYesNoToggle({
   disabled,
   className,
   labelClassName,
+  yesValue = true,
+  noValue = false,
+  yesLabel = "Yes",
+  noLabel = "No",
 }: TYesNoToggleProps) {
   const {
     control,
@@ -47,19 +55,19 @@ export default function CustomYesNoToggle({
               <Button
                 type="button"
                 disabled={disabled}
-                variant={field.value === true ? "default" : "outline"}
-                onClick={() => field.onChange(true)}
+                variant={field.value === yesValue ? "default" : "outline"}
+                onClick={() => field.onChange(yesValue)}
               >
-                Yes
+                {yesLabel}
               </Button>
 
               <Button
                 type="button"
-                variant={field.value === false ? "default" : "outline"}
+                variant={field.value === noValue ? "default" : "outline"}
                 disabled={disabled}
-                onClick={() => field.onChange(false)}
+                onClick={() => field.onChange(noValue)}
               >
-                No
+                {noLabel}
               </Button>
             </div>
 

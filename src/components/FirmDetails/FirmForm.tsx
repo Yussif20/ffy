@@ -149,9 +149,8 @@ export default function FirmForm({
               value: otherFeature.value,
               name: otherFeature.name,
             }))}
-            required
           />
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 space-y-4">
             <CustomComboBoxMultiple
               name="restrictedCountries"
               label={t("restrictedCountries")}
@@ -163,6 +162,10 @@ export default function FirmForm({
               }))}
               required
             />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <RichTextEditor2 name="restrictedCountriesNote" label="Restricted Countries Note (English)" mobileFontSizeName="restrictedCountriesNoteMobileFontSize" />
+              <RichTextEditor2 name="restrictedCountriesNoteArabic" label="Restricted Countries Note (Arabic)" />
+            </div>
           </div>
         </div>
         {/* Offer Section */}
