@@ -167,14 +167,17 @@ export default function UserManagement() {
 
   const searchTerm = params.get("search") || "";
   // Get all users
-  const { data, isLoading, isFetching } = useGetAllUserAdminQuery([
+  const queryParams: { name: string; value: string | number }[] = [
     { name: "page", value: page },
     { name: "limit", value: 100 },
     { name: "searchTerm", value: searchTerm },
-  ]);
+  ];
+  if (roleFilter !== "ALL") {
+    queryParams.push({ name: "role", value: roleFilter });
+  }
+  const { data, isLoading, isFetching } = useGetAllUserAdminQuery(queryParams);
 
-  const allUsers: TUser[] = (data?.data?.users as TUser[] | undefined) ?? [];
-  const users = roleFilter === "ALL" ? allUsers : allUsers.filter((u) => u.role === roleFilter);
+  const users: TUser[] = (data?.data?.users as TUser[] | undefined) ?? [];
 
   const currentUser = useAppSelector(useCurrentUser);
 
@@ -231,13 +234,16 @@ export default function UserManagement() {
 
     let exportUsers = users;
     try {
-      const result = await triggerGetAllUsers([
+      const exportParams: { name: string; value: string | number }[] = [
         { name: "page", value: 1 },
         { name: "limit", value: 10000 },
         { name: "searchTerm", value: searchTerm },
-      ]).unwrap();
-      const allExportUsers: TUser[] = (result?.data?.users as TUser[] | undefined) ?? [];
-      exportUsers = roleFilter === "ALL" ? allExportUsers : allExportUsers.filter((u) => u.role === roleFilter);
+      ];
+      if (roleFilter !== "ALL") {
+        exportParams.push({ name: "role", value: roleFilter });
+      }
+      const result = await triggerGetAllUsers(exportParams).unwrap();
+      exportUsers = (result?.data?.users as TUser[] | undefined) ?? [];
     } catch {
       toast.error("Failed to fetch all users for export, exporting current page only.");
     }
