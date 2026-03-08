@@ -9,6 +9,7 @@ import "@/styles/globals.css";
 import { SinglePropFirm } from "@/types/firm.types";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 
 type LayoutProps = Readonly<{
   children: React.ReactNode;
@@ -53,17 +54,23 @@ export default async function RootLayout({
   const { slug } = await params;
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
-  const { data } = await serverApi.get<{ data: SinglePropFirm }>(
-    `/firms/${slug}`,
-    {
-      headers: {
-        ...(accessToken && {
-          Authorization: `${accessToken}`,
-          "x-client-type": "MOBILE",
-        }),
-      },
-    }
-  );
+  let data: { data: SinglePropFirm };
+  try {
+    const res = await serverApi.get<{ data: SinglePropFirm }>(
+      `/firms/${slug}`,
+      {
+        headers: {
+          ...(accessToken && {
+            Authorization: `${accessToken}`,
+            "x-client-type": "MOBILE",
+          }),
+        },
+      }
+    );
+    data = res.data;
+  } catch {
+    notFound();
+  }
 
   return (
     <div>

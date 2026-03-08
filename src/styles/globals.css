@@ -51,6 +51,7 @@
 /* Light theme (default when .dark is not on html) */
 :root {
   --radius: 0.65rem;
+  --primary-rgb: 5, 150, 102;
   --background: #f8fafc;
   --foreground: #0f172a;
   --card: #ffffff;
@@ -91,6 +92,7 @@
 /* Dark theme (when .dark is on html) */
 .dark {
   --radius: 0.65rem;
+  --primary-rgb: 5, 150, 102;
   --background: #030310;
   --foreground: #ffffff;
   --card: #18181b;
@@ -174,6 +176,7 @@ input[type="radio"] {
 
 /* Yellow theme — light (Futures, when .dark is not on html) */
 .yellow-theme {
+  --primary-rgb: 184, 134, 11;
   --background: #faf9f5;
   --foreground: #1c1917;
   --card: #ffffff;
@@ -213,6 +216,7 @@ input[type="radio"] {
 
 /* Yellow theme — dark (Futures, when .dark is on html) */
 .yellow-theme.dark {
+  --primary-rgb: 201, 162, 39;
   --background: #030310;
   --foreground: #ffffff;
   --card: #18181b;
@@ -623,6 +627,44 @@ button {
   );
   background-size: 200% 100%;
   animation: shimmer 1.6s infinite;
+}
+
+/* Discount card sequential glow — each card lights up briefly then fades.
+   Use --glow-delay (inline) to stagger across cards.
+   --glow-duration controls full cycle length. */
+@keyframes discount-glow-seq {
+  0%, 100% {
+    box-shadow:
+      0 0 12px rgba(var(--primary-rgb, 5, 150, 102), 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  8%, 18% {
+    box-shadow:
+      0 0 35px rgba(var(--primary-rgb, 5, 150, 102), 0.55),
+      0 0 70px rgba(var(--primary-rgb, 5, 150, 102), 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    border-color: rgba(var(--primary-rgb, 5, 150, 102), 0.45);
+  }
+}
+
+.animate-discount-glow {
+  animation: discount-glow-seq var(--glow-duration, 6s) ease-in-out infinite;
+  animation-delay: var(--glow-delay, 0s);
+}
+
+/* Sweep shimmer for discount badges */
+@keyframes discount-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.discount-sweep-trigger:hover .discount-sweep-bar {
+  animation: discount-sweep 0.7s ease-in-out;
 }
 
 /* Sticky table header stepping entrance */

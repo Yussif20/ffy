@@ -88,6 +88,8 @@ function OfferPercentageBadge({
   discountType,
   discountText,
   discountTextArabic,
+  glowIndex = 0,
+  glowTotal = 1,
 }: {
   percentage: number;
   showGift?: boolean;
@@ -99,6 +101,8 @@ function OfferPercentageBadge({
   discountType?: "PERCENTAGE" | "TEXT" | string;
   discountText?: string;
   discountTextArabic?: string;
+  glowIndex?: number;
+  glowTotal?: number;
 }) {
   const gift = visibleText(isArabic, giftText ?? undefined, giftTextArabic ?? undefined);
   const isText = discountType === "TEXT";
@@ -118,53 +122,31 @@ function OfferPercentageBadge({
         isSubtle
           ? "rounded-xl w-[76px] min-w-[76px] py-3"
           : "rounded-2xl w-full min-w-0 py-5 sm:py-6 lg:min-w-[110px] lg:w-[110px]",
-        // Glassmorphism: frosted background + backdrop blur
-        "bg-gradient-to-br from-primary/[0.08] via-primary/[0.04] to-transparent",
+        // Glassy white background
+        "bg-gradient-to-br from-white/[0.22] via-white/[0.15] to-white/[0.10]",
         "backdrop-blur-2xl",
-        // Border: subtle luminous edge
-        "border border-primary/20",
-        // Outer glow + inset glass shine
-        isSubtle
-          ? "shadow-[0_0_14px_rgba(var(--primary-rgb,99,102,241),0.12),inset_0_1px_0_rgba(255,255,255,0.08)]"
-          : "shadow-[0_0_24px_rgba(var(--primary-rgb,99,102,241),0.18),0_0_48px_rgba(var(--primary-rgb,99,102,241),0.06),inset_0_1px_0_rgba(255,255,255,0.1)]",
+        // Border
+        "border border-white/[0.25]",
+        // Glow animation
+        !isSubtle && "animate-discount-glow",
         // Hover lift
         "transition-all duration-300",
-        "hover:shadow-[0_0_32px_rgba(var(--primary-rgb,99,102,241),0.28),0_0_60px_rgba(var(--primary-rgb,99,102,241),0.1),inset_0_1px_0_rgba(255,255,255,0.15)]",
-        "hover:border-primary/30",
+        "hover:border-white/[0.35] hover:scale-[1.04]",
         className
       )}
+      style={!isSubtle ? { "--glow-delay": `${glowIndex * 0.5}s`, "--glow-duration": `${glowTotal * 0.5 + 1.5}s` } as React.CSSProperties : undefined}
     >
-      {/* Top-right accent orb */}
+      {/* Inner ring — glass edge */}
       <div
         className={cn(
-          "absolute rounded-full bg-primary/15 blur-2xl pointer-events-none",
-          isSubtle ? "-top-3 -right-3 w-8 h-8" : "-top-5 -right-5 w-14 h-14"
-        )}
-      />
-      {/* Bottom-left accent orb */}
-      <div
-        className={cn(
-          "absolute rounded-full bg-primary/10 blur-2xl pointer-events-none",
-          isSubtle ? "-bottom-3 -left-3 w-8 h-8" : "-bottom-5 -left-5 w-14 h-14"
-        )}
-      />
-      {/* Inner ring — double stroke glass effect */}
-      <div
-        className={cn(
-          "absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/[0.07]",
+          "absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/[0.12]",
           isSubtle ? "rounded-xl" : "rounded-2xl"
-        )}
-      />
-      <div
-        className={cn(
-          "absolute pointer-events-none ring-1 ring-inset ring-primary/10",
-          isSubtle ? "inset-[2px] rounded-[10px]" : "inset-[3px] rounded-[13px]"
         )}
       />
       {/* Top highlight strip (glass reflection) */}
       <div
         className={cn(
-          "absolute top-0 inset-x-0 pointer-events-none bg-gradient-to-b from-white/[0.07] to-transparent",
+          "absolute top-0 inset-x-0 pointer-events-none bg-gradient-to-b from-white/[0.18] to-transparent",
           isSubtle ? "h-6 rounded-t-xl" : "h-10 rounded-t-2xl"
         )}
       />
@@ -173,7 +155,7 @@ function OfferPercentageBadge({
       {isText ? (
         <span
           className={cn(
-            "relative font-bold text-primary text-center leading-tight px-2",
+            "relative font-bold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] text-center leading-tight px-2",
             isSubtle ? "text-xs" : "text-base sm:text-lg"
           )}
         >
@@ -183,7 +165,7 @@ function OfferPercentageBadge({
         <>
           <span
             className={cn(
-              "relative font-extrabold tabular-nums text-primary drop-shadow-[0_0_6px_rgba(var(--primary-rgb,99,102,241),0.35)]",
+              "relative font-extrabold tabular-nums text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]",
               isSubtle ? "text-lg leading-tight" : "text-3xl sm:text-4xl"
             )}
           >
@@ -191,7 +173,7 @@ function OfferPercentageBadge({
           </span>
           <span
             className={cn(
-              "relative font-semibold uppercase tracking-widest text-primary/80",
+              "relative font-semibold uppercase tracking-widest text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]",
               isSubtle ? "text-[9px]" : "text-[11px] mt-0.5"
             )}
           >
@@ -204,10 +186,10 @@ function OfferPercentageBadge({
       {showGift && gift && (
         <div
           className={cn(
-            "relative font-medium text-center text-primary/90 backdrop-blur-sm rounded-md",
+            "relative font-medium text-center text-white/90 backdrop-blur-sm rounded-md",
             isSubtle
-              ? "mt-1.5 px-1.5 py-0.5 bg-primary/[0.06] text-[9px] leading-tight"
-              : "mt-2.5 px-2.5 py-1 bg-primary/[0.08] text-[10px]"
+              ? "mt-1.5 px-1.5 py-0.5 bg-primary/[0.08] text-[9px] leading-tight"
+              : "mt-2.5 px-2.5 py-1 bg-primary/[0.10] text-[10px]"
           )}
         >
           <GiftBox size={isSubtle ? 8 : 11} className="inline-block align-middle text-success" />{" "}
@@ -284,10 +266,14 @@ export default function SingleOffer(props: {
   hideBlackHoles?: boolean;
   isTopOffer?: boolean;
   data: FirmWithOffers;
+  index?: number;
+  totalCount?: number;
   prevFirm?: FirmWithOffers;
   nextFirm?: FirmWithOffers;
 }) {
   const { onlyShowMatch, hideBlackHoles, isTopOffer, data } = props;
+  const glowIndex = props.index ?? 0;
+  const glowTotal = props.totalCount ?? 1;
   const offer = data?.offers ?? [];
   const companyData = {
     id: data.id,
@@ -377,6 +363,8 @@ export default function SingleOffer(props: {
                 discountType={offerFirstData.discountType}
                 discountText={offerFirstData.discountText}
                 discountTextArabic={offerFirstData.discountTextArabic}
+                glowIndex={glowIndex}
+                glowTotal={glowTotal}
               />
             }
           />
@@ -394,6 +382,8 @@ export default function SingleOffer(props: {
                   isTopOffer={isTopOffer}
                   hideCompany
                   hideBadge
+                  glowIndex={glowIndex}
+                  glowTotal={glowTotal}
                 />
                 <AccordionContent>
                   <div className="flex flex-col gap-4 lg:gap-6 pt-2">
@@ -426,6 +416,8 @@ export default function SingleOffer(props: {
               onlyShowMatch={onlyShowMatch}
               isAdmin={isAdmin}
               isTopOffer={isTopOffer}
+              glowIndex={glowIndex}
+              glowTotal={glowTotal}
             />
             <AccordionContent>
               <div className="flex flex-col gap-4 lg:gap-6 mt-4 lg:mt-6">
@@ -459,6 +451,8 @@ const OfferCard = ({
   isAdmin,
   hideCompany = false,
   hideBadge = false,
+  glowIndex = 0,
+  glowTotal = 1,
 }: {
   isTopOffer?: boolean;
   offer: Offer;
@@ -474,6 +468,8 @@ const OfferCard = ({
   t: any;
   onlyShowMatch?: boolean;
   isAdmin?: boolean;
+  glowIndex?: number;
+  glowTotal?: number;
   hideCompany?: boolean;
   hideBadge?: boolean;
 }) => {
@@ -510,14 +506,20 @@ const OfferCard = ({
     ? !!visibleText(isArabic, offer.discountText, offer.discountTextArabic)
     : offer.offerPercentage !== 0;
   const percantCard = showPercantCard ? (
-    <Card className="relative py-6 lg:py-10 lg:h-25 w-full lg:w-auto lg:aspect-5/2 flex flex-col justify-center items-center gap-y-2 lg:gap-y-4 rounded-2xl overflow-hidden bg-gradient-to-br from-primary/[0.07] via-primary/[0.03] to-transparent backdrop-blur-2xl border border-primary/20 shadow-[0_0_20px_rgba(var(--primary-rgb,99,102,241),0.12),inset_0_1px_0_rgba(255,255,255,0.08)] hover:shadow-[0_0_28px_rgba(var(--primary-rgb,99,102,241),0.22),inset_0_1px_0_rgba(255,255,255,0.12)] hover:border-primary/30 transition-all duration-300 group">
-      {/* Glass reflection */}
-      <div className="absolute top-0 inset-x-0 h-10 bg-gradient-to-b from-white/[0.06] to-transparent rounded-t-2xl pointer-events-none" />
-      <div className="absolute -top-4 -right-4 w-12 h-12 rounded-full bg-primary/15 blur-2xl pointer-events-none" />
-      <div className="absolute -bottom-4 -left-4 w-12 h-12 rounded-full bg-primary/10 blur-2xl pointer-events-none" />
-      <h1 className="relative text-4xl md:text-5xl font-bold uppercase py-0 leading-1">
+    <Card
+      className="discount-sweep-trigger animate-discount-glow relative py-6 lg:py-10 lg:h-25 w-full lg:w-auto lg:aspect-5/2 flex flex-col justify-center items-center gap-y-2 lg:gap-y-4 rounded-2xl overflow-hidden bg-gradient-to-br from-white/[0.22] via-white/[0.15] to-white/[0.10] backdrop-blur-2xl border border-white/[0.25] hover:border-white/[0.35] transition-all duration-300 group hover:scale-[1.03]"
+      style={{ "--glow-delay": `${glowIndex * 0.5}s`, "--glow-duration": `${glowTotal * 0.5 + 1.5}s` } as React.CSSProperties}
+    >
+      {/* Top glass reflection strip */}
+      <div className="absolute top-0 inset-x-0 h-12 bg-gradient-to-b from-white/[0.18] to-transparent rounded-t-2xl pointer-events-none" />
+      {/* Inner glass ring */}
+      <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/[0.12] pointer-events-none" />
+      {/* Hover shimmer sweep */}
+      <div className="discount-sweep-bar absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent pointer-events-none" style={{ transform: "translateX(-100%)" }} />
+
+      <h1 className="relative text-4xl md:text-5xl font-bold uppercase py-0 leading-1 drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]">
         <DiscountText
-          className="text-primary"
+          className="text-white"
           percentage={offer.offerPercentage}
           discountType={offer.discountType}
           discountText={offer.discountText}
@@ -525,7 +527,7 @@ const OfferCard = ({
         />
       </h1>
       {offer.showGift && (
-        <div className="relative px-3 py-1 bg-primary/[0.08] backdrop-blur-sm max-w-max rounded-full gap-1 md:gap-1.5 text-xs text-center">
+        <div className="relative flex items-center gap-1 md:gap-1.5 px-3 py-1 bg-white/[0.12] backdrop-blur-sm max-w-max rounded-full text-xs text-white/90 text-center border border-white/[0.15]">
           <GiftBox size={14} className="text-yellow-500 inline-block" /> +{" "}
           {visibleText(isArabic, offer.giftText, offer.giftTextArabic)}
         </div>

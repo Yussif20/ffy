@@ -45,7 +45,7 @@ export default function FDTabs({
           {t("tabs.offers")} {count.offers > 0 && <>({count.offers})</>}
         </div>
       ),
-      slugPath: `${basePath}/exclusive-offers`,
+      slugPath: `${basePath}/offers`,
     },
 
     // {
@@ -97,7 +97,8 @@ export default function FDTabs({
       pathname === basePath ||
       pathname === `${basePath}/` ||
       pathname.startsWith(`${basePath}/challenges`) ||
-      pathname.includes("exclusive-offers");
+      pathname.includes("exclusive-offers") ||
+      pathname.endsWith("/offers");
 
     if (!isFirmTabPath) return;
 

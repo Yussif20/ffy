@@ -130,6 +130,8 @@ export default function OfferList({ companySlug }: { companySlug?: string }) {
           <SingleOffer
             key={firm.id}
             data={firm}
+            index={idx}
+            totalCount={data.firms.length}
             prevFirm={data.firms[idx - 1]}
             nextFirm={data.firms[idx + 1]}
           />
