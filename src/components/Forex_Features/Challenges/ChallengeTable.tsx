@@ -58,11 +58,15 @@ export default function ChallengeTable({
   const queries: TQueryParam[] = [
     { name: "page", value: page },
     { name: "limit", value: 10 },
-    {
+  ];
+
+  // Only filter by firmType when not on a specific firm's page
+  if (!companySlug) {
+    queries.push({
       name: "firmType",
       value: isFutures ? "FUTURES" : "FOREX",
-    },
-  ];
+    });
+  }
 
   if (searchTerm) {
     queries.push({ name: "searchTerm", value: searchTerm });

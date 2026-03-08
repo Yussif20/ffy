@@ -84,6 +84,7 @@ export default function Offers({
           onChange={handleChange}
           onSubmit={handleSubmit}
           placeholder={t("searchPlaceholder")}
+          className="lg:w-3/4 lg:max-w-md"
         />
         {currUser && currUser.role !== UserRole.USER && <AddNewOffer />}
       </div>

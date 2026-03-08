@@ -60,9 +60,16 @@ export default function ChallengeFilter({
   // Set default size (100K) and steps (STEP1) together so URL ends up as ?in_steps=STEP1&size=100000
   // Skip defaults on firm info challenges tab so all challenges show without pre-selected filters
   useEffect(() => {
-    if (isFirmChallengesPage || hasAppliedChallengeDefaults.current) return;
+    if (isFirmChallengesPage) return;
     const hasSize = searchParams.get("size") || searchParams.get("size_range");
     const hasSteps = searchParams.get("in_steps");
+
+    // Reset the flag when navigating back with a clean URL (e.g. clicking the tab again)
+    if (!hasSize && !hasSteps) {
+      hasAppliedChallengeDefaults.current = false;
+    }
+
+    if (hasAppliedChallengeDefaults.current) return;
     if (hasSize && hasSteps) {
       hasAppliedChallengeDefaults.current = true;
       return;
