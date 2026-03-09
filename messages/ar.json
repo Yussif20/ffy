@@ -187,7 +187,17 @@
     "platforms": "المنصات",
     "maxAllocation": "أقصى مبلغ",
     "discount": "خصم",
-    "action": "الإجراءات"
+    "action": "الإجراءات",
+    "customize": "تخصيص",
+    "customizeColumns": "تخصيص الجدول",
+    "showHide": "الأعمدة",
+    "reorder": "الأعمدة",
+    "resetDefaults": "إعادة تعيين",
+    "selectAll": "تحديد الكل",
+    "deselectAll": "إلغاء تحديد الكل",
+    "noColumnsSelected": "لم يتم تحديد أعمدة",
+    "cancel": "إلغاء",
+    "apply": "تطبيق"
   },
   "Pagination": {
     "previous": "السابق",
@@ -384,7 +394,17 @@
     "BI_WEEKLY": "مرة كل أسبوعين",
     "ON_DEMAND": "عند الطلب",
     "ON_DEMAND_THEN_EVERY_7_DAYS": "السحب عند الطلب، بعدها كل 7 أيام",
-    "action": "الإجراءات"
+    "action": "الإجراءات",
+    "customize": "تخصيص",
+    "customizeColumns": "تخصيص الجدول",
+    "showHide": "الأعمدة",
+    "reorder": "الأعمدة",
+    "resetDefaults": "إعادة تعيين",
+    "selectAll": "تحديد الكل",
+    "deselectAll": "إلغاء تحديد الكل",
+    "noColumnsSelected": "لم يتم تحديد أعمدة",
+    "cancel": "إلغاء",
+    "apply": "تطبيق"
   },
   "SelectOption": {
     "selectOneOrMultiple": "اختر خيارًا واحدًا أو عدة خيارات",

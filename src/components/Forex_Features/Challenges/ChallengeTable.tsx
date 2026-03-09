@@ -13,24 +13,40 @@ import { useCurrentUser } from "@/redux/authSlice";
 import useGetParams from "@/hooks/useGetParams";
 import { TQueryParam } from "@/types";
 import useIsFutures from "@/hooks/useIsFutures";
+import { type ColumnDef } from "@/hooks/useColumnCustomization";
+import { useMemo } from "react";
+
+export const CHALLENGE_COLUMNS: ColumnDef[] = [
+  { key: "accountSize", labelKey: "accountSize" },
+  { key: "steps", labelKey: "steps" },
+  { key: "profitTarget", labelKey: "profitTarget" },
+  { key: "dailyLoss", labelKey: "dailyLoss" },
+  { key: "maxLoss", labelKey: "maxLoss" },
+  { key: "profitSplit", labelKey: "profitSplit" },
+  { key: "payoutFrequency", labelKey: "payoutFrequency" },
+  { key: "price", labelKey: "price" },
+];
 
 type ChallengeTableProps = {
   companySlug?: string;
   locale: string;
   /** When provided, search is controlled (no URL); overrides params */
   searchTermFromState?: string;
+  orderedVisibleKeys?: string[];
 };
 
 export default function ChallengeTable({
   companySlug,
   locale,
   searchTermFromState,
+  orderedVisibleKeys,
 }: ChallengeTableProps) {
   const t = useTranslations("Challenges");
   const params = useSearchParams();
   const isArabic = locale === "ar";
   const user = useAppSelector(useCurrentUser);
   const role = user?.role;
+  const isAdmin = role === "SUPER_ADMIN";
   const {
     countries,
     paymentMethods,
@@ -167,39 +183,56 @@ export default function ChallengeTable({
   const totalPages = totallBookings?.meta?.totalPage || 1;
   const challenges = totallBookings?.data || [];
 
-  const _headers = [
-    {
-      label: t("firm"),
-      field: "title",
-      className: "hidden md:table-cell",
-    },
-    {
-      label: t("firmLogo"),
-      id: "titleLogo",
-      field: "title",
-      hideSort: true,
-      className: "table-cell md:hidden",
-    },
-    {
-      label: t("firmName"),
-      id: "titleName",
-      field: "title",
-      className: "table-cell md:hidden",
-    },
-    { label: t("accountSize"), field: "accountSize", tooltip: "The funded trading capital provided by the firm" },
-    { label: t("steps"), field: "steps", tooltip: "Number of evaluation phases required before getting funded" },
-    { label: t("profitTarget"), field: "profitTarget", tooltip: "% gain required to pass each evaluation phase" },
-    { label: t("dailyLoss"), field: "dailyLoss", tooltip: "Maximum % loss allowed in a single trading day" },
-    { label: t("maxLoss"), field: "maxLoss", tooltip: "Maximum total % drawdown allowed across the account" },
-    { label: t("profitSplit"), field: "profitSplit", tooltip: "% of profits you keep after passing evaluation" },
-    { label: t("payoutFrequency"), field: "payoutFrequency", tooltip: "How often you can request profit withdrawals" },
-    { label: t("price"), field: "price", tooltip: "Cost to enter the challenge" },
-    role === "SUPER_ADMIN"
-      ? { label: t("action"), field: "action", hideSort: true }
-      : null,
-  ];
+  // Fallback when no customization is passed
+  const visibleKeys = orderedVisibleKeys ?? CHALLENGE_COLUMNS.map((c) => c.key);
 
-  const headers = _headers.filter(Boolean) as NonNullable<typeof _headers[number]>[];
+  const headers = useMemo(() => {
+    const firmIdentityHeaders = [
+      {
+        label: t("firm"),
+        field: "title",
+        className: "hidden md:table-cell",
+      },
+      {
+        label: t("firmLogo"),
+        id: "titleLogo",
+        field: "title",
+        hideSort: true,
+        className: "table-cell md:hidden",
+      },
+      {
+        label: t("firmName"),
+        id: "titleName",
+        field: "title",
+        className: "table-cell md:hidden",
+      },
+    ];
+
+    const tooltips: Record<string, string> = {
+      accountSize: "The funded trading capital provided by the firm",
+      steps: "Number of evaluation phases required before getting funded",
+      profitTarget: "% gain required to pass each evaluation phase",
+      dailyLoss: "Maximum % loss allowed in a single trading day",
+      maxLoss: "Maximum total % drawdown allowed across the account",
+      profitSplit: "% of profits you keep after passing evaluation",
+      payoutFrequency: "How often you can request profit withdrawals",
+      price: "Cost to enter the challenge",
+    };
+
+    const visibleHeaders = visibleKeys.map((key) => ({
+      label: t(key),
+      field: key,
+      tooltip: tooltips[key],
+    }));
+
+    const actionHeader = isAdmin
+      ? [{ label: t("action"), field: "action", hideSort: true }]
+      : [];
+
+    return [...firmIdentityHeaders, ...visibleHeaders, ...actionHeader];
+  }, [t, visibleKeys, isAdmin]);
+
+  const colSpan = 3 + visibleKeys.length + (isAdmin ? 1 : 0);
 
   if (isLoading || isFetching) return <TableSkeleton />;
 
@@ -207,12 +240,13 @@ export default function ChallengeTable({
     <div className="max-w-full w-full space-y-8">
       <Table className="min-w-[1100px]">
         <SortTableHeader headers={headers} />
-        <TableBody colSpan={7}>
+        <TableBody colSpan={colSpan}>
           {challenges.map((item: TChallenge, index: number) => (
-            <ChallengeRow 
-              isArabic={isArabic} 
-              key={item.id} 
+            <ChallengeRow
+              isArabic={isArabic}
+              key={item.id}
               challenge={item}
+              visibleColumns={visibleKeys}
               prevChallenge={challenges[index - 1]}
               nextChallenge={challenges[index + 1]}
             />

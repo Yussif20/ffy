@@ -12,10 +12,10 @@ export default function TableSkeleton() {
       </div>
 
       {/* Table skeleton */}
-      <div className="space-y-3">
-        <div className="h-10 w-full rounded-md bg-muted" />
+      <div className="rounded-2xl border border-border/40 overflow-hidden">
+        <div className="h-12 w-full bg-primary/[0.06]" />
         {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className="h-16 w-full rounded-md bg-muted opacity-70" />
+          <div key={i} className={`h-16 w-full border-t border-border/20 ${i % 2 === 1 ? "bg-muted/20" : ""}`} />
         ))}
       </div>
 

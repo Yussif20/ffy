@@ -30,7 +30,7 @@ export default function FirmCell({
 
           className="flex items-center gap-2 max-md:outline-none max-md:focus:outline-none max-md:active:outline-none max-md:[-webkit-tap-highlight-color:transparent]"
         >
-          <div className="bg-primary3 max-w-max rounded-lg overflow-hidden border border-border flex-shrink-0">
+          <div className="bg-primary3 max-w-max rounded-xl overflow-hidden border border-border/50 shadow-sm flex-shrink-0 group-hover:border-primary/30 transition-colors duration-200">
             <div className="w-9 md:w-10 xl:w-14 aspect-square relative">
               <Image
                 src={company.image}
@@ -71,7 +71,7 @@ export default function FirmCell({
 
           className="relative z-0 flex justify-center md:justify-start w-full min-w-0 max-md:outline-none max-md:focus:outline-none max-md:active:outline-none max-md:[-webkit-tap-highlight-color:transparent]"
         >
-          <div className="bg-primary3 rounded-lg overflow-hidden border border-border flex-shrink-0 w-9 md:w-10 xl:w-14 aspect-square relative">
+          <div className="bg-primary3 rounded-xl overflow-hidden border border-border/50 shadow-sm flex-shrink-0 w-9 md:w-10 xl:w-14 aspect-square relative group-hover:border-primary/30 transition-colors duration-200">
             <Image
               src={company.image}
               alt={company.name}

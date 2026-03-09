@@ -21,6 +21,8 @@ type ChallengeFilterProps = {
   onSearchChange?: (value: string) => void;
   /** Server-resolved search params — used to skip the defaults useEffect when defaults are already in the URL */
   initialSearchParams?: Record<string, string>;
+  /** Optional slot rendered before the Filter button */
+  beforeFilter?: React.ReactNode;
 };
 
 export default function ChallengeFilter({
@@ -28,6 +30,7 @@ export default function ChallengeFilter({
   searchValue,
   onSearchChange,
   initialSearchParams,
+  beforeFilter,
 }: ChallengeFilterProps) {
   const t = useTranslations("Challenges");
   const tSearch = useTranslations("Search");
@@ -88,6 +91,7 @@ export default function ChallengeFilter({
   return (
     <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-center overflow-x-hidden">
       <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
+        {beforeFilter}
         {!hideAllFilter && (
           <Button
             className={cn(

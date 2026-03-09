@@ -187,7 +187,17 @@
     "platforms": "Platforms",
     "maxAllocation": "Max Allocation",
     "discount": "Discount",
-    "action": "Action"
+    "action": "Action",
+    "customize": "Customize",
+    "customizeColumns": "Customize Table",
+    "showHide": "Columns",
+    "reorder": "Columns",
+    "resetDefaults": "Reset To Default",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "noColumnsSelected": "No columns selected",
+    "cancel": "Cancel",
+    "apply": "Apply"
   },
   "Pagination": {
     "previous": "Previous",
@@ -387,7 +397,17 @@
     "BI_WEEKLY": "Bi-Weekly",
     "ON_DEMAND": "On-Demand",
     "ON_DEMAND_THEN_EVERY_7_DAYS": "Payout on Demand, then every 7 Days",
-    "action": "Action"
+    "action": "Action",
+    "customize": "Customize",
+    "customizeColumns": "Customize Table",
+    "showHide": "Columns",
+    "reorder": "Columns",
+    "resetDefaults": "Reset To Default",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "noColumnsSelected": "No columns selected",
+    "cancel": "Cancel",
+    "apply": "Apply"
   },
   "SelectOption": {
     "selectOneOrMultiple": "Select One or Multiple Options",

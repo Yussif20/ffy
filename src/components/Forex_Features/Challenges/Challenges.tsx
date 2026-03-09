@@ -3,10 +3,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { handleSetSearchParams } from "@/lib/utils";
+import { useColumnCustomization } from "@/hooks/useColumnCustomization";
+import CustomizeColumnsDialog from "@/components/Global/CustomizeColumnsDialog";
 import FirmAllFilters from "../Firms/FirmAllFilters";
 import ChallengeFilter from "./ChallengeFilter";
-import ChallengeTable from "./ChallengeTable";
+import ChallengeTable, { CHALLENGE_COLUMNS } from "./ChallengeTable";
 
 export default function Challenges({
   locale,
@@ -18,7 +21,19 @@ export default function Challenges({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const tChallenges = useTranslations("Challenges");
   const marketType = pathname.includes("futures") ? "futures" : "forex";
+
+  const {
+    visibility,
+    order,
+    toggleVisibility,
+    reorder,
+    resetToDefaults,
+    setAllVisibility,
+    orderedVisibleKeys,
+    columns,
+  } = useColumnCustomization("challenge-table-columns", CHALLENGE_COLUMNS);
   const [searchInput, setSearchInput] = useState("");
   const [searchTerm] = useDebounce(searchInput, 300);
   const searchParamsRef = useRef(searchParams);
@@ -48,6 +63,19 @@ export default function Challenges({
         searchValue={searchInput}
         onSearchChange={handleSearchChange}
         initialSearchParams={initialSearchParams}
+        beforeFilter={
+          <CustomizeColumnsDialog
+            columns={columns}
+            visibility={visibility}
+            order={order}
+            orderedVisibleKeys={orderedVisibleKeys}
+            toggleVisibility={toggleVisibility}
+            setAllVisibility={setAllVisibility}
+            reorder={reorder}
+            resetToDefaults={resetToDefaults}
+            t={tChallenges}
+          />
+        }
       />
       <div className="flex items-start gap-0 lg:gap-6 w-full">
         <div className="w-0 min-w-0 max-w-0 overflow-hidden lg:w-auto lg:max-w-sm lg:overflow-visible flex shrink-0">
@@ -57,6 +85,7 @@ export default function Challenges({
           <ChallengeTable
             locale={locale}
             searchTermFromState={searchTerm}
+            orderedVisibleKeys={orderedVisibleKeys}
           />
         </div>
       </div>
