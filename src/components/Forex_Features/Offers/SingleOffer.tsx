@@ -154,7 +154,7 @@ function OfferPercentageBadge({
       {/* Content */}
       {isText ? (
         (() => {
-          const offMatch = customText?.match(/^(.*?)\s*(off|خصم)\s*$/i);
+          const offMatch = customText?.match(/^(.*?)\s*(off|خصم|استرداد|Reward)\s*$/i);
           const mainText = offMatch?.[1]?.trim() ?? "";
           const mainLen = mainText.length;
           return offMatch ? (

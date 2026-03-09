@@ -58,7 +58,7 @@ export default function SortTableHeader({
               className={cn(
                 "cursor-pointer select-none border relative",
                 header.className,
-                isArabic ? "text-base font-semibold" : "",
+                isArabic ? "text-sm font-semibold" : "",
                 header.tooltip ? "underline decoration-dotted decoration-foreground/30 underline-offset-4" : "",
               )}
               onClick={() => handleSort(header.field, header.hideSort)}
