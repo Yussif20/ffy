@@ -153,14 +153,46 @@ function OfferPercentageBadge({
 
       {/* Content */}
       {isText ? (
-        <span
-          className={cn(
-            "relative font-bold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] text-center leading-tight px-2",
-            isSubtle ? "text-xs" : "text-base sm:text-lg"
-          )}
-        >
-          {customText}
-        </span>
+        (() => {
+          const offMatch = customText?.match(/^(.*?)\s*(off|خصم)\s*$/i);
+          const mainText = offMatch?.[1]?.trim() ?? "";
+          const mainLen = mainText.length;
+          return offMatch ? (
+            <>
+              <span
+                className={cn(
+                  "relative font-extrabold tabular-nums text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]",
+                  isSubtle
+                    ? "text-lg leading-tight"
+                    : mainLen > 6
+                      ? "text-xl sm:text-2xl"
+                      : mainLen > 3
+                        ? "text-2xl sm:text-3xl"
+                        : "text-3xl sm:text-4xl"
+                )}
+              >
+                {offMatch[1].trim()}
+              </span>
+              <span
+                className={cn(
+                  "relative font-semibold uppercase tracking-widest text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]",
+                  isSubtle ? "text-[9px]" : "text-[11px] mt-0.5"
+                )}
+              >
+                {offMatch[2]}
+              </span>
+            </>
+          ) : (
+            <span
+              className={cn(
+                "relative font-bold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] text-center leading-tight px-2",
+                isSubtle ? "text-xs" : "text-base sm:text-lg"
+              )}
+            >
+              {customText}
+            </span>
+          );
+        })()
       ) : (
         <>
           <span

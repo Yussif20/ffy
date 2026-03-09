@@ -582,7 +582,7 @@ button {
 @media (min-width: 768px) {
   .danger-html-mobile-12,
   .danger-html-mobile-12 * {
-    font-size: 1rem !important; /* md:text-base */
+    font-size: 14px !important;
   }
 }
 

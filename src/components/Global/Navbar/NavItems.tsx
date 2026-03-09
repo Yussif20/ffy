@@ -115,7 +115,7 @@ export default function NavItems() {
 
   const linkClass = () => {
     return cn(
-      "text-foreground/80 hover:text-foreground transition-colors text-center pb-1 hover:border-b-3 hover:border-primary/20 transition-all duration-100 min-w-30",
+      "text-foreground/80 hover:text-foreground transition-colors text-center pb-1 border-b-3 border-transparent hover:border-primary/20 transition-all duration-100 min-w-30",
       isArabic ? "text-base md:text-lg font-semibold" : "text-sm md:text-base",
     );
   };

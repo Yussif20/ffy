@@ -10,6 +10,8 @@ export default function SortTableHeader({
   headers,
   skipSort = false,
   skipSortOptionFor = [],
+  headerClassName,
+  rowClassName,
 }: {
   headers: {
     label: string | ReactNode;
@@ -22,6 +24,8 @@ export default function SortTableHeader({
   }[];
   skipSort?: boolean;
   skipSortOptionFor?: string[];
+  headerClassName?: string;
+  rowClassName?: string;
 }) {
   const { setParam, getParam } = useQueryBuilder();
   const isArabic = useIsArabic();
@@ -41,8 +45,8 @@ export default function SortTableHeader({
   };
 
   return (
-    <TableHeader>
-      <TableRow className="uppercase">
+    <TableHeader className={headerClassName}>
+      <TableRow className={cn("uppercase", rowClassName)}>
         {headers.map((header) => {
           const skipIcons = skipSortOptionFor.includes(header.field);
 
