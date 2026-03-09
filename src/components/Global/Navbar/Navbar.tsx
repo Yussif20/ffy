@@ -86,7 +86,7 @@ const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className={`sticky z-50 w-full top-0 shadow-sm transition-all duration-150 ${
+      className={`sticky z-50 w-full top-0 transition-all duration-150 ${
         isScrolled ? "py-2 bg-background/80 backdrop-blur-sm" : "py-6"
       }`}
     >
@@ -163,7 +163,7 @@ const Navbar = () => {
                             {[
                               { label: t("home"), href: "/" },
                               { label: t("offers"), href: "/offers" },
-                              { label: t("challenges"), href: "/challenges" },
+                              { label: t("challenges"), href: "/challenges?size=100000&in_steps=STEP1" },
                               { label: t("spreads"), href: "/spreads" },
                               { label: t("faq"), href: "/faq" },
                             ].map((item) => (
@@ -218,7 +218,7 @@ const Navbar = () => {
                             {[
                               { label: t("home"), href: "/" },
                               { label: t("offers"), href: "/offers" },
-                              { label: t("challenges"), href: "/challenges" },
+                              { label: t("challenges"), href: "/challenges?size=100000&in_steps=STEP1" },
                               { label: t("spreads"), href: "/spreads" },
                               { label: t("faq"), href: "/faq" },
                             ].map((item) => (

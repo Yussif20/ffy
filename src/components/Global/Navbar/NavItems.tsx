@@ -36,7 +36,7 @@ export default function NavItems() {
     },
     {
       name: t("challenges"),
-      href: "/forex/challenges",
+      href: "/forex/challenges?size=100000&in_steps=STEP1",
       icon: <Trophy size={13} />,
       part: 2,
       scrollToTabs: true,

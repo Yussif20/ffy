@@ -48,7 +48,7 @@ export default function HomeNavItems() {
   let pages: { name: string; value: string; baseValue: string }[] = [
     { name: t("firms"), value: "/", baseValue: "/" },
     { name: t("offers"), value: "/offers", baseValue: "/offers" },
-    { name: t("challenges"), value: "/challenges", baseValue: "/challenges" },
+    { name: t("challenges"), value: "/challenges?size=100000&in_steps=STEP1", baseValue: "/challenges" },
   ];
 
   // ---- APPLY TYPE PREFIX ----

@@ -77,7 +77,8 @@ export default function FooterLink({
     const rawPath = href || "/";
     const targetPath =
       rawPath === "/" ? "/" : rawPath.startsWith("/") ? rawPath : `/${rawPath}`;
-    const cleanPath = targetPath.replace(/^\//, "");
+    // Strip query params for path matching, keep full targetPath for navigation
+    const cleanPath = targetPath.split("?")[0].replace(/^\//, "");
 
     // For tabbed sections, mimic navbar behavior:
     // navigate, then scroll precisely to #tabs-section with dynamic offset.

@@ -22,7 +22,7 @@ export default function Footer() {
       title: t("propFirms"),
       links: [
         { label: t("allPropFirms"), href: basePath },
-        { label: t("compareChallenges"), href: `${basePath}/challenges` },
+        { label: t("compareChallenges"), href: `${basePath}/challenges?size=100000&in_steps=STEP1` },
       ],
     },
     {

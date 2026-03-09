@@ -57,19 +57,17 @@ export default function ChallengeFilter({
     hasAppliedChallengeDefaults.current = false;
   }
 
-  // Set default size (100K) and steps (STEP1) together so URL ends up as ?in_steps=STEP1&size=100000
-  // Skip defaults on firm info challenges tab so all challenges show without pre-selected filters
+  // Set default size (100K) and steps (STEP1) on first load only.
+  // Once defaults have been applied, never re-apply — the user may intentionally clear them.
+  // Tab re-clicks are handled by the tab Link itself (its href includes default params).
+  // Skip defaults on firm info challenges tab so all challenges show without pre-selected filters.
   useEffect(() => {
     if (isFirmChallengesPage) return;
+    if (hasAppliedChallengeDefaults.current) return;
+
     const hasSize = searchParams.get("size") || searchParams.get("size_range");
     const hasSteps = searchParams.get("in_steps");
 
-    // Reset the flag when navigating back with a clean URL (e.g. clicking the tab again)
-    if (!hasSize && !hasSteps) {
-      hasAppliedChallengeDefaults.current = false;
-    }
-
-    if (hasAppliedChallengeDefaults.current) return;
     if (hasSize && hasSteps) {
       hasAppliedChallengeDefaults.current = true;
       return;
