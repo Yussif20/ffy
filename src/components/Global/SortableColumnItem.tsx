@@ -17,7 +17,9 @@ export default function SortableColumnItem({
     useSortable({ id });
 
   const style = {
-    transform: CSS.Transform.toString(transform),
+    transform: transform
+      ? CSS.Transform.toString({ ...transform, x: 0 })
+      : undefined,
     transition,
   };
 
