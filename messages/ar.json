@@ -196,6 +196,9 @@
     "selectAll": "تحديد الكل",
     "deselectAll": "إلغاء تحديد الكل",
     "noColumnsSelected": "لم يتم تحديد أعمدة",
+    "signInRequired": "تسجيل الدخول مطلوب",
+    "signInToCustomize": "سجّل الدخول لتخصيص أعمدة الجدول وحفظ تفضيلاتك.",
+    "signIn": "تسجيل الدخول",
     "cancel": "إلغاء",
     "apply": "تطبيق"
   },
@@ -403,6 +406,9 @@
     "selectAll": "تحديد الكل",
     "deselectAll": "إلغاء تحديد الكل",
     "noColumnsSelected": "لم يتم تحديد أعمدة",
+    "signInRequired": "تسجيل الدخول مطلوب",
+    "signInToCustomize": "سجّل الدخول لتخصيص أعمدة الجدول وحفظ تفضيلاتك.",
+    "signIn": "تسجيل الدخول",
     "cancel": "إلغاء",
     "apply": "تطبيق"
   },

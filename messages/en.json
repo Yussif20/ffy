@@ -196,6 +196,9 @@
     "selectAll": "Select All",
     "deselectAll": "Deselect All",
     "noColumnsSelected": "No columns selected",
+    "signInRequired": "Sign In Required",
+    "signInToCustomize": "Sign in to customize your table columns and save your preferences.",
+    "signIn": "Sign In",
     "cancel": "Cancel",
     "apply": "Apply"
   },
@@ -406,6 +409,9 @@
     "selectAll": "Select All",
     "deselectAll": "Deselect All",
     "noColumnsSelected": "No columns selected",
+    "signInRequired": "Sign In Required",
+    "signInToCustomize": "Sign in to customize your table columns and save your preferences.",
+    "signIn": "Sign In",
     "cancel": "Cancel",
     "apply": "Apply"
   },

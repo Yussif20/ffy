@@ -6,12 +6,15 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogDescription,
   DialogClose,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { SlidersHorizontal, RotateCcw } from "lucide-react";
+import { SlidersHorizontal, RotateCcw, Lock } from "lucide-react";
+import { useAppSelector } from "@/redux/store";
+import { useCurrentUser } from "@/redux/authSlice";
+import { useRouter } from "@/i18n/navigation";
 import {
   DndContext,
   closestCenter,
@@ -26,6 +29,10 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import {
+  restrictToVerticalAxis,
+  restrictToParentElement,
+} from "@dnd-kit/modifiers";
 import SortableColumnItem from "./SortableColumnItem";
 import type { ColumnDef } from "@/hooks/useColumnCustomization";
 
@@ -52,6 +59,9 @@ export default function CustomizeColumnsDialog({
   t,
 }: Props) {
   const [open, setOpen] = useState(false);
+  const [signInOpen, setSignInOpen] = useState(false);
+  const user = useAppSelector(useCurrentUser);
+  const router = useRouter();
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -79,23 +89,58 @@ export default function CustomizeColumnsDialog({
   const columnMap = new Map(columns.map((c) => [c.key, c]));
 
   return (
+    <>
+    <Button
+      variant="outline"
+      size="sm"
+      className="gap-2"
+      onClick={() => (user ? setOpen(true) : setSignInOpen(true))}
+    >
+      <SlidersHorizontal className="h-4 w-4" />
+      {t("customize")}
+    </Button>
+
+    {/* Sign-in prompt dialog */}
+    <Dialog open={signInOpen} onOpenChange={setSignInOpen}>
+      <DialogContent className="max-w-sm text-center">
+        <DialogHeader className="items-center">
+          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+            <Lock className="h-6 w-6 text-primary" />
+          </div>
+          <DialogTitle className="text-xl font-bold">
+            {t("signInRequired")}
+          </DialogTitle>
+          <DialogDescription className="text-muted-foreground">
+            {t("signInToCustomize")}
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex items-center justify-center gap-3 pt-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setSignInOpen(false)}
+          >
+            {t("cancel")}
+          </Button>
+          <Button size="sm" onClick={() => router.push("/auth/sign-in")}>
+            {t("signIn")}
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+
+    {/* Customize columns dialog */}
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-2">
-          <SlidersHorizontal className="h-4 w-4" />
-          {t("customize")}
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-2xl p-0 gap-0 overflow-hidden">
+      <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-2xl max-h-[90vh] p-0 gap-0 flex flex-col overflow-hidden">
         {/* Header */}
-        <DialogHeader className="px-6 pt-6 pb-4 border-b border-border/50">
+        <DialogHeader className="px-6 pt-6 pb-4 border-b border-border/50 shrink-0">
           <DialogTitle className="text-xl font-bold">
             {t("customizeColumns")}
           </DialogTitle>
         </DialogHeader>
 
         {/* Body - two columns */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-border/50 min-h-[300px] max-h-[60vh]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-border/50 min-h-0 flex-1 overflow-y-auto">
           {/* Left: show/hide checkboxes */}
           <div className="px-6 py-5 flex flex-col">
             <div className="flex items-center justify-between mb-4">
@@ -144,6 +189,7 @@ export default function CustomizeColumnsDialog({
                   sensors={sensors}
                   collisionDetection={closestCenter}
                   onDragEnd={handleDragEnd}
+                  modifiers={[restrictToVerticalAxis, restrictToParentElement]}
                 >
                   <SortableContext
                     items={orderedVisibleKeys}
@@ -169,7 +215,7 @@ export default function CustomizeColumnsDialog({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-border/50 bg-muted/20">
+        <div className="flex items-center justify-between px-6 py-4 border-t border-border/50 bg-muted/20 shrink-0">
           <Button
             variant="outline"
             size="sm"
@@ -195,5 +241,6 @@ export default function CustomizeColumnsDialog({
         </div>
       </DialogContent>
     </Dialog>
+    </>
   );
 }

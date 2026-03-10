@@ -76,7 +76,7 @@ export default function ChallengeRow({
     ),
     profitTarget: (
       <TableCell key="profitTarget" center className="text-sm md:text-base">
-        <div className="text-primary">
+        <div className="text-white">
           {challenge?.profitTarget.length > 0
             ? challenge.profitTarget.map((item) => item + "%").join(" | ")
             : "-"}
@@ -84,12 +84,12 @@ export default function ChallengeRow({
       </TableCell>
     ),
     dailyLoss: (
-      <TableCell key="dailyLoss" center className="text-sm md:text-base text-red-400">
+      <TableCell key="dailyLoss" center className="text-sm md:text-base text-white">
         {challenge?.dailyLoss ? `${challenge.dailyLoss}%` : "-"}
       </TableCell>
     ),
     maxLoss: (
-      <TableCell key="maxLoss" center className="text-sm md:text-base text-red-400">
+      <TableCell key="maxLoss" center className="text-sm md:text-base text-white">
         {challenge?.maxLoss ? `${challenge.maxLoss}%` : "-"}
       </TableCell>
     ),
@@ -97,7 +97,7 @@ export default function ChallengeRow({
       <TableCell key="profitSplit" center className="text-sm md:text-base">
         <div className="flex items-center justify-center gap-2">
           <BatteryIndicator percentage={challenge?.profitSplit} showNumber={false} />
-          <span className="text-sm md:text-base font-semibold text-primary">
+          <span className="text-sm md:text-base font-semibold text-white">
             {challenge?.profitSplit}%
           </span>
         </div>
