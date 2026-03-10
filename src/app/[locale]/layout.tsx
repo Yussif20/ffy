@@ -13,6 +13,7 @@ import { Cairo, Space_Grotesk } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Providers } from "./providers";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 import NextTopLoader from "nextjs-toploader";
 
 const BASE_URL = "https://fundedforyou.com";
@@ -167,7 +168,9 @@ export default async function RootLayout({ children, params }: Props) {
         </ThemeProvider>
       </body>
       <GoogleAnalytics gaId="G-76FY8LG50Y" />
-      <GoogleAnalytics gaId="G-K2HX57Q0WY" />
+      <Script id="ga-second-id" strategy="afterInteractive">
+        {`gtag('config', 'G-K2HX57Q0WY');`}
+      </Script>
     </html>
   );
 }
