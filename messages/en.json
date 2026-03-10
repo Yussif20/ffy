@@ -1154,7 +1154,7 @@
       "tookChallenge": {
         "label": "How many challenges have you taken?",
         "options": {
-          "never": "Never",
+          "never": "0",
           "1-3": "1-3",
           "4-9": "4-9",
           "10plus": "10+"

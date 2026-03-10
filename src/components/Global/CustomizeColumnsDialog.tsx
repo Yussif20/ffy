@@ -15,6 +15,8 @@ import { SlidersHorizontal, RotateCcw, Lock } from "lucide-react";
 import { useAppSelector } from "@/redux/store";
 import { useCurrentUser } from "@/redux/authSlice";
 import { useRouter } from "@/i18n/navigation";
+import useIsArabic from "@/hooks/useIsArabic";
+import { cn } from "@/lib/utils";
 import {
   DndContext,
   closestCenter,
@@ -62,6 +64,7 @@ export default function CustomizeColumnsDialog({
   const [signInOpen, setSignInOpen] = useState(false);
   const user = useAppSelector(useCurrentUser);
   const router = useRouter();
+  const isArabic = useIsArabic();
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -92,8 +95,10 @@ export default function CustomizeColumnsDialog({
     <>
     <Button
       variant="outline"
-      size="sm"
-      className="gap-2"
+      className={cn(
+        "h-8 px-2! text-[11px] sm:h-9 sm:px-3! sm:text-xs md:px-6! md:text-sm gap-2",
+        isArabic && "font-semibold"
+      )}
       onClick={() => (user ? setOpen(true) : setSignInOpen(true))}
     >
       <SlidersHorizontal className="h-4 w-4" />

@@ -7,6 +7,7 @@ import { countries, countriesByCode } from "@/data";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { ChevronLeft, CircleQuestionMark } from "lucide-react";
+import useIsArabic from "@/hooks/useIsArabic";
 import { motion, AnimatePresence } from "framer-motion";
 import { Label } from "../ui/label";
 import { cn } from "@/lib/utils";
@@ -102,6 +103,7 @@ export default function Onboarding() {
   const { data, isLoading: surveyLoading } = useGetSurveyUserQuery(undefined);
   const router = useRouter();
   const t = useTranslations("Onboarding");
+  const isArabic = useIsArabic();
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector(useCurrentUser);
   const currentToken = useAppSelector(useCurrentToken);
@@ -317,16 +319,8 @@ export default function Onboarding() {
                   singleValue={formData.tookChallenge}
                   translationKey="about.tookChallenge.options"
                 />
-                <Button
-                  variant={"outline2"}
-                  type="button"
-                  className="w-full justify-start text-primary hover:text-primary cursor-default!"
-                >
-                  <CircleQuestionMark />
-                  {t("about.info")}
-                </Button>
                 <div className="space-y-2">
-                  <div className="flex gap-3">
+                  <div className={cn("flex gap-3", isArabic && "flex-row-reverse")}>
                     <Button
                       size={"icon"}
                       variant={"outline2"}

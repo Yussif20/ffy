@@ -91,21 +91,6 @@ export default function ChallengeFilter({
   return (
     <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-center overflow-x-hidden">
       <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
-        {beforeFilter}
-        {!hideAllFilter && (
-          <Button
-            className={cn(
-              "h-8 px-2! text-[11px] sm:h-9 sm:px-3! sm:text-xs md:px-6! md:text-sm",
-              isArabic && "font-semibold"
-            )}
-            onClick={() => {
-              handleSetCategory({ filterOpen: filterOpen ? "" : "true" });
-            }}
-            variant={filterOpen ? "defaultBH" : "secondary"}
-          >
-            <Filter /> {t("filter")}
-          </Button>
-        )}
         <SelectOptions
           name="size"
           title={t("size")}
@@ -138,6 +123,23 @@ export default function ChallengeFilter({
           ]}
           cols={2}
         />
+        <div className="order-last w-full justify-center lg:order-none lg:w-auto flex gap-1.5 sm:gap-2 md:gap-4 items-center">
+          {beforeFilter}
+          {!hideAllFilter && (
+            <Button
+              className={cn(
+                "h-8 px-2! text-[11px] sm:h-9 sm:px-3! sm:text-xs md:px-6! md:text-sm",
+                isArabic && "font-semibold"
+              )}
+              onClick={() => {
+                handleSetCategory({ filterOpen: filterOpen ? "" : "true" });
+              }}
+              variant={filterOpen ? "defaultBH" : "secondary"}
+            >
+              <Filter /> {t("filter")}
+            </Button>
+          )}
+        </div>
         {role === "SUPER_ADMIN" && (
           <Button variant="default" onClick={() => setOpenModal(true)}>
             <Plus />
