@@ -167,6 +167,7 @@ export default async function RootLayout({ children, params }: Props) {
         </ThemeProvider>
       </body>
       <GoogleAnalytics gaId="G-76FY8LG50Y" />
+      <GoogleAnalytics gaId="G-K2HX57Q0WY" />
     </html>
   );
 }
