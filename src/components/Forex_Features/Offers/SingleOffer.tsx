@@ -699,7 +699,7 @@ const OfferCard = ({
 
         {/* Right: Code + Buy 50-50 on small screens, then More */}
         <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3 shrink-0 w-full sm:w-auto">
-          <div className="grid grid-cols-2 gap-2 sm:contents min-w-0">
+          <div className={cn("grid gap-2 sm:contents min-w-0", offer.code ? "grid-cols-2" : "grid-cols-1")}>
             {offer.code && (
               <button
                 onClick={() => copyToClipboard(offer?.code)}
@@ -803,7 +803,7 @@ const OfferCard = ({
             <div className="hidden lg:block w-full">{leftContent}</div>
             <div className="flex items-center gap-2.5 justify-end ml-auto lg:ml-0 w-full lg:w-auto">
               <div className="flex flex-col gap-4 lg:gap-5 ml-0 lg:ml-4 justify-center items-center w-full">
-                <div className="grid grid-cols-2 lg:flex items-center gap-3 lg:gap-4 w-full min-w-0">
+                <div className={cn("grid lg:flex items-center gap-3 lg:gap-4 w-full min-w-0", offer.code ? "grid-cols-2" : "grid-cols-1")}>
                   <div className="space-y-2.5 lg:space-y-3 h-full lg:h-auto min-w-0">
                     {offer.code && (
                       <button

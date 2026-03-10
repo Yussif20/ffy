@@ -10,7 +10,7 @@ function Table({ className, containerClassName, ...props }: React.ComponentProps
       data-slot="table-container"
       className={cn(
         "relative w-full overflow-x-auto scrollbar-hide",
-        "rounded-xl border border-border/60 bg-card/50 shadow-sm",
+        "rounded-2xl border border-white/[0.08] bg-card/40 shadow-lg shadow-black/10 backdrop-blur-xl ring-1 ring-inset ring-white/[0.05]",
         containerClassName,
       )}
     >
@@ -19,10 +19,6 @@ function Table({ className, containerClassName, ...props }: React.ComponentProps
         className={cn(
           "w-full caption-bottom border-collapse",
           "text-[11px] md:text-xs",
-          "[&_th:first-child]:border-s [&_td:first-child]:border-s",
-          "[&_th:first-child]:border-border/50 [&_td:first-child]:border-border/50",
-          "[&_th:last-child]:border-r [&_td:last-child]:border-r",
-          "[&_th:last-child]:border-border/50 [&_td:last-child]:border-border/50",
           className,
         )}
         {...props}
@@ -36,7 +32,7 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
     <thead
       data-slot="table-header"
       className={cn(
-        "[&_tr]:border-b [&_tr]:border-border/60 bg-muted/30 dark:bg-foreground/5",
+        "[&_tr]:border-b-2 [&_tr]:border-primary/25 bg-gradient-to-r from-primary/[0.10] via-primary/[0.05] to-primary/[0.10]",
         className,
       )}
       {...props}
@@ -81,7 +77,7 @@ function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
     <tfoot
       data-slot="table-footer"
       className={cn(
-        "bg-muted/30 dark:bg-foreground/5 border-t border-border/60 font-medium [&>tr]:last:border-b-0",
+        "bg-gradient-to-r from-primary/[0.04] via-transparent to-primary/[0.04] border-t border-border/30 font-medium [&>tr]:last:border-b-0",
         className,
       )}
       {...props}
@@ -94,8 +90,10 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
     <tr
       data-slot="table-row"
       className={cn(
-        "border-b border-border/40 transition-colors duration-150",
-        "hover:bg-muted/40 dark:hover:bg-foreground/5 data-[state=selected]:bg-muted/60",
+        "border-b border-border/30 transition-all duration-200",
+        "hover:bg-primary/[0.07] dark:hover:bg-primary/[0.10] data-[state=selected]:bg-primary/[0.08]",
+        "even:bg-muted/30",
+        "border-l-2 border-l-transparent hover:border-l-primary",
         className,
       )}
       {...props}
@@ -113,9 +111,9 @@ function TableHead({
     <th
       data-slot="table-head"
       className={cn(
-        "text-foreground text-left align-middle font-semibold whitespace-nowrap",
+        "text-foreground/90 text-left align-middle font-semibold whitespace-nowrap",
         "[&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-0.5",
-        "py-2 px-2 md:py-3.5 md:px-3 tracking-tight border-r border-border/50",
+        "py-2.5 px-2.5 md:py-4 md:px-3.5 tracking-tight",
         className,
       )}
       {...props}
@@ -139,9 +137,9 @@ function TableCell({
     <td
       data-slot="table-cell"
       className={cn(
-        "align-middle whitespace-nowrap text-foreground/90",
+        "align-middle whitespace-nowrap text-foreground/85",
         "[&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-0.5",
-        "py-2 px-2 md:py-3 md:px-3 border-r border-border/40",
+        "py-2.5 px-2.5 md:py-3.5 md:px-3.5",
         className,
       )}
       {...props}

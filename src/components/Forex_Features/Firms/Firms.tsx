@@ -2,8 +2,10 @@
 
 import { AddFirmDialog } from "@/components/FirmDetails/AddFirmDialog";
 import LinearBorder from "@/components/Global/LinearBorder";
+import CustomizeColumnsDialog from "@/components/Global/CustomizeColumnsDialog";
 import { useQueryBuilder } from "@/hooks/usePagination";
 import useIsArabic from "@/hooks/useIsArabic";
+import { useColumnCustomization } from "@/hooks/useColumnCustomization";
 import { handleSetSearchParams } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 import { useGetAllFirmsQuery } from "@/redux/api/firms.api";
@@ -17,7 +19,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 import FirmAllFilters from "./FirmAllFilters";
 import FirmsFilter from "./FirmsFilter";
-import FirmTable from "./FirmTable";
+import FirmTable, { ALL_FIRM_COLUMNS } from "./FirmTable";
 
 export default function Firms({
   initialSearchParams: _initialSearchParams,
@@ -32,7 +34,19 @@ export default function Firms({
   const marketType = pathname.includes("futures") ? "futures" : "forex";
   const isArabic = useIsArabic();
   const t = useTranslations("Search");
+  const tFirms = useTranslations("Firms");
   const router = useRouter();
+
+  const {
+    visibility,
+    order,
+    toggleVisibility,
+    reorder,
+    resetToDefaults,
+    setAllVisibility,
+    orderedVisibleKeys,
+    columns,
+  } = useColumnCustomization("firm-table-columns", ALL_FIRM_COLUMNS);
   const page = getParamsWithKey("page", 1);
   const searchParamsRef = useRef(searchParams);
   searchParamsRef.current = searchParams;
@@ -121,6 +135,17 @@ export default function Firms({
     <div className="space-y-8 pb-10 md:pb-14">
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-center overflow-x-hidden">
         <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
+          <CustomizeColumnsDialog
+            columns={columns}
+            visibility={visibility}
+            order={order}
+            orderedVisibleKeys={orderedVisibleKeys}
+            toggleVisibility={toggleVisibility}
+            setAllVisibility={setAllVisibility}
+            reorder={reorder}
+            resetToDefaults={resetToDefaults}
+            t={tFirms}
+          />
           <FirmsFilter />
           {user?.role === "SUPER_ADMIN" && <AddFirmDialog />}
         </div>
@@ -195,6 +220,7 @@ export default function Firms({
             meta={firmsMeta}
             isFuturesPage={isFuturesPage}
             isLoading={isLoading || isFetching}
+            orderedVisibleKeys={orderedVisibleKeys}
           />
         </div>
       </div>

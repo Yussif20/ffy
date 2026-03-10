@@ -56,7 +56,7 @@ export default function SortTableHeader({
               key={header.id ?? header.field}
               title={header.tooltip}
               className={cn(
-                "cursor-pointer select-none border relative",
+                "cursor-pointer select-none relative transition-colors duration-150 hover:text-primary",
                 header.className,
                 isArabic ? "text-sm font-semibold" : "",
                 header.tooltip ? "underline decoration-dotted decoration-foreground/30 underline-offset-4" : "",

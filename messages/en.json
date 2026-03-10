@@ -187,7 +187,20 @@
     "platforms": "Platforms",
     "maxAllocation": "Max Allocation",
     "discount": "Discount",
-    "action": "Action"
+    "action": "Action",
+    "customize": "Customize",
+    "customizeColumns": "Customize Table",
+    "showHide": "Columns",
+    "reorder": "Columns",
+    "resetDefaults": "Reset To Default",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "noColumnsSelected": "No columns selected",
+    "signInRequired": "Sign In Required",
+    "signInToCustomize": "Sign in to customize your table columns and save your preferences.",
+    "signIn": "Sign In",
+    "cancel": "Cancel",
+    "apply": "Apply"
   },
   "Pagination": {
     "previous": "Previous",
@@ -387,7 +400,20 @@
     "BI_WEEKLY": "Bi-Weekly",
     "ON_DEMAND": "On-Demand",
     "ON_DEMAND_THEN_EVERY_7_DAYS": "Payout on Demand, then every 7 Days",
-    "action": "Action"
+    "action": "Action",
+    "customize": "Customize",
+    "customizeColumns": "Customize Table",
+    "showHide": "Columns",
+    "reorder": "Columns",
+    "resetDefaults": "Reset To Default",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "noColumnsSelected": "No columns selected",
+    "signInRequired": "Sign In Required",
+    "signInToCustomize": "Sign in to customize your table columns and save your preferences.",
+    "signIn": "Sign In",
+    "cancel": "Cancel",
+    "apply": "Apply"
   },
   "SelectOption": {
     "selectOneOrMultiple": "Select One or Multiple Options",
@@ -1128,7 +1154,7 @@
       "tookChallenge": {
         "label": "How many challenges have you taken?",
         "options": {
-          "never": "Never",
+          "never": "0",
           "1-3": "1-3",
           "4-9": "4-9",
           "10plus": "10+"
