@@ -51,7 +51,7 @@ export default function ChallengeTable({
     countries,
     paymentMethods,
     payoutMethods,
-    yearsInOperation,
+    // yearsInOperation,
     assets,
     platforms,
     programType,
@@ -123,12 +123,12 @@ export default function ChallengeTable({
     });
   }
 
-  if (yearsInOperation) {
-    queries.push({
-      name: "firm.range_yearsInOperation",
-      value: yearsInOperation,
-    });
-  }
+  // if (yearsInOperation) {
+  //   queries.push({
+  //     name: "firm.range_yearsInOperation",
+  //     value: yearsInOperation,
+  //   });
+  // }
 
   if (in_steps) {
     queries.push({ name: "in_steps", value: in_steps });

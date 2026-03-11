@@ -167,7 +167,7 @@ export default function FirmAllFilters({
 
   const filters = {
     in_firmId: getArrayParam("in_firmId"),
-    range_yearsInOperation: getYearsInOperation(),
+    // range_yearsInOperation: getYearsInOperation(),
     // assets: getArrayParam("assets"),
     paymentMethods: getArrayParam("paymentMethods"),
     payoutMethods: getArrayParam("payoutMethods"),
@@ -456,7 +456,7 @@ export default function FirmAllFilters({
           </AccordionContent>
         </AccordionItem>
 
-        {/* Years in Operation */}
+        {/* Years in Operation — hidden
         <AccordionItem
           value="range_yearsInOperation"
           className="border-gray-800"
@@ -473,7 +473,7 @@ export default function FirmAllFilters({
               extraQuery={{ page: "1" }}
             />
           </AccordionContent>
-        </AccordionItem>
+        </AccordionItem> */}
 
         {/* Assets */}
         {/* <AccordionItem value="assets" className="border-gray-800">

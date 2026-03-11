@@ -80,8 +80,8 @@ export default function Firms({
   const payoutMethodsArray_id = searchParams.get("payoutMethods") || "";
   const array_typeOfInstruments =
     searchParams.get("array_typeOfInstruments") || "";
-  const range_yearsInOperation =
-    searchParams.get("range_yearsInOperation") || "";
+  // const range_yearsInOperation =
+  //   searchParams.get("range_yearsInOperation") || "";
   const brokersArray_id = searchParams.get("brokers") || "";
   const platformsArray_id = searchParams.get("platforms") || "";
   const sort = searchParams.get("sort") || "";
@@ -99,7 +99,7 @@ export default function Firms({
     { name: "paymentMethods.array_id", value: paymentMethodsArray_id },
     { name: "payoutMethods.array_id", value: payoutMethodsArray_id },
     { name: "array_typeOfInstruments", value: array_typeOfInstruments },
-    { name: "range_yearsInOperation", value: range_yearsInOperation },
+    // { name: "range_yearsInOperation", value: range_yearsInOperation },
     { name: "brokers.array_id", value: brokersArray_id },
     { name: "platforms.array_id", value: platformsArray_id },
     category,

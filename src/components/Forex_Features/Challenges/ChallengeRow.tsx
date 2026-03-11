@@ -104,7 +104,7 @@ export default function ChallengeRow({
       </TableCell>
     ),
     payoutFrequency: (
-      <TableCell key="payoutFrequency" center className="whitespace-normal max-w-[130px] text-center leading-snug text-xs md:text-sm">
+      <TableCell key="payoutFrequency" center className="whitespace-normal max-w-[130px] text-center leading-snug text-[11px] md:text-sm">
         {visibleText(
           isArabic,
           challenge.payoutFrequency,
@@ -115,7 +115,7 @@ export default function ChallengeRow({
     price: (
       <TableCell key="price" center className="text-sm md:text-base">
         <div className="flex flex-col items-center gap-1.5 bg-primary/[0.06] rounded-xl px-3 py-2 border border-primary/15">
-          <p className="text-base md:text-lg font-bold text-primary">{formatCurrencyLong(challenge?.price)}</p>
+          <p className="text-xs md:text-lg font-bold text-primary">{formatCurrencyLong(challenge?.price)}</p>
           <Link href={challenge.affiliateLink || ""} target="_blank">
             <Button size="sm" className="h-7 px-3 text-xs font-bold">{t("buy")}</Button>
           </Link>
