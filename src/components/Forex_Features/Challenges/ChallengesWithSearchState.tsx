@@ -9,6 +9,8 @@ import { useColumnCustomization } from "@/hooks/useColumnCustomization";
 import CustomizeColumnsDialog from "@/components/Global/CustomizeColumnsDialog";
 import ChallengeFilter from "./ChallengeFilter";
 import ChallengeTable, { CHALLENGE_COLUMNS } from "./ChallengeTable";
+import SelectOptions from "./SelectOptions";
+import { useGetFirmsQuery } from "@/redux/api/spreadApi";
 
 type Props = {
   locale: string;
@@ -32,6 +34,16 @@ export default function ChallengesWithSearchState({
     [searchParams, router]
   );
 
+  // Fetch firm data to get challengeNames for the filter (only when on a firm's challenges page)
+  const { data: firmsData } = useGetFirmsQuery(
+    { limit: 500 },
+    { skip: !companySlug }
+  );
+  const firm = companySlug
+    ? (firmsData?.data || []).find((f: any) => f.slug === companySlug)
+    : null;
+  const challengeNames: string[] = firm?.challengeNames || [];
+
   const {
     visibility,
     order,
@@ -50,17 +62,30 @@ export default function ChallengesWithSearchState({
         searchValue={searchInput}
         onSearchChange={handleSearchChange}
         beforeFilter={
-          <CustomizeColumnsDialog
-            columns={columns}
-            visibility={visibility}
-            order={order}
-            orderedVisibleKeys={orderedVisibleKeys}
-            toggleVisibility={toggleVisibility}
-            setAllVisibility={setAllVisibility}
-            reorder={reorder}
-            resetToDefaults={resetToDefaults}
-            t={tChallenges}
-          />
+          <>
+            {companySlug && challengeNames.length > 0 && (
+              <SelectOptions
+                name="in_challengeName"
+                title="Challenge Name"
+                options={challengeNames.map((name) => ({
+                  name,
+                  value: name,
+                }))}
+                cols={2}
+              />
+            )}
+            <CustomizeColumnsDialog
+              columns={columns}
+              visibility={visibility}
+              order={order}
+              orderedVisibleKeys={orderedVisibleKeys}
+              toggleVisibility={toggleVisibility}
+              setAllVisibility={setAllVisibility}
+              reorder={reorder}
+              resetToDefaults={resetToDefaults}
+              t={tChallenges}
+            />
+          </>
         }
       />
       <div className="flex">

@@ -20,8 +20,76 @@ import { useGetBrokersQuery } from "@/redux/api/brokerApi";
 import { Broker } from "@/types/broker.type";
 import { Platform } from "@/types";
 import { PaymentMethod } from "@/types/payment-method";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, X as XIcon } from "lucide-react";
 import RichTextEditor2 from "../Forms/RichTextEditor2";
+import { useState } from "react";
+import { useFormContext } from "react-hook-form";
+
+function ChallengeNamesField() {
+  const { watch, setValue, getValues } = useFormContext();
+  const [input, setInput] = useState("");
+
+  const addName = () => {
+    const trimmed = input.trim();
+    if (!trimmed) return;
+    const current = getValues("challengeNames") || [];
+    if (!current.includes(trimmed)) {
+      setValue("challengeNames", [...current, trimmed]);
+    }
+    setInput("");
+  };
+
+  return (
+    <div className="col-span-full">
+      <label className="block text-sm font-medium mb-1">Challenge Names</label>
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              addName();
+            }
+          }}
+          placeholder="Enter a challenge name"
+          className="w-full border rounded-3xl border-chart-1 px-3 py-2"
+        />
+        <button
+          type="button"
+          onClick={addName}
+          className="bg-primary1 text-foreground px-4 rounded-3xl"
+        >
+          Add
+        </button>
+      </div>
+      <div className="mt-2 flex flex-wrap gap-2">
+        {(watch("challengeNames") || []).map((name: string, idx: number) => (
+          <span
+            key={idx}
+            className="bg-primary1 text-foreground px-2 py-1 rounded flex items-center gap-1"
+          >
+            {name}
+            <button
+              type="button"
+              onClick={() =>
+                setValue(
+                  "challengeNames",
+                  getValues("challengeNames").filter((_: any, i: number) => i !== idx),
+                )
+              }
+              className="text-red-500 font-bold ml-1"
+            >
+              <XIcon className="size-3" />
+            </button>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function FirmForm({
   showOffer,
   setShowOffer,
@@ -150,6 +218,9 @@ export default function FirmForm({
               name: otherFeature.name,
             }))}
           />
+
+          <ChallengeNamesField />
+
           <div className="md:col-span-2 space-y-4">
             <CustomComboBoxMultiple
               name="restrictedCountries"

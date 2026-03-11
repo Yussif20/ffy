@@ -59,6 +59,7 @@ export const defaultValues = {
   drawDownTexts: [],
   drawDownProgramTypeMap: {} as Record<string, string[]>,
   otherFeatures: [],
+  challengeNames: [] as string[],
   programTypes: [StepsEnum.STEP1],
 
   allocationRules: "",
@@ -145,6 +146,7 @@ export const AddFirmDialog = () => {
       drawDownTexts: data.drawDownTexts,
       drawDownProgramTypeMap: data.drawDownProgramTypeMap || {},
       otherFeatures: data.otherFeatures,
+      challengeNames: data.challengeNames || [],
       programTypes: data.programTypes,
       affiliateLink: data.affiliateLink,
       maxAllocation: Number(data.maxAllocation),

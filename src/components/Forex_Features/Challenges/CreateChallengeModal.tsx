@@ -33,6 +33,7 @@ export default function CreateChallengeModal({
       firmId: "",
       title: "",
       resetType: "",
+      challengeName: "",
       accountSize: "",
       steps: "",
       profitTarget: [] as number[],

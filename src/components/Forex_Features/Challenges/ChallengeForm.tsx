@@ -117,15 +117,20 @@ export default function ChallengeForm({ methods }: { methods: any }) {
         </div>
       </div>
 
-      {/* Other Inputs */}
+      {/* Challenge Name - options from selected firm */}
       <CustomSelect
-        label={t("resetType")}
-        name="resetType"
-        options={[
-          { label: t("daily"), value: "Daily" },
-          { label: t("weekly"), value: "Weekly" },
-          { label: t("monthly"), value: "Monthly" },
-        ]}
+        label="Challenge Name"
+        name="challengeName"
+        options={
+          (() => {
+            const firmId = watch("firmId");
+            const firm = (getAllFirms?.data || []).find((f: any) => f.id === firmId);
+            return (firm?.challengeNames || []).map((name: string) => ({
+              label: name,
+              value: name,
+            }));
+          })()
+        }
       />
 
       <CustomInput

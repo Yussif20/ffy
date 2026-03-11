@@ -65,6 +65,7 @@ export default function ChallengeTable({
   const accountSizeRange = params.get("size_range") || "";
   const in_steps = params.get("in_steps") || "";
   const in_firmId = params.get("in_firmId") || "";
+  const in_challengeName = params.get("in_challengeName") || "";
   const searchTerm =
     searchTermFromState !== undefined
       ? searchTermFromState
@@ -131,6 +132,10 @@ export default function ChallengeTable({
 
   if (in_steps) {
     queries.push({ name: "in_steps", value: in_steps });
+  }
+
+  if (in_challengeName) {
+    queries.push({ name: "in_challengeName", value: in_challengeName });
   }
 
   if (assets) {

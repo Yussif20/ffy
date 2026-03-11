@@ -86,6 +86,7 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
                 arabicText: "",
               })),
         otherFeatures: firm.otherFeatures || [],
+        challengeNames: firm.challengeNames || [],
         drawDownProgramTypeMap:
           firm.drawDownProgramTypeMap && Object.keys(firm.drawDownProgramTypeMap).length > 0
             ? firm.drawDownProgramTypeMap
@@ -192,6 +193,7 @@ export const EditFirmDialog = ({ firmId }: EditFirmDialogProps) => {
       drawDownTexts: data.drawDownTexts,
       drawDownProgramTypeMap: data.drawDownProgramTypeMap || {},
       otherFeatures: data.otherFeatures,
+      challengeNames: data.challengeNames || [],
       programTypes: data.programTypes,
       affiliateLink: data.affiliateLink,
       maxAllocation: Number(data.maxAllocation),
