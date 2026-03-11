@@ -5,13 +5,22 @@ import CustomSelect from "@/components/Forms/CustomSelect";
 import CustomYesNoToggle from "@/components/Forms/CustomYesNoToggle";
 import { useGetFirmsQuery } from "@/redux/api/spreadApi";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 export default function ChallengeForm({ methods }: { methods: any }) {
   const { data: getAllFirms, isLoading } = useGetFirmsQuery({ limit: 500 });
   const t = useTranslations("CHALLENGEMANAGEMENT");
   const [profitInput, setProfitInput] = useState<string>("");
   const { watch, setValue, getValues } = methods;
+  const firmId = watch("firmId");
+
+  const challengeNameOptions = useMemo(() => {
+    const firm = (getAllFirms?.data || []).find((f: any) => f.id === firmId);
+    return (firm?.challengeNames || []).map((name: string) => ({
+      label: name,
+      value: name,
+    }));
+  }, [firmId, getAllFirms?.data]);
   const handleProfitKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && profitInput.trim() !== "") {
       const currentTargets = getValues("profitTarget") || [];
@@ -119,18 +128,9 @@ export default function ChallengeForm({ methods }: { methods: any }) {
 
       {/* Challenge Name - options from selected firm */}
       <CustomSelect
-        label="Challenge Name"
+        label={t("challengeName")}
         name="challengeName"
-        options={
-          (() => {
-            const firmId = watch("firmId");
-            const firm = (getAllFirms?.data || []).find((f: any) => f.id === firmId);
-            return (firm?.challengeNames || []).map((name: string) => ({
-              label: name,
-              value: name,
-            }));
-          })()
-        }
+        options={challengeNameOptions}
       />
 
       <CustomInput

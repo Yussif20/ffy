@@ -39,6 +39,8 @@ import dynamic from "next/dynamic";
 
 const OfferCoinClient = dynamic(() => import("./OfferCoinClient"), { ssr: false });
 
+const OFFER_BADGE_KEYWORDS = ["off", "خصم", "استرداد", "Reward"];
+
 /** Styled offer description with line-clamp and full-text tooltip */
 function OfferDescription({
   text,
@@ -154,7 +156,7 @@ function OfferPercentageBadge({
       {/* Content */}
       {isText ? (
         (() => {
-          const offMatch = customText?.match(/^(.*?)\s*(off|خصم|استرداد|Reward)\s*$/i);
+          const offMatch = customText?.match(new RegExp(`^(.*?)\\s*(${OFFER_BADGE_KEYWORDS.join("|")})\\s*$`, "i"));
           const mainText = offMatch?.[1]?.trim() ?? "";
           const mainLen = mainText.length;
           return offMatch ? (

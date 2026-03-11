@@ -146,13 +146,6 @@ export default function FirmAllFilters({
     setCompanyPage(1);
   }, [firms.length]);
 
-  // const getYearsInOperation = () => {
-  //   const years = searchParams.get("range_yearsInOperation");
-  //   return years
-  //     ? (years.split(",") || []).map((item: string) => Number(item))
-  //     : [0, 10];
-  // };
-
   const getMaxAllocation = () => {
     const allocation = searchParams.get("range_maxAllocation");
     return allocation
@@ -167,8 +160,6 @@ export default function FirmAllFilters({
 
   const filters = {
     in_firmId: getArrayParam("in_firmId"),
-    // range_yearsInOperation: getYearsInOperation(),
-    // assets: getArrayParam("assets"),
     paymentMethods: getArrayParam("paymentMethods"),
     payoutMethods: getArrayParam("payoutMethods"),
     platforms: getArrayParam("platforms"),
@@ -455,25 +446,6 @@ export default function FirmAllFilters({
             </div>
           </AccordionContent>
         </AccordionItem>
-
-        {/* Years in Operation — hidden
-        <AccordionItem
-          value="range_yearsInOperation"
-          className="border-gray-800"
-        >
-          <AccordionTrigger className="text-sm font-semibold hover:no-underline">
-            {t("yearsInOperation")}
-          </AccordionTrigger>
-          <AccordionContent>
-            <CustomSlider
-              max={10}
-              min={0}
-              name="range_yearsInOperation"
-              hideCurrency={true}
-              extraQuery={{ page: "1" }}
-            />
-          </AccordionContent>
-        </AccordionItem> */}
 
         {/* Assets */}
         {/* <AccordionItem value="assets" className="border-gray-800">
