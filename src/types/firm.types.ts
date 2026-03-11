@@ -62,6 +62,7 @@ export type SinglePropFirm = {
   restrictedCountriesNoteArabic?: string;
   spreads: any[];
   programTypes: string[];
+  challengeNames: string[];
   assets: string[];
   paymentMethods: PaymentMethod[];
   drawDowns: string[];
