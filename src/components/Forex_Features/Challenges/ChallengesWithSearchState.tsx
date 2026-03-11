@@ -10,7 +10,7 @@ import CustomizeColumnsDialog from "@/components/Global/CustomizeColumnsDialog";
 import ChallengeFilter from "./ChallengeFilter";
 import ChallengeTable, { CHALLENGE_COLUMNS } from "./ChallengeTable";
 import SelectOptions from "./SelectOptions";
-import { useGetFirmsQuery } from "@/redux/api/spreadApi";
+import { useGetAllFirmsQuery } from "@/redux/api/firms.api";
 import { useAppSelector } from "@/redux/store";
 import { useCurrentUser } from "@/redux/authSlice";
 
@@ -39,13 +39,11 @@ export default function ChallengesWithSearchState({
   );
 
   // Fetch firm data to get challengeNames for the filter (only when on a firm's challenges page)
-  const { data: firmsData } = useGetFirmsQuery(
-    { limit: 500 },
+  const { data: firmsData } = useGetAllFirmsQuery(
+    [{ name: "slug", value: companySlug! }],
     { skip: !companySlug }
   );
-  const firm = companySlug
-    ? (firmsData?.data || []).find((f: any) => f.slug === companySlug)
-    : null;
+  const firm = companySlug ? firmsData?.firms?.[0] ?? null : null;
   const challengeNames: string[] = firm?.challengeNames || [];
 
   const {
