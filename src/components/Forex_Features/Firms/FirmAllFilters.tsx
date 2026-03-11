@@ -146,12 +146,12 @@ export default function FirmAllFilters({
     setCompanyPage(1);
   }, [firms.length]);
 
-  const getYearsInOperation = () => {
-    const years = searchParams.get("range_yearsInOperation");
-    return years
-      ? (years.split(",") || []).map((item: string) => Number(item))
-      : [0, 10];
-  };
+  // const getYearsInOperation = () => {
+  //   const years = searchParams.get("range_yearsInOperation");
+  //   return years
+  //     ? (years.split(",") || []).map((item: string) => Number(item))
+  //     : [0, 10];
+  // };
 
   const getMaxAllocation = () => {
     const allocation = searchParams.get("range_maxAllocation");
