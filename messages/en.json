@@ -308,7 +308,11 @@
     "deleting": "Deleting...",
     "deleteConfirmTitle": "Confirm Deletion",
     "reorderSuccess": "Order updated successfully",
-    "reorderError": "Failed to save order"
+    "reorderError": "Failed to save order",
+    "addLine": "Add",
+    "adding": "Adding...",
+    "done": "Done",
+    "addedCount": "{count} added"
   },
   "Offers": {
     "thisMonthForexOffers": "This Month Forex Offers",

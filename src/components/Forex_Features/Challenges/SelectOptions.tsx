@@ -81,7 +81,7 @@ export default function SelectOptions({
       ? categories.filter((item) => item !== value)
       : [...categories, value];
     handleSetSearchParams(
-      { [name]: newCategories.join(","), [`${name}_range`]: "" },
+      { [name]: newCategories.join(","), [`${name}_range`]: "", page: "1" },
       searchParams,
       router,
     );
@@ -89,7 +89,7 @@ export default function SelectOptions({
 
   const handleSetRange = (range: string) => {
     handleSetSearchParams(
-      { [`${name}_range`]: range, [name]: "" },
+      { [`${name}_range`]: range, [name]: "", page: "1" },
       searchParams,
       router,
     );

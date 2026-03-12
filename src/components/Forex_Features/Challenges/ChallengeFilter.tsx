@@ -81,7 +81,7 @@ export default function ChallengeFilter({
     if (!hasSteps) next.in_steps = "STEP1";
     if (Object.keys(next).length > 0) {
       hasAppliedChallengeDefaults.current = true;
-      handleSetSearchParams(next, searchParams, router);
+      handleSetSearchParams({ ...next, page: "1" }, searchParams, router);
     }
   }, [pathname, searchParams, router, isFirmChallengesPage]);
 

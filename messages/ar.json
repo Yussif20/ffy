@@ -305,7 +305,11 @@
     "updating": "جاري التحديث...",
     "deleting": "جاري الحذف...",
     "reorderSuccess": "تم تحديث الترتيب بنجاح",
-    "reorderError": "فشل في حفظ الترتيب"
+    "reorderError": "فشل في حفظ الترتيب",
+    "addLine": "إضافة",
+    "adding": "جاري الإضافة...",
+    "done": "تم",
+    "addedCount": "{count} تمت إضافتها"
   },
   "Offers": {
     "thisMonthForexOffers": "عروض الفوركس لشهر يناير",

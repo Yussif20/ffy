@@ -32,7 +32,7 @@ export default function CustomSlider({
   useEffect(() => {
     const handler = setTimeout(() => {
       handleSetSearchParams(
-        { [name]: value.join("-"), ...(extraQuery || {}) },
+        { [name]: value.join("-"), ...(extraQuery || {}), page: "1" },
         searchParams,
         router
       );

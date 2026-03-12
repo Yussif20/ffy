@@ -22,10 +22,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { FieldValues } from "react-hook-form";
+import { FieldValues, UseFormReturn } from "react-hook-form";
 import CustomForm from "@/components/Forms/CustomForm";
 import CustomInput from "@/components/Forms/CustomInput";
-import { Loader2 } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { News } from "@/types/newsType";
 import { useAppSelector } from "@/redux/store";
@@ -212,10 +212,14 @@ export function DeleteNews({
 export function AddNews({ children }: { children: React.ReactNode }) {
   const t = useTranslations("HighImpactNews");
   const [createNewsAction] = useCreateNewsMutation();
+  const [deleteNewsAction] = useDeleteNewsMutation();
 
   const role = useAppSelector(useCurrentUser)?.role;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [addedItems, setAddedItems] = useState<
+    { id: string; title: string; titleArabic: string }[]
+  >([]);
 
   if (role !== "SUPER_ADMIN") return null;
 
@@ -226,7 +230,10 @@ export function AddNews({ children }: { children: React.ReactNode }) {
     titleArabic: "",
   };
 
-  const handleSubmit = async (data: FieldValues) => {
+  const handleSubmit = async (
+    data: FieldValues,
+    methods: UseFormReturn<any>
+  ) => {
     startTransition(async () => {
       const payload = {
         dateAndTime: data?.dateAndTime
@@ -236,20 +243,49 @@ export function AddNews({ children }: { children: React.ReactNode }) {
         title: data.title,
         titleArabic: data.titleArabic,
       };
-      const toastId = toast.loading("Creating news...");
+      const toastId = toast.loading(t("adding"));
       try {
-        await createNewsAction(payload).unwrap();
+        const result = await createNewsAction(payload).unwrap();
 
-        toast.success("News created successfully", { id: toastId });
-        setIsDialogOpen(false);
-      } catch (error) {
-        toast.error("Failed to create news", { id: toastId });
+        toast.success("News added", { id: toastId });
+        setAddedItems((prev) => [
+          ...prev,
+          {
+            id: result.data.id,
+            title: data.title,
+            titleArabic: data.titleArabic,
+          },
+        ]);
+        methods.setValue("title", "");
+        methods.setValue("titleArabic", "");
+      } catch {
+        toast.error("Failed to add news", { id: toastId });
       }
     });
   };
 
+  const handleDeleteFromList = (id: string) => {
+    startTransition(async () => {
+      const toastId = toast.loading("Deleting...");
+      try {
+        await deleteNewsAction(id).unwrap();
+        toast.success("News deleted", { id: toastId });
+        setAddedItems((prev) => prev.filter((item) => item.id !== id));
+      } catch {
+        toast.error("Failed to delete news", { id: toastId });
+      }
+    });
+  };
+
+  const handleOpenChange = (open: boolean) => {
+    setIsDialogOpen(open);
+    if (!open) {
+      setAddedItems([]);
+    }
+  };
+
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+    <Dialog open={isDialogOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
@@ -296,18 +332,45 @@ export function AddNews({ children }: { children: React.ReactNode }) {
             required
             fieldClassName="h-11"
           />
+
+          {addedItems.length > 0 && (
+            <div className="max-h-40 overflow-y-auto space-y-1 border rounded-lg p-2">
+              <p className="text-xs text-muted-foreground mb-1">
+                {t("addedCount", { count: addedItems.length })}
+              </p>
+              {addedItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex items-center justify-between gap-2 text-sm p-1.5 bg-muted/50 rounded"
+                >
+                  <span className="truncate flex-1">{item.title}</span>
+                  <span className="truncate flex-1 text-muted-foreground">
+                    {item.titleArabic}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteFromList(item.id)}
+                    disabled={isPending}
+                    className="shrink-0 p-0.5 hover:text-destructive"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
           <DialogFooter className="mt-6">
+            <Button type="submit" disabled={isPending}>
+              {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {isPending ? t("adding") : t("addLine")}
+            </Button>
             <Button
               type="button"
               variant="outline2"
-              onClick={() => setIsDialogOpen(false)}
-              disabled={isPending}
+              onClick={() => handleOpenChange(false)}
             >
-              {t("cancel")}
-            </Button>
-            <Button type="submit" disabled={isPending}>
-              {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {isPending ? t("creating") : t("create")}
+              {t("done")}
             </Button>
           </DialogFooter>
         </CustomForm>

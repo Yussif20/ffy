@@ -69,7 +69,7 @@ export default function ChallengesWithSearchState({
             {companySlug && challengeNames.length > 0 && (
               <SelectOptions
                 name="in_challengeName"
-                title="Challenge Name"
+                title={tChallenges("challengeName")}
                 options={challengeNames.map((name) => ({
                   name,
                   value: name,
