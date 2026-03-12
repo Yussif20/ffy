@@ -11,8 +11,6 @@ import ChallengeFilter from "./ChallengeFilter";
 import ChallengeTable, { CHALLENGE_COLUMNS } from "./ChallengeTable";
 import SelectOptions from "./SelectOptions";
 import { useGetAllFirmsQuery } from "@/redux/api/firms.api";
-import { useAppSelector } from "@/redux/store";
-import { useCurrentUser } from "@/redux/authSlice";
 
 type Props = {
   locale: string;
@@ -23,8 +21,6 @@ export default function ChallengesWithSearchState({
   locale,
   companySlug,
 }: Props) {
-  const user = useAppSelector(useCurrentUser);
-  const isAdmin = user?.role === "SUPER_ADMIN";
   const searchParams = useSearchParams();
   const router = useRouter();
   const tChallenges = useTranslations("Challenges");
@@ -65,7 +61,7 @@ export default function ChallengesWithSearchState({
         onSearchChange={handleSearchChange}
         beforeFilter={
           <>
-            {isAdmin && companySlug && challengeNames.length > 0 && (
+            {companySlug && challengeNames.length > 0 && (
               <SelectOptions
                 name="in_challengeName"
                 title="Challenge Name"
