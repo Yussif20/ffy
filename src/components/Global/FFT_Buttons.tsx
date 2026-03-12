@@ -52,7 +52,7 @@ export default function FFT_Buttons({ compact }: { compact?: boolean }) {
   return (
     <div
       className={cn(
-        "max-w-max flex justify-center items-center rounded-full shadow-none overflow-hidden",
+        "max-w-max flex justify-center items-center rounded-full",
         compact ? "gap-1 rounded-xl py-0.5" : "gap-1 sm:gap-2",
       )}
     >
@@ -61,13 +61,13 @@ export default function FFT_Buttons({ compact }: { compact?: boolean }) {
         {!isFutures && (
           <motion.div
             layoutId={`fft-pill-${id}`}
-            className="absolute inset-0 rounded-full bg-primary shadow-none"
+            className="absolute inset-0 rounded-full bg-primary"
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           />
         )}
         <Button
           className={cn(
-            "relative z-10 rounded-full! bg-transparent! hover:bg-white/10! shadow-none! ring-0! focus-visible:ring-0! outline-none!",
+            "relative z-10 rounded-full! bg-transparent! hover:bg-white/10!",
             compact
               ? "h-7 min-w-14 px-2! text-xs"
               : "px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24",
@@ -95,13 +95,13 @@ export default function FFT_Buttons({ compact }: { compact?: boolean }) {
         {isFutures && (
           <motion.div
             layoutId={`fft-pill-${id}`}
-            className="absolute inset-0 rounded-full bg-primary shadow-none"
+            className="absolute inset-0 rounded-full bg-primary"
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           />
         )}
         <Button
           className={cn(
-            "relative z-10 rounded-full! bg-transparent! hover:bg-white/10! shadow-none! ring-0! focus-visible:ring-0! outline-none!",
+            "relative z-10 rounded-full! bg-transparent! hover:bg-white/10!",
             compact
               ? "h-7 min-w-14 px-2! text-xs"
               : "px-2! sm:px-4! h-8 sm:h-9 min-w-20 sm:min-w-24",

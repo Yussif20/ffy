@@ -1,10 +1,9 @@
 "use client";
 
-import LinearBorder from "@/components/Global/LinearBorder";
+import SearchInputField from "@/components/Forms/SearchInputField";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { cn, handleSetSearchParams } from "@/lib/utils";
-import { Filter, Plus, Search } from "lucide-react";
+import { Filter, Plus } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import SelectOptions from "./SelectOptions";
 import { useTranslations } from "next-intl";
@@ -89,7 +88,7 @@ export default function ChallengeFilter({
   };
 
   return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-center overflow-x-hidden">
+    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-end overflow-x-hidden">
       <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
         <SelectOptions
           name="size"
@@ -123,73 +122,35 @@ export default function ChallengeFilter({
           ]}
           cols={2}
         />
-        <div className="order-last w-full justify-center lg:order-none lg:w-auto flex gap-1.5 sm:gap-2 md:gap-4 items-center">
-          {beforeFilter}
-          {!hideAllFilter && (
-            <Button
-              className={cn(
-                "h-8 px-2! text-[11px] sm:h-9 sm:px-3! sm:text-xs md:px-6! md:text-sm",
-                isArabic && "font-semibold"
-              )}
-              onClick={() => {
-                handleSetCategory({ filterOpen: filterOpen ? "" : "true" });
-              }}
-              variant={filterOpen ? "defaultBH" : "secondary"}
-            >
-              <Filter /> {t("filter")}
-            </Button>
-          )}
-        </div>
+        {!hideAllFilter && (
+          <Button
+            className={cn(
+              "h-8 px-2 text-[11px] sm:h-9 sm:px-3 sm:text-xs md:px-4 md:text-sm",
+              isArabic && "font-semibold"
+            )}
+            onClick={() => {
+              handleSetCategory({ filterOpen: filterOpen ? "" : "true" });
+            }}
+            variant={filterOpen ? "defaultBH" : "outline2"}
+          >
+            <Filter /> {t("filter")}
+          </Button>
+        )}
+        <div className="hidden sm:block w-px h-6 bg-border" />
+        {beforeFilter}
         {role === "SUPER_ADMIN" && (
           <Button variant="default" onClick={() => setOpenModal(true)}>
             <Plus />
           </Button>
         )}
       </div>
-      <div className={cn("w-full min-w-0 flex order-1 lg:order-2 lg:min-w-0 lg:w-3/4", isArabic ? "ml-0 mr-auto" : "mr-0 ml-auto")}>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            onSearchChange?.(searchValue ?? "");
-          }}
-          className="w-full max-w-none min-w-0 flex-1"
-        >
-          <LinearBorder className="w-full max-w-full">
-            <div className={cn("relative flex items-center w-full", isArabic && "flex-row-reverse")}>
-              <div
-                className={cn(
-                  "absolute top-1/2 -translate-y-1/2 z-10 text-muted-foreground pointer-events-none",
-                  isArabic ? "right-3" : "left-3"
-                )}
-              >
-                <Search className="h-4 w-4" />
-              </div>
-              <Input
-                type="search"
-                withoutLinearBorder
-                value={searchValue ?? ""}
-                onChange={(e) => onSearchChange?.(e.target.value)}
-                placeholder={tSearch("searchPlaceholder")}
-                dir={isArabic ? "rtl" : "ltr"}
-                className={cn(
-                  "h-11 w-full flex-1 min-w-0 pl-9 pr-11 rounded-full border-0 bg-transparent text-sm",
-                  isArabic ? "pr-9 pl-11 text-base font-semibold text-right" : ""
-                )}
-                aria-label={tSearch("searchPlaceholder")}
-              />
-              <div
-                className={cn(
-                  "absolute top-0 bottom-0 flex items-center shrink-0",
-                  isArabic ? "left-0 pl-1" : "right-0 pr-1"
-                )}
-              >
-                <Button type="submit" size="sm" className="h-9 w-9">
-                  <Search className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-          </LinearBorder>
-        </form>
+      <div className={cn("w-full min-w-0 flex order-1 lg:order-2 lg:min-w-0 lg:max-w-md", isArabic ? "ml-0 mr-auto" : "mr-0 ml-auto")}>
+        <SearchInputField
+          value={searchValue ?? ""}
+          onChange={(v) => onSearchChange?.(v)}
+          onSubmit={() => onSearchChange?.(searchValue ?? "")}
+          placeholder={tSearch("searchPlaceholder")}
+        />
       </div>
 
       <CreateChallengeModal

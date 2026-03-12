@@ -1,9 +1,10 @@
 "use client";
 
 import SearchInputField from "@/components/Forms/SearchInputField";
-import { handleSetSearchParams } from "@/lib/utils";
+import { handleSetSearchParams, cn } from "@/lib/utils";
 import { useAppSelector } from "@/redux/store";
 import { UserRole } from "@/types";
+import useIsArabic from "@/hooks/useIsArabic";
 import AddNewOffer from "./AddNewOffer";
 import OfferFilter from "./OfferFilter";
 import OfferList from "./OfferList";
@@ -23,6 +24,7 @@ export default function Offers({
   const searchParams = useSearchParams();
   const router = useRouter();
   const t = useTranslations("Search");
+  const isArabic = useIsArabic();
   const marketType = pathname.includes("futures") ? "futures" : "forex";
   const urlSearch = searchParams.get("search") || "";
   const [searchInput, setSearchInput] = useState(urlSearch);
@@ -77,16 +79,19 @@ export default function Offers({
 
   return (
     <div className="space-y-8 pb-10 md:pb-14">
-      <div className="w-full flex justify-between md:items-center flex-col lg:flex-row gap-5 overflow-x-hidden">
-        <OfferFilter />
-        <SearchInputField
-          value={searchInput}
-          onChange={handleChange}
-          onSubmit={handleSubmit}
-          placeholder={t("searchPlaceholder")}
-          className="lg:w-3/4 lg:max-w-md"
-        />
-        {currUser && currUser.role !== UserRole.USER && <AddNewOffer />}
+      <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-end overflow-x-hidden">
+        <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
+          <OfferFilter />
+          {currUser && currUser.role !== UserRole.USER && <AddNewOffer />}
+        </div>
+        <div className={cn("w-full min-w-0 flex order-1 lg:order-2 lg:min-w-0 lg:max-w-md", isArabic ? "ml-0 mr-auto" : "mr-0 ml-auto")}>
+          <SearchInputField
+            value={searchInput}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            placeholder={t("searchPlaceholder")}
+          />
+        </div>
       </div>
       <OfferList key={filterKey} />
     </div>

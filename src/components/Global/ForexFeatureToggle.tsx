@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 export default function ForexFeatureToggle({ compact }: { compact?: boolean }) {
   return (
-    <LinearBorder className={cn(compact && "rounded-xl shadow-md")}>
+    <LinearBorder className={cn("shadow-none", compact && "rounded-xl")}>
       <FFT_Buttons compact={compact} />
     </LinearBorder>
   );

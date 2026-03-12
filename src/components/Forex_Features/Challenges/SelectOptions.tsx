@@ -127,7 +127,7 @@ export default function SelectOptions({
                 "ring-2 ring-primary/25 bg-primary/5 border-primary/40 hover:bg-primary/10 hover:ring-primary/35",
               triggerClassName,
             )}
-            variant={"outline"}
+            variant={"outline2"}
           >
             {title}:{" "}
             <span className={cn(hasSelection && "font-semibold text-primary")}>

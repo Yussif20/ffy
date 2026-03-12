@@ -94,14 +94,14 @@ export default function CustomizeColumnsDialog({
   return (
     <>
     <Button
-      variant="outline"
+      variant="outline2"
       className={cn(
-        "h-8 px-2! text-[11px] sm:h-9 sm:px-3! sm:text-xs md:px-6! md:text-sm gap-2",
+        "h-8 px-2 text-[11px] sm:h-9 sm:px-3 sm:text-xs md:px-4 md:text-sm gap-2 border-primary/30 hover:border-primary/50 hover:bg-primary/5 transition-colors",
         isArabic && "font-semibold"
       )}
       onClick={() => (user ? setOpen(true) : setSignInOpen(true))}
     >
-      <SlidersHorizontal className="h-4 w-4" />
+      <SlidersHorizontal className="h-4 w-4 text-primary" />
       {t("customize")}
     </Button>
 

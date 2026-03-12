@@ -17,43 +17,17 @@ export default function FirmsFilter() {
     handleSetSearchParams(value, searchParams, router);
   };
   return (
-    <div className="flex justify-center md:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center overflow-x-auto">
-      <Button
-        className={cn(
-          "h-8 px-2! text-[11px] sm:h-9 sm:px-3! sm:text-xs md:px-6! md:text-sm",
-          isArabic ? "md:text-base font-semibold" : "",
-        )}
-        onClick={() => {
-          handleSetCategory({ filterOpen: filterOpen ? "" : "true" });
-        }}
-        variant={filterOpen ? "defaultBH" : "secondary"}
-      >
-        <Filter /> {t("filter")}
-      </Button>
-      {/* "All" button hidden as per requirement */}
-      {/* <div className="flex gap-1.5 sm:gap-2 md:gap-4 items-center">
-        {categories.map((item) => {
-          const isActive = category === item.value;
-          return (
-            <Button
-              key={item.value}
-              className={cn(
-                "h-8 px-2! text-[11px] sm:h-9 sm:px-3! sm:text-xs md:px-6! md:text-sm",
-                isArabic ? "md:text-base font-semibold" : ""
-              )}
-              onClick={() => handleSetCategory({ category: item.value })}
-              variant={isActive ? "default" : "outline"}
-            >
-              {item.icon && (
-                <item.icon
-                  className={cn("text-primary", isActive && "text-foreground")}
-                />
-              )}
-              {item.name}
-            </Button>
-          );
-        })}
-      </div> */}
-    </div>
+    <Button
+      className={cn(
+        "h-8 px-2 text-[11px] sm:h-9 sm:px-3 sm:text-xs md:px-4 md:text-sm",
+        isArabic ? "md:text-base font-semibold" : "",
+      )}
+      onClick={() => {
+        handleSetCategory({ filterOpen: filterOpen ? "" : "true" });
+      }}
+      variant={filterOpen ? "defaultBH" : "outline2"}
+    >
+      <Filter /> {t("filter")}
+    </Button>
   );
 }
