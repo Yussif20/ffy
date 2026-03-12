@@ -50,7 +50,7 @@ export default async function FirmOverview({
       <div className="flex gap-8 relative flex-col lg:flex-row">
         {/* Sidebar Navigation */}
         {/* Sticky section bar: below sticky offer bar on small (top-[6.5rem]), on lg top-52; bar is hidden on md+ */}
-        <div className="sticky top-[6.5rem] lg:top-52 h-max bg-background z-20 pt-3 lg:pt-4 border-b-0">
+        <div className="sticky top-[8.5rem] lg:top-54 h-max bg-background z-20 pt-3 lg:pt-4 border-b-0">
           <FO_Sidebar />
         </div>
 

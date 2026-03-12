@@ -45,14 +45,11 @@ export default function FirmOfferStickyBar({ firm }: { firm: SinglePropFirm }) {
   const firmHref = isFutures ? `/futures/firms/${firm.slug}` : `/firms/${firm.slug}`;
 
   return (
-    <div className="sticky top-(--navbar-height,3.5rem) z-40 w-full border-b border-border bg-background/95 backdrop-blur-sm shadow-sm">
-      <div className="flex items-center justify-between gap-2 sm:gap-5 px-2 py-2 sm:px-4 sm:py-2.5 min-h-11 sm:min-h-12">
-        {/* Firm logo + name (shrink more on very small screens) */}
-        <Link
-          href={firmHref}
-          className="flex items-center gap-1.5 sm:gap-2 shrink-0 min-w-0 rounded-lg p-1 -m-1 hover:bg-muted/50 transition-colors"
-        >
-          <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-md overflow-hidden border border-border bg-card shrink-0 relative">
+    <div className="sticky top-(--navbar-height,3.5rem) z-10 w-full border-b border-border bg-background/95 backdrop-blur-sm shadow-sm md:hidden">
+      <div className="flex items-center gap-3 px-3 py-2.5 sm:px-4 sm:py-3">
+        {/* Logo — spans both rows */}
+        <Link href={firmHref} className="shrink-0 self-center rounded-md hover:opacity-80 transition-opacity">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-md overflow-hidden border border-border bg-card relative">
             <Image
               src={firm.logoUrl || "/placeholder.png"}
               alt=""
@@ -60,47 +57,53 @@ export default function FirmOfferStickyBar({ firm }: { firm: SinglePropFirm }) {
               className="object-cover"
             />
           </div>
-          <span className="font-semibold text-xs sm:text-base text-foreground truncate max-w-[80px] xs:max-w-[100px] sm:max-w-[180px]">
-            {firm.title}
-          </span>
         </Link>
 
-        {/* Code (no label), percent, buy */}
-        <div className="flex items-center gap-2 sm:gap-5 shrink-0 min-w-0">
-          {hasCode && (
-            <button
-              type="button"
-              onClick={() => copyToClipboard(firstOffer!.code)}
-              className={cn(
-                "inline-flex items-center gap-1.5 sm:gap-2 rounded-lg border-2 border-dashed px-2 py-1 sm:px-3 sm:py-1.5 text-xs sm:text-sm transition-colors shrink-0",
-                codeBorderCls
-              )}
-            >
-              <span className="font-semibold uppercase tracking-wide truncate max-w-[60px] sm:max-w-none">{firstOffer!.code}</span>
-              {isCopied ? (
-                <Check className="size-4 text-green-500 shrink-0" />
-              ) : (
-                <Copy className={cn("size-4 shrink-0", isFutures ? "text-yellow-500" : "text-primary")} />
-              )}
-            </button>
-          )}
+        {/* Row 1: Name, Row 2: Code + Percent */}
+        <div className="flex flex-col gap-1.5 min-w-0 flex-1">
+          <Link href={firmHref} className="min-w-0 hover:underline">
+            <span className="font-semibold text-sm sm:text-base text-foreground line-clamp-1">
+              {firm.title}
+            </span>
+          </Link>
 
-          {hasPercent && (
-            <div className="inline-flex items-center gap-1 sm:gap-1.5 rounded-lg bg-primary/15 px-2 py-1 sm:px-3 sm:py-1.5 border border-primary/30 shrink-0">
-              <span className="text-xs sm:text-sm font-bold tabular-nums text-primary">{firstOffer!.offerPercentage}%</span>
-              <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-primary/80">OFF</span>
-            </div>
-          )}
+          <div className="flex items-center gap-2 flex-wrap">
+            {hasCode && (
+              <button
+                type="button"
+                onClick={() => copyToClipboard(firstOffer!.code)}
+                className={cn(
+                  "inline-flex items-center gap-1.5 rounded-lg border-2 border-dashed px-2.5 py-1 sm:px-3 sm:py-1.5 text-xs sm:text-sm transition-colors",
+                  codeBorderCls
+                )}
+              >
+                <span className="font-semibold uppercase tracking-wide">{firstOffer!.code}</span>
+                {isCopied ? (
+                  <Check className="size-3.5 sm:size-4 text-green-500 shrink-0" />
+                ) : (
+                  <Copy className={cn("size-3.5 sm:size-4 shrink-0", isFutures ? "text-yellow-500" : "text-primary")} />
+                )}
+              </button>
+            )}
 
-          {hasAffiliate && (
-            <NextLink href={firm.affiliateLink} target="_blank" rel="noopener noreferrer" className="shrink-0">
-              <Button size="sm" className="h-8 sm:h-9 rounded-lg gap-1 sm:gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-xs sm:text-sm px-2 sm:px-3">
-                {t("buy")}
-                <ArrowUpRight className="size-3 sm:size-4 shrink-0" />
-              </Button>
-            </NextLink>
-          )}
+            {hasPercent && (
+              <div className="inline-flex items-center gap-1 rounded-lg bg-primary/15 px-2.5 py-1 sm:px-3 sm:py-1.5 border border-primary/30">
+                <span className="text-xs sm:text-sm font-bold tabular-nums text-primary">{firstOffer!.offerPercentage}%</span>
+                <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-primary/80">OFF</span>
+              </div>
+            )}
+          </div>
         </div>
+
+        {/* Buy button — centered vertically */}
+        {hasAffiliate && (
+          <NextLink href={firm.affiliateLink} target="_blank" rel="noopener noreferrer" className="shrink-0 self-center">
+            <Button size="sm" className="h-9 sm:h-10 rounded-lg gap-1.5 sm:gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm sm:text-base px-4 sm:px-5">
+              {t("buy")}
+              <ArrowUpRight className="size-4 sm:size-5 shrink-0" />
+            </Button>
+          </NextLink>
+        )}
       </div>
     </div>
   );
