@@ -126,52 +126,54 @@ export default function Firms({
 
   return (
     <div className="space-y-8 pb-10 md:pb-14">
-      <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-end overflow-x-hidden">
-        <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
-          <FirmsFilter />
-          <div className="hidden sm:block w-px h-6 bg-border" />
-          <CustomizeColumnsDialog
-            columns={columns}
-            visibility={visibility}
-            order={order}
-            orderedVisibleKeys={orderedVisibleKeys}
-            toggleVisibility={toggleVisibility}
-            setAllVisibility={setAllVisibility}
-            reorder={reorder}
-            resetToDefaults={resetToDefaults}
-            t={tFirms}
-          />
-          {user?.role === "SUPER_ADMIN" && <AddFirmDialog />}
-        </div>
-        <div
-          className={cn(
-            "w-full min-w-0 flex order-1 lg:order-2 lg:min-w-0 lg:max-w-md",
-            isArabic ? "ml-0 mr-auto" : "mr-0 ml-auto",
-          )}
-        >
-          <SearchInputField
-            value={searchInput}
-            onChange={(v) => handleSearchChange(v)}
-            onSubmit={() => handleSearchChange(searchInput)}
-            placeholder={t("searchPlaceholder")}
-          />
-        </div>
-      </div>
-
       <div className="flex items-start gap-0 lg:gap-6 w-full">
         <div className="w-0 min-w-0 max-w-0 overflow-hidden lg:w-auto lg:max-w-sm lg:overflow-visible flex shrink-0">
           <FirmAllFilters />
         </div>
 
-        <div className="flex-1 min-w-0 -ms-5 -me-5 px-2 md:ms-0 md:me-0 md:px-0">
-          <FirmTable
-            firms={firms}
-            // @ts-ignore
-            meta={firmsMeta}
-            isFuturesPage={isFuturesPage}
-            isLoading={isLoading || isFetching}
-            orderedVisibleKeys={orderedVisibleKeys}
-          />
+        <div className="flex-1 min-w-0 space-y-8">
+          <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-end overflow-x-clip">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
+              <FirmsFilter />
+              <div className="hidden sm:block w-px h-6 bg-border" />
+              <CustomizeColumnsDialog
+                columns={columns}
+                visibility={visibility}
+                order={order}
+                orderedVisibleKeys={orderedVisibleKeys}
+                toggleVisibility={toggleVisibility}
+                setAllVisibility={setAllVisibility}
+                reorder={reorder}
+                resetToDefaults={resetToDefaults}
+                t={tFirms}
+              />
+              {user?.role === "SUPER_ADMIN" && <AddFirmDialog />}
+            </div>
+            <div
+              className={cn(
+                "w-full min-w-0 flex order-1 lg:order-2 lg:min-w-0 lg:max-w-md",
+                isArabic ? "ml-0 mr-auto" : "mr-0 ml-auto",
+              )}
+            >
+              <SearchInputField
+                value={searchInput}
+                onChange={(v) => handleSearchChange(v)}
+                onSubmit={() => handleSearchChange(searchInput)}
+                placeholder={t("searchPlaceholder")}
+              />
+            </div>
+          </div>
+
+          <div className="-ms-5 -me-5 px-2 md:ms-0 md:me-0 md:px-0">
+            <FirmTable
+              firms={firms}
+              // @ts-ignore
+              meta={firmsMeta}
+              isFuturesPage={isFuturesPage}
+              isLoading={isLoading || isFetching}
+              orderedVisibleKeys={orderedVisibleKeys}
+            />
+          </div>
         </div>
       </div>
     </div>

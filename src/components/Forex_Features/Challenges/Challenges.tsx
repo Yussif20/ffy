@@ -59,34 +59,36 @@ export default function Challenges({
 
   return (
     <div className="space-y-8 pb-10 md:pb-14">
-      <ChallengeFilter
-        searchValue={searchInput}
-        onSearchChange={handleSearchChange}
-        initialSearchParams={initialSearchParams}
-        beforeFilter={
-          <CustomizeColumnsDialog
-            columns={columns}
-            visibility={visibility}
-            order={order}
-            orderedVisibleKeys={orderedVisibleKeys}
-            toggleVisibility={toggleVisibility}
-            setAllVisibility={setAllVisibility}
-            reorder={reorder}
-            resetToDefaults={resetToDefaults}
-            t={tChallenges}
-          />
-        }
-      />
       <div className="flex items-start gap-0 lg:gap-6 w-full">
         <div className="w-0 min-w-0 max-w-0 overflow-hidden lg:w-auto lg:max-w-sm lg:overflow-visible flex shrink-0">
           <FirmAllFilters showCompanyFilter />
         </div>
-        <div className="flex-1 min-w-0 -ms-5 -me-5 px-2 md:ms-0 md:me-0 md:px-0">
-          <ChallengeTable
-            locale={locale}
-            searchTermFromState={searchTerm}
-            orderedVisibleKeys={orderedVisibleKeys}
+        <div className="flex-1 min-w-0 space-y-8">
+          <ChallengeFilter
+            searchValue={searchInput}
+            onSearchChange={handleSearchChange}
+            initialSearchParams={initialSearchParams}
+            beforeFilter={
+              <CustomizeColumnsDialog
+                columns={columns}
+                visibility={visibility}
+                order={order}
+                orderedVisibleKeys={orderedVisibleKeys}
+                toggleVisibility={toggleVisibility}
+                setAllVisibility={setAllVisibility}
+                reorder={reorder}
+                resetToDefaults={resetToDefaults}
+                t={tChallenges}
+              />
+            }
           />
+          <div className="-ms-5 -me-5 px-2 md:ms-0 md:me-0 md:px-0">
+            <ChallengeTable
+              locale={locale}
+              searchTermFromState={searchTerm}
+              orderedVisibleKeys={orderedVisibleKeys}
+            />
+          </div>
         </div>
       </div>
     </div>

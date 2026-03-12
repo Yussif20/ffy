@@ -676,3 +676,10 @@ button {
     transform: translateY(0);
   }
 }
+
+/* Force Google Sign-In button to keep pill shape after iframe re-render */
+div[id^="g_id_"] iframe,
+div[class*="google"] iframe,
+iframe[src*="accounts.google.com"] {
+  border-radius: 9999px !important;
+}

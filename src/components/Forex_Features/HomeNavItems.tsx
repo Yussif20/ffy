@@ -89,6 +89,7 @@ export default function HomeNavItems() {
               <Button
                 size={"default"}
                 variant={isActive ? "default" : "outline"}
+                linearClassName="shadow-none"
                 className={cn(
                   "flex items-center gap-1 sm:gap-1.5 md:gap-2",
                   "min-w-0 px-2 py-1.5 text-[11px] sm:px-3 sm:py-2 sm:text-xs md:h-12 md:px-7 md:text-base",

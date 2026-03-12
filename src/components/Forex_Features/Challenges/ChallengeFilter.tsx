@@ -88,7 +88,7 @@ export default function ChallengeFilter({
   };
 
   return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-end overflow-x-hidden">
+    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-end overflow-x-clip">
       <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
         <SelectOptions
           name="size"
