@@ -52,6 +52,8 @@ export default function ChallengeFilter({
 
   // Firm challenges page: never apply default filters (no 100k / STEP1)
   const isFirmChallengesPage = pathname.includes("/firms/") && pathname.includes("/challenges");
+  // Futures features page: /en/futures/challenges
+  const isFeaturesPage = pathname.includes("/futures/") && !isFirmChallengesPage;
 
   // When switching Forex <-> Futures, reset so we re-apply defaults on the new tab
   if (pathname !== prevPathnameRef.current) {
@@ -88,26 +90,39 @@ export default function ChallengeFilter({
   };
 
   return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-end overflow-x-clip">
+    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-end">
       <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
         <SelectOptions
           name="size"
           title={t("size")}
-          options={[
-            { name: "$5K", value: "5000" },
-            { name: "$10K", value: "10000" },
-            { name: "$25K", value: "25000" },
-            { name: "$50K", value: "50000" },
-            { name: "$100K", value: "100000" },
-            { name: "$200K", value: "200000" },
-            { name: "$300K", value: "300000" },
-            { name: "$500K", value: "500000" },
-          ]}
-          custom={{
-            show: true,
-            max: 2000000,
-            min: 600,
-          }}
+          options={
+            isFeaturesPage
+              ? [
+                  { name: "$25K", value: "25000" },
+                  { name: "$50K", value: "50000" },
+                  { name: "$75K", value: "75000" },
+                  { name: "$100K", value: "100000" },
+                  { name: "$150K", value: "150000" },
+                  { name: "$200K", value: "200000" },
+                ]
+              : [
+                  { name: "$5K", value: "5000" },
+                  { name: "$10K", value: "10000" },
+                  { name: "$25K", value: "25000" },
+                  { name: "$50K", value: "50000" },
+                  { name: "$100K", value: "100000" },
+                  { name: "$200K", value: "200000" },
+                  { name: "$300K", value: "300000" },
+                  { name: "$500K", value: "500000" },
+                ]
+          }
+          {...(!isFeaturesPage && {
+            custom: {
+              show: true,
+              max: 2000000,
+              min: 600,
+            },
+          })}
         />
 
         <SelectOptions
