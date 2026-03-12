@@ -9,7 +9,7 @@ import { useColumnCustomization } from "@/hooks/useColumnCustomization";
 import CustomizeColumnsDialog from "@/components/Global/CustomizeColumnsDialog";
 import FirmAllFilters from "../Firms/FirmAllFilters";
 import ChallengeFilter from "./ChallengeFilter";
-import ChallengeTable, { CHALLENGE_COLUMNS } from "./ChallengeTable";
+import ChallengeTable, { CHALLENGE_COLUMNS, FUTURES_CHALLENGE_COLUMNS } from "./ChallengeTable";
 
 export default function Challenges({
   locale,
@@ -23,6 +23,9 @@ export default function Challenges({
   const router = useRouter();
   const tChallenges = useTranslations("Challenges");
   const marketType = pathname.includes("futures") ? "futures" : "forex";
+  const isFutures = marketType === "futures";
+  const columnDefs = isFutures ? FUTURES_CHALLENGE_COLUMNS : CHALLENGE_COLUMNS;
+  const storageKey = isFutures ? "challenge-table-columns-futures" : "challenge-table-columns";
 
   const {
     visibility,
@@ -33,7 +36,7 @@ export default function Challenges({
     setAllVisibility,
     orderedVisibleKeys,
     columns,
-  } = useColumnCustomization("challenge-table-columns", CHALLENGE_COLUMNS);
+  } = useColumnCustomization(storageKey, columnDefs);
   const [searchInput, setSearchInput] = useState("");
   const [searchTerm] = useDebounce(searchInput, 300);
   const searchParamsRef = useRef(searchParams);

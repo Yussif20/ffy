@@ -6,6 +6,7 @@ export type TChallenge = {
   dailyLoss: number;
   EAs: boolean;
   maxLeverage: string;
+  activationFees: number | null;
   maxLoss: number;
   maxLostType: "STATIC" | "DYNAMIC";
   minTradingDays: number;

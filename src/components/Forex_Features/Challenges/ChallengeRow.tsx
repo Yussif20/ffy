@@ -93,6 +93,11 @@ export default function ChallengeRow({
         {challenge?.maxLoss ? `${challenge.maxLoss}%` : "-"}
       </TableCell>
     ),
+    activationFees: (
+      <TableCell key="activationFees" center className="text-sm md:text-base text-white">
+        {challenge?.activationFees ? formatCurrencyLong(challenge.activationFees) : "-"}
+      </TableCell>
+    ),
     profitSplit: (
       <TableCell key="profitSplit" center className="text-sm md:text-base">
         <div className="flex items-center justify-center gap-2">

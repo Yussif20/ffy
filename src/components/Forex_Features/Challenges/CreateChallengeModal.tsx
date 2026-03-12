@@ -47,6 +47,7 @@ export default function CreateChallengeModal({
       minTradingDays: "",
       timeLimit: "",
       maxLeverage: "",
+      activationFees: "",
 
       newsTrading: true,
       copyTrading: false,
@@ -70,6 +71,7 @@ export default function CreateChallengeModal({
       price: Number(data.price),
       profitSplit: Number(data.profitSplit),
       timeLimit: Number(data.timeLimit),
+      activationFees: data.activationFees ? Number(data.activationFees) : null,
     };
 
     try {

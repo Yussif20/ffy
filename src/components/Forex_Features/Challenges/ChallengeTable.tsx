@@ -27,6 +27,18 @@ export const CHALLENGE_COLUMNS: ColumnDef[] = [
   { key: "price", labelKey: "price" },
 ];
 
+export const FUTURES_CHALLENGE_COLUMNS: ColumnDef[] = [
+  { key: "accountSize", labelKey: "accountSize" },
+  { key: "steps", labelKey: "steps" },
+  { key: "profitTarget", labelKey: "profitTarget" },
+  { key: "dailyLoss", labelKey: "dailyLoss" },
+  { key: "maxLoss", labelKey: "maxLoss" },
+  { key: "activationFees", labelKey: "activationFees" },
+  { key: "profitSplit", labelKey: "profitSplit" },
+  { key: "payoutFrequency", labelKey: "payoutFrequency" },
+  { key: "price", labelKey: "price" },
+];
+
 type ChallengeTableProps = {
   companySlug?: string;
   locale: string;
@@ -181,7 +193,8 @@ export default function ChallengeTable({
   const challenges = totallBookings?.data || [];
 
   // Fallback when no customization is passed
-  const visibleKeys = orderedVisibleKeys ?? CHALLENGE_COLUMNS.map((c) => c.key);
+  const defaultColumns = isFutures ? FUTURES_CHALLENGE_COLUMNS : CHALLENGE_COLUMNS;
+  const visibleKeys = orderedVisibleKeys ?? defaultColumns.map((c) => c.key);
 
   const headers = useMemo(() => {
     const firmIdentityHeaders = [
@@ -211,6 +224,7 @@ export default function ChallengeTable({
       profitTarget: "% gain required to pass each evaluation phase",
       dailyLoss: "Maximum % loss allowed in a single trading day",
       maxLoss: "Maximum total % drawdown allowed across the account",
+      activationFees: "One-time fee required to activate the funded account",
       profitSplit: "% of profits you keep after passing evaluation",
       payoutFrequency: "How often you can request profit withdrawals",
       price: "Cost to enter the challenge",

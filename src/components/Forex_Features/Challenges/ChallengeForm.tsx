@@ -6,10 +6,12 @@ import CustomYesNoToggle from "@/components/Forms/CustomYesNoToggle";
 import { useGetFirmsQuery } from "@/redux/api/spreadApi";
 import { useTranslations } from "next-intl";
 import { useState, useMemo } from "react";
+import useIsFutures from "@/hooks/useIsFutures";
 
 export default function ChallengeForm({ methods }: { methods: any }) {
   const { data: getAllFirms, isLoading } = useGetFirmsQuery({ limit: 500 });
   const t = useTranslations("CHALLENGEMANAGEMENT");
+  const isFutures = useIsFutures();
   const [profitInput, setProfitInput] = useState<string>("");
   const { watch, setValue, getValues } = methods;
   const firmId = watch("firmId");
@@ -220,12 +222,21 @@ export default function ChallengeForm({ methods }: { methods: any }) {
         placeholder={t("timeLimitPlaceholder")}
       />
 
-      <CustomInput
-        label={t("maxLeverage")}
-        name="maxLeverage"
-        type="text"
-        placeholder={t("maxLeveragePlaceholder")}
-      />
+      {isFutures ? (
+        <CustomInput
+          label={t("activationFees")}
+          name="activationFees"
+          type="number"
+          placeholder={t("activationFeesPlaceholder")}
+        />
+      ) : (
+        <CustomInput
+          label={t("maxLeverage")}
+          name="maxLeverage"
+          type="text"
+          placeholder={t("maxLeveragePlaceholder")}
+        />
+      )}
     </>
   );
 }

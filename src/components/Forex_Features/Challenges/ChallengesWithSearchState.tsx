@@ -8,9 +8,10 @@ import { handleSetSearchParams } from "@/lib/utils";
 import { useColumnCustomization } from "@/hooks/useColumnCustomization";
 import CustomizeColumnsDialog from "@/components/Global/CustomizeColumnsDialog";
 import ChallengeFilter from "./ChallengeFilter";
-import ChallengeTable, { CHALLENGE_COLUMNS } from "./ChallengeTable";
+import ChallengeTable, { CHALLENGE_COLUMNS, FUTURES_CHALLENGE_COLUMNS } from "./ChallengeTable";
 import SelectOptions from "./SelectOptions";
 import { useGetAllFirmsQuery } from "@/redux/api/firms.api";
+import useIsFutures from "@/hooks/useIsFutures";
 
 type Props = {
   locale: string;
@@ -42,6 +43,10 @@ export default function ChallengesWithSearchState({
   const firm = companySlug ? firmsData?.firms?.[0] ?? null : null;
   const challengeNames: string[] = firm?.challengeNames || [];
 
+  const isFutures = useIsFutures();
+  const columnDefs = isFutures ? FUTURES_CHALLENGE_COLUMNS : CHALLENGE_COLUMNS;
+  const storageKey = isFutures ? "challenge-table-columns-futures" : "challenge-table-columns";
+
   const {
     visibility,
     order,
@@ -51,7 +56,7 @@ export default function ChallengesWithSearchState({
     setAllVisibility,
     orderedVisibleKeys,
     columns,
-  } = useColumnCustomization("challenge-table-columns", CHALLENGE_COLUMNS);
+  } = useColumnCustomization(storageKey, columnDefs);
 
   return (
     <div className="space-y-8 pb-20 md:pb-30">
