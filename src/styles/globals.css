@@ -3,6 +3,19 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@custom-variant tablet {
+  @media (min-width: 768px) and (min-height: 500px) {
+    @slot;
+  }
+}
+
+/* Landscape phone: wide enough but very short viewport */
+@custom-variant landscape-phone {
+  @media (max-height: 499px) and (min-width: 500px) {
+    @slot;
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

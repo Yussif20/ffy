@@ -45,12 +45,12 @@ export default function NavSearch() {
         onClick={() => setOpen(true)}
         className="flex items-center gap-2 cursor-pointer"
       >
-        <div className="md:hidden">
+        <div className="tablet:hidden">
           <Button variant="outline" size="icon" className="w-7 h-7">
             <Search className="w-4 h-4" />
           </Button>
         </div>
-        <div className="hidden md:block">
+        <div className="hidden tablet:block">
           <Input
             disabled
             placeholder={t("searchPlaceholder")}

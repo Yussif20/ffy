@@ -52,12 +52,12 @@ export default async function FirmOverview({
         {company?.title} Prop Firm Details
       </h1>
 
-      <div className="flex gap-8 relative flex-col lg:flex-row">
+      <div className="flex gap-8 relative flex-col tablet:flex-row">
         {/* Sidebar Navigation */}
         {/* Sticky section bar: below sticky offer bar on small (top-[6.5rem]), on lg top-52; bar is hidden on md+ */}
         <div className={cn(
-          "sticky h-max bg-background z-20 pt-3 lg:pt-4 border-b-0",
-          hasCodeOrPercent ? "top-[10.5rem] lg:top-54" : "top-[7.5rem] lg:top-54"
+          "sticky h-max bg-background z-20 pt-3 tablet:pt-4 border-b-0",
+          hasCodeOrPercent ? "top-[10.5rem] landscape-phone:top-[7.5rem] tablet:top-54" : "top-[7.5rem] landscape-phone:top-[5.5rem] tablet:top-54"
         )}>
           <FO_Sidebar />
         </div>

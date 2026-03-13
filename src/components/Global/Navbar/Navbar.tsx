@@ -38,7 +38,7 @@ const Navbar = () => {
   useEffect(() => {
     const check = () =>
       setIsMobile(
-        typeof window !== "undefined" && window.innerWidth < MOBILE_BREAKPOINT,
+        typeof window !== "undefined" && (window.innerWidth < MOBILE_BREAKPOINT || window.innerHeight < 500),
       );
     check();
     window.addEventListener("resize", check);
@@ -91,14 +91,14 @@ const Navbar = () => {
       }`}
     >
       <Container
-        className={cn(isMobile && isScrolled && "!px-3 md:!ps-5 md:!pe-5")}
+        className={cn(isMobile && isScrolled && "!px-3 tablet:!ps-5 tablet:!pe-5")}
       >
         <div className="">
-          <div className="grid grid-cols-[auto_1fr_auto] md:grid-cols-3 items-center">
+          <div className="grid grid-cols-[auto_1fr_auto] tablet:grid-cols-3 items-center">
             {/* Left Section */}
             <div className="flex items-center gap-2 sm:gap-4">
               <div
-                className={`hidden md:block transition-all duration-150 ease-out ${
+                className={`hidden tablet:block transition-all duration-150 ease-out ${
                   isScrolled
                     ? "opacity-100 translate-x-0"
                     : "opacity-0 -translate-x-8 absolute pointer-events-none"
@@ -142,13 +142,13 @@ const Navbar = () => {
 
             {/* Right Actions */}
 
-            <div className="flex items-center justify-end gap-1 md:gap-2 lg:gap-3">
+            <div className="flex items-center justify-end gap-1 tablet:gap-2 lg:gap-3">
               <NavLanguageChange />
               {/* <ThemeToggle variant="ghost" size="icon" className="h-9 w-9 shrink-0" /> */}
 
               {isLogIn ? (
                 <>
-                  <div className="md:hidden flex items-center gap-1">
+                  <div className="tablet:hidden flex items-center gap-1">
                     <Sheet>
                       <SheetTrigger asChild>
                         <Button variant="ghost" size="sm">
@@ -182,13 +182,13 @@ const Navbar = () => {
                     </Sheet>
                     <NavProfile />
                   </div>
-                  <div className="hidden md:block">
+                  <div className="hidden tablet:block">
                     <NavProfile />
                   </div>
                 </>
               ) : (
                 <>
-                  <div className="hidden md:flex items-center justify-end gap-2 lg:gap-3">
+                  <div className="hidden tablet:flex items-center justify-end gap-2 lg:gap-3">
                     <Link className="hidden sm:block" href="/auth/sign-in">
                       <Button
                         variant="outline"
@@ -203,7 +203,7 @@ const Navbar = () => {
                       </Button>
                     </Link>
                   </div>
-                  <div className="md:hidden">
+                  <div className="tablet:hidden">
                     <Sheet>
                       <SheetTrigger asChild>
                         <Button variant="ghost" size="sm">
@@ -267,7 +267,7 @@ const Navbar = () => {
             <ForexFeatureToggle compact={isMobile} />
           </div>
 
-          <div className="hidden md:block">
+          <div className="hidden tablet:block">
             <NavItems />
           </div>
         </div>

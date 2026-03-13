@@ -55,7 +55,7 @@ export default function WebToggler() {
   return (
     <>
       {/* Desktop Dropdown */}
-      <div className="hidden md:block">
+      <div className="hidden tablet:block">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <BsGrid3X3Gap className="text-xl sm:text-2xl cursor-pointer" />
@@ -143,7 +143,7 @@ export default function WebToggler() {
       </div>
 
       {/* Mobile Button */}
-      <div className="md:hidden">
+      <div className="tablet:hidden">
         <BsGrid3X3Gap
           className="text-xl sm:text-2xl cursor-pointer"
           onClick={() => setIsModalOpen(true)}

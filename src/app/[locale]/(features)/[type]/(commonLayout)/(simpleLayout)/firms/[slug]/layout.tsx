@@ -79,7 +79,7 @@ export default async function RootLayout({
       <div className="space-y-12 relative">
         <FirmDetails data={data.data} />
 
-        <div className="md:sticky md:top-(--navbar-height,5.5rem) bg-background z-30">
+        <div className="hidden lg:block lg:sticky lg:top-(--navbar-height,5.5rem) bg-background z-30">
           <SingleOffer hideBlackHoles data={data.data} />
         </div>
         <FDTabs slug={slug} count={data.data.count} />

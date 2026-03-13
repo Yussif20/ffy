@@ -48,12 +48,12 @@ export default async function FirmHeader({
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-row flex-wrap items-start lg:items-center justify-between gap-4 sm:gap-6 lg:gap-8">
+      <div className="flex flex-row flex-wrap items-start tablet:items-center justify-between gap-4 sm:gap-6 lg:gap-8">
         {/* Left Section */}
         <div className="flex items-start flex-col sm:flex-row gap-4 sm:gap-6">
           {/* Company Avatar */}
           <div className="flex gap-2 items-center">
-            <div className="w-10 h-10 sm:w-16 sm:h-16 lg:w-20 lg:h-20 border-2 border-foreground/60  rounded-lg relative overflow-hidden">
+            <div className="w-10 h-10 sm:w-16 sm:h-16 tablet:w-20 tablet:h-20 border-2 border-foreground/60  rounded-lg relative overflow-hidden">
               <Image
                 src={company?.logoUrl || "/placeholder.png"}
                 alt="Profile"
@@ -74,16 +74,28 @@ export default async function FirmHeader({
 
           {/* Company Info */}
           <div className="flex flex-col gap-3">
-            <NextLink href={company?.affiliateLink || "#"} target="_blank">
-              <h1 className="text-2xl sm:text-3xl font-bold hidden sm:flex items-center gap-2 hover:underline">
-                {company?.title} <ArrowUpRight size={24} />
-              </h1>
-            </NextLink>
+            {/* Title row — shown sm+, with Visit button beside it on md+ */}
+            <div className="hidden sm:flex items-center gap-4">
+              <NextLink href={company?.affiliateLink || "#"} target="_blank">
+                <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-2 hover:underline">
+                  {company?.title} <ArrowUpRight size={24} />
+                </h1>
+              </NextLink>
+              <NextLink href={company?.affiliateLink || "#"} target="_blank" className="hidden tablet:block">
+                <Button
+                  size="default"
+                  className="px-4 lg:px-8 gap-2 text-sm lg:text-base whitespace-nowrap"
+                >
+                  {t("buyButton")}
+                  <ArrowUpRight size={18} />
+                </Button>
+              </NextLink>
+            </div>
 
-            {/* Details + Visit Website button in one horizontal row on mobile */}
+            {/* Details row + Visit button (button only on mobile/sm) */}
             <div className="flex flex-row flex-nowrap items-center justify-between gap-3 sm:gap-4 lg:gap-6 w-full">
-              {/* Details: 2x2 grid on small/medium (CEO+Country, Date+Years), one line on large */}
-              <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:gap-x-8 sm:gap-y-6 lg:flex lg:flex-wrap lg:items-center lg:gap-6 text-sm flex-1 min-w-0">
+              {/* Details: 2x2 grid on mobile, horizontal row on md+ */}
+              <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:gap-x-8 sm:gap-y-6 tablet:flex tablet:flex-wrap tablet:items-center tablet:gap-6 text-sm flex-1 min-w-0">
                 {/* CEO */}
                 <div className="flex flex-col gap-0.5">
                   <span className="text-muted-foreground font-semibold">
@@ -92,7 +104,7 @@ export default async function FirmHeader({
                   <span className="font-medium">{company?.ceo}</span>
                 </div>
 
-                <div className="hidden lg:block h-8 w-px bg-border" />
+                <div className="hidden tablet:block h-8 w-px bg-border" />
 
                 {/* Country */}
                 <div className="flex flex-col gap-0.5">
@@ -114,7 +126,7 @@ export default async function FirmHeader({
                   </div>
                 </div>
 
-                <div className="hidden lg:block h-8 w-px bg-border" />
+                <div className="hidden tablet:block h-8 w-px bg-border" />
 
                 {/* Date Created */}
                 <div className="flex flex-col gap-0.5">
@@ -126,7 +138,7 @@ export default async function FirmHeader({
                   </span>
                 </div>
 
-                <div className="hidden lg:block h-8 w-px bg-border" />
+                <div className="hidden tablet:block h-8 w-px bg-border" />
 
                 {/* Years in Operation */}
                 <div className="flex flex-col gap-0.5">
@@ -139,11 +151,11 @@ export default async function FirmHeader({
                 </div>
               </div>
 
-              {/* Visit Website button: sits to the right of details on mobile */}
-              <NextLink href={company?.affiliateLink || "#"} target="_blank">
+              {/* Visit Website button: mobile/sm only — on md+ it sits beside the title */}
+              <NextLink href={company?.affiliateLink || "#"} target="_blank" className="tablet:hidden">
                 <Button
                   size="default"
-                  className="px-3 sm:px-4 lg:px-8 gap-2 text-xs sm:text-sm lg:text-base whitespace-nowrap"
+                  className="px-3 sm:px-4 gap-2 text-xs sm:text-sm whitespace-nowrap"
                 >
                   {t("buyButton")}
                   <ArrowUpRight size={18} />
@@ -180,14 +192,14 @@ export function FirmHeaderSkeleton() {
           <div className="flex flex-col gap-3">
             <Skeleton className="h-8 w-48 hidden sm:block" />
 
-            <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:gap-x-8 sm:gap-y-6 lg:flex lg:flex-wrap lg:items-center lg:gap-6 text-sm">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:gap-x-8 sm:gap-y-6 tablet:flex tablet:flex-wrap tablet:items-center tablet:gap-6 text-sm">
               {/* CEO */}
               <div className="flex flex-col gap-1">
                 <Skeleton className="h-4 w-20" />
                 <Skeleton className="h-4 w-28" />
               </div>
 
-              <div className="hidden lg:block h-8 w-px bg-border" />
+              <div className="hidden tablet:block h-8 w-px bg-border" />
 
               {/* Country */}
               <div className="flex flex-col gap-1">
@@ -198,7 +210,7 @@ export function FirmHeaderSkeleton() {
                 </div>
               </div>
 
-              <div className="hidden lg:block h-8 w-px bg-border" />
+              <div className="hidden tablet:block h-8 w-px bg-border" />
 
               {/* Date Created */}
               <div className="flex flex-col gap-1">
@@ -206,7 +218,7 @@ export function FirmHeaderSkeleton() {
                 <Skeleton className="h-4 w-28" />
               </div>
 
-              <div className="hidden lg:block h-8 w-px bg-border" />
+              <div className="hidden tablet:block h-8 w-px bg-border" />
 
               {/* Years in Operation */}
               <div className="flex flex-col gap-1">

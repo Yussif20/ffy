@@ -123,10 +123,10 @@ export default function NavItems() {
     <>
       <div className="relative">
         {/* Left fade hint for mobile horizontal scroll */}
-        <div className="pointer-events-none absolute left-0 top-0 h-full w-10 bg-linear-to-r from-background to-transparent z-10 md:hidden" />
-        <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-linear-to-l from-background to-transparent z-10 md:hidden" />
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-10 bg-linear-to-r from-background to-transparent z-10 tablet:hidden" />
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-linear-to-l from-background to-transparent z-10 tablet:hidden" />
         <div
-          className={cn("w-full flex md:grid", !isFutures && "overflow-x-auto")}
+          className={cn("w-full flex tablet:grid", !isFutures && "overflow-x-auto")}
           style={{ gridTemplateColumns: `repeat(${navItems.length}, minmax(0, 1fr))` }}
         >
           {navItems.map((item) => {
