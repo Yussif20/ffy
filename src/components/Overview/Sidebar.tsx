@@ -48,13 +48,13 @@ const navigation = [
     labelKey: "manageContactMessages",
     route: "/overview/contact-messages",
     icon: MessageSquare,
-    roles: ["SUPER_ADMIN"],
+    roles: ["SUPER_ADMIN", "MODERATOR"],
   },
   {
     labelKey: "home",
     route: "/",
     icon: Home,
-    roles: ["SUPER_ADMIN", "USER"],
+    roles: ["SUPER_ADMIN", "MODERATOR", "USER"],
   },
 ];
 

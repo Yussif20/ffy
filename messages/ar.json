@@ -1460,6 +1460,7 @@
       "exportExcel": "تصدير إكسل",
       "allRoles": "جميع الأدوار",
       "adminRole": "مدير",
+      "moderatorRole": "مشرف",
       "userRole": "مستخدم"
     },
     "payMethodManagement": {

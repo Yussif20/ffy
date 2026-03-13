@@ -6,7 +6,7 @@ type User = {
   email: string;
   id: string;
   name: string;
-  role: "USER" | "SUPER_ADMIN"; // Add other roles if needed
+  role: "USER" | "MODERATOR" | "SUPER_ADMIN";
   hasTakenSurvey: boolean;
 };
 

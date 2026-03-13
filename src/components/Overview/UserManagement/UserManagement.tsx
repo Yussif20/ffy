@@ -52,7 +52,7 @@ export type TUser = {
   profile: string | null;
   location: string | null;
   authType: "EMAIL" | "GOOGLE" | "FACEBOOK";
-  role: "USER" | "ADMIN" | "SUPER_ADMIN";
+  role: "USER" | "MODERATOR" | "ADMIN" | "SUPER_ADMIN";
   phoneNumber: string | null;
   createdAt?: string;
   hasTakenSurvey: boolean;
@@ -202,8 +202,8 @@ export default function UserManagement() {
     router.refresh();
   };
 
-  const handleRoleUpdate = async (user: TUser) => {
-    const newRole = user.role === "USER" ? "SUPER_ADMIN" : "USER";
+  const handleRoleUpdate = async (user: TUser, newRole: string) => {
+    if (newRole === user.role) return;
     const confirmed = window.confirm(
       `Are you sure you want to change ${user.fullName}'s role to ${newRole}?`
     );
@@ -298,6 +298,7 @@ export default function UserManagement() {
             <SelectContent>
               <SelectItem value="ALL">{t("allRoles")}</SelectItem>
               <SelectItem value="SUPER_ADMIN">{t("adminRole")}</SelectItem>
+              <SelectItem value="MODERATOR">{t("moderatorRole")}</SelectItem>
               <SelectItem value="USER">{t("userRole")}</SelectItem>
             </SelectContent>
           </Select>
@@ -446,16 +447,20 @@ export default function UserManagement() {
                             </Button>
 
                             {currentUser?.id !== user.id && (
-                              <Button
-                                size="sm"
-                                variant="outline"
+                              <Select
+                                value={user.role}
+                                onValueChange={(value) => handleRoleUpdate(user, value)}
                                 disabled={isRoleUpdating}
-                                onClick={() => handleRoleUpdate(user)}
                               >
-                                {user.role === "USER"
-                                  ? "Make Admin"
-                                  : "Make User"}
-                              </Button>
+                                <SelectTrigger className="h-8 w-[130px] text-xs">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="USER">{t("userRole")}</SelectItem>
+                                  <SelectItem value="MODERATOR">{t("moderatorRole")}</SelectItem>
+                                  <SelectItem value="SUPER_ADMIN">{t("adminRole")}</SelectItem>
+                                </SelectContent>
+                              </Select>
                             )}
 
                             {user.role !== "SUPER_ADMIN" && user.status !== "BLOCKED" && (

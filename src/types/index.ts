@@ -10,7 +10,7 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
 
-export type UserRoleEnum = "USER" | "SUPERADMIN";
+export type UserRoleEnum = "USER" | "MODERATOR" | "SUPER_ADMIN";
 
 export type UserStatus = "ACTIVE" | "INACTIVE" | "BLOCKED";
 
@@ -93,5 +93,6 @@ export type OmitTypes = "id" | "createdAt" | "updatedAt";
 
 export enum UserRole {
   USER = "USER",
+  MODERATOR = "MODERATOR",
   SUPER_ADMIN = "SUPER_ADMIN",
 }

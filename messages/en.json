@@ -1494,6 +1494,7 @@
       "exportExcel": "Export Excel",
       "allRoles": "All Roles",
       "adminRole": "Admin",
+      "moderatorRole": "Moderator",
       "userRole": "User"
     },
     "payMethodManagement": {
