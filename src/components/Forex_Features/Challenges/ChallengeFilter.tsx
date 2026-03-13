@@ -90,74 +90,78 @@ export default function ChallengeFilter({
   };
 
   return (
-    <div className="w-full flex flex-col lg:flex-row gap-5 items-end">
-      <div className="flex-1 flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
-        <SelectOptions
-          name="size"
-          title={t("size")}
-          options={
-            isFeaturesPage
-              ? [
-                  { name: "$25K", value: "25000" },
-                  { name: "$50K", value: "50000" },
-                  { name: "$75K", value: "75000" },
-                  { name: "$100K", value: "100000" },
-                  { name: "$150K", value: "150000" },
-                  { name: "$200K", value: "200000" },
-                ]
-              : [
-                  { name: "$5K", value: "5000" },
-                  { name: "$10K", value: "10000" },
-                  { name: "$25K", value: "25000" },
-                  { name: "$50K", value: "50000" },
-                  { name: "$100K", value: "100000" },
-                  { name: "$200K", value: "200000" },
-                  { name: "$300K", value: "300000" },
-                  { name: "$500K", value: "500000" },
-                ]
-          }
-          {...(!isFeaturesPage && {
-            custom: {
-              show: true,
-              max: 2000000,
-              min: 600,
-            },
-          })}
-        />
+    <div className="w-full flex flex-col lg:flex-row gap-5 items-center lg:items-end">
+      <div className="w-full lg:flex-1 flex flex-col lg:flex-row lg:flex-wrap justify-center lg:justify-start gap-3 md:gap-4 lg:gap-4 items-center order-2 lg:order-1">
+        <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center">
+          <SelectOptions
+            name="size"
+            title={t("size")}
+            options={
+              isFeaturesPage
+                ? [
+                    { name: "$25K", value: "25000" },
+                    { name: "$50K", value: "50000" },
+                    { name: "$75K", value: "75000" },
+                    { name: "$100K", value: "100000" },
+                    { name: "$150K", value: "150000" },
+                    { name: "$200K", value: "200000" },
+                  ]
+                : [
+                    { name: "$5K", value: "5000" },
+                    { name: "$10K", value: "10000" },
+                    { name: "$25K", value: "25000" },
+                    { name: "$50K", value: "50000" },
+                    { name: "$100K", value: "100000" },
+                    { name: "$200K", value: "200000" },
+                    { name: "$300K", value: "300000" },
+                    { name: "$500K", value: "500000" },
+                  ]
+            }
+            {...(!isFeaturesPage && {
+              custom: {
+                show: true,
+                max: 2000000,
+                min: 600,
+              },
+            })}
+          />
 
-        <SelectOptions
-          name="in_steps"
-          title={t("steps")}
-          options={[
-            { name: t("INSTANT"), value: "INSTANT" },
-            { name: t("STEP1"), value: "STEP1" },
-            { name: t("STEP2"), value: "STEP2" },
-            { name: t("STEP3"), value: "STEP3" },
-            { name: t("STEP4"), value: "STEP4" },
-          ]}
-          cols={2}
-        />
-        {!hideAllFilter && (
-          <Button
-            className={cn(
-              "h-8 px-2 text-[11px] sm:h-9 sm:px-3 sm:text-xs md:px-4 md:text-sm",
-              isArabic && "font-semibold"
-            )}
-            onClick={() => {
-              handleSetCategory({ filterOpen: filterOpen ? "" : "true" });
-            }}
-            variant={filterOpen ? "defaultBH" : "outline2"}
-          >
-            <Filter /> {t("filter")}
-          </Button>
-        )}
-        <div className="hidden sm:block w-px h-6 bg-border" />
-        {beforeFilter}
-        {role === "SUPER_ADMIN" && (
-          <Button variant="default" onClick={() => setOpenModal(true)}>
-            <Plus />
-          </Button>
-        )}
+          <SelectOptions
+            name="in_steps"
+            title={t("steps")}
+            options={[
+              { name: t("INSTANT"), value: "INSTANT" },
+              { name: t("STEP1"), value: "STEP1" },
+              { name: t("STEP2"), value: "STEP2" },
+              { name: t("STEP3"), value: "STEP3" },
+              { name: t("STEP4"), value: "STEP4" },
+            ]}
+            cols={2}
+          />
+        </div>
+        <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center">
+          {!hideAllFilter && (
+            <Button
+              className={cn(
+                "h-8 px-2 text-[11px] sm:h-9 sm:px-3 sm:text-xs md:px-4 md:text-sm",
+                isArabic && "font-semibold"
+              )}
+              onClick={() => {
+                handleSetCategory({ filterOpen: filterOpen ? "" : "true" });
+              }}
+              variant={filterOpen ? "defaultBH" : "outline2"}
+            >
+              <Filter /> {t("filter")}
+            </Button>
+          )}
+          <div className="hidden sm:block w-px h-6 bg-border" />
+          {beforeFilter}
+          {role === "SUPER_ADMIN" && (
+            <Button variant="default" onClick={() => setOpenModal(true)}>
+              <Plus />
+            </Button>
+          )}
+        </div>
       </div>
       <div className={cn("w-full lg:w-[28rem] lg:shrink-0 flex order-1 lg:order-2", isArabic ? "ml-0 mr-auto" : "mr-0 ml-auto")}>
         <SearchInputField

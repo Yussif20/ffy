@@ -20,7 +20,7 @@ export default function FirmCell({
     <>
       <TableCell
         className={cn(
-          "bg-background z-10 hidden md:table-cell sticky",
+          "bg-background z-10 hidden md:table-cell sticky w-fit",
           !isArabic && "left-0 shadow-[2px_0_4px_rgba(0,0,0,0.1)]",
           isArabic && "right-0 shadow-[-2px_0_4px_rgba(0,0,0,0.1)]"
         )}
@@ -53,7 +53,7 @@ export default function FirmCell({
           // Mobile logo cell: fixed width so EN/AR look identical
           "bg-background z-10 table-cell md:hidden sticky border-r-0 overflow-visible",
           // slightly larger than old EN, smaller than old AR
-          "w-[80px] min-w-[80px] max-w-[80px]",
+          "w-[40px] min-w-[40px] max-w-[40px]",
           !isArabic && [
             "left-0",
             "shadow-[2px_0_4px_rgba(0,0,0,0.1),8px_0_0_0_var(--background)]",
@@ -82,10 +82,10 @@ export default function FirmCell({
         </Link>
       </TableCell>
 
-      <TableCell className={cn("bg-background z-10 table-cell md:hidden w-max min-w-max")}>
+      <TableCell className={cn("bg-background z-10 table-cell md:hidden w-fit")}>
         <Link href={linkHref} scroll={false} className="flex justify-center md:justify-start max-md:outline-none max-md:focus:outline-none max-md:active:outline-none max-md:[-webkit-tap-highlight-color:transparent]">
-          <div className="overflow-visible transition-all duration-200 md:max-w-none text-center md:text-left">
-            <h2 className="text-sm md:text-base xl:text-lg font-semibold whitespace-nowrap px-1">
+          <div className={cn("overflow-visible transition-all duration-200 md:max-w-none md:text-left", isArabic ? "text-right" : "text-left")}>
+            <h2 className="text-xs md:text-base xl:text-lg font-semibold whitespace-nowrap px-1">
               {company.name}
             </h2>
           </div>

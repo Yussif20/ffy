@@ -65,7 +65,7 @@ export default function ChallengeRow({
       </TableCell>
     ),
     steps: (
-      <TableCell key="steps" center className="text-sm md:text-base">
+      <TableCell key="steps" center className="text-[11px] md:text-sm">
         <span className={cn(
           "inline-flex items-center px-2 py-0.5 rounded-full text-xs md:text-sm font-semibold",
           stepStyles[challenge?.steps] ?? "bg-foreground/10 text-foreground/60"

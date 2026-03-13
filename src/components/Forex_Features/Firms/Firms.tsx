@@ -133,7 +133,7 @@ export default function Firms({
 
         <div className="flex-1 min-w-0 space-y-8">
           <div className="w-full flex flex-col lg:flex-row gap-5 items-end overflow-x-clip">
-            <div className="flex-1 flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
+            <div className="w-full lg:flex-1 flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
               <FirmsFilter />
               <div className="hidden sm:block w-px h-6 bg-border" />
               <CustomizeColumnsDialog
