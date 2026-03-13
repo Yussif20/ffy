@@ -41,6 +41,11 @@ export default async function FirmOverview({
   const isArabic = locale === "ar";
   const isFutures = type === "futures";
 
+  const firstOffer = company?.offers?.[0];
+  const hasCodeOrPercent =
+    Boolean(firstOffer?.code) ||
+    (firstOffer?.offerPercentage != null && firstOffer.offerPercentage > 0);
+
   return (
     <div>
       <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 sm:mb-8">
@@ -50,7 +55,10 @@ export default async function FirmOverview({
       <div className="flex gap-8 relative flex-col lg:flex-row">
         {/* Sidebar Navigation */}
         {/* Sticky section bar: below sticky offer bar on small (top-[6.5rem]), on lg top-52; bar is hidden on md+ */}
-        <div className="sticky top-[8.5rem] lg:top-54 h-max bg-background z-20 pt-3 lg:pt-4 border-b-0">
+        <div className={cn(
+          "sticky h-max bg-background z-20 pt-3 lg:pt-4 border-b-0",
+          hasCodeOrPercent ? "top-[10.5rem] lg:top-54" : "top-[7.5rem] lg:top-54"
+        )}>
           <FO_Sidebar />
         </div>
 
@@ -278,7 +286,7 @@ export default async function FirmOverview({
             <SecTitle>{tSidebar("items.drawdown")}</SecTitle>
 
             <div className="space-y-4">
-              {company?.drawDownTexts.map((item, idx) => {
+              {company?.drawDownTexts.filter((item) => item.englishText || item.arabicText).map((item, idx) => {
                 return (
                   <div key={idx} className="space-y-1">
                     <div

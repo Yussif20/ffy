@@ -45,7 +45,10 @@ export default function FirmOfferStickyBar({ firm }: { firm: SinglePropFirm }) {
   const firmHref = isFutures ? `/futures/firms/${firm.slug}` : `/firms/${firm.slug}`;
 
   return (
-    <div className="sticky top-(--navbar-height,3.5rem) z-10 w-full border-b border-border bg-background/95 backdrop-blur-sm shadow-sm md:hidden">
+    <div className={cn(
+      "sticky z-30 w-full border-b border-border bg-background/95 backdrop-blur-sm shadow-sm md:hidden",
+      (hasCode || hasPercent) ? "top-[3rem]" : "top-(--navbar-height,3.5rem)"
+    )}>
       <div className="flex items-center gap-3 px-3 py-2.5 sm:px-4 sm:py-3">
         {/* Logo — spans both rows */}
         <Link href={firmHref} className="shrink-0 self-center rounded-md hover:opacity-80 transition-opacity">

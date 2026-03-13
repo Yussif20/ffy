@@ -90,8 +90,8 @@ export default function ChallengeFilter({
   };
 
   return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 items-end">
-      <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
+    <div className="w-full flex flex-col lg:flex-row gap-5 items-end">
+      <div className="flex-1 flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 md:gap-4 items-center order-2 lg:order-1">
         <SelectOptions
           name="size"
           title={t("size")}
@@ -159,7 +159,7 @@ export default function ChallengeFilter({
           </Button>
         )}
       </div>
-      <div className={cn("w-full min-w-0 flex order-1 lg:order-2 lg:min-w-0 lg:max-w-md", isArabic ? "ml-0 mr-auto" : "mr-0 ml-auto")}>
+      <div className={cn("w-full lg:w-[28rem] lg:shrink-0 flex order-1 lg:order-2", isArabic ? "ml-0 mr-auto" : "mr-0 ml-auto")}>
         <SearchInputField
           value={searchValue ?? ""}
           onChange={(v) => onSearchChange?.(v)}
